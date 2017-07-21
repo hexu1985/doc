@@ -1,0 +1,350 @@
+Message-ID: <1457846260.31742.1496221025324.JavaMail.confluence@jira>
+Subject: Exported From Confluence
+MIME-Version: 1.0
+Content-Type: multipart/related; 
+	boundary="----=_Part_31741_2029124660.1496221025324"
+
+------=_Part_31741_2029124660.1496221025324
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/exported.html
+
+<html xmlns:o=3D'urn:schemas-microsoft-com:office:office'
+      xmlns:w=3D'urn:schemas-microsoft-com:office:word'
+      xmlns:v=3D'urn:schemas-microsoft-com:vml'
+      xmlns=3D'urn:w3-org-ns:HTML'>
+<head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dutf-8=
+">
+    <title>=E5=BC=80=E5=8F=91=E4=B8=80=E4=B8=AA=E7=AE=80=E5=8D=95=E7=9A=84n=
+ginx=E6=A8=A1=E5=9D=97</title>
+    <!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:TargetScreenSize>1024x640</o:TargetScreenSize>
+            <o:PixelsPerInch>72</o:PixelsPerInch>
+            <o:AllowPNG/>
+        </o:OfficeDocumentSettings>
+        <w:WordDocument>
+            <w:View>Print</w:View>
+            <w:Zoom>90</w:Zoom>
+            <w:DoNotOptimizeForBrowser/>
+        </w:WordDocument>
+    </xml>
+    <![endif]-->
+    <style>
+                <!--
+        @page Section1 {
+            size: 8.5in 11.0in;
+            margin: 1.0in;
+            mso-header-margin: .5in;
+            mso-footer-margin: .5in;
+            mso-paper-source: 0;
+        }
+
+        td {
+            page-break-inside: avoid;
+        }
+
+        tr {
+            page-break-after: avoid;
+        }
+
+        div.Section1 {
+            page: Section1;
+        }
+
+        /* Confluence print stylesheet. Common to all themes for print medi=
+a */
+/* Full of !important until we improve batching for print CSS */
+
+#main {
+    padding-bottom: 1em !important; /* The default padding of 6em is too mu=
+ch for printouts */
+}
+
+body {
+    font-family: Arial, Helvetica, FreeSans, sans-serif;
+    font-size: 10pt;
+    line-height: 1.2;
+}
+
+body, #full-height-container, #main, #page, #content, .has-personal-sidebar=
+ #content {
+    background: #fff    !important;
+    color: #000         !important;
+    border: 0           !important;
+    width: 100%         !important;
+    height: auto        !important;
+    min-height: auto    !important;
+    margin: 0           !important;
+    padding: 0          !important;
+    display: block      !important;
+}
+
+a, a:link, a:visited, a:focus, a:hover, a:active {
+    color: #000;
+}
+#content h1,
+#content h2,
+#content h3,
+#content h4,
+#content h5,
+#content h6 {
+    font-family: Arial, Helvetica, FreeSans, sans-serif;
+    page-break-after: avoid;
+}
+pre {
+    font-family: Monaco, "Courier New", monospace;
+}
+
+#header,
+.aui-header-inner,
+#navigation,
+#sidebar,
+.sidebar,
+#personal-info-sidebar,
+.ia-fixed-sidebar,
+.page-actions,
+.navmenu,
+.ajs-menu-bar,
+.noprint,
+.inline-control-link,
+.inline-control-link a,
+a.show-labels-editor,
+.global-comment-actions,
+.comment-actions,
+.quick-comment-container,
+#addcomment {
+    display: none !important;
+}
+
+.comment .date::before {
+    content: none !important; /* remove middot for print view */
+}
+
+h1.pagetitle img {
+    height: auto;
+    width: auto;
+}
+
+.print-only {
+    display: block;
+}
+#footer {
+    position: relative !important; /* CONF-17506 Place the footer at end of=
+ the content */
+    margin: 0;
+    padding: 0;
+    background: none;
+    clear: both;
+}
+
+#poweredby {
+    border-top: none;
+    background: none;
+}
+
+#poweredby li.print-only {
+    display: list-item;
+    font-style: italic;
+}
+
+#poweredby li.noprint {
+    display:none;
+}
+
+
+/* no width controls in print */
+.wiki-content .table-wrap,
+.wiki-content p,
+.panel .codeContent,
+.panel .codeContent pre,
+.image-wrap {
+    overflow: visible !important;
+}
+
+/* TODO - should this work? */
+#children-section,
+#comments-section .comment,
+#comments-section .comment .comment-body,
+#comments-section .comment .comment-content,
+#comments-section .comment p {
+    page-break-inside: avoid;
+}
+
+#page-children a {
+    text-decoration: none;
+}
+
+/**
+ hide twixies
+
+ the specificity here is a hack because print styles
+ are getting loaded before the base styles. */
+#comments-section.pageSection .section-header,
+#comments-section.pageSection .section-title,
+#children-section.pageSection .section-header,
+#children-section.pageSection .section-title,
+.children-show-hide {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.children-show-hide.icon {
+    display: none;
+}
+
+/* personal sidebar */
+.has-personal-sidebar #content {
+    margin-right: 0px;
+}
+
+.has-personal-sidebar #content .pageSection {
+    margin-right: 0px;
+}
+-->
+    </style>
+</head>
+<body>
+    <h1>=E5=BC=80=E5=8F=91=E4=B8=80=E4=B8=AA=E7=AE=80=E5=8D=95=E7=9A=84ngin=
+x=E6=A8=A1=E5=9D=97</h1>
+    <div class=3D"Section1">
+        <p>1=EF=BC=89=E5=8F=82=E8=80=83=E6=96=87=E6=A1=A3</p>
+<p><a href=3D"http://blog.csdn.net/nestler/article/details/31825335" class=
+=3D"external-link" rel=3D"nofollow">http://blog.csdn.net/nestler/article/de=
+tails/31825335</a></p>
+<p>2=EF=BC=89=E4=BB=8Enginx=E5=AE=98=E7=BD=91=E4=B8=8B=E8=BD=BDnginx=E6=BA=
+=90=E7=A0=81=E5=8C=85=EF=BC=8C=E5=B9=B6=E8=A7=A3=E5=8E=8B=EF=BC=8C=E4=BB=A5=
+$NGINX=E6=8C=87=E4=BB=A3nginx=E7=9A=84=E6=A0=B9=E7=9B=AE=E5=BD=95</p>
+<p>3=EF=BC=89=E5=A2=9E=E5=8A=A0module=E6=BA=90=E6=96=87=E4=BB=B6=E5=92=8Cco=
+nfig=E6=96=87=E4=BB=B6</p>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">=20
+<pre class=3D"theme: Confluence; brush: bash; gutter: false" style=3D"font-=
+size:12px;"># mkdir -p $NGINX/src/http_mytest
+# cd $NGINX/src/http_mytest
+# vim ngx_http_mytest_module.c
+# vim config</pre>=20
+</div>
+</div>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeHeader panelHeader pdl" style=3D"border-bottom-width: 1px=
+;">
+<b>ngx_http_mytest_module.c</b>
+</div>
+<div class=3D"codeContent panelContent pdl">=20
+<pre class=3D"theme: Confluence; brush: cpp; gutter: false" style=3D"font-s=
+ize:12px;">#include &lt;ngx_config.h&gt;
+#include &lt;ngx_core.h&gt;
+#include &lt;ngx_http.h&gt;
+#include &lt;stdio.h&gt;
+static char* ngx_http_mytest(ngx_conf_t *cf, ngx_command_t *cmd, void *conf=
+);
+static ngx_int_t ngx_http_mytest_handler(ngx_http_request_t *r);
+static ngx_command_t ngx_http_mytest_commands[] =3D {
+    {=20
+        ngx_string(&quot;mytest&quot;),
+        NGX_HTTP_MAIN_CONF | NGX_HTTP_SRV_CONF | NGX_HTTP_LOC_CONF | NGX_HT=
+TP_LMT_CONF | NGX_CONF_NOARGS,
+        ngx_http_mytest,          // =E5=87=BA=E7=8E=B0mytest=E9=85=8D=E7=
+=BD=AE=E9=A1=B9=E6=97=B6=EF=BC=8Cngx_http_mytest=E5=87=BD=E6=95=B0=E8=A2=AB=
+=E8=B0=83=E7=94=A8
+        0,
+        0,
+        NULL=20
+    },
+    ngx_null_command            // =E4=BB=A5=E4=B8=80=E4=B8=AA=E7=A9=BA=E7=
+=9A=84ngx_command_t=E4=BD=9C=E4=B8=BA=E7=BB=93=E5=B0=BE
+};
+static ngx_http_module_t ngx_http_mytest_module_ctx =3D {
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+};
+ngx_module_t ngx_http_mytest_module =3D {
+    NGX_MODULE_V1,      // 0,0,0,0,0,0,1
+    &amp;ngx_http_mytest_module_ctx,
+    ngx_http_mytest_commands,
+    NGX_HTTP_MODULE,    // =E5=AE=9A=E4=B9=89=E6=A8=A1=E5=9D=97=E7=B1=BB=E5=
+=9E=8B
+    /* Nginx=E5=9C=A8=E5=90=AF=E5=8A=A8=E5=92=8C=E9=80=80=E5=87=BA=E6=97=B6=
+=E4=BC=9A=E8=B0=83=E7=94=A8=E4=B8=8B=E9=9D=A27=E4=B8=AA=E5=9B=9E=E8=B0=83=
+=E6=96=B9=E6=B3=95 */
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NULL,
+    NGX_MODULE_V1_PADDING,  // 0,0,0,0,0,0,0,0,=E4=BF=9D=E7=95=99=E5=AD=97=
+=E6=AE=B5
+};
+static char* ngx_http_mytest(ngx_conf_t *cf, ngx_command_t *cmd, void *conf=
+)
+{
+    ngx_http_core_loc_conf_t *clcf;
+    // =E6=89=BE=E5=88=B0mytest=E9=85=8D=E7=BD=AE=E9=A1=B9=E6=89=80=E5=B1=
+=9E=E7=9A=84=E9=85=8D=E7=BD=AE=E5=9D=97
+    clcf =3D ngx_http_conf_get_module_loc_conf(cf, ngx_http_core_module);
+    // =E8=AE=BE=E7=BD=AE=E5=A4=84=E7=90=86=E8=AF=B7=E6=B1=82=E7=9A=84=E6=
+=96=B9=E6=B3=95=EF=BC=8CHTTP=E6=A1=86=E6=9E=B6=E5=9C=A8=E5=A4=84=E7=90=86=
+=E7=94=A8=E6=88=B7=E8=AF=B7=E6=B1=82=E8=BF=9B=E8=A1=8C=E5=88=B0NGX_HTTP_CON=
+TENT_PHASE=E9=98=B6=E6=AE=B5=E6=97=B6
+    // =E5=A6=82=E6=9E=9C=E4=B8=BB=E6=9C=BA=E5=9F=9F=E5=90=8D=E3=80=81URI=
+=E5=92=8Cmytest=E6=A8=A1=E5=9D=97=E6=89=80=E5=9C=A8=E9=85=8D=E7=BD=AE=E5=9D=
+=97=E5=90=8D=E7=A7=B0=E7=9B=B8=E5=90=8C=EF=BC=8C=E5=B0=B1=E4=BC=9A=E8=B0=83=
+=E7=94=A8=E5=87=BD=E6=95=B0ngx_http_mytest_handler
+    clcf-&gt;handler =3D ngx_http_mytest_handler;
+    return NGX_CONF_OK;
+}
+// =E8=AF=B7=E6=B1=82=E7=9A=84=E6=89=80=E6=9C=89=E4=BF=A1=E6=81=AF=E9=83=BD=
+=E5=AD=98=E5=85=A5ngx_http_request_t=E7=BB=93=E6=9E=84=E4=BD=93=E4=B8=AD
+static ngx_int_t ngx_http_mytest_handler(ngx_http_request_t *r)
+{
+    printf(&quot;hello world!\n&quot;);
+    return NGX_DECLINED;
+}</pre>=20
+</div>
+</div>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeHeader panelHeader pdl" style=3D"border-bottom-width: 1px=
+;">
+<b>config</b>
+</div>
+<div class=3D"codeContent panelContent pdl">=20
+<pre class=3D"theme: Confluence; brush: java; gutter: false" style=3D"font-=
+size:12px;">ngx_addon_name=3Dngx_http_mytest_module
+HTTP_MODULES=3D&quot;$HTTP_MODULES ngx_http_mytest_module&quot;
+NGX_ADDON_SRCS=3D&quot;$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_mytest_modul=
+e.c&quot;</pre>=20
+</div>
+</div>
+<p>&nbsp;</p>
+<p>4=EF=BC=89=E7=BC=96=E8=AF=91nginx</p>
+<div class=3D"code panel pdl" style=3D"border-width: 1px;">
+<div class=3D"codeContent panelContent pdl">=20
+<pre class=3D"theme: Confluence; brush: bash; gutter: false" style=3D"font-=
+size:12px;"># cd $NGINX
+# ./configure --add-module=3D./src/http_mytest
+# make</pre>=20
+</div>
+</div>
+<p>&nbsp;</p>
+<p>5=EF=BC=89=E4=BF=AE=E6=94=B9nginx.conf=EF=BC=8C=E5=A2=9E=E5=8A=A0mytest=
+=E9=80=89=E9=A1=B9</p>
+<p>6=EF=BC=89=E5=90=AF=E5=8A=A8nginx</p>
+<p>7=EF=BC=89=E7=94=A8=E6=B5=8F=E8=A7=88=E5=99=A8=E6=88=96curl=E6=B5=8B=E8=
+=AF=95mytest=E6=98=AF=E5=90=A6=E7=94=9F=E6=95=88</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+    </div>
+</body>
+</html>
+------=_Part_31741_2029124660.1496221025324--

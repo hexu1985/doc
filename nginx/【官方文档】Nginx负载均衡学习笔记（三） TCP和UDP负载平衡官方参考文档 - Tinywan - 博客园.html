@@ -1,0 +1,479 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>【官方文档】Nginx负载均衡学习笔记（三） TCP和UDP负载平衡官方参考文档 - Tinywan - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=m_FXmwz3wxZoecUwNEK23PAzc-j9vbX_C6MblJ5ouMc1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip.css?v=xPXJVC4GCITs1yYYgSeLkcicCxapqseaPVQLFGMO1wc1"/>
+<link type="text/css" rel="stylesheet" href="/blog/customcss/303843.css?v=rEYFcAoJb31gSs3cLCzEuZQ%2b4UE%3d"/>
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip-mobile.css?v=MWSjZLbmjXliMx325Wa2C3a4w4uorsHndDWoifJvQ5A1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/tinywan/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/tinywan/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/tinywan/wlwmanifest.xml"/>
+<script src="//common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'tinywan', cb_enable_mathjax=true;var isLogined=false;</script>
+<script src="/bundles/blog-common.js?v=CPv0EEqm9L2aCgolHxaZfVYM6J-Sn5az_FJXbjzgr-o1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/tinywan/"><img id="blogLogo" src="/Skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/tinywan/"><a href="https://github.com/Tinywan" id="TabFiles">https://github.com/Tinywan</a></a></h1>
+<h2><font color="#2F4F4F"> -- 贵在坚持，相信自己.享受编程和技术所带来的快乐！实践是学习的捷径，跟智商没有太大关系！</font></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/tinywan/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/Tinywan">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/tinywan/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/tinywan/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 181&nbsp; </span>
+<span id="stats_article_count">文章 - 2&nbsp; </span>
+<span id="stats-comment_count">评论 - 44</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/tinywan/p/6586053.html">【官方文档】Nginx负载均衡学习笔记（三） TCP和UDP负载平衡官方参考文档</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span>本章介绍如何使用NGINX Plus和NGINX开放源代理和负载平衡TCP和UDP流量。</span></p>
+<h2 id="toc"><span>目录</span></h2>
+<ul>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#intro">介绍</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#prerequisites">先决条件</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#proxy_pass">配置反向代理</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#upstream">配置TCP或UDP负载平衡</a>
+<ul>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#method">选择负载平衡方法</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#hash">配置会话持久性</a></li>
+</ul>
+</li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_passive">被动健康监控</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active">主动健康监控</a>
+<ul>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_about">怎么运行的</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_prerequisites">先决条件</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_advanced">基本配置</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_advanced">微调健康检查</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_match">使用匹配配置块进行微调健康检查</a>
+<ul>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_match_tcp">TCP的微调健康检查</a></li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_match_udp">UDP的微调健康检查</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#upstream_conf">即时配置</a>
+<ul>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#upstream_conf_example">动态配置示例</a></li>
+</ul>
+</li>
+<li><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#example">TCP和UDP负载平衡配置示例</a></li>
+</ul>
+<h2 id="intro"><span>介绍</span></h2>
+<p><a href="https://www.nginx.com/solutions/load-balancing/">负载平衡</a><span>是指跨多个后端服务器有效分布网络流量。</span></p>
+<p><span>在</span><a title="NGINX Plus版本" href="https://www.nginx.com/resources/admin-guide/nginx-plus-releases/">版本5</a><span><span>和更高版本中，NGINX可以代理和负载平衡TCP流量。</span><span>TCP（传输控制协议）是用于许多流行的应用和服务的协议，例如LDAP，MySQL和RTMP。</span></span></p>
+<p><span>在</span><a title="NGINX Plus版本" href="https://www.nginx.com/resources/admin-guide/nginx-plus-releases/">版本9</a><span><span>和更高版本中，NGINX可以代理和负载平衡UDP流量。</span><span>UDP（用户数据报协议）是许多流行的非事务性应用程序的协议，例如DNS，syslog和RADIUS。</span></span></p>
+<p><span>要加载平衡HTTP流量，请参阅</span><a href="https://www.nginx.com/resources/admin-guide/load-balancer/">HTTP负载平衡一</a><span>文。</span></p>
+<h2 id="prerequisites"><span>先决条件</span></h2>
+<ul>
+<li><span>最新的</span><code>--with-stream</code><span><span>NGINX&nbsp;</span><span>开源采用</span><span>配置标志或最新</span><span>的</span><span>NGINX Plus构建（无需额外的构建步骤）</span></span></li>
+<li><span>通过TCP或UDP进行通信的应用程序，数据库或服务</span></li>
+<li><span>上游服务器，每个服务器运行应用程序，数据库或服务的同一实例</span></li>
+</ul>
+<h2 id="proxy_pass"><span>配置反向代理</span></h2>
+<p><span>首先，您需要配置</span><em>反向代理</em><span><span>，以便</span><span>NGINX&nbsp;</span><span>可以将客户端的TCP连接或UDP数据报转发到上游组或代理服务器。</span></span></p>
+<p><span>打开NGINX配置文件并执行以下步骤：</span></p>
+<p><span><span><span>1、创建顶级</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html#stream">stream {}</a></code><span><span>块：</span></span></span></p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+...
+}</span></pre>
+</div>
+<p>2、server {}在顶层stream {}上下文中为每个虚拟服务器 定义一个或多个配置块。</p>
+<p>3、在server {}每个服务器的配置块中，包括listen用于定义服务器侦听的IP地址和/或端口的指令。对于UDP流量，还包括udp参数。TCP是stream上下文的默认协议，因此没有tcp <br>参数listen指令：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    server {
+        listen </span><span style="color: #800080">12345</span><span style="color: #000000">;
+        ...
+    }
+    server {
+        listen </span><span style="color: #800080">53</span><span style="color: #000000"> udp;
+        ...
+    }
+    ...
+}</span></pre>
+</div>
+<p><span><span>4、包括</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_proxy_module.html#proxy_pass">proxy_pass</a></code><span><span>用于定义代理服务器</span><span>的</span><span>指令或服务器转发流量的上游组：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    server {
+        listen     </span><span style="color: #800080">12345</span><span style="color: #000000">;
+
+        </span>#TCP traffic will be proxied to the <span style="color: #800000">"</span><span style="color: #800000">stream_backend</span><span style="color: #800000">"</span><span style="color: #000000"> upstream group
+        proxy_pass stream_backend;
+    }
+
+    server {
+        listen     </span><span style="color: #800080">12346</span><span style="color: #000000">;
+
+        </span>#<span style="color: #000000">TCP traffic will be proxied a proxied server
+        proxy_pass backend.example.com:</span><span style="color: #800080">12346</span><span style="color: #000000">;
+    }
+
+    server {
+        listen     </span><span style="color: #800080">53</span><span style="color: #000000"> udp;
+
+        </span>#UDP traffic will be proxied to the <span style="color: #800000">"</span><span style="color: #800000">dns_servers</span><span style="color: #800000">"</span><span style="color: #000000"> upstream group
+        proxy_pass dns_servers;
+    }
+    ...
+}</span></pre>
+</div>
+<p>5、或者，如果您的代理服务器有多个网络接口，您可以配置NGINX选择一个源IP地址连接到上游服务器。如果NGINX后面的代理服务器配置为接受来自特定IP网络或IP地址范围的连接，这可能很有用。<br>指定proxy_bind必需的网络接口的伪指令和IP地址：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    ...
+    server {
+        listen     </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">12345</span><span style="color: #000000">;
+        proxy_pass backend.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+        proxy_bind </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">12345</span><span style="color: #000000">;
+    }
+}</span></pre>
+</div>
+<p>6、或者，您可以调整两个内存缓冲区的大小，其中NGINX可以从客户端和上游连接中输入数据。如果存在小量的数据，则可以减少缓冲器，这可以节省存储器资源。如果存在大量数据，则可以增加缓冲区大小以减少套接字读/写操作的数量。一旦在一个连接上接收到数据，NGINX读取它并通过另一个连接转发它。缓冲区由指令proxy_buffer_size控制：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    ...
+    server {
+        listen            </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">12345</span><span style="color: #000000">;
+        proxy_pass        backend.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+        proxy_buffer_size 16k;
+    }
+}</span></pre>
+</div>
+<h2 id="upstream"><span>配置TCP或UDP负载平衡</span></h2>
+<p>&nbsp;1、<span><span>创建一组服务器，或</span><span>流量将负载平衡</span><span>的</span></span><em><span><span>上游组</span></span></em><span><span>。</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#upstream">upstream {}</a></code><span><span class="goog-text-highlight">在顶层</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html#stream">stream {}</a></code><span><span class="goog-text-highlight">上下文</span><span class="goog-text-highlight">中</span><span class="goog-text-highlight">定义一个或多个</span><span class="goog-text-highlight">配置块，</span><span class="goog-text-highlight">并为上游组设置名称，例如，</span></span><code>stream_backend</code><span><span class="goog-text-highlight">对于TCP服务器和</span></span><code>dns_servers</code><span><span class="goog-text-highlight">UDP服务器：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    upstream stream_backend {
+        ...    
+    }
+
+    upstream dns_servers {
+        ...    
+    }
+    ...
+}</span></pre>
+</div>
+<p>注意:<span><span class="goog-text-highlight">确保上一个配置中</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_proxy_module.html#proxy_pass">proxy_pass</a></code><span><span class="goog-text-highlight">引用</span><span class="goog-text-highlight">了上游组的名称</span><span class="goog-text-highlight">。</span></span></p>
+<p>2、<span><span class="goog-text-highlight">使用</span></span><em><span><span class="goog-text-highlight">上游服务器</span></span></em><span><span class="goog-text-highlight">填充上游组</span><span class="goog-text-highlight">。</span><span>在</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#upstream">upstream {}</a></code><span><span>&nbsp;块中，</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#server">server</a></code><span><span>为每个上游服务器</span><span>添加一个</span><span>伪指令，指定其IP地址或主机名（可解析为多个IP地址）和</span></span><em><span><span>必需的</span></span></em><span><span>端口号。</span><span>请注意，您不为每个服务器定义协议，因为它是由</span><span>您在前面创建</span></span><code>listen</code><span><span>的</span></span><code>server</code><span><span>块中</span><span>的</span><span>伪指令中</span><span>包含的</span><span>参数</span><span>为整个上游组定义的</span><span>。</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    upstream stream_backend {
+        server backend1.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+        server backend2.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+        server backend3.example.com:</span><span style="color: #800080">12346</span><span style="color: #000000">;
+        ...
+    }
+    upstream dns_servers {
+        server </span><span style="color: #800080">192.168</span>.<span style="color: #800080">136.130</span>:<span style="color: #800080">53</span><span style="color: #000000">;
+        server </span><span style="color: #800080">192.168</span>.<span style="color: #800080">136.131</span>:<span style="color: #800080">53</span><span style="color: #000000">;
+        ...
+    }
+    ...
+}</span></pre>
+</div>
+<p><span><span>配置</span><span>上游组使用</span><span>的</span></span><em><span><span>负载分担方法</span></span></em><span><span>。</span><span>您可以指定以下方法之一：</span></span></p>
+<p>&nbsp;</p>
+<ul>
+<li><code>round-robin</code><span><span>&nbsp;- 默认情况下，NGINX使用循环算法对流量进行负载均衡，将其顺序​​定向到配置的上游组中的服务器。</span><span>因为它是默认方法，没有</span></span><code>round-robin</code><span><span>指令;&nbsp;</span><span>只需</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#upstream">upstream</a></code><span>在顶层</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html#stream">stream</a></code><span><span>上下文中</span><span>创建一个</span><span>配置块</span><span>并添加上</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#server">server</a></code><span>一步中描述的指令。</span></li>
+<li><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#least_conn">least_conn</a></code><span>&nbsp;- NGINX选择当前活动连接数较少的服务器。</span></li>
+<li><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#least_time">least_time</a></code><span><span class="goog-text-highlight">&nbsp;- NGINX选择平均延迟最小，活动连接数最少的服务器。</span><span>最低平均延迟是基于以下参数中的哪一个包括在</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#least_time">least_time</a></code><span><span>指令</span><span>上</span><span>计算的：</span></span>
+<p>&nbsp;</p>
+</li>
+<ul>
+<li><code>connect</code><span>&nbsp;- 连接到上游服务器的时间</span></li>
+<li><code>first_byte</code><span>&nbsp;- 接收数据的第一个字节的时间</span></li>
+<li><code>last_byte</code><span>&nbsp;- 从服务器接收完整响应的时间</span></li>
+</ul>
+<li>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">upstream stream_backend {
+    least_time first_byte;
+
+    server backend1.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend2.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend3.example.com:</span><span style="color: #800080">12346</span><span style="color: #000000">;
+}</span></pre>
+</div>
+</li>
+<li><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#hash">hash</a></code><span><span>&nbsp;- NGINX基于用户定义的密钥选择服务器，例如源IP地址（</span></span><code>$remote_addr</code><span><span>）：</span></span></li>
+</ul>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">upstream stream_backend {
+    hash $remote_addr;
+
+    server backend1.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend2.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend3.example.com:</span><span style="color: #800080">12346</span><span style="color: #000000">;
+}</span></pre>
+</div>
+<p><span><span>所述</span></span><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#hash"><span><span>散列</span></span></a><span><span>负载平衡方法还用于配置</span></span><em><span><span>会话持久性</span></span></em><span><span>。</span><span class="goog-text-highlight">由于散列函数基于客户端IP地址，来自给定客户端的连接始终传递到同一服务器，除非服务器关闭或以其他方式不可用。</span><span>指定一个可选</span></span><code>consistent</code><span><span>参数以应用</span></span><em><span><span>ketama</span></span></em><span><span>一致性散列方法：</span></span></p>
+<div class="cnblogs_code">
+<pre>hash $remote_addr consistent;</pre>
+</div>
+<p><span><span>或者，对于每个上游服务器，指定服务器特定的参数，包括</span></span><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#max_conns"><span><span>最大连接数</span></span></a><span><span>，</span></span><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#weight"><span><span>服务器权重</span></span></a><span><span>等：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">upstream stream_backend {
+    hash   $remote_addr consistent;
+    server backend1.example.com:</span><span style="color: #800080">12345</span> weight=<span style="color: #800080">5</span><span style="color: #000000">;
+    server backend2.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend3.example.com:</span><span style="color: #800080">12346</span> max_conns=<span style="color: #800080">3</span><span style="color: #000000">;
+}
+
+    upstream dns_servers {
+        least_conn;
+        server </span><span style="color: #800080">192.168</span>.<span style="color: #800080">136.130</span>:<span style="color: #800080">53</span><span style="color: #000000">;
+        server </span><span style="color: #800080">192.168</span>.<span style="color: #800080">136.131</span>:<span style="color: #800080">53</span><span style="color: #000000">;
+        ...
+    }</span></pre>
+</div>
+<p><span><span>另一种方法是将流量代理到单个服务器而不是上游组。</span><span>如果您通过主机名标识服务器，并将主机名配置为解析为多个IP地址，则NGINX使用循环算法在IP地址之间对流量进行负载平衡。</span><span>在这种情况下，</span></span><em><span><span>必须在</span></span></em><span><span>配置参数中指定服务器的端口号，</span></span><code>proxy_pass</code><span><span>并且</span></span><em><span><span>不能</span></span></em><span><span>在IP地址或主机名之前指定协议：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    ...
+    server {
+        listen     </span><span style="color: #800080">12345</span><span style="color: #000000">;
+        proxy_pass backend.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    }
+}</span></pre>
+</div>
+<h2 id="health_passive"><span>被动健康监控</span></h2>
+<p><span><span>如果尝试连接到上游服务器超时或导致错误，NGINX开源或NGINX Plus可以将服务器标记为不可用，并停止向其发送请求一段确定的时间。</span><span>要定义NGINX认为上游服务器不可用的条件，请在指令中包含以下</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#server">server</a></code><span>参数</span></p>
+<ul>
+<li><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#fail_timeout">fail_timeout</a></code><span><span>&nbsp;- 指定数量的连接尝试必须失败，服务器被认为不可用的时间量。</span><span>此外，在标记它之后，NGINX认为服务器不可用的时间量。</span></span></li>
+<li><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#max_fails">max_fails</a></code><span>&nbsp;- 在指定时间内发生的NGINX认为服务器不可用的失败尝试次数。</span></li>
+</ul>
+<p><span>默认值为</span><code>10</code><span>秒和</span><code>1</code><span><span>尝试。</span><span class="goog-text-highlight">因此，如果连接尝试在10秒内超时或至少出现一次失败，则NGINX将服务器标记为不可用10秒。</span><span>该示例显示如何在30秒内将这些参数设置为2个故障：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">upstream stream_backend {
+    server backend1.example.com:</span><span style="color: #800080">12345</span> weight=<span style="color: #800080">5</span><span style="color: #000000">;
+    server backend2.example.com:</span><span style="color: #800080">12345</span> max_fails=<span style="color: #800080">2</span> fail_timeout=<span style="color: #000000">30s;
+    server backend3.example.com:</span><span style="color: #800080">12346</span> max_conns=<span style="color: #800080">3</span><span style="color: #000000">;
+}</span></pre>
+</div>
+<h2 id="health_active"><span>主动健康监控</span></h2>
+<p><span><span>可以配置运行状况检查以测试各种故障类型。</span><span>例如，NGINX Plus可以连续测试上游服务器的响应能力，避免出现故障的服务器。</span></span></p>
+<h3 id="health_active_about"><span>怎么运行的</span></h3>
+<p><span><span>NGINX Plus向每个上游服务器发送特殊的健康检查请求，并检查满足特定条件的响应。</span><span>如果无法建立与服务器的连接，则健康检查将失败，并认为服务器不正常。</span><span>NGINX Plus不会将客户端连接代理到不正常的服务器。</span><span>如果为一组服务器定义了几个运行状况检查，则任何一个检查的失败都足以使相应的服务器被视为不正常运行。</span></span></p>
+<h3 id="health_active_prerequisites"><span>先决条件</span></h3>
+<ul>
+<li><span>您已在</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_core_module.html#stream">stream</a></code><span><span>上下文中</span><span>配置了上游服务器组</span><span>，例如：</span></span></li>
+</ul>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    upstream stream_backend {
+ 
+    server backend1.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend2.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+    server backend3.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+   }
+}</span></pre>
+</div>
+<ul>
+<li>您已配置将流量（在这种情况下为TCP连接）传递到服务器组的服务器：</li>
+</ul>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">server {
+    listen     </span><span style="color: #800080">12345</span><span style="color: #000000">;
+    proxy_pass stream_backend;
+}</span></pre>
+</div>
+<h3 id="health_active_basic"><span>基本配置</span></h3>
+<ol>
+<li><span><span class="goog-text-highlight">指定</span></span><em><span><span class="goog-text-highlight">共享内存区域</span></span></em><span><span class="goog-text-highlight">&nbsp;- 一个特殊区域，NGINX Plus工作进程共享关于计数器和连接的状态信息。</span><span>将</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#zone">zone</a></code><span><span>指令</span><span>添加</span><span>到上游服务器组，并指定</span></span><em>区域名称</em><span>和</span><em>内存量</em><span>：</span></li>
+</ol>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">stream {
+    upstream stream_backend {
+
+        zone   stream_backend 64k; 
+        server backend1.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+        server backend2.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+        server backend3.example.com:</span><span style="color: #800080">12345</span><span style="color: #000000">;
+   }
+}</span></pre>
+</div>
+<p><span><span class="goog-text-highlight">对上游组中的服务器启用运行状况检查。</span><span>将</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#health_check">health_check</a></code><span><span>和</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#health_check_timeout">health_check_timeout</a></code><span><span>指令</span><span>添加</span><span>到代理到上游组的连接的服务器：</span></span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">server {
+    listen        </span><span style="color: #800080">12345</span><span style="color: #000000">;
+    proxy_pass    stream_backend;
+    health_check;
+    health_check_timeout 5s;
+}</span></pre>
+</div>
+<p><span>该</span><code>health_check</code><span>指令启用运行状况检查功能，同时</span><code>health_check_timeout</code><span>覆盖</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_proxy_module.html#proxy_timeout">proxy_timeout</a></code><span><span>运行状况检查</span><span>的</span><span>值，对于运行状况检查，此超时需要显着缩短。</span></span></p>
+<p><span>要对UDP流量启用运行状况检查，在</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#health_check">health_check</a></code><span>指令中指定</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#health_check_udp">udp</a></code><span><span>启用UDP的运行状况检查的参数，以及</span><span>包含用于验证服务器响应的测试</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#hc_match">match=</a></code><span>的相应</span><code>match</code><span><span>块</span><span>的名称的</span><span>参数（请参阅</span></span><a href="https://www.nginx.com/resources/admin-guide/tcp-load-balancing/#health_active_match_udp">微调UDP运行状况检查</a><span>）：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">server {
+    listen       </span><span style="color: #800080">5053</span><span style="color: #000000">;
+    proxy_pass   dns_servers;
+    health_check udp match</span>=<span style="color: #000000">dns;
+    health_check_timeout 5s;
+}</span></pre>
+</div>
+<h3 id="health_active_advanced"><span>微调健康检查</span></h3>
+<p><span><span>默认情况下，NGINX Plus每5秒尝试连接一个上游服务器组中的每个服务器。</span><span>如果无法建立连接，NGINX Plus认为健康检查失败，将服务器标记为不正常，并停止将客户端连接转发到服务器。</span></span></p>
+<p><span>要更改默认行为，请在参数中包含</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#health_check">health_check</a></code><span>参数：</span></p>
+<ul>
+<li><code>interval</code><span>&nbsp;- NGINX Plus发送健康检查请求的频率（以秒为单位）（默认为5秒）</span></li>
+<li><code>passes</code><span>&nbsp;- 服务器必须响应以认为健康的连续运行状况检查的数量（默认值为1）</span></li>
+<li><code>fails</code><span>&nbsp;- 服务器必须无法响应以认为不正常的连续运行状况检查数（默认值为1）</span></li>
+<li>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">server {
+    listen       </span><span style="color: #800080">12345</span><span style="color: #000000">;
+    proxy_pass   stream_backend;
+    health_check interval</span>=<span style="color: #800080">10</span> passes=<span style="color: #800080">2</span> fails=<span style="color: #800080">3</span><span style="color: #000000">;
+}</span></pre>
+</div>
+</li>
+</ul>
+<p><span>在该示例中，TCP运行状况检查之间的时间增加到</span><code>10</code><span>秒，服务器在</span><code>3</code><span><span>连续失败的运行状况检查</span><span>后被</span><span>认为不健康，并且服务器需要通过</span></span><code>2</code><span>连续检查以再次被视为健康。</span></p>
+<p><span><span class="goog-text-highlight">默认情况下，NGINX Plus会向</span><span class="goog-text-highlight">块中</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#server">server</a></code><span><span class="goog-text-highlight">指令指定</span><span class="goog-text-highlight">的端口发送运行状况检查消息</span></span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#upstream">upstream</a></code><span><span class="goog-text-highlight">。</span><span>您可以指定另一个端口进行运行状况检查，这在监视同一主机上许多服务的运行状况时尤其有用。</span><span>要覆盖端口，请指定</span></span><code>port</code><span>指令的</span><code><a href="http://nginx.org/en/docs/stream/ngx_stream_upstream_module.html#health_check">health_check</a></code><span>参数：</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">server {
+    listen       </span><span style="color: #800080">12345</span><span style="color: #000000">;
+    proxy_pass   stream_backend;
+    health_check port</span>=<span style="color: #800080">8080</span><span style="color: #000000">;
+}</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000">uptream name { 
+        server </span><span style="color: #800080">192.168</span>.<span style="color: #800080">0.21</span>:<span style="color: #800080">80</span><span style="color: #000000">;
+        server </span><span style="color: #800080">192.168</span>.<span style="color: #800080">0.22</span>:<span style="color: #800080">80</span><span style="color: #000000">;
+        check interval</span>=<span style="color: #800080">3000</span> rise=<span style="color: #800080">2</span> fall=<span style="color: #800080">5</span> timeout=<span style="color: #800080">1000</span> <span style="color: #ff00ff">type</span>=<span style="color: #000000">http;        
+ }
+</span>#上面配置的意思是，对name这个负载均衡条目中的所有节点，每个3秒检测一资，请求2资下正常则标记realserver状态为up,如果检测5次都失败，则标记realserver的状态为down，超时间为1秒。</pre>
+</div>
+<p>&nbsp;</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2017-03-20 09:52</span> <a href='http://www.cnblogs.com/tinywan/'>Tinywan</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=6586053" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(6586053);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=303843,cb_entryId=6586053,cb_blogApp=currentBlogApp,cb_blogUserGuid='87e234d9-4673-e611-9fc1-ac853d9f53cc',cb_entryCreatedDate='2017/3/20 9:52:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='cnblogs_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='cnblogs_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2017 Tinywan
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>

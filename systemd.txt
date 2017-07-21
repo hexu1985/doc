@@ -1,0 +1,70 @@
+安装systemd
+pacman -S systemd
+
+然后在grub的menu.lst文件的arch引导部分的kernel末尾加上init=binsystemd
+形如
+
+kernel vmlinuz-linux root=devsda7 ro init=binsystemd
+
+这样，就是以systemd引导arch了。
+
+接下来是一些具体的问题解决方案
+第一，开机启动图形界面（相当于init 5)
+# systemctl -f enable graphical.target
+
+第二，设置开机启动使用的登录管理器(gdm的service没看到，可能需要自己写,这里以kdm为例）
+# systemctl enable kdm.service
+
+第三，开机启动一些常用的服务
+# systemctl enable network.service
+# systemctl enable dbus.service
+# systemctl enable console-kit-daemon.service
+
+如果还需要启动其他服务的话，按照这样来就行了，同时呢,systemd会根据需要启动的服务的依赖关系来启动一些其他你没有设置的服务，
+
+这些service文件可以通过以下途径获取
+一部分是systemd自身带的
+一部分是软件包一并带的
+还有一部分可以安装systemd-arch-units包来获取(包括前面提到的gdm)
+# pacman -S systemd-arch-units
+
+如果有些服务的service文件没有，需要使用arch原本的DAEMON行来运行该服务（比如hwclock)
+那么安装initscript-systemd
+# pacman -S initscript-systemd
+并需要执行
+# systemctl enable arch-daemons.target
+这样DAEMON行的设置才会生效
+
+systemd下设置hostname等信息，都是在etc下面的同名文件里面设置（这个和arch原本的rc.conf不同的），具体的可以看下arch官方wiki的这一段，有例子可以参考。
+
+如果你原本在rc.local文件中写了东西，需要在systemd中调用
+那么执行
+#systemctl enable rc-local.service
+
+------------这里有关arch-daemons-target和rc-local.service的部分，最好是能想办法迁移到systemd原生的设置方案中去，毕竟少启动一个服务，就能节省一点启动时间
+
+这样基本上就可以使用了
+
+我个人的机子上，启动速度大概是比以前快了一倍左右，效果是非常惊人的
+
+下面补充一些systemd的常见命令及用途
+
+1,切换运行级别runlevel的办法
+可以采用原来的init命令
+也可以使用
+# systemctl isolate runlevel5.target
+# systemctl isolate runlevel3.target
+# systemctl isolate graphical.target
+来进行
+
+2,重启启动关闭服务
+#systemctl restart ,service
+#systemctl start .service
+#systemctl stop .service
+#systemctl reload .service
+#systemctl reload-or-restart .service
+
+3,查看当前运行的服务状态（或可用的服务)
+$systemctl
+或者
+$systemctl list-units

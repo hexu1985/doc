@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>Vundle：你必须了解的Linux Vim插件管理工具 - 51CTO.COM</title>
+    <meta name="description" content="Vim是一款非常出色的工具。它不仅是一款出色的默认文本编辑工具，可以让你的工作流程更快速更流畅，还可以转换成IDE（集成开发环境），支持几乎任何一种现有的编程语言。Vundle对于快速轻松地对功能强大的Vim环境实现个性化大有帮助。"/>
+    <meta name="keywords" content="Linux,Vim,Vundle"/>
+    <base target="_blank" />
+    <link rel="stylesheet" type="text/css" href="http://static4.51cto.com/51cto/cms/2016/css/article_head.css?v=0.1"/>
+    <link rel="stylesheet" type="text/css" href="http://static1.51cto.com/51cto/cms/2016/css/article_layout.css?v=2.15"/>
+    <script type="text/javascript" src="http://static1.51cto.com/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://static3.51cto.com//51cto/cms/bdtj/os.js"></script>
+</head>
+<body >
+<!-- 导航 开始-->
+<!-- top start -->
+<div class="home-top" id="topx">
+    <div class="w1001 cent">
+        <div class="pdr10 fl">中国领先的IT技术网站</div>
+        <div class="pdr10 fl">|</div>
+        <div class="pdr10 fl">
+            <div class="subweb"><span class="trans">51CTO旗下网站</span><i></i>
+                <!--旗下网站-->
+                <div class="subweb-list">
+                    <a href="http://www.51cto.com" target="_blank">51CTO.com</a>
+                    <a href="http://cio.51cto.com" target="_blank">CIOage.com</a>
+                    <a href="http://www.watchstor.com" target="_blank">WatchStor.com</a>
+                    <a href="http://www.hc3i.cn" target="_blank">HC3i.cn</a>
+                </div>
+                <!--旗下网站-->
+            </div>
+        </div>
+        <div class="pdr10 fl">|</div>
+        <div class="pdr10 fl"><a href="http://www.51cto.com/about/map.htm" target="_blank">地图</a></div>
+        <div class="top-r">
+        <div id="login_status" style="text-align:right;" class="login"> </div>
+        </div>
+    </div>
+</div>
+<!-- top end -->
+<!-- 导航 结束-->
+
+<!-- 频道导航 -->
+<div class="top_bg">
+	<div class="wrap">
+		<div id="tonglanad" class="left"></div>
+		<div id="list4" class="right" style="position:relative;">
+			<ul>
+				<li id="wordlinkad1"></li>
+				<li id="wordlinkad2"></li>
+				<li id="wordlinkad3"></li>
+				<li id="wordlinkad4"></li>
+			</ul>
+			<div style="right: 0px; width: 24px; height: 14px; z-index: 12; position: absolute; background: transparent url('http://s5.51cto.com/wyfs02/M00/86/BB/wKiom1fI4nWStYqXAAAEoZQn6vs942.png') repeat scroll 0% 0%; bottom: 2px;"></div>
+		</div>
+	</div>
+	<div class="nav">
+		<a href="http://www.51cto.com" class="logo"><img src="http://static3.51cto.com/51cto/cms/2016/images/nr_logo.png?v=0.1" alt=""></a>
+		<ul>
+			<li><a href="http://os.51cto.com" class="active">系统频道</a></li>
+			<li><a href="http://os.51cto.com">首页</a></li>
+			<li><a href="http://os.51cto.com/col/543/">资讯</a></li>
+			<li><a href="http://os.51cto.com/linux/">Linux</a></li>
+			<li><a href="http://os.51cto.com/windows/">Windows</a></li>
+			<li><a href="http://os.51cto.com/col/610/">开源</a></li>
+			<li><a href="http://os.51cto.com/col/975/">桌面</a></li>
+			<li><a href="http://os.51cto.com/col/545/">运维&工具</a></li>
+			<li><a href="http://os.51cto.com/col/1496/">技巧集锦</a></li>
+			<li><a href="http://os.51cto.com/speclist/519/">专题</a></li>
+		</ul>
+		<div class="nav-rsear">
+			<form method="post" action="http://www.51cto.com/php/search.php" name="searchform" target="_blank">
+				<input name="keyword" id="q" type="text" placeholder="输入您要搜索的内容" class="sear-1">
+				<input name="" type="submit" value="" class="sear-2">
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- 频道导航结束 -->
+
+<div class="main">
+    <!-- 左侧内容 -->
+    <div class="main_left">
+        <div class="wznr">
+            <h2>Vundle：你必须了解的Linux Vim插件管理工具</h2>
+            <p>Vim是一款非常出色的工具。它不仅是一款出色的默认文本编辑工具，可以让你的工作流程更快速更流畅，还可以转换成IDE（集成开发环境），支持几乎任何一种现有的编程语言。Vundle对于快速轻松地对功能强大的Vim环境实现个性化大有帮助。</p>
+            <dl>
+                <dt><span>作者：布加迪编译</span><span>来源：<a href='http://xmodulo.com/manage-vim-plugins.html' target='_blank'>51CTO</a></span>|<em>2015-07-15 09:18</em></dt>
+                <dd>
+                	<div class="left" style="padding-right: 10px">
+                		<a href="javascript:favorBox('open');" title="一键收藏，随时查看，分享好友！" target="_self" class="bds_more1">&nbsp;收藏</a>
+                	</div>
+					<div class="bdsharebuttonbox left" data-tag="share_2">
+						<a href="javascript:;" class="bds_more" data-cmd="more">&nbsp;&nbsp;分享</a>
+					</div>
+                </dd>
+            </dl>
+        </div>
+        <div class="zwnr">
+            <h2><a href="#" target="_blank"></a></h2>
+            <p><!--[if !mso]>
+<style>
+v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style>
+<![endif]--></p>
+<p><!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Normal</w:View>
+<w:Zoom>0</w:Zoom>
+<w:TrackMoves />
+<w:TrackFormatting />
+<w:PunctuationKerning />
+<w:DrawingGridVerticalSpacing>7.8 磅</w:DrawingGridVerticalSpacing>
+<w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+<w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+<w:ValidateAgainstSchemas />
+<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+<w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+<w:DoNotPromoteQF />
+<w:LidThemeOther>EN-US</w:LidThemeOther>
+<w:LidThemeAsian>ZH-CN</w:LidThemeAsian>
+<w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+<w:Compatibility>
+<w:SpaceForUL />
+<w:BalanceSingleByteDoubleByteWidth />
+<w:DoNotLeaveBackslashAlone />
+<w:ULTrailSpace />
+<w:DoNotExpandShiftReturn />
+<w:AdjustLineHeightInTable />
+<w:BreakWrappedTables />
+<w:SnapToGridInCell />
+<w:WrapTextWithPunct />
+<w:UseAsianBreakRules />
+<w:DontGrowAutofit />
+<w:SplitPgBreakAndParaMark />
+<w:DontVertAlignCellWithSp />
+<w:DontBreakConstrainedForcedTables />
+<w:DontVertAlignInTxbx />
+<w:Word11KerningPairs />
+<w:CachedColBalance />
+<w:UseFELayout />
+</w:Compatibility>
+<w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+<m:mathPr>
+<m:mathFont m:val="Cambria Math" />
+<m:brkBin m:val="before" />
+<m:brkBinSub m:val="--" />
+<m:smallFrac m:val="off" />
+<m:dispDef />
+<m:lMargin m:val="0" />
+<m:rMargin m:val="0" />
+<m:defJc m:val="centerGroup" />
+<m:wrapIndent m:val="1440" />
+<m:intLim m:val="subSup" />
+<m:naryLim m:val="undOvr" />
+</m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="true"
+DefSemiHidden="true" DefQFormat="false" DefPriority="99"
+LatentStyleCount="267">
+<w:LsdException Locked="false" Priority="0" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Normal" />
+<w:LsdException Locked="false" Priority="9" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="heading 1" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 2" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 3" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 4" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 5" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 6" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 7" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 8" />
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 9" />
+<w:LsdException Locked="false" Priority="39" Name="toc 1" />
+<w:LsdException Locked="false" Priority="39" Name="toc 2" />
+<w:LsdException Locked="false" Priority="39" Name="toc 3" />
+<w:LsdException Locked="false" Priority="39" Name="toc 4" />
+<w:LsdException Locked="false" Priority="39" Name="toc 5" />
+<w:LsdException Locked="false" Priority="39" Name="toc 6" />
+<w:LsdException Locked="false" Priority="39" Name="toc 7" />
+<w:LsdException Locked="false" Priority="39" Name="toc 8" />
+<w:LsdException Locked="false" Priority="39" Name="toc 9" />
+<w:LsdException Locked="false" Priority="35" QFormat="true" Name="caption" />
+<w:LsdException Locked="false" Priority="10" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Title" />
+<w:LsdException Locked="false" Priority="1" Name="Default Paragraph Font" />
+<w:LsdException Locked="false" Priority="11" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Subtitle" />
+<w:LsdException Locked="false" Priority="22" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Strong" />
+<w:LsdException Locked="false" Priority="20" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Emphasis" />
+<w:LsdException Locked="false" Priority="59" SemiHidden="false"
+UnhideWhenUsed="false" Name="Table Grid" />
+<w:LsdException Locked="false" UnhideWhenUsed="false" Name="Placeholder Text" />
+<w:LsdException Locked="false" Priority="1" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="No Spacing" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading Accent 1" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List Accent 1" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid Accent 1" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1 Accent 1" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2 Accent 1" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1 Accent 1" />
+<w:LsdException Locked="false" UnhideWhenUsed="false" Name="Revision" />
+<w:LsdException Locked="false" Priority="34" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="List Paragraph" />
+<w:LsdException Locked="false" Priority="29" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Quote" />
+<w:LsdException Locked="false" Priority="30" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Intense Quote" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2 Accent 1" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1 Accent 1" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2 Accent 1" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3 Accent 1" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List Accent 1" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading Accent 1" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List Accent 1" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid Accent 1" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading Accent 2" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List Accent 2" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid Accent 2" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1 Accent 2" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2 Accent 2" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1 Accent 2" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2 Accent 2" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1 Accent 2" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2 Accent 2" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3 Accent 2" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List Accent 2" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading Accent 2" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List Accent 2" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid Accent 2" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading Accent 3" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List Accent 3" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid Accent 3" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1 Accent 3" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2 Accent 3" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1 Accent 3" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2 Accent 3" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1 Accent 3" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2 Accent 3" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3 Accent 3" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List Accent 3" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading Accent 3" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List Accent 3" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid Accent 3" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading Accent 4" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List Accent 4" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid Accent 4" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1 Accent 4" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2 Accent 4" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1 Accent 4" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2 Accent 4" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1 Accent 4" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2 Accent 4" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3 Accent 4" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List Accent 4" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading Accent 4" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List Accent 4" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid Accent 4" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading Accent 5" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List Accent 5" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid Accent 5" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1 Accent 5" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2 Accent 5" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1 Accent 5" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2 Accent 5" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1 Accent 5" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2 Accent 5" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3 Accent 5" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List Accent 5" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading Accent 5" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List Accent 5" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid Accent 5" />
+<w:LsdException Locked="false" Priority="60" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Shading Accent 6" />
+<w:LsdException Locked="false" Priority="61" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light List Accent 6" />
+<w:LsdException Locked="false" Priority="62" SemiHidden="false"
+UnhideWhenUsed="false" Name="Light Grid Accent 6" />
+<w:LsdException Locked="false" Priority="63" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 1 Accent 6" />
+<w:LsdException Locked="false" Priority="64" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Shading 2 Accent 6" />
+<w:LsdException Locked="false" Priority="65" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 1 Accent 6" />
+<w:LsdException Locked="false" Priority="66" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium List 2 Accent 6" />
+<w:LsdException Locked="false" Priority="67" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 1 Accent 6" />
+<w:LsdException Locked="false" Priority="68" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 2 Accent 6" />
+<w:LsdException Locked="false" Priority="69" SemiHidden="false"
+UnhideWhenUsed="false" Name="Medium Grid 3 Accent 6" />
+<w:LsdException Locked="false" Priority="70" SemiHidden="false"
+UnhideWhenUsed="false" Name="Dark List Accent 6" />
+<w:LsdException Locked="false" Priority="71" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Shading Accent 6" />
+<w:LsdException Locked="false" Priority="72" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful List Accent 6" />
+<w:LsdException Locked="false" Priority="73" SemiHidden="false"
+UnhideWhenUsed="false" Name="Colorful Grid Accent 6" />
+<w:LsdException Locked="false" Priority="19" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Subtle Emphasis" />
+<w:LsdException Locked="false" Priority="21" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Intense Emphasis" />
+<w:LsdException Locked="false" Priority="31" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Subtle Reference" />
+<w:LsdException Locked="false" Priority="32" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Intense Reference" />
+<w:LsdException Locked="false" Priority="33" SemiHidden="false"
+UnhideWhenUsed="false" QFormat="true" Name="Book Title" />
+<w:LsdException Locked="false" Priority="37" Name="Bibliography" />
+<w:LsdException Locked="false" Priority="39" QFormat="true" Name="TOC Heading" />
+</w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+/* Style Definitions */
+table.MsoNormalTable
+{mso-style-name:普通表格;
+mso-tstyle-rowband-size:0;
+mso-tstyle-colband-size:0;
+mso-style-noshow:yes;
+mso-style-priority:99;
+mso-style-qformat:yes;
+mso-style-parent:"";
+mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+mso-para-margin:0cm;
+mso-para-margin-bottom:.0001pt;
+mso-pagination:widow-orphan;
+font-size:10.5pt;
+mso-bidi-font-size:11.0pt;
+font-family:"Calibri","sans-serif";
+mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:宋体;
+mso-fareast-theme-font:minor-fareast;
+mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:"Times New Roman";
+mso-bidi-theme-font:minor-bidi;
+mso-font-kerning:1.0pt;}
+</style>
+<![endif]--></p>
+<p class="MsoNormal" style="text-indent: 21pt; line-height: 16pt; text-align: center;"><a href="http://s5.51cto.com/wyfs02/M02/6F/B3/wKiom1Wlu0ryIuMbAAENOzD4fpU551.jpg-wh_651x-s_3072579663.jpg" target="_blank"><img   border="0" src="http://s5.51cto.com/wyfs02/M02/6F/B3/wKiom1Wlu0ryIuMbAAENOzD4fpU551.jpg-wh_651x-s_3072579663.jpg" alt="" /></a></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">是</span><span lang="EN-US">Linux</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">上一款用途广泛的轻量级文本编辑工具。虽然对普通的</span><span lang="EN-US">Linux</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">用户来说开始学用起来难度相当大，但鉴于它具有的种种好处，完全值得一学。至于功能方面，</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">可以通过插件实现全面定制。不过由于其高级配置，你可能需要在其插件系统上花一番时间，才能够高效地对</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">进行个性化定制。幸好，我们有几个工具可以简化我们使用</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">插件。</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">就是本人每天使用的一款工具。</span></p>
+<p class="MsoNormal" style="text-align: left; line-height: 16pt;"><b style="mso-bidi-font-weight:normal"><span lang="EN-US">Vundle</span></b><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">简介</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">（</span><span lang="EN-US">https://github.com/VundleVim/Vundle.vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">）的全称是</span><span lang="EN-US">Vim Bundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">，它是一款</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">插件管理工具。</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">让你可以非常轻松地安装、更新、搜索和清理</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">插件。它还能管理你的运行时环境，并帮助标记。我在本教程中将介绍如何安装和使用</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">。</span></p>
+<p class="MsoNormal" style="text-align: left; line-height: 16pt;"><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">安装</span><span lang="EN-US">Vundle</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">首先，如果你的</span><span lang="EN-US">Linux</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">系统上还没有</span><span lang="EN-US">Git</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">，安装它（</span><span lang="EN-US">http://ask.xmodulo.com/install-git-linux.html</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">）。</span></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">下一步，创建一个目录，</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">插件下载后将安装到该目录下。默认情况下，该目录位于</span><span lang="EN-US">~/.vim/bundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">。</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>$&nbsp;mkdir&nbsp;-p&nbsp;~/.vim/bundle&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">现在安装</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">，如下所示。请注意：</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">本身是另一种</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">插件。因而，我们将</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">安装在之前创建的</span><span lang="EN-US">~/.vim/bundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">下。</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>$&nbsp;git&nbsp;clone&nbsp;https://github.com/gmarik/Vundle.vim.git&nbsp;~/.vim/bundle/Vundle.vim&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-align: left; line-height: 16pt;"><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">配置</span><span lang="EN-US">Vundle</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">现在设置你的</span><span lang="EN-US">.vimrc</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">文件，如下所示：</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span class="keyword">set</span><span>&nbsp;nocompatible&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;这是必需的&nbsp;</span></span></li><li><span>filetype&nbsp;<span class="keyword">off</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;这是必需的&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li><span>&quot;&nbsp;你在此设置运行时路径&nbsp;</span></li><li class="alt"><span><span class="keyword">set</span><span>&nbsp;rtp+=~/.vim/bundle/Vundle.vim&nbsp;&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&quot;&nbsp;vundle初始化&nbsp;</span></li><li><span>call&nbsp;vundle#<span class="keyword">begin</span><span>()&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;</span></li><li><span>&quot;&nbsp;这应该始终是第一个&nbsp;</span></li><li class="alt"><span>Plugin&nbsp;<span class="string">'gmarik/Vundle.vim'</span><span>&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&quot;&nbsp;该例子来自https://github.com/gmarik/Vundle.vim&nbsp;README&nbsp;</span></li><li><span>Plugin&nbsp;<span class="string">'tpope/vim-fugitive'</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;</span></li><li><span>&quot;&nbsp;来自http://vim-scripts.org/vim/scripts.html的插件&nbsp;</span></li><li class="alt"><span>Plugin&nbsp;<span class="string">'L9'</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&quot;未托管在GitHub上的Git插件&nbsp;</span></li><li><span>Plugin&nbsp;<span class="string">'git://git.wincent.com/command-t.git'</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;</span></li><li><span>&quot;本地机器上的git软件库（即编写自己的插件时）&nbsp;</span></li><li class="alt"><span>Plugin&nbsp;<span class="string">'file:///home/gmarik/path/to/plugin'</span><span>&nbsp;&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&quot;&nbsp;sparkup&nbsp;vim脚本在名为vim的该软件库子目录下。&nbsp;</span></li><li><span>&quot;&nbsp;传递路径，合理设置运行时路径。&nbsp;</span></li><li class="alt"><span>Plugin&nbsp;<span class="string">'rstacruz/sparkup'</span><span>,&nbsp;{</span><span class="string">'rtp'</span><span>:&nbsp;</span><span class="string">'vim/'</span><span>}&nbsp;</span></span></li><li><span>&nbsp;</span></li><li class="alt"><span>&quot;&nbsp;与L9避免名称冲突&nbsp;</span></li><li><span>Plugin&nbsp;<span class="string">'user/L9'</span><span>,&nbsp;{</span><span class="string">'name'</span><span>:&nbsp;</span><span class="string">'newL9'</span><span>}&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;</span></li><li><span>&quot;每个插件都应该在这一行之前&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;</span></li><li><span>call&nbsp;vundle#<span class="keyword">end</span><span>()&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;&nbsp;required&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">不妨稍微解释一下上述配置。默认情况下，</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">从</span><span lang="EN-US">github.com</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">或</span><span lang="EN-US">vim-scripts.org</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">下载并安装</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">插件。你可以修改默认行为。</span></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">从</span><span lang="EN-US">Github</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">进行安装：</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>Plugin&nbsp;</span><span class="string">'user/plugin'</span><span>&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">从</span><span lang="EN-US"><a href="http://vim-scripts.org/vim/scripts.html"><span style="color:windowtext;
+text-decoration:none;text-underline:none">http://vim-scripts.org/vim/scripts.html</span></a></span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">进行安装：</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>Plugin&nbsp;</span><span class="string">'plugin_name'</span><span>&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">从另一个</span><span lang="EN-US">git</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">软件库进行安装：</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>Plugin&nbsp;</span><span class="string">'git://git.another_repo.com/plugin'</span><span>&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">从本地文件进行安装：</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>Plugin&nbsp;</span><span class="string">'file:///home/user/path/to/plugin'</span><span>&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">你还可以定制其他参数，比如插件的运行时路径，如果你在自行编写插件，或者就想从不是</span><span lang="EN-US">~/.vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">的另一个目录来装入它，这非常有用。</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>Plugin&nbsp;</span><span class="string">'rstacruz/sparkup'</span><span>,&nbsp;{</span><span class="string">'rtp'</span><span>:&nbsp;</span><span class="string">'another_vim_path/'</span><span>}&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">如果你有同样名称的插件，可以更名插件，那样它就不会冲突。</span><span lang="EN-US"><br />
+</span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>Plugin&nbsp;</span><span class="string">'user/plugin'</span><span>,&nbsp;{</span><span class="string">'name'</span><span>:&nbsp;</span><span class="string">'newPlugin'</span><span>}&nbsp;</span></span></li></ol></pre>
+<p class="MsoNormal" style="text-align: left; text-indent: 21pt; line-height: 16pt;"></p>
+<p class="MsoNormal" style="text-align: left; text-indent: 21pt; line-height: 16pt;"><b style="mso-bidi-font-weight:
+normal"><span lang="EN-US">Vundle</span></b><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">命令用法</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">一旦你用</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">设置好了插件，就可以使用几个</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">命令，用</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">来安装、更新、搜索和清理闲置未用的插件。</span></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">安装一个新的插件</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span lang="EN-US">PluginInstall</span><span style="font-family:宋体;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">命令会安装在你的</span><span lang="EN-US">.vimrc</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">文件中列出来的所有插件。你还可以只安装某一个特定的插件，只要传递其名称。</span></p>
+
+<pre><ol class="dp-sql"><li class="alt"><span><span>:PluginInstall&nbsp;</span></span></li><li><span>:PluginInstall&nbsp;&lt;plugin-<span class="keyword">name</span><span>&gt;&nbsp;</span></span></li></ol></pre>
+<p style="text-align: center;"><a href="https://www.flickr.com/photos/xmodulo/18998707843/" target="_blank" rel="nofollow"><img src="http://s5.51cto.com/wyfs02/M02/88/AF/wKioL1f_RvWQL6t2AADbCs6gvuE28.jpeg-wh_600x-s_1373050924.jpeg" alt="" /></a></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">清理闲置未用的插件</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">如果你有任何闲置未用的插件，只要使用</span><span lang="EN-US">PluginClean</span><span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">命令，就可以清理它。</span><span lang="EN-US"> </span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>:PluginClean&nbsp;</span></span></li></ol></pre>
+<p style="text-align: center;"><a href="https://www.flickr.com/photos/xmodulo/19433047689/" target="_blank" rel="nofollow"><img src="http://s1.51cto.com/wyfs02/M01/88/B2/wKiom1f_RwehfhfKAAF_6MIciA028.jpeg-wh_600x-s_1268102987.jpeg" alt="" /></a></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;
+mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">搜索插件</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">如果你想从所提供的插件列表安装一个插件，搜索功能就很有用。</span><span lang="EN-US"> </span></p>
+<pre><ol class="dp-sql"><li class="alt"><span><span>:PluginSearch&nbsp;&lt;text-list&gt;&nbsp;</span></span></li></ol></pre>
+<p style="text-align: center;"><a href="https://www.flickr.com/photos/xmodulo/19593459846/" target="_blank" rel="nofollow"><img src="http://s4.51cto.com/wyfs02/M00/88/AF/wKioL1f_RwuTBVKlAAH81yPLsmc07.jpeg-wh_600x-s_3265227100.jpeg" alt="" /></a></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">在搜索过程中，你可以在交互式分屏上安装、清理、研究或重新装入同一列表。安装插件不会自动装入你的插件。想自动装入插件，将插件添加到你的</span><span lang="EN-US">.vimrc</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">文件。</span></p>
+<p class="MsoNormal" style="text-align: left; line-height: 16pt;"><b style="mso-bidi-font-weight:normal"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">结束语</span></b></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:
+&quot;Times New Roman&quot;;mso-hansi-font-family:&quot;Times New Roman&quot;">是一款非常出色的工具。它不仅是一款出色的默认文本编辑工具，可以让你的工作流程更快速更流畅，还可以转换成</span><span lang="EN-US">IDE</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">（集成开发环境），支持几乎任何一种现有的编程语言。</span><span lang="EN-US">Vundle</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">对于快速轻松地对功能强大的</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">环境实现个性化大有帮助。</span></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">请注意：有几个网站让你可以找到适合自己的</span><span lang="EN-US">Vim</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">插件。别忘了浏览</span><span lang="EN-US"><a href="http://www.vim-scripts.org/"><span style="color:windowtext;text-decoration:
+none;text-underline:none">http://www.vim-scripts.org</span></a></span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">、</span><span lang="EN-US">Github</span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">或</span><span lang="EN-US"><a href="http://www.vimawesome.com/"><span style="color:windowtext;text-decoration:none;text-underline:none">http://www.vimawesome.com</span></a></span><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;mso-hansi-font-family:
+&quot;Times New Roman&quot;">，查找新的脚本或插件。另外记得使用插件的帮助文档。</span></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">尽情享用你钟爱的文本编辑工具吧！</span></p>
+<p class="MsoNormal" style="text-indent:21.0pt;line-height:16.0pt;mso-line-height-rule:
+exactly"><span style="font-family:宋体;mso-ascii-font-family:&quot;Times New Roman&quot;;
+mso-hansi-font-family:&quot;Times New Roman&quot;">原文标题：How to manage Vim plugins</span></p>
+<p>【编辑推荐】</p>
+<div>
+<ol>
+    <li><a href="http://os.51cto.com/art/201507/483977.htm" target="_blank">lolcat：一个在Linux终端中输出彩虹特效的命令行工具</a></li>
+    <li><a href="http://os.51cto.com/art/201507/483983.htm" target="_blank">Linux下如何处理包含空格和特殊字符的文件名</a></li>
+    <li><a href="http://os.51cto.com/art/201507/483991.htm" target="_blank">LFS中文版手册发布：如何打造自己的Linux发行版</a></li>
+    <li><a href="http://os.51cto.com/art/201507/484094.htm" target="_blank">使用Samba实现Linux与Windows文件共享实践</a></li>
+    <li><a href="http://os.51cto.com/art/201507/484104.htm" target="_blank">【扫盲贴】你对Linux窗口管理程序Tmux了解吗</a></li>
+</ol>
+</div>
+<div align="right">【责任编辑：<a href="mailto:sunsj@51cto.com" class="ln">火凤凰</a> TEL：（010）68476606】</div><br>
+            <a href="###" class="dzdz zhan" target="_self">点赞 <span>0</span></a>
+        </div>
+        <div class="share5">
+            <ul>
+                <li><a href='http://www.51cto.com/php/search.php?keyword=Linux' target='_blank' class='underline'>Linux</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Vim' target='_blank' class='underline'>Vim</a>&nbsp;&nbsp;<a href='http://www.51cto.com/php/search.php?keyword=Vundle' target='_blank' class='underline'>Vundle</a></li>
+            </ul>
+            <dl>
+                <dt><em>分享:</em>
+<div class="bdsharebuttonbox" data-tag="share_1">
+    <a class="wb" data-cmd="tsina"></a>
+    <a class="wx" data-cmd="weixin"></a>
+    <a class="more" data-cmd="more"></a>
+</div>
+</dt>
+<script type="text/javascript">
+    window._bd_share_config = {
+        common : {
+            bdText : document.title
+        },
+        share : [{
+            "bdSize" : 16,
+        }]
+    }
+    with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+<!-- Baidu Button END -->
+            </dl>
+        </div>
+        <div class="nrdp comment">
+            <div class='comment center'>
+	<div class='inner center' id="cmscmt_iframe"></div>
+</div>
+<script type="text/javascript" id="UYScript" src="http://comment.51cto.com/static/js/api_js/iframe_cmt.js" async=""></script>
+
+        </div>
+        <div class="dzk">
+            <dl><dt class="show">大家都在看</dt><dt>猜你喜欢</dt></dl>
+            <div>
+                <ul>
+                    <li class="show">
+                        <div class="djdzk" id="djdzk">
+                        </div>
+                    </li>
+                    <li>
+                       <div class="djdzk" id="cnxh" style="display: none;"></div>
+                       <div id="ENGAGEYA_WIDGET_89" style="display:none;"></div>
+                       <script>
+						(function(E,n,G,A,g,Y,a){E['EngageyaObject']=g;E[g]=E[g]||function(){ (E[g].q=E[g].q||[]).push(arguments)},E[g].l=1*new Date();Y=n.createElement(G), a=n.getElementsByTagName(G)[0];Y.async=1;Y.src=A;a.parentNode.insertBefore(Y,a)})(window,document,'script','//widget.goingnative.cn/engageya_loader.js','__engWidget');
+						__engWidget('createWidget',{wwei:'ENGAGEYA_WIDGET_89',pubid:63,webid:137,wid:89});
+						</script>
+						<div id="jzl_reco" style="display:none;"></div>
+                        <script type="text/javascript">
+                            var _jzlad = _jzlad || [];
+                            _jzlad.push(["load_config",{allUrl:true}]);
+                            _jzlad.push(["load_config",{rowCount:1}]);
+                            _jzlad.push(["load_reco",3496,26,0,"pc",4,6002,6002]);
+                            (function () {
+                                var u = (("https:" == document.location.protocol) ? "https" : "http") + "://cdn.jiuzhilan.com/";
+                                var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
+                                g.type = "text/javascript";
+                                g.async = true;
+                                g.defer = true;
+                                g.charset="utf-8";
+                                g.src = u + "reco/reco.min.js";
+                                s.parentNode.insertBefore(g, s);
+                            })();
+                        </script>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- 文章左侧结束 -->
+    <!-- 文章右侧 -->
+    <div class="wrap_right">
+        <div>
+</div>
+        <div class="mtgg m30"><script type="text/javascript" src="http://image.51cto.com/ad/art/hzh/ad.js"></script></div>
+        <div></div>
+        <div class="bjtj m30">
+            <h2><span>编辑推荐</span></h2>
+            <dl><dt>头条</dt><dd><a href="http://os.51cto.com/art/201604/509584.htm" title="36款顶级的开源音频/视频应用程序">36款顶级的开源音频/视频应用程序</a></dd></dl><dl><dt>头条</dt><dd><a href="http://os.51cto.com/art/201605/511472.htm" title="修复Windows系统还原功能的12个小窍门">修复Windows系统还原功能的12个小窍门</a></dd></dl><dl><dt>外电</dt><dd><a href="http://os.51cto.com/art/201605/510755.htm" title="九个经受严苛评测的安全Windows免费软件下载站">九个经受严苛评测的安全Windows免费软件下载站</a></dd></dl><dl><dt>头条</dt><dd><a href="http://os.51cto.com/art/201606/512201.htm" title="Linux的这七大认识误区，你千万别有！">Linux的这七大认识误区，你千万别有！</a></dd></dl><dl><dt>外电</dt><dd><a href="http://os.51cto.com/art/201605/511582.htm" title="你可以得心应手使用Windows 10的十个小窍门">你可以得心应手使用Windows 10的十个小窍门</a></dd></dl>
+        </div>
+        <div></div>
+        <div class="news m30">
+            <dl><dt class="show">24H热文</dt><dt>一周话题</dt><dt>本月最赞</dt></dl>
+            <ul><li class="show"><a href=http://os.51cto.com/art/201701/526873.htm title=2016年开源业界大事记>2016年开源业界大事记</a><a href=http://os.51cto.com/art/201611/521377.htm title=面向物联网的几大开源操作系统>面向物联网的几大开源操作系统</a><a href=http://os.51cto.com/art/201101/244090.htm title=如何在Linux中查看所有正在运行的进程>如何在Linux中查看所有正在运行的进程</a><a href=http://os.51cto.com/art/201701/526762.htm title=九款命令行实用工具助你监测Linux磁盘分区及使用情况>九款命令行实用工具助你监测Linux磁盘分区及使用情况</a><a href=http://os.51cto.com/art/201508/487487.htm title=安装Linux与Windows 10双系统，你需要了解的一切>安装Linux与Windows 10双系统，你需要了解的一切</a><a href=http://os.51cto.com/art/201412/460698.htm title=你值得拥有：25个Linux性能监控工具>你值得拥有：25个Linux性能监控工具</a><a href=http://os.51cto.com/art/201404/435279.htm title=Linux服务器上监控网络带宽的18个常用命令>Linux服务器上监控网络带宽的18个常用命令</a><a href=http://os.51cto.com/art/201001/177866.htm title=Linux下RPM软件包的安装及卸载>Linux下RPM软件包的安装及卸载</a></li><li><a href=http://os.51cto.com/art/201701/526873.htm title=2016年开源业界大事记>2016年开源业界大事记</a><a href=http://os.51cto.com/art/201508/487487.htm title=安装Linux与Windows 10双系统，你需要了解的一切>安装Linux与Windows 10双系统，你需要了解的一切</a><a href=http://os.51cto.com/art/201101/244090.htm title=如何在Linux中查看所有正在运行的进程>如何在Linux中查看所有正在运行的进程</a><a href=http://server.51cto.com/-526126.htm title=2016年十大Linux服务器发行版排行榜>2016年十大Linux服务器发行版排行榜</a><a href=http://os.51cto.com/art/201404/435279.htm title=Linux服务器上监控网络带宽的18个常用命令>Linux服务器上监控网络带宽的18个常用命令</a><a href=http://os.51cto.com/art/201001/177866.htm title=Linux下RPM软件包的安装及卸载>Linux下RPM软件包的安装及卸载</a><a href=http://os.51cto.com/art/201611/521377.htm title=面向物联网的几大开源操作系统>面向物联网的几大开源操作系统</a><a href=http://os.51cto.com/art/201405/439494.htm title=安装 Kali Linux 后需要做的 20 件事>安装 Kali Linux 后需要做的 20 件事</a></li><li><a href=http://os.51cto.com/art/201508/487487.htm title=安装Linux与Windows 10双系统，你需要了解的一切>安装Linux与Windows 10双系统，你需要了解的一切</a><a href=http://os.51cto.com/art/201101/244090.htm title=如何在Linux中查看所有正在运行的进程>如何在Linux中查看所有正在运行的进程</a><a href=http://os.51cto.com/art/201611/521377.htm title=面向物联网的几大开源操作系统>面向物联网的几大开源操作系统</a><a href=http://os.51cto.com/art/201502/464662.htm title=12 个最佳的免费网络监控工具>12 个最佳的免费网络监控工具</a><a href=http://os.51cto.com/art/201404/435279.htm title=Linux服务器上监控网络带宽的18个常用命令>Linux服务器上监控网络带宽的18个常用命令</a><a href=http://os.51cto.com/art/201001/177866.htm title=Linux下RPM软件包的安装及卸载>Linux下RPM软件包的安装及卸载</a><a href=http://os.51cto.com/art/201405/439494.htm title=安装 Kali Linux 后需要做的 20 件事>安装 Kali Linux 后需要做的 20 件事</a><a href=http://os.51cto.com/art/201412/460698.htm title=你值得拥有：25个Linux性能监控工具>你值得拥有：25个Linux性能监控工具</a></li></ul>
+        </div>
+        <div><div class="areaAd mt5" id="ad_1"></div>
+<div style="display:none">
+<span id="ad1">
+
+<script type='text/javascript'><!--//<![CDATA[
+var m3_u = (location.protocol=='https:'?'https://gg.51cto.com/www/delivery/ajs.php':'http://gg3.51cto.com/www/delivery/ajs.php');
+var m3_r = Math.floor(Math.random()*99999999999);
+if (!document.MAX_used) document.MAX_used = ',';
+document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+document.write ("?zoneid=693");
+document.write ('&amp;cb=' + m3_r);
+if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+document.write ("&amp;loc=" + escape(window.location));
+if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+if (document.context) document.write ("&context=" + escape(document.context));
+if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+document.write ("'><\/scr"+"ipt>");
+//]]>--></script><noscript><a href='//gg2.51cto.com/www/delivery/ck.php?n=ae95ac07&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='//gg.51cto.com/www/delivery/avw.php?zoneid=693&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=ae95ac07' border='0' alt='' /></a></noscript>
+</span>
+    </div>
+<script>
+    document.getElementById('ad_1').innerHTML = document.getElementById('ad1').innerHTML;
+</script></div>
+        <div class="spkc m30">
+            <h2><span>视频课程</span><a href="http://edu.51cto.com/">+更多</a></h2>
+            
+            <dl>
+                <dt><a href="http://edu.51cto.com/course/course_id-7347.html"><img src="http://s1.51cto.com/images/201610/e29b65236fdf5dafc37071293e63b3ff5e81d9.jpg" title="VMware Site Recovery Manager 6.1 全新深度演绎视频课程（上）" alt="VMware Site Recovery Manager 6.1 全新深度演绎视频课程（上）" width="100px" height="80px"></a><span></span></dt>
+                <dd>
+                    <h3><a href="http://edu.51cto.com/course/course_id-7347.html" target="_blank" title="VMware Site Recovery Manager 6.1 全新深度演绎视频课程（上）">VMware Site Recovery Manager 6.1 全新深度</a></h3>
+                    <h4><span class="fl">讲师：<em><a href="http://edu.51cto.com/lecturer/user_id-7168277.html" target="_blank">赵海兵</a></em></span><span class="fr"><em>0</em>人学习过</span></h4>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt><a href="http://edu.51cto.com/course/course_id-7339.html"><img src="http://s1.51cto.com/images/201610/e329ce4742be0d5c3458295df40677ede73d6b.jpg" title="Illustrator CC 2015(AI)从入门到精通视频教程【第3章】" alt="Illustrator CC 2015(AI)从入门到精通视频教程【第3章】" width="100px" height="80px"></a><span></span></dt>
+                <dd>
+                    <h3><a href="http://edu.51cto.com/course/course_id-7339.html" target="_blank" title="Illustrator CC 2015(AI)从入门到精通视频教程【第3章】">Illustrator CC 2015(AI)从入门到精通视频教</a></h3>
+                    <h4><span class="fl">讲师：<em><a href="http://edu.51cto.com/lecturer/user_id-6077550.html" target="_blank">龙韵</a></em></span><span class="fr"><em>5</em>人学习过</span></h4>
+                </dd>
+            </dl>
+            
+            <dl>
+                <dt><a href="http://edu.51cto.com/course/course_id-7336.html"><img src="http://s1.51cto.com/images/201610/f3282b465d8282205a2882406d36b92de5a3de.jpg" title="马哥2016全新Linux+Python高端运维班4期基础板块【培训班同步视频】" alt="马哥2016全新Linux+Python高端运维班4期基础板块【培训班同步视频】" width="100px" height="80px"></a><span></span></dt>
+                <dd>
+                    <h3><a href="http://edu.51cto.com/course/course_id-7336.html" target="_blank" title="马哥2016全新Linux+Python高端运维班4期基础板块【培训班同步视频】">马哥2016全新Linux+Python高端运维班4期基础</a></h3>
+                    <h4><span class="fl">讲师：<em><a href="http://edu.51cto.com/lecturer/user_id-4265610.html" target="_blank">马哥</a></em></span><span class="fr"><em>0</em>人学习过</span></h4>
+                </dd>
+            </dl>
+            
+        </div>
+        <div></div>
+        <div class="rmzw m30">
+            <h2><span>热门职位</span><a href="http://gaozhao.51cto.com/">+更多</a></h2>
+            <div id="rmzw"></div>
+        </div>
+        <div></div>
+        <div class="zxzt m30">
+            <h2><span>最新专题</span><a href="http://os.51cto.com/speclist/1496">+更多</a></h2>
+            <dl>
+                <dt><a href="http://os.51cto.com/art/201603/507057.htm" title="如何选择最适合你的Linux发行版？"><img src="http://s3.51cto.com/wyfs02/M02/7C/FC/wKioL1beLAixuvyFAACz5r8rLPw433.jpg-wh_100x70-s_2159590033.jpg" alt="如何选择最适合你的Linux发行版？" title="如何选择最适合你的Linux发行版？"></a></dt>
+                <dd>
+                    <a href="http://os.51cto.com/art/201603/507057.htm" title="如何选择最适合你的Linux发行版？">如何选择最适合你的Linux发行版？</a>
+                    <h3><a href='http://www.51cto.com/php/search.php?keyword=Linux'>Linux</a></h3>
+                </dd>
+            </dl><dl>
+                <dt><a href="http://os.51cto.com/art/201602/505598.htm" title="如何破解微软Windows 10的升级难题"><img src="http://s2.51cto.com/wyfs02/M01/7A/ED/wKiom1bBzmOgG99uAACJwiEfFQw073.jpg-wh_100x70-s_4286889212.jpg" alt="如何破解微软Windows 10的升级难题" title="如何破解微软Windows 10的升级难题"></a></dt>
+                <dd>
+                    <a href="http://os.51cto.com/art/201602/505598.htm" title="如何破解微软Windows 10的升级难题">如何破解微软Windows 10的升级难题</a>
+                    <h3><a href='http://www.51cto.com/php/search.php?keyword=%CE%A2%C8%ED'>微软</a></h3>
+                </dd>
+            </dl><dl>
+                <dt><a href="http://os.51cto.com/art/201601/503687.htm" title="智能化运维在日常业务中的最佳实践探索"><img src="http://s1.51cto.com/wyfs02/M01/79/5A/wKiom1aPI2Gx4Qw6AACXFDeaW94853.jpg-wh_100x70-s_4074910719.jpg" alt="智能化运维在日常业务中的最佳实践探索" title="智能化运维在日常业务中的最佳实践探索"></a></dt>
+                <dd>
+                    <a href="http://os.51cto.com/art/201601/503687.htm" title="智能化运维在日常业务中的最佳实践探索">智能化运维在日常业务中的最佳实践探索</a>
+                    <h3><a href='http://www.51cto.com/php/search.php?keyword=%D6%C7%C4%DC%BB%AF%D4%CB%CE%AC'>智能化运维</a></h3>
+                </dd>
+            </dl><dl>
+                <dt><a href="http://os.51cto.com/art/201512/501902.htm" title="你应该使用开源软件的九大理由"><img src="http://s3.51cto.com/wyfs02/M02/78/EF/wKiom1aExVSgoasqAAC4d3P-TJs622.jpg-wh_100x70-s_976432699.jpg" alt="你应该使用开源软件的九大理由" title="你应该使用开源软件的九大理由"></a></dt>
+                <dd>
+                    <a href="http://os.51cto.com/art/201512/501902.htm" title="你应该使用开源软件的九大理由">你应该使用开源软件的九大理由</a>
+                    <h3><a href='http://www.51cto.com/php/search.php?keyword=%BF%AA%D4%B4%C8%ED%BC%FE'>开源软件</a></h3>
+                </dd>
+            </dl>
+        </div>
+        <div></div>
+        <div id="jcpl"></div>
+        <div></div>
+        <div class="news m30">
+            <dl><dt class="show">精选博文</dt><dt>论坛热帖</dt><dt>下载排行</dt></dl>
+            <div>
+                <ul>
+                    <li class="show">
+                        <a href="http://terryblog.blog.51cto.com/1764499/478018/" target="_blank" title="Android 解码播放GIF图像">Android 解码播放GIF图像</a><a href="http://gtstorageworld.blog.51cto.com/908359/477804/" target="_blank" title="2011存储：大鱼与小鱼的博弈">2011存储：大鱼与小鱼的博弈</a><a href="http://sunyongjie.blog.51cto.com/445592/477789/" target="_blank" title="素数之年，IT运维其实可以很简单">素数之年，IT运维其实可以很简单</a><a href="http://shitouququ.blog.51cto.com/24569/477780/" target="_blank" title="nis服务器架设">nis服务器架设</a><a href="http://ucworld.blog.51cto.com/811917/477745/" target="_blank" title="批量导入LYNC 2010用户的联系人">批量导入LYNC 2010用户的联系人</a>
+                    </li>
+                    <li>
+                        <a href="http://bbs.51cto.com/thread-1152245-1.html" target="_blank" title="CLOUDSTACK FOR HYPER-V">CLOUDSTACK FOR HYPER-V</a><a href="http://bbs.51cto.com/thread-1170777-1.html" target="_blank" title="【AD】实用组策略/脚本集合 （重大更新20160627）">【AD】实用组策略/脚本集合 （重大更</a><a href="http://bbs.51cto.com/thread-1171408-1.html" target="_blank" title="Unable to connect the MKS: Failed to server 10.0.9.20:902">Unable to connect the MKS: Failed </a><a href="http://bbs.51cto.com/thread-1171426-1.html" target="_blank" title="最近自己模拟了个“水果忍者”的小游戏，分享下C++和OPENGL源码">最近自己模拟了个“水果忍者”的小游</a><a href="http://bbs.51cto.com/thread-1171854-1.html" target="_blank" title="好铁不打钉，好男不当网管-----论网管的自我修养">好铁不打钉，好男不当网管-----论网</a>
+                    </li>
+                    <li>
+                        <a href="http://down.51cto.com/data/1560161/" target="_blank" title="将DELL华为斩落马下  赢HANA应用X6架构在华第一单">将DELL华为斩落马下  赢HANA应用X6架</a><a href="http://down.51cto.com/data/1560139/" target="_blank" title="某三甲医院数据中心虚拟化建设项目">某三甲医院数据中心虚拟化建设项目</a><a href="http://down.51cto.com/data/1560059/" target="_blank" title="IBM System X给比亚迪插上隐形的翅膀 振兴民族汽车制造工业">IBM System X给比亚迪插上隐形的翅膀</a><a href="http://down.51cto.com/data/1560058/" target="_blank" title="某汽车制造企业SAP HANA系统建设项目">某汽车制造企业SAP HANA系统建设项目</a><a href="http://down.51cto.com/data/1560057/" target="_blank" title="iPhone电话解锁教程">iPhone电话解锁教程</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div></div>
+        <div class="ds m30">
+            <h2><span>读 书 </span><a href="http://book.51cto.com/">+更多</a></h2>
+            <dl>
+                
+                <dt><a href="http://book.51cto.com/art/200710/58355.htm" title="网络工程师考试考前冲刺预测卷及考点解析"><img src="http://images.51cto.com/files/uploadimg/20071019/113918560.gif" width="98px" height="144px"/></a></dt>
+                <dd><h3><a href="http://book.51cto.com/art/200710/58355.htm" title="网络工程师考试考前冲刺预测卷及考点解析">网络工程师考试考前冲刺预测卷及考点解析</a></h3>
+                    本书依据最新版《网络工程师考试大纲》的考核要求，深入研究了历年网络工程师考试试题的命题风格和试题结构，对考查的知识点进行了提炼，并...
+                </dd>
+                
+            </dl>
+        </div>
+        <div></div>
+        <div class="dydy">
+            <dl>
+                <dt><img src="http://static1.51cto.com/51cto/cms/2016/images/dydy.jpg" alt=""></dt>
+                <dd>
+                    <h3>订阅51CTO邮刊</h3>
+                    <h4><a href="http://news.51cto.com/col/1323/">点击这里查看样刊</a></h4>
+                    <a href="http://home.51cto.com/index.php?s=/Subscribe"><img src="http://static4.51cto.com/51cto/cms/2016/images/ljdy.jpg" alt="订阅51CTO邮刊"></a>
+                </dd>
+            </dl>
+        </div>
+        <div></div>
+    </div>
+    <!-- 文章右侧结束 -->
+    </div>
+<div class="footer_nav">
+   <div class="wrap">
+       <h2>51CTO旗下网站：</h2>
+       <a href="http://www.51cto.com">领先的IT技术网站 51CTO</a>|<a href="http://www.watchstor.com">领先的中文存储媒体 WatchStor</a>|
+       <a href="http://cio.51cto.com">中国首个CIO网站 CIOage </a>|<a href="http://www.hc3i.cn">中国首家数字医疗网站 HC3i</a>
+   </div>
+</div>
+<div id="ft"><div id="foot" align="center"><script src="http://images.51cto.com/images/copy_right/copy_right.js?v=0.1"></script></div></div>
+<div class="clk"><a class="ewm" href="###" target="_self"><img src="http://static2.51cto.com/51cto/cms/2016/images/wxwx.jpg" style="display: none;"></a><a class="yjk" href="#comment" target="_self"></a><a class="topx" href="#topx" target="_self"></a></div>
+<script>
+    $(function(){
+        var host = window.location.host;
+        document.getElementById('cnxh').style.display = '';
+    });
+    var $$ = function(func){
+        if (document.addEventListener) {
+            window.addEventListener("load", func, false);
+        }
+        else if (document.attachEvent) {
+            window.attachEvent("onload", func);
+        }
+    };
+
+    $$(function(){
+        show();
+    });
+    var show = function(){
+        var aa = $('#cmscmt_iframe dl').html();
+        setTimeout(function(){
+            $("[data-track]").live("click", function() {
+                if (aa.indexOf('uid') > -1) {
+                    var label = $(this).data("track") + '-login';
+                } else {
+                    var label = $(this).data("track") + '-not-login';
+                }console.log(label);
+                window._hmt && window._hmt.push(['_trackEvent', label, 'click']);
+
+            });
+        }, 3000);
+    }
+
+</script>
+<script src="http://logs.51cto.com/rizhi/count/count.js"></script>
+<!-- 悬浮广告 -->
+
+<!--end-->
+<!-- 学院广告位 -->
+<div id="edu_adver">
+    <div class="aderbox">
+        <span class="educlose">×</span>
+        <a href="http://edu.51cto.com/px/train/108?qizhi"><img src="http://s3.51cto.com/wyfs02/M02/8D/79/wKioL1idclXjFxMnAACZGTYkbSg416.jpg" width="100" height="300" alt="大数据高端培训" title="大数据高端培训"></a>
+    </div>
+</div>
+<style type="text/css">
+    #edu_adver{position:fixed; top:240px; left:50%; margin-left:-623px; width:100px; height:300px; border:1px solid #c4c4c6;}
+    #edu_adver .aderbox{position:relative;}
+    #edu_adver  .educlose{position:absolute; right:6px; top:6px; background:#655c4d; color:#fff; font-size:12px;  display:inline-block; width:13px; height:13px; text-align:center; line-height:13px; cursor:pointer;}
+</style>
+<script>
+    $('#edu_adver .educlose').click(function () {
+        $("#edu_adver").hide();
+    });
+</script>
+
+<script type="text/javascript">var artid = 484174</script>
+<script src='http://home.51cto.com/index.php?s=/Index/getLoginStatus2015/reback/http%253A%252F%252Fos.51cto.com%252Fart%252F201507%252F484174.htm' charset="utf-8"></script>
+<script type="text/javascript" src="http://static4.51cto.com/51cto/cms/2016/js/article.js?v=1.0"></script>
+<script type="text/javascript" src="http://static5.51cto.com/51cto/cms/2016/js/article_ajax.js?v=2.1"></script>
+<script src="http://other.51cto.com/php/count.php?view=yes&artID=484174" type="text/javascript"></script>
+<script type="text/javascript" src="http://home.51cto.com/apps/favorite/Tpl/default/Public/js/favorbox.js"></script>
+<!--  一大波JS来袭 -->
+<div id="MyMoveAd" style="display:none">
+    <span id="pinglun"><script type="text/javascript" src="http://other.51cto.com/php/getArtCount.php?artid=484174&type=all"></script></span>
+	<span id="tonglan"><script type="text/javascript" src="http://image.51cto.com/ad/art/tonglan/ad.js"></script></span>
+	<span id="wordlink_1"><script src="http://image.51cto.com/ad/art/wordlink/wordlink1.js"></script></span>
+	<span id="wordlink_2"><script src="http://image.51cto.com/ad/art/wordlink/wordlink2.js"></script></span>
+	<span id="wordlink_3"><script src="http://image.51cto.com/ad/art/wordlink/wordlink3.js"></script></span>
+	<span id="wordlink_4"><script src="http://image.51cto.com/ad/art/wordlink/wordlink4.js"></script></span>
+	<span id="wordlink"><script  src="http://image.51cto.com/ad/art/wordlink/ad.js"></script></span>
+</div>
+<script type="text/javascript">
+var thistid=484174;
+//收藏按钮
+var favor_url = 'http://os.51cto.com/art/201507/484174.htm';
+var favor_title = 'Vundle：你必须了解的Linux Vim插件管理工具';  
+document.getElementById('tonglanad').innerHTML=document.getElementById('tonglan').innerHTML;
+</script>
+<!-- 结束 -->
+</body>
+</html>

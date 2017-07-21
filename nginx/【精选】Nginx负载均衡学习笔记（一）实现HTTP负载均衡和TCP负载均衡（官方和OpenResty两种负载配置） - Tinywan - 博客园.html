@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>【精选】Nginx负载均衡学习笔记（一）实现HTTP负载均衡和TCP负载均衡（官方和OpenResty两种负载配置） - Tinywan - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=m_FXmwz3wxZoecUwNEK23PAzc-j9vbX_C6MblJ5ouMc1"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip.css?v=xPXJVC4GCITs1yYYgSeLkcicCxapqseaPVQLFGMO1wc1"/>
+<link type="text/css" rel="stylesheet" href="/blog/customcss/303843.css?v=rEYFcAoJb31gSs3cLCzEuZQ%2b4UE%3d"/>
+<link id="mobile-style" media="only screen and (max-width: 768px)" type="text/css" rel="stylesheet" href="/skins/darkgreentrip/bundle-darkgreentrip-mobile.css?v=MWSjZLbmjXliMx325Wa2C3a4w4uorsHndDWoifJvQ5A1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/tinywan/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/tinywan/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/tinywan/wlwmanifest.xml"/>
+<script src="//common.cnblogs.com/script/jquery.js" type="text/javascript"></script>  
+<script type="text/javascript">var currentBlogApp = 'tinywan', cb_enable_mathjax=true;var isLogined=false;</script>
+<script src="/bundles/blog-common.js?v=CPv0EEqm9L2aCgolHxaZfVYM6J-Sn5az_FJXbjzgr-o1" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/tinywan/"><img id="blogLogo" src="/Skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/tinywan/"><a href="https://github.com/Tinywan" id="TabFiles">https://github.com/Tinywan</a></a></h1>
+<h2><font color="#2F4F4F"> -- 贵在坚持，相信自己.享受编程和技术所带来的快乐！实践是学习的捷径，跟智商没有太大关系！</font></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/tinywan/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/Tinywan">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/tinywan/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/tinywan/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 181&nbsp; </span>
+<span id="stats_article_count">文章 - 2&nbsp; </span>
+<span id="stats-comment_count">评论 - 44</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class = "post">
+		<h1 class = "postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/tinywan/p/6560889.html">【精选】Nginx负载均衡学习笔记（一）实现HTTP负载均衡和TCP负载均衡（官方和OpenResty两种负载配置）</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body"><p><span style="font-size: 16px"><strong>说明：</strong>很简单一个在HTTP模块中，而另外一个和HTTP 是并列的Stream模块(Nginx 1.9.0 支持)</span></p>
+<h2><span style="font-size: 16px">一、两个模块的最简单配置如下</span></h2>
+<h3><span style="font-size: 16px"><strong>1、HTTP负载均衡：</strong></span></h3>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">http {  
+    include       mime.types;  
+    default_type  application</span>/octet-<span style="color: #000000">stream;  
+  
+    upstream live_node {</span><span style="color: #000000">
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8088</span><span style="color: #000000">;
+     }
+
+    server {
+        listen </span><span style="color: #800080">80</span><span style="color: #000000">;
+        server_name  localhost;
+        location </span>/<span style="color: #000000"> {
+　　　　　　　　proxy_pass http://live_node;</span><span style="color: #000000">
+        }
+    }<br>
+    server {
+        listen </span><span style="color: #800080">8088</span><span style="color: #000000">;
+        server_name  localhost;
+        location </span>/<span style="color: #000000"> {</span><span style="color: #000000">
+            root   </span>/usr/<span style="color: #0000ff">local</span>/nginx/<span style="color: #000000">html2;
+            index  index.html index.htm;</span><span style="color: #000000">
+        }
+    }
+
+    server {
+        listen </span><span style="color: #800080">8089</span><span style="color: #000000">;
+        server_name  localhost;
+        location </span>/<span style="color: #000000"> {
+            root   </span>/usr/<span style="color: #0000ff">local</span>/nginx/<span style="color: #000000">html3;
+            index  index.html index.htm;</span><span style="color: #000000">
+        }
+    } 
+} </span></span></pre>
+</div>
+<p><span style="font-size: 16px">以上测试一个浏览器访问80端口，实现访问不同的server。</span></p>
+<h3><span style="font-size: 16px"><strong>2、TCP负载均衡：</strong></span></h3>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">stream {
+    upstream rtmp {
+        </span>server <span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0.0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0.0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }
+    server {
+        listen </span><span style="color: #800080">1935</span><span style="color: #000000">;  # 需要监听的端口
+        proxy_timeout 20s;
+        proxy_pass rtmp;
+    }
+}</span></span></pre>
+</div>
+<p><span style="font-size: 16px">以上可以实现一个简单的RTMP流的转发。</span></p>
+<h2><span style="font-size: 16px">二、TCP负载均衡和Http负载均衡的详细解说</span></h2>
+<h3><span style="font-size: 16px"><strong>1、TCP负载均衡：</strong></span></h3>
+<p><span style="font-size: 16px"><strong>　　</strong>nginx-1.9.0 已发布，该版本增加了 stream 模块用于一般的 TCP 代理和负载均衡，<strong>ngx_stream_core_module</strong> 这个模块在1.90版本后将被启用。但是并不会默认安装，需要在编译时通过指定 --with-stream 参数来激活这个模块。</span></p>
+<p><span style="font-size: 16px">（1）配置Nginx编译文件参数</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">./configure <span style="color: #008000">--</span><span style="color: #008000">with-http_stub_status_module --with-stream</span></span></pre>
+</div>
+<p><span style="font-size: 16px">（2）编译、安装，make,make install .</span></p>
+<p><span style="font-size: 16px">（3）配置nginx.conf文件</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">stream {
+    upstream rtmp {
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }
+    server {
+        listen </span><span style="color: #800080">1935</span>;  #<span style="color: #000000"> 需要监听的端口
+        proxy_timeout 20s;
+        proxy_pass rtmp;
+    }
+}</span></span></pre>
+</div>
+<p><span style="font-size: 16px">　　创建最高级别的stream（与http同一级别），定义一个upstream组 名称为rtmp，由多个服务组成达到负载均衡 定义一个服务用来监听TCP连接（如：1935端口），并且把他们代理到一个upstream组的rtmp中，配置负载均衡的方法和参数为每个server；配置些如：连接数、权重等等。</span></p>
+<p><span style="font-size: 16px">　　首先创建一个server组，用来作为TCP负载均衡组。定义一个upstream块在stream上下文中，在这个块里面添加由server命令定义的server，指定他的IP地址和主机名（能够被解析成多地址的主机名)和端口号。下面的例子是建立一个被称之为rtmp组，两个监听1395端口的server ，一个监听8089端口的server。</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">upstream rtmp {
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }</span></span></pre>
+</div>
+<p><span style="font-size: 16px"><span style="color: #ff0000">注意：你不能为每个server定义协议，因为这个stream命令建立TCP作为整个 server的协议了</span>。</span></p>
+<p><span style="font-size: 16px">　　配置反向代理使Nginx能够把TCP请求从一个客户端转发到负载均衡组中(如：rtmp组)。在每个server配置块中 通过每个虚拟server的server的配置信息和在每个server中定义的监听端口（客户端需求的代理端口号，如我推流的的是RTMP协议，则端口号为：1935）的配置信息和proxy_passs 命令把TCP通信发送到upstream的哪个server中去。下面我们将TCP通信发送到rtmp 组中去。</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">  server {
+        listen </span><span style="color: #800080">1935</span>;  #<span style="color: #000000"> 需要监听的端口
+        proxy_timeout 20s;
+        proxy_pass rtmp;
+    }</span></span></pre>
+</div>
+<p><span style="font-size: 16px">当然我们也可以采用<strong>单一</strong>的代理方式：</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">server {
+        listen </span><span style="color: #800080">1935</span>;  #<span style="color: #000000"> 需要监听的端口
+        proxy_timeout 20s;
+        proxy_pass  </span>127.0.0.3:1935; #需要代理的端口，在这里我代理一一个RTMP模块的接口1935</span><br><span style="font-size: 16px">}</span></pre>
+</div>
+<p><span style="font-size: 16px">（4）改变负载均衡的方法：</span></p>
+<p><span style="font-size: 16px">　　默认nginx是通过轮询算法来进行负载均衡的通信的。引导这个请求循环的到配置在upstream组中server端口上去。 因为他是默认的方法，这里没有轮询命令，只是简单的创建一个upstream配置组在这儿stream山下文中，而且在其中添加server。</span></p>
+<p><span style="font-size: 16px"><strong>1、least-connected ：</strong>对于每个请求，nginx plus选择当前连接数最少的server来处理:</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">　upstream rtmp {
+　　　　 <span style="color: #ff0000"><strong>least_conn;</strong></span>
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }</span></span></pre>
+</div>
+<p><span style="font-size: 16px"><strong>2、least time ：</strong>对于每个链接,nginx pluns 通过几点来选择server的： 最底平均延时：通过包含在least_time命令中指定的参数计算出来的：</span></p>
+<ul>
+<li><span style="font-size: 16px"><strong>connect：</strong>连接到一个server所花的时间</span></li>
+<li><span style="font-size: 16px"><strong>first_byte：</strong>接收到第一个字节的时间</span></li>
+<li><span style="font-size: 16px"><strong>last_byte：</strong>全部接收完了的时间 最少活跃的连接数:</span></li>
+</ul>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">　upstream rtmp {
+　　　　<strong><span style="color: #ff0000"> least_time first_byte;</span></strong>
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }</span></span></pre>
+</div>
+<p><span style="font-size: 16px"><strong>3、普通的hash算法：</strong>nginx plus选择这个server是通过user_defined 关键字，就是IP地址：$remote_addr;</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">　　upstream rtmp {<br>　　　　<strong> <span style="color: #ff0000">hash $remote_addr consistent;</span></strong>
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }</span></span></pre>
+</div>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<h3><span style="font-size: 16px"><strong>2、HTTP负载均衡：</strong></span></h3>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">参考文章：</span></p>
+<p><span style="font-size: 16px"><a href="http://freeloda.blog.51cto.com/2033581/1288553" target="_blank">http://freeloda.blog.51cto.com/2033581/1288553</a></span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<h1><span style="font-size: 16px"><span style="line-height: 24px">=========================</span>Ubuntu14.0 平台安装OpenResty1.11.2.1============================</span></h1>
+<p><span style="font-size: 16px"><strong>下载安装LusJIT：LuaJIT-2.0.4 </strong></span></p>
+<p><span style="font-size: 16px">（更多版本下载地址：<a href="http://luajit.org/download.html" target="_blank">http://luajit.org/download.html</a>）</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">wget  http:<span style="color: #008000">//</span><span style="color: #008000">luajit.org/download/LuaJIT-2.0.4.tar.gz</span>
+tar -zxvf  LuaJIT-2.0.4.tar.<span style="color: #000000">gz
+make </span>&amp;&amp; sudo make install</span></pre>
+</div>
+<p><span style="font-size: 16px">编译</span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170320223012877-1913352670.png" alt=""></span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170320223038565-1091549050.png" alt=""></span></p>
+<p><span style="font-size: 16px">出现以上表示编译成功</span></p>
+<p><span style="font-size: 16px">安装</span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170320223446455-2112712302.png" alt=""></span></p>
+<p><span style="font-size: 16px">可以看出安装完成后给了一个软连接到&nbsp;/usr/local/bin/luajit 下</span></p>
+<p><span style="font-size: 16px">OpenResty编译或运行时所需要的软件包</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">apt-get install libreadline-dev libncurses5-dev libpcre3-dev \     </span><br><span style="font-size: 16px">libssl-dev perl make build-essential</span></pre>
+</div>
+<h4><span style="font-size: 16px">OpenResty 安装</span></h4>
+<p><span style="font-size: 16px">1、去<a href="https://github.com/openresty/lua-nginx-module/releases" target="_blank">openresty</a>&nbsp;的github上下载一个版本&nbsp;<a href="https://github.com/openresty/lua-nginx-module/releases" target="_blank">https://github.com/openresty/lua-nginx-module/releases</a></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">wget https://openresty.org/download/openresty-1.11.2.1.tar.gz</span></pre>
+</div>
+<p><span style="font-size: 16px">2、解压源码包，tar xzvf ngx_openresty-1.9.7.1.tar.gz。若你下载的源码包版本不一样，将相应的版本号改为你所下载的即可。</span></p>
+<p><span style="font-size: 16px">3、切换工作目录到 cd ngx_openresty-1.9.7.1。</span></p>
+<p><span style="font-size: 16px">4、了解默认激活的组件。<a href="http://openresty.org/" rel="nofollow">OpenResty 官网</a>有组件列表,我们可以参考，列表中大部分组件默认激活，也有部分默认不激活。 默认不激活的组件，我们可以在编译的时激活，后面步骤详说明</span></p>
+<p><span style="font-size: 16px">5、绝大部分组件已内置在OpenResty安装包中，但也有一部分不包含在内默认并未启用</span></p>
+<p><span style="font-size: 16px">　　标准 Lua 5.1 解释器、<a href="http://openresty.org/cn/drizzle-nginx-module.html">Drizzle Nginx 模块</a>、&nbsp;<a href="http://openresty.org/cn/postgres-nginx-module.html">Postgres Nginx 模块</a>&nbsp;以及&nbsp;<a href="http://openresty.org/cn/iconv-nginx-module.html">Iconv Nginx 模块</a>&nbsp;默认并未启用，以下为分别编译选项来开启它们</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">--with-lua51</span><br><span style="font-size: 16px">--with-http_drizzle_module</span><br><span style="font-size: 16px">--with-http_postgres_module</span><br><span style="font-size: 16px">--with-http_iconv_module </span></pre>
+</div>
+<p><span style="font-size: 16px">6、使用选项 --with-Components 激活组件，--without 则是禁止组件。 你可以根据自己实际需要选择 with 或 without。</span></p>
+<p><span style="font-size: 16px">如下命令，OpenResty 将配置安装在 /opt/openresty 目录下（注意使用 root 用户）,并激活luajit、http_iconv_module 并禁止 http_redis2_module 组件。检测配置文件信息</span></p>
+<div class="cnblogs_code">
+<p>sudo ./configure \</p>
+<p>--prefix=/opt/openresty \</p>
+<p>--with-lua51 --with-http_drizzle_module --with- <br>luajit --without-http_redis2_module --with-http_iconv_module --with-stream --with-
+<br>http_stub_status_module --with-http_xslt_module --with-stream_ssl_module --with-
+<br>http_realip_module --with-http_ssl_module --add-module=../stream-lua-nginx-module-
+<br>0.0.1/ --add-module=../nginx-rtmp-module-1.1.11/</p>
+
+</div>
+<p><span style="font-size: 16px; color: #ff0000">提示错误：./configure: error: the ngx_drizzle addon requires the libdrizzle library.</span></p>
+<p><span style="font-size: 16px; color: #339966">解决办法：</span></p>
+<div class="cnblogs_code">
+<pre>http:<span style="color: #008000">//</span><span style="color: #008000">openresty.org/download/drizzle7-2011.07.21.tar.gz</span>
+tar xzvf drizzle7-<span style="color: #800080">2011.07</span>.<span style="color: #800080">21</span><span style="color: #000000">.tar.gz
+cd drizzle7</span>-<span style="color: #800080">2011.07</span>.<span style="color: #800080">21</span>/<span style="color: #000000">
+.</span>/configure --without-<span style="color: #000000">server
+make libdrizzle</span>-<span style="color: #800080">1.0</span><span style="color: #000000">
+make install</span>-libdrizzle-<span style="color: #800080">1.0</span></pre>
+</div>
+<p><span style="font-size: 16px; color: #ff0000">提示错误:./configure: error: the HTTP XSLT module requires the libxml2/libxslt</span></p>
+<p><span style="font-size: 16px; color: #339966">解决办法：</span></p>
+<div class="cnblogs_code">
+<pre>sudo apt-<span style="color: #0000ff">get</span> install libxml2 libxml2-dev libxslt-<span style="color: #000000">dev
+sudo apt</span>-<span style="color: #0000ff">get</span> install libgd2-xpm libgd2-xpm-dev</pre>
+</div>
+<p><span style="font-size: 16px">7、在上一步中，最后没有什么 error 的提示就是最好的。若有错误，最后会显示 具体原因可以看源码包目录下的 build/nginx-VERSION/objs/autoconf.err文件查看。若没有错误，则会出现如下信息：</span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170320225747783-1088760652.png" alt=""></span></p>
+<p><span style="font-size: 16px">8、编译：根据上一步命令提示，输入gmake</span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170320225923190-502861442.png" alt=""></span></p>
+<p><span style="font-size: 16px">9、安装：输入gmake install</span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170320230250065-118672060.png" alt=""></span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px">10、设置环境变量（我这里没有做）</span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px">　　为了后面启动 OpenResty 的命令简单一些，不用在 OpenResty 的安装目录下进行启动，我们设置环境变量来简化操作。 将 nginx 目录添加到 PATH 中。打开文件 /etc/profile， 在文件末尾加入export PATH=$PATH:/opt/openresty/nginx/sbin，若你的安装目录不一样，则做相应修改。 注意：这一步操作需要重新加载环境变量才会生效，可通过命令source /etc/profile或者重启服务器等方式实现。</span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">/etc/<span style="color: #000000">profile 　　是所有用户的环境变量
+</span>/etc/enviroment　　是系统的环境变量</span><br><span style="font-size: 16px">&nbsp;</span><br><span style="font-size: 16px">登陆系统时shell读取的顺序应该是&nbsp;</span><br><span style="font-size: 16px">/etc/profile -&gt;/etc/enviroment --&gt;$HOME/.profile&nbsp;&nbsp; --&gt;$HOME/.env</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 16px">编译完之后做了一个软连接哦</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">mkdir -p /opt/openresty/site/<span style="color: #000000">lualib
+ln </span>-sf /opt/openresty/nginx/sbin/nginx /opt/openresty/bin/openresty</span></pre>
+</div>
+<p><span style="font-size: 16px">所有启动Nginx的方式可以有两种方式：</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px; color: #339966">软连接开启：/opt/openresty/bin/openresty</span></pre>
+<pre><span style="font-size: 16px; color: #339966">原始地址开启：/opt/openresty/nginx/sbin/nginx</span></pre>
+</div>
+<p><span style="font-size: 16px">查看编译后的结果：</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">root@iZbp16w4fwm1sxrjd98oe0Z:/home/www/tinywan_bak/openresty-<span style="color: #800080">1.11</span>.<span style="color: #800080">2.1</span># /opt/openresty/bin/openresty -<span style="color: #000000">V
+nginx version: openresty</span>/<span style="color: #800080">1.11</span>.<span style="color: #800080">2.1</span><span style="color: #000000">
+built by gcc </span><span style="color: #800080">4.8</span>.<span style="color: #800080">2</span> (Ubuntu <span style="color: #800080">4.8</span>.<span style="color: #800080">2</span>-<span style="color: #000000">19ubuntu1) 
+built with OpenSSL </span><span style="color: #800080">1.0</span>.1f <span style="color: #800080">6</span> Jan <span style="color: #800080">2014</span><span style="color: #000000">
+TLS SNI support enabled
+configure arguments: </span><span style="color: #008000">--</span><span style="color: #008000">prefix=/opt/openresty/nginx --with-cc-opt=-O2 <br>--add-module=../ngx_devel_kit-0.3.0 <br>--add-module=../iconv-nginx-module-0.14 <br>--add-module=../echo-nginx-module-0.60 <br>--add-module=../xss-nginx-module-0.05 <br>--add-module=../ngx_coolkit-0.2rc3 <br>--add-module=../set-misc-nginx-module-0.31 <br>--add-module=../form-input-nginx-module-0.12 <br>--add-module=../encrypted-session-nginx-module-0.06 <br>--add-module=../srcache-nginx-module-0.31 <br>--add-module=../ngx_lua-0.10.6 <br>--add-module=../ngx_lua_upstream-0.06 <br>--add-module=../headers-more-nginx-module-0.31 <br>--add-module=../array-var-nginx-module-0.05 <br>--add-module=../memc-nginx-module-0.17 <br>--add-module=../redis-nginx-module-0.3.7 <br>--add-module=../rds-json-nginx-module-0.14 <br>--add-module=../rds-csv-nginx-module-0.07 <br>--with-ld-opt=-Wl,-rpath,/opt/openresty/luajit/lib <br>--with-stream --with-stream_ssl_module <br>--with-http_ssl_module <br>--add-module=/home/www/tinywan_bak/openresty-1.11.2.1/../stream-lua-nginx-module</span></span></pre>
+</div>
+<p><span style="font-size: 16px">浏览器访问，安装成功:&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;<img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170317111044510-1334326143.png" alt=""></span></p>
+<p><span style="font-size: 16px"><strong>Nginx.conf</strong></span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">#<span style="color: #000000">TCP 负载均衡
+stream {
+    server {
+        listen </span><span style="color: #800080">1234</span><span style="color: #000000">;
+        </span>#<span style="color: #000000">proxy_timeout 20s;
+        </span>#<span style="color: #000000">proxy_pass backend;
+        content_by_lua_block {
+           ngx.say(</span><span style="color: #800000">"</span><span style="color: #800000">HelloWorld</span><span style="color: #800000">"</span><span style="color: #000000">)
+        }
+    }
+}</span></span></pre>
+</div>
+<p><span style="font-size: 16px">&nbsp;【1】通过命令<strong>telnet 命令</strong>测试TCP负载server&nbsp;</span></p>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px">root@iZbp16w4fwm1sxrjd98oe0Z:/opt/openresty/nginx/sbin# telnet <span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span> <span style="color: #800080">1234</span><span style="color: #000000">
+Trying </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span><span style="color: #000000">...
+Connected to </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span><span style="color: #000000">.
+Escape character is </span><span style="color: #800000">'</span><span style="color: #800000">^]</span><span style="color: #800000">'</span><span style="color: #000000">.
+<span style="color: #ff0000">HelloWorld</span>
+Connection closed by foreign host.</span></span></pre>
+</div>
+<p><span style="font-size: 16px">&nbsp;【2】CURL测试结果！</span></p>
+<p><span style="font-size: 16px"><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170317133739354-715468648.png" alt=""></span></p>
+<p><span style="font-size: 16px"><strong>【3】Windows 客户端测试结果:</strong></span></p>
+<p><span style="font-size: 16px"><strong><img src="http://images2015.cnblogs.com/blog/1021265/201703/1021265-20170317133043026-1485015978.png" alt=""></strong></span></p>
+<p><span style="font-size: 16px"><strong><span style="color: #ff0000">注意，以上127.0.0.1 要换成你openresty服务器地址！！！</span></strong></span></p>
+<p><span style="font-size: 16px"><strong>Linux开始、停止、重新加载</strong></span></p>
+<ol>
+<li><span style="font-size: 16px">开始：./nginx&nbsp;</span></li>
+<li><span style="font-size: 16px">停止：./nginx -s stop</span></li>
+<li><span style="font-size: 16px">重置：./nginx -s reload</span></li>
+</ol>
+<h1><span style="color: #ff0000; font-size: 16px">TCP（4层协议） 负载均衡可以的！！！！！！！！！！！！！！！！！！！！！</span></h1>
+<div class="cnblogs_code">
+<pre><span style="font-size: 16px"><span style="color: #000000">stream {
+    upstream rtmp {
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.1</span>:<span style="color: #800080">8089</span>; #<span style="color: #000000"> 这里配置成要访问的地址
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.2</span>:<span style="color: #800080">1935</span><span style="color: #000000">;
+        server </span><span style="color: #800080">127.0</span>.<span style="color: #800080">0.3</span>:<span style="color: #800080">1935</span>; #<span style="color: #000000">需要代理的端口，在这里我代理一一个RTMP模块的接口1935
+    }
+    server {
+        listen </span><span style="color: #800080">1935</span>;  #<span style="color: #000000"> 需要监听的端口<br></span></span></pre>
+<p><span style="font-size: 16px">　　　<span style="color: #ff0000">　<strong>　　content_by_lua_block {</strong></span></span><br><span style="color: #ff0000; font-size: 16px"><strong>            　　　　　　　　ngx.say("Hello, Lua!")</strong></span><br><span style="color: #ff0000; font-size: 16px"><strong>        　　　　　　}</strong></span></p>
+<pre><span style="color: #000000; font-size: 16px">        proxy_timeout 20s;
+        proxy_pass rtmp;
+    }
+}</span></pre>
+</div>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p>
+<p><span style="font-size: 16px">&nbsp;</span></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<div class = "postDesc">posted @ <span id="post-date">2017-03-16 18:09</span> <a href='http://www.cnblogs.com/tinywan/'>Tinywan</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=6560889" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(6560889);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=303843,cb_entryId=6560889,cb_blogApp=currentBlogApp,cb_blogUserGuid='87e234d9-4673-e611-9fc1-ac853d9f53cc',cb_entryCreatedDate='2017/3/16 18:09:00';loadViewCount(cb_entryId);</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='cnblogs_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='cnblogs_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright &copy;2017 Tinywan
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+</body>
+</html>

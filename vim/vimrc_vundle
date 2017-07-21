@@ -1,0 +1,111 @@
+" 创建一个目录, Vim插件下载后将安装到该目录下. 
+" 默认情况下, 该目录位于~/.vim/bundle
+" $ mkdir -p ~/.vim/bundle
+
+" 现在安装Vundle, 如下所示.
+" 请注意:Vundle本身是另一种Vim插件.
+" 因而, 我们将Vundle安装在之前创建的~/.vim/bundle下。
+" $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" cp 当前文件到 ~/.vimrc
+
+" 安装插件, 执行 :PluginInstall
+" 删除不用的插件, 执行 :PluginClean
+" 显示插件列表, 执行 :PluginList
+
+set nocompatible              " 这是必需的 
+filetype off                  " 这是必需的 
+  
+" 你在此设置运行时路径 
+set rtp+=~/.vim/bundle/Vundle.vim  
+ 
+" vundle初始化 
+call vundle#begin()  
+ 
+" 这应该始终是第一个 
+Plugin 'gmarik/Vundle.vim' 
+ 
+" Tagbar配置
+Plugin 'Tagbar'
+let g:tagbar_ctags_bin='ctags'
+let g:tagbar_width=20
+let g:tagbar_left=1
+"let g:tagbar_right=1
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+nmap tb :TagbarToggle<cr>
+
+" NERDTree配置, 首先要安装NERDTree: 
+" :BundleInstall The-NERD-tree
+Plugin 'The-NERD-tree'
+let NERDTreeWinPos='right'
+let NERDTreeShowBookmarks=1
+let NERDTreeWinSize=20
+nmap nt :NERDTreeToggle<cr>
+
+nmap tt tbnt
+
+" MiniBufExplorer配置, 首先要安装MiniBufExplorer
+" :BundleInstall 'minibufexpl.vim'
+Plugin 'minibufexpl.vim'
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplForceSyntaxEnable = 1
+let g:miniBufExplorerMoreThanOne=2
+
+" 每个插件都应该在这一行之前  
+call vundle#end()            " required
+
+" Enable file type detection.
+" Use the default filetype settings, so that mail gets 'tw' set to 72,
+" 'cindent' is on in C files, etc.
+" Also load indent files, to automatically do language-dependent indenting.
+" Revert with ":filetype off".
+filetype plugin indent on
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+set nobackup		" do not keep a backup file, use versions instead
+set history=50		" keep 50 lines of command line history
+set ruler		    " show the cursor position all the time
+set showcmd		    " display incomplete commands
+set incsearch		" do incremental searching
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+
+" 缩进设置
+set cindent " C语法缩进
+" set autoindent " 自动缩进
+" set smartindent " 自动缩进
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+
+" 文件编码
+set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf-8,gbk,gb18030,gb2312
+
+" 配色方案
+colorscheme desert
+
+" 显示行号
+" set number
+
+" 显示行列光标高亮
+" set cursorline
+" set cursorcolumn
+
+" 显示折叠的线索
+" set foldcolumn=5
+set foldenable
+set foldlevel=100
+set foldmethod=syntax " 手动折叠
+" set foldmethod=indent " 按缩进折叠
+" set foldmethod=manual " 手动折叠
+

@@ -1,0 +1,1138 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>  
+
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>vim基本配置 - heli007的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="void merge(BYTE *array, int low, int mid, int high){    int i, k;    BYTE *temp = (BYTE *) malloc(high-low+1);    int begin1 = low;" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+      <script type="text/javascript" src="http://static.blog.csdn.net/scripts/jquery-version.js"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/tracking.js"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/dark1/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/heli007/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</head>
+<body>
+
+
+    <!-- 广告位开始 -->
+        <ins data-revive-zoneid="149" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/heli007">heli007的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/heli007?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/heli007?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/heli007/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "heli007";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/heli007";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://bss.csdn.net/m/topic/edu_exam
+">
+<font color=blue>2017直通软考，拿证无忧
+
+
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/274
+">
+<font color=red>程序员简历优化指南！ 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/PK.html">
+<font color=blue>【观点】移动原生App开发 PK HTML 5开发
+</font></a>
+
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://bss.csdn.net/m/product/aliyun_essay/index
+">
+<font color=red>云端应用征文大赛，秀绝招，赢无人机！
+</font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/replace.min.js"></script>
+
+
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+      
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=vim%e5%9f%ba%e6%9c%ac%e9%85%8d%e7%bd%ae&u=http://blog.csdn.net/heli007/article/details/8285092"
+
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/heli007/article/details/8285092">
+        vim基本配置            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_r">
+            <span class="link_postdate">2012-12-12 09:34</span>
+            <span class="link_view" title="阅读次数">14545人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(0)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('vim%e5%9f%ba%e6%9c%ac%e9%85%8d%e7%bd%ae','8285092');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(8285092,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('1272404','heli007','top','8285092');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">hanxinsemi<em>（14）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/heli007/article/category/1272404"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_1272404">                            
+                            </ul>
+                        </div>
+                    </label>                    
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<p><span style="font-size:14px">vim基本配置：包括tab键替换成4个空&#26684;</span></p>
+<p><span style="font-size:14px">Edit Vim configuration file &quot;.vimrc&quot; in your HOME directory, add below lines:<br>
+</span></p>
+<p><span style="font-size:14px"></span><pre name="code" class="plain">set et
+set ci
+set sw=4
+set ts=4
+</pre><br>
+</p>
+<p>&nbsp;After new setting take effect, each time you press TAB key, it will automatically replaced by 4 SPACE and do indentation.</p>
+<p>You can still insert real Tabs as [Ctrl]-V [Tab].</p>
+<p>If you open an unwell indentation source code file, you can press &quot;gg=G&quot;, all TABs will be replaced by 4 SPACE.&nbsp;</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">&nbsp; &nbsp; &nbsp; &nbsp; 在使用vim编辑器的时候 &nbsp;很多系统里默认的vim tapstop是8，而很多时候我们需要的tapstop是4，比如在写python的时候，我们都知道python严重依赖缩进，所以tapstop是8的话 ，这个脚本比较大的时候那就相当的不好看了，所以在这种情况下修改tapstop为4还是很有必要的。</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">&nbsp; &nbsp; &nbsp; &nbsp; 怎么设置这个东东呢？很简单 &nbsp;打开/etc/vimrc 加入类&#20284;这样的内容就可以了：</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><strong>set tabstop=4</strong></p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">或者</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><strong>set &nbsp;ts=4</strong></p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">&nbsp; &nbsp; &nbsp; &nbsp; 然后你再用vim编辑个文件并按tab试试，就会感觉到明显的不一样。</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">但是问题又来了，在python脚本里，如果缩进使用tab那么就不再推荐在同一脚本里使用其他的符号来缩进，因为这很有可能导致诸多兼容性问题，比如你既使用了tab又在某些地方使用了空&#26684;来缩进，额，恭喜你，你很有可能会遇到无法执行此脚本的错误。</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">这个时候怎么办呢？最显而易见的方法只有一个，那就是统一使用相同的缩进方法，该是做出艰难的选择的时候了：要么用tab &nbsp;要么用空&#26684; 。而很多经常使用python的同学可能会发现使用空&#26684;缩进比tab来缩进&#20284;乎更加明智，因此也极力推荐统一使用空&#26684;，这是为什么呢？当你vim编辑一个文件的时候，你能一&#30524;就看出缩进使用的是tab吗？最有可能发生的是把tab当成了空&#26684;而不是把空&#26684;看成tab。为了避免这样的困扰，统一使用空&#26684;看起来是更好的选择。</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">&nbsp; &nbsp; &nbsp; &nbsp; <strong>
+现在你再打开vim，按下tab，再按backspace，你会发现tab出来的缩进只需要backspace一次就能删除，这足以说明这段空白是tab；</strong>然后你再次修改vimrc，并加入：</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><strong>set expandtab</strong></p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><strong>或</strong></p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><strong>set et</strong></p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">再次打开vim，你会发现tab出来的空白已经变成空&#26684;了，而这个时候<strong>一个tab就真正成为4个空&#26684;了，而不仅仅是4个空&#26684;的缩进距离</strong>。这才是我们真正想要的。</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">那么如果你编辑了一个文件并且想要在别人修改这个文件的时候不会出现类&#20284;的疑问怎么办呢？方法有两个，一个是你告诉他，你使用的是空&#26684;还是tab，另一个方法是<strong>使用vim的modeline</strong>，当别人打开这个文件的时候会自动使用相同的配置。什么是modeline呢？就是往文件里面写入特定的行，当vim打开这个文件的时候会自动读取这一行的参数配置并调整自己的设置到这个配置，例如你可能经常会看到在有些源码的文件末尾会出现这样的行：</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><strong># vim:et:ts=4:sw=4:</strong></p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">这个就是modeline。当其他人的vimrc里打开了set modeline的时候，就会自动读入这个配置。</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif">更多的信息请参考vim :help auto-setting &nbsp;和:help modeline</p>
+<p style="word-wrap:break-word; font-family:Verdana,Tahoma,sans-serif"><pre name="code" class="plain">set nocompatible &quot;关闭vi兼容
+set enc=utf-8
+&quot;set number &quot;显示行号
+filetype plugin on &quot;文件类型
+set history=500 &quot;历史命令
+syntax on &quot;语法高亮
+&quot;set autoindent &quot;ai 自动缩进
+&quot;set smartindent &quot;智能缩进
+set showmatch &quot;括号匹配
+set ruler &quot;右下角显示光标状态行
+set nohls &quot;关闭匹配的高亮显示
+set incsearch &quot;设置快速搜索
+set foldenable &quot;开启代码折叠
+&quot;set fdm=manual &quot;手动折叠
+set foldmethod=syntax &quot;自动语法折叠
+set modeline &quot;自动载入模式行
+&quot;自动插入modeline
+func! AppendModeline()
+let l:modeline = printf(&quot; vim: set ts=%d sw=%d tw=%d :&quot;,
+\ &amp;tabstop, &amp;shiftwidth, &amp;textwidth)
+let l:modeline = substitute(&amp;commentstring, &quot;%s&quot;, l:modeline, &quot;&quot;)
+call append(line(&quot;$&quot;), l:modeline)
+endfunc
+&quot;按\ml,自动插入modeline
+nnoremap &lt;silent&gt; &lt;Leader&gt;ml :call AppendModeline()&lt;CR&gt;
+&quot;空格展开折叠
+nnoremap &lt;space&gt; @=((foldclosed(line('.')) &lt; 0) ? 'zc' : 'zo')&lt;CR&gt;
+
+&quot;set tabstop=4
+&quot;set shiftwidth=4
+set ts=4
+set sw=4
+set expandtab
+&quot;自动tab
+
+ 
+
+if has(&quot;autocmd&quot;)
+filetype plugin indent on
+endif
+autocmd filetype python setlocal et sta sw=4 sts=4
+
+
+&quot;根据文件类型自动插入文件头
+autocmd BufNewFile *.py,*.sh exec &quot;:call SetTitle()&quot;
+func SetTitle()
+if &amp;filetype == 'sh'
+call setline(1, &quot;\#!/bin/bash&quot;)
+call append(line(&quot;.&quot;), &quot;\# Author:itxx00@gmail.com&quot;)
+call append(line(&quot;.&quot;)+1, &quot;&quot;)
+else
+call setline(1, &quot;\#!/bin/env python&quot;)
+call append(line(&quot;.&quot;), &quot;\#coding:utf-8&quot;)
+call append(line(&quot;.&quot;)+1, &quot;\#Author:itxx00@gmail.com&quot;)
+call append(line(&quot;.&quot;)+2, &quot;&quot;)
+endif
+endfunc 
+&quot;新建文件后自动定位至文件末尾
+autocmd BufNewFile * normal G
+&quot;F2去空行
+nnoremap &lt;F2&gt; :g/^\s*$/d&lt;CR&gt;</pre><br>
+<br>
+</p>
+<br>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.12-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+
+        <div id="digg" ArticleId="8285092" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>0</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/heli007/article/details/8285069';">上一篇</span><a href="/heli007/article/details/8285069" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">emacs基本配置</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/heli007/article/details/8291954';">下一篇</span><a href="/heli007/article/details/8291954" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">emacs有用的</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('1272404','heli007','foot','8285092');">hanxinsemi<em>（14）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('1272404', 'heli007','foot','8285092');
+        });
+    </script>
+      
+</div>
+
+     <div>
+             <ins data-revive-zoneid="206" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins> 
+    </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/heli007/svc/GetSuggestContent/8285092",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="http://static.blog.csdn.net/css/replace.css"/>
+<div id="relate" data-mod="popu_218"  class="tracking-ad">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+        </div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "8285092",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'vim基本配置' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+
+    <div id="ad_cen">        
+                      <ins data-revive-zoneid="199" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    </div>  
+
+    <!-- 广告位开始 -->
+    <ins data-revive-zoneid="72" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    <!-- 广告位结束 -->
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '8285092';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/heli007/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>      
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/heli007" target="_blank">
+    <img src="http://avatar.csdn.net/F/F/7/1_heli007.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/heli007" class="user_name" target="_blank">heli007</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=heli007','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>96533次</span></li>
+    <li>积分：<span>1284</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog4.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：1284 </div>
+        </span>  </li>
+    <li>排名：<span>千里之外</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>32篇</span></li>
+    <li>转载：<span>23篇</span></li>
+    <li>译文：<span>0篇</span></li>
+    <li>评论：<span>7条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/heli007/article/category/1295225" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">通过算法学习C++</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/956250" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">嵌入式操作系统</a><span>(14)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/956253" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Android</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/1061636" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">随笔</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/1076543" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Linux操作系统分析</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/1176561" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">opencv</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/1331041" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">python</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/1272404" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">hanxinsemi</a><span>(15)</span>
+                </li>
+                 <li>
+                    <a href="/heli007/article/category/1417951" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Micron实习笔记</a><span>(2)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/heli007/article/month/2016/01">2016年01月</a><span>(3)</span></li><li><a href="/heli007/article/month/2015/04">2015年04月</a><span>(1)</span></li><li><a href="/heli007/article/month/2014/03">2014年03月</a><span>(1)</span></li><li><a href="/heli007/article/month/2013/05">2013年05月</a><span>(1)</span></li><li><a href="/heli007/article/month/2013/04">2013年04月</a><span>(2)</span></li><li><a href="/heli007/article/month/2013/01">2013年01月</a><span>(2)</span></li><li><a href="/heli007/article/month/2012/12">2012年12月</a><span>(12)</span></li><li><a href="/heli007/article/month/2012/11">2012年11月</a><span>(4)</span></li><li><a href="/heli007/article/month/2012/08">2012年08月</a><span>(1)</span></li><li><a href="/heli007/article/month/2012/06">2012年06月</a><span>(1)</span></li><li><a href="/heli007/article/month/2012/04">2012年04月</a><span>(2)</span></li><li><a href="/heli007/article/month/2012/02">2012年02月</a><span>(10)</span></li><li><a href="/heli007/article/month/2012/01">2012年01月</a><span>(15)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/heli007/article/details/7279022" title="SecureCRT下的串口不能输入">SecureCRT下的串口不能输入</a><span>(16076)</span>
+</li>
+<li>
+<a href="/heli007/article/details/8285092" title="vim基本配置">vim基本配置</a><span>(14537)</span>
+</li>
+<li>
+<a href="/heli007/article/details/8268614" title="GCOV的使用-测试代码覆盖率">GCOV的使用-测试代码覆盖率</a><span>(7835)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187586" title="使用gdb调试linux内核">使用gdb调试linux内核</a><span>(6592)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187748" title="使用systemtap调试linux内核">使用systemtap调试linux内核</a><span>(5234)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7185754" title="Linux内核配置选项">Linux内核配置选项</a><span>(3278)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7452628" title="C语言数组下标是负数">C语言数组下标是负数</a><span>(3068)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7207970" title="VirtualBox下共享目录的设置">VirtualBox下共享目录的设置</a><span>(1886)</span>
+</li>
+<li>
+<a href="/heli007/article/details/8332437" title="查看反汇编">查看反汇编</a><span>(1816)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187110" title="Ubuntu 11.04安装gcc 4.5.2以下版本[比如gcc 4.1.1]">Ubuntu 11.04安装gcc 4.5.2以下版本[比如gcc 4.1.1]</a><span>(1688)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/heli007/article/details/7187586" title="使用gdb调试linux内核">使用gdb调试linux内核</a><span>(3)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187208" title="火车票订票系统的几点优化思考">火车票订票系统的几点优化思考</a><span>(2)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7188220" title="进程间通信（IPC）">进程间通信（IPC）</a><span>(1)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7279022" title="SecureCRT下的串口不能输入">SecureCRT下的串口不能输入</a><span>(1)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187252" title="Skyeye中运行操作系统">Skyeye中运行操作系统</a><span>(0)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187157" title="linux修改文件夹-文件目录权限">linux修改文件夹-文件目录权限</a><span>(0)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187110" title="Ubuntu 11.04安装gcc 4.5.2以下版本[比如gcc 4.1.1]">Ubuntu 11.04安装gcc 4.5.2以下版本[比如gcc 4.1.1]</a><span>(0)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7187050" title="构建交叉编译工具链">构建交叉编译工具链</a><span>(0)</span>
+</li>
+<li>
+<a href="/heli007/article/details/50522803" title="编程习惯-enum的用法">编程习惯-enum的用法</a><span>(0)</span>
+</li>
+<li>
+<a href="/heli007/article/details/7185796" title="Linux内核裁剪的具体步骤">Linux内核裁剪的具体步骤</a><span>(0)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/mmoaay/article/details/54562045" target="_blank">* 造轮子 | 如何设计一个面向协议的 iOS 网络请求库</a></li>
+<li><a href="http://blog.csdn.net/guolin_blog/article/details/53122387" 
+target="_blank">* Android新特性介绍，ConstraintLayout完全解析</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/54882693"target="_blank">* Android 热修复 Tinker接入及源码浅析</a></li>
+<li><a href="http://blog.csdn.net/zwgdft/article/details/54728677" target="_blank">* 创业公司做数据分析（六）数据仓库的建设</a></li>
+<li><a href="http://blog.csdn.net/chenssy/article/details/54883355" 
+target="_blank">* 【死磕Java并发】-----深入分析synchronized的实现原理</a></li>
+
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/heli007/article/details/7187586#comments">使用gdb调试linux内核</a>
+    <p style="margin:0px;"><a href="/heli007" class="user_name">heli007</a>:
+@angellove24:这是很早之前的帖子了，来源我记不清了，这应该是编译linux内核后产生的镜...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/heli007/article/details/7187586#comments">使用gdb调试linux内核</a>
+    <p style="margin:0px;"><a href="/angellove24" class="user_name">angellove24</a>:
+请问，ubuntu9.10_32.img是怎么来的呢？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/heli007/article/details/7188220#comments">进程间通信（IPC）</a>
+    <p style="margin:0px;"><a href="/beckham467" class="user_name">beckham467</a>:
+何大牛
+    </p>
+    </li>
+    <li>
+   
+         <a href="/heli007/article/details/7279022#comments">SecureCRT下的串口不能输入</a>
+    <p style="margin:0px;"><a href="/deren__123" class="user_name">deren__123</a>:
+我的为什么用printf发送数据的时候，这样发可以：while（1）{               ...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/heli007/article/details/7187208#comments">火车票订票系统的几点优化思考</a>
+    <p style="margin:0px;"><a href="/heli007" class="user_name">heli007</a>:
+@ganrun1988:润哥也对铁道部的网站感兴趣~！嘿嘿
+    </p>
+    </li>
+    <li>
+   
+         <a href="/heli007/article/details/7187208#comments">火车票订票系统的几点优化思考</a>
+    <p style="margin:0px;"><a href="/ganrun1988" class="user_name">ganrun1988</a>:
+不错。。居然在这找到你了
+    </p>
+    </li>
+    <li>
+   
+         <a href="/heli007/article/details/7187208#comments">使用gdb调试linux内核</a>
+    <p style="margin:0px;"><a href="/heli007" class="user_name">heli007</a>:
+牛逼
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                   <!-- 广告位开始 --> 
+                    <ins data-revive-zoneid="190" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins> 
+                    <!-- 广告位结束 -->
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=1232164"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_code.css" />
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/saveToCode.js"></script>
+      <script type="text/javascript" src="//csdnimg.cn/rabbit/tracking-ad/main.js?75eacd8"></script>
+
+     <link rel="stylesheet" href="http://static.blog.csdn.net/css/fa.css" />
+
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" />
+    </div>
+</body>
+</html>   
+ 

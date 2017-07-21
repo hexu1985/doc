@@ -1,0 +1,1221 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+     
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    
+<head>  
+
+    <script type="text/javascript" src="http://c.csdnimg.cn/pubfooter/js/tracking.js" charset="utf-8"></script>  
+
+    <script type="text/javascript">
+        var protocol = window.location.protocol;
+        document.write('<script type="text/javascript" src="' + protocol + '//csdnimg.cn/pubfooter/js/repoAddr2.js?v=' + Math.random() + '"></' + 'script>');
+    </script>
+
+  
+ <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+
+    <title>Vim插件管理利器——Vundle - jiaolongdy的专栏
+        - 博客频道 - CSDN.NET</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="1、单条件查询：select 字段名 from tablename where 条件；2、简单多条件查询，使用&amp;&amp;或者between and等：3、is null和is not null查询，这里要注意null不是空字符串不是0：4、in和not in查询，相当于是用or把in后边的集合元素连起来。注意如果in后边带的集合中存在null，那么不会影响结果，但not in后边集合中有null，就不会" />
+    <script src="http://static.blog.csdn.net/scripts/jquery.js" type="text/javascript"></script>
+      <script type="text/javascript" src="http://static.blog.csdn.net/scripts/jquery-version.js"></script>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+               <link rel="stylesheet" href="http://c.csdnimg.cn/public/common/toolbar/css/index.css">        <!--new top-->
+    
+      <!-- ad begin -->
+         <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/tracking.js"></script>
+    <!-- ad end-->
+
+    <link rel="Stylesheet" type="text/css" href="http://static.blog.csdn.net/skin/default/css/style.css?v=1.1" />
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="/jiaolongdy/rss/list" />
+    <link rel="shortcut icon" href="http://c.csdnimg.cn/public/favicon.ico" />
+    <link type="text/css" rel="stylesheet" href="http://static.blog.csdn.net/scripts/SyntaxHighlighter/styles/default.css" />
+ 
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function () {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?6bcd52f51e9b3dce32bec4a3997715ac";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+</head>
+<body>
+
+
+    <!-- 广告位开始 -->
+        <ins data-revive-zoneid="149" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    <!-- 广告位结束 -->
+
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="http://c.csdnimg.cn/public/common/toolbar/js/html.js" type="text/javascript"></script>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/jiaolongdy">jiaolongdy的专栏</a></h2>
+            <h3></h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+        
+     
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>           
+                <li id="btnContents"><a href="http://blog.csdn.net/jiaolongdy?viewmode=contents"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_mulu'])">
+                    <img src="http://static.blog.csdn.net/images/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/jiaolongdy?viewmode=list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_zhaiyao'])">
+                    <img src="http://static.blog.csdn.net/images/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/jiaolongdy/rss/list"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_RSS'])">
+                    <img src="http://static.blog.csdn.net/images/ico_rss.gif">订阅</span></a></li>                
+            
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "jiaolongdy";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/jiaolongdy";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";  
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+                        <div class="ad_class">
+<div class="notice tracking-ad" data-mod='popu_3' > 
+
+
+<a href="http://bss.csdn.net/m/topic/edu_exam
+">
+<font color=blue>2017直通软考，拿证无忧
+
+
+</font></a>
+
+&nbsp;&nbsp;&nbsp;&nbsp
+
+<a href="http://edu.csdn.net/huiyiCourse/detail/274
+">
+<font color=red>程序员简历优化指南！ 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/turingbooks/article/details/54582158">
+<font color=blue>程序员1月书讯
+</font></a>
+
+&nbsp;&nbsp;&nbsp;
+
+<a href="http://bss.csdn.net/m/product/aliyun_essay/index
+">
+<font color=red>云端应用征文大赛，秀绝招，赢无人机！
+</font></a>
+
+
+</div>                        </div>
+                        
+
+
+
+  
+<link href="http://static.blog.csdn.net/css/comment1.css" type="text/css" rel="stylesheet" />
+<link href="http://static.blog.csdn.net/css/style1.css" type="text/css" rel="stylesheet" />
+<script language='JavaScript' type='text/javascript' src='http://download.csdn.net/js/jquery.cookie.js'></script>
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/search-service/main.js"></script>
+<link rel="stylesheet" href="http://static.blog.csdn.net/public/res-min/markdown_views.css?v=1.0" />
+<link rel="stylesheet" href="http://static.blog.csdn.net/css/category.css?v=1.0" />
+<script type="text/javascript" src="http://static.blog.csdn.net/public/res/bower-libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/web-storage-cache.min.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/replace.min.js"></script>
+
+
+
+
+  <script type="text/ecmascript">
+      window.quickReplyflag = true;
+           
+            var isBole = false;
+            
+      
+      var fasrc="http://my.csdn.net/my/favorite/miniadd?t=Vim%e6%8f%92%e4%bb%b6%e7%ae%a1%e7%90%86%e5%88%a9%e5%99%a8%e2%80%94%e2%80%94Vundle&u=http://blog.csdn.net/jiaolongdy/article/details/17889787/"
+
+    </script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="/jiaolongdy/article/details/17889787">
+        Vim插件管理利器——Vundle            
+        </a></span>
+    </h1>
+</div>
+
+   
+
+        <div class="article_manage clearfix">
+        <div class="article_l">
+            <span class="link_categories">
+            标签：
+              <a href='http://www.csdn.net/tag/Vim' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">Vim</a><a href='http://www.csdn.net/tag/Vundle' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">Vundle</a><a href='http://www.csdn.net/tag/%e6%8f%92%e4%bb%b6' target=_blank onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_tag']);">插件</a>
+            </span>
+        </div>
+        <div class="article_r">
+            <span class="link_postdate">2014-01-05 20:58</span>
+            <span class="link_view" title="阅读次数">30469人阅读</span>
+            <span class="link_comments" title="评论次数"> <a href="#comments" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_pinglun'])">评论</a>(1)</span>
+            <span class="link_collect tracking-ad" data-mod="popu_171"> <a href="javascript:void(0);" onclick="javascript:collectArticle('Vim%e6%8f%92%e4%bb%b6%e7%ae%a1%e7%90%86%e5%88%a9%e5%99%a8%e2%80%94%e2%80%94Vundle','17889787');return false;" title="收藏">收藏</a></span>
+             <span class="link_report"> <a href="#report" onclick="javascript:report(17889787,2);return false;" title="举报">举报</a></span>
+
+        </div>
+    </div>
+    <div class="embody"  style="display:none" id="embody">
+        <span class="embody_t">本文章已收录于：</span>
+        <div class="embody_c" id="lib" value="{&quot;err&quot;:0,&quot;msg&quot;:&quot;ok&quot;,&quot;data&quot;:[]}"></div>
+    </div>
+    <style type="text/css">        
+            .embody{
+                padding:10px 10px 10px;
+                margin:0 -20px;
+                border-bottom:solid 1px #ededed;                
+            }
+            .embody_b{
+                margin:0 ;
+                padding:10px 0;
+            }
+            .embody .embody_t,.embody .embody_c{
+                display: inline-block;
+                margin-right:10px;
+            }
+            .embody_t{
+                font-size: 12px;
+                color:#999;
+            }
+            .embody_c{
+                font-size: 12px;
+            }
+            .embody_c img,.embody_c em{
+                display: inline-block;
+                vertical-align: middle;               
+            }
+             .embody_c img{               
+                width:30px;
+                height:30px;
+            }
+            .embody_c em{
+                margin: 0 20px 0 10px;
+                color:#333;
+                font-style: normal;
+            }
+    </style>
+    <script  type="text/javascript">
+        $(function () {
+            try
+            {
+                var lib = eval("("+$("#lib").attr("value")+")");
+                var html = "";
+                if (lib.err == 0) {
+                    $.each(lib.data, function (i) {
+                        var obj = lib.data[i];
+                        //html += '<img src="' + obj.logo + '"/>' + obj.name + "&nbsp;&nbsp;";
+                        html += ' <a href="' + obj.url + '" target="_blank">';
+                        html += ' <img src="' + obj.logo + '">';
+                        html += ' <em><b>' + obj.name + '</b></em>';
+                        html += ' </a>';
+                    });
+                    if (html != "") {
+                        setTimeout(function () {
+                            $("#lib").html(html);                      
+                            $("#embody").show();
+                        }, 100);
+                    }
+                }      
+            } catch (err)
+            { }
+            
+        });
+    </script>
+      <div class="category clearfix">
+        <div class="category_l">
+           <img src="http://static.blog.csdn.net/images/category_icon.jpg">
+            <span>分类：</span>
+        </div>
+        <div class="category_r">
+                    <label  onclick="GetCategoryArticles('628361','jiaolongdy','top','17889787');">
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">Linux<em>（7）</em></span>
+                      <img class="arrow-down" src="http://static.blog.csdn.net/images/arrow_triangle _down.jpg" style="display:inline;">
+                      <img class="arrow-up" src="http://static.blog.csdn.net/images/arrow_triangle_up.jpg" style="display:none;">
+                        <div class="subItem">
+                            <div class="subItem_t"><a  href="http://blog.csdn.net/jiaolongdy/article/category/628361"  target="_blank">作者同类文章</a><i class="J_close">X</i></div>
+                            <ul class="subItem_l" id="top_628361">                            
+                            </ul>
+                        </div>
+                    </label>                    
+                    <label>
+                        <span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_fenlei']);">vim<em></em></span>                       
+                    </label>      
+        </div>
+    </div>
+    <script   type="text/javascript" src="http://static.blog.csdn.net/scripts/category.js"></script>  
+        <div   class="bog_copyright">         
+            <p  class="copyright_p" >版权声明：本文为博主原创文章，未经博主允许不得转载。</p>
+        </div>
+
+  
+
+  
+  
+     
+
+<div id="article_content" class="article_content">
+
+<span style="font-size:13px; font-family:Arial"></span><span style="font-size:13px; font-family:Arial">Vundle是基于Git仓库的插件管理软件。Vundle将插件的安装简化为类&#20284;yum软件安装的过程，只要:BundleInstall插件就安装完了，:BundleClean之后插件就卸载了。</span><br>
+<strong>一、Vundle的安装和使用</strong><br>
+<span style="font-size:13px; font-family:Arial">1. Vundle的安装</span><br>
+<span style="font-size:13px; font-family:Arial"></span><pre code_snippet_id="143520" snippet_file_name="blog_20140105_1_768436"  code_snippet_id="143520" snippet_file_name="blog_20140105_1_768436" name="code" class="ruby">$ git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle</pre><span style="font-size:13px; font-family:Arial"></span><br>
+<span style="font-size:13px; font-family:Arial">2. 更新.vimrc配置文件</span>
+<p></p>
+<pre code_snippet_id="143520" snippet_file_name="blog_20140105_2_7115128"  code_snippet_id="143520" snippet_file_name="blog_20140105_2_7115128" name="code" class="python">set nocompatible              &quot; be iMproved
+filetype off                  &quot; required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+&quot; let Vundle manage Vundle
+&quot; required! 
+Bundle 'gmarik/vundle'
+
+&quot; 可以通过以下四种方式指定插件的来源
+&quot; a) 指定Github中vim-scripts仓库中的插件，直接指定插件名称即可，插件明中的空格使用“-”代替。
+Bundle 'L9'
+
+“ b) 指定Github中其他用户仓库的插件，使用“用户名/插件名称”的方式指定
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-rails.git'
+
+&quot; c) 指定非Github的Git仓库的插件，需要使用git地址
+Bundle 'git://git.wincent.com/command-t.git'
+
+&quot; d) 指定本地Git仓库中的插件
+Bundle 'file:///Users/gmarik/path/to/plugin'
+
+filetype plugin indent on     &quot; required!</pre>
+<p></p>
+<span style="font-size:13px; font-family:Arial"></span><br>
+<span style="font-size:13px; font-family:Arial">3. 安装插件:</span><br>
+<pre code_snippet_id="143520" snippet_file_name="blog_20140105_3_844883"  code_snippet_id="143520" snippet_file_name="blog_20140105_3_844883" name="code" class="python">:BundleInstall</pre>
+<div><span style="font-family:Arial; font-size:12px"><br>
+</span><span style="font-size:13px; font-family:Arial">4. 卸载插件</span><br>
+<span style="font-size:13px; font-family:Arial">如果要卸载插件就只需要删除.vimrc中的Bundle，然后在Vim中执行</span><br>
+<pre code_snippet_id="143520" snippet_file_name="blog_20140105_4_2415046"  code_snippet_id="143520" snippet_file_name="blog_20140105_4_2415046" name="code" class="python">:BundleClean</pre><br>
+<span style="font-size:13px; font-family:Arial"><strong>二、Vundle常用命令</strong></span><br>
+<pre code_snippet_id="143520" snippet_file_name="blog_20140105_5_1684698"  code_snippet_id="143520" snippet_file_name="blog_20140105_5_1684698" name="code" class="python">:BundleList              -列举列表(也就是.vimrc)中配置的所有插件
+:BundleInstall          -安装列表中的全部插件
+:BundleInstall!         -更新列表中的全部插件
+:BundleSearch foo   -查找foo插件
+:BundleSearch! foo  -刷新foo插件缓存
+:BundleClean           -清除列表中没有的插件
+:BundleClean!          -清除列表中没有的插件</pre>
+<div><br>
+</div>
+<strong>附：参考文献</strong></div>
+<div><span style="font-size:13px; font-family:Arial"><a target="_blank" target="_blank" href="https://github.com/gmarik/vundle">Vundle项目</a></span><br>
+</div>
+<div><a target="_blank" href="http://vim-scripts.org/">vim-scripts</a>维护的<a target="_blank" href="https://github.com/vim-scripts">GitHub repo</a><br>
+</div>
+<div><br>
+</div>
+   
+</div>
+
+
+
+
+<!-- Baidu Button BEGIN -->
+
+
+
+
+<div class="bdsharebuttonbox tracking-ad" style="float: right;" data-mod="popu_172">
+<a href="#" class="bds_more" data-cmd="more" style="background-position:0 0 !important; background-image: url(http://bdimg.share.baidu.com/static/api/img/share/icons_0_16.png?v=d754dcc0.png) !important"></a>
+<a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"  style="background-position:0 -52px !important"></a>
+<a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"style="background-position:0 -104px !important"></a>
+<a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"style="background-position:0 -260px !important"></a>
+<a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"style="background-position:0 -208px !important"></a>
+<a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"style="background-position:0 -1612px !important" ></a>
+</div>
+<script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "1", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+<!-- Baidu Button END -->
+
+   <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_detail.css" />
+
+    
+<!--172.16.140.13-->
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" ></script>
+<script type="text/javascript" id="bdshell_js"></script>
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+ 
+
+
+        <div id="digg" ArticleId="17889787" >
+            <dl id="btnDigg" class="digg digg_disable"  onclick="btndigga();">
+               
+                 <dt>顶</dt>
+                <dd>7</dd>
+            </dl>
+           
+              
+            <dl id="btnBury" class="digg digg_disable"  onclick="btnburya();">
+              
+                  <dt>踩</dt>
+                <dd>0</dd>               
+            </dl>
+            
+        </div>
+     <div class="tracking-ad" data-mod="popu_222"><a href="javascript:void(0);" >&nbsp;</a>   </div>
+    <div class="tracking-ad" data-mod="popu_223"> <a href="javascript:void(0);" >&nbsp;</a></div>
+    <script type="text/javascript">
+                function btndigga() {
+                    $(".tracking-ad[data-mod='popu_222'] a").click();
+                }
+                function btnburya() {
+                    $(".tracking-ad[data-mod='popu_223'] a").click();
+                }
+            </script>
+
+   <ul class="article_next_prev">
+                <li class="prev_article"><span  onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian']);location.href='/jiaolongdy/article/details/15106149';">上一篇</span><a href="/jiaolongdy/article/details/15106149" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_shangyipian'])">C++ primer读书笔记——5.12 类型转换</a></li>
+                <li class="next_article"><span onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian']);location.href='/jiaolongdy/article/details/26529035';">下一篇</span><a href="/jiaolongdy/article/details/26529035" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_xiayipian'])">01 计算机系统漫游</a></li>
+    </ul>
+
+    <div style="clear:both; height:10px;"></div>
+
+
+        <div class="similar_article"  style="display:none">
+                <h4>我的同类文章</h4>
+                <div class="similar_c"style="margin:20px 0px 0px 0px">
+                    <div class="similar_c_t">
+                                <label class="similar_cur">
+                                    <span  style="cursor:pointer"  onclick="GetCategoryArticles('628361','jiaolongdy','foot','17889787');">Linux<em>（7）</em></span>
+                                </label>
+                    </div>
+                   
+                    <div class="similar_wrap tracking-ad" data-mod="popu_141"  style="max-height:195px;">
+                        <a href="http://blog.csdn.net" style="display:none">http://blog.csdn.net</a>
+                        <ul class="similar_list fl">                          
+                        </ul>
+
+                        <ul class="similar_list fr">                           
+                        </ul>
+                    </div>
+                </div>
+            </div>    
+    <script  type="text/javascript">
+        $(function () {
+            GetCategoryArticles('628361', 'jiaolongdy','foot','17889787');
+        });
+    </script>
+      
+</div>
+
+    <div>
+            <ins data-revive-zoneid="205" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins> 
+     </div>
+
+<div id="suggest"></div>
+         <script  language="javascript" type='text/javascript'>     
+             $(function(){
+                 $.get("/jiaolongdy/svc/GetSuggestContent/17889787",function(data){
+                     $("#suggest").html(data);
+                 });     
+             });             
+         </script>  
+
+
+<style>
+.blog-ass-articl dd {
+color: #369;
+width: 99%; /*修改行*/
+float: left;
+overflow: hidden;
+font: normal normal 12px/23px "SimSun";
+height: 23px;
+margin: 0;
+padding: 0 0 0 10px;
+margin-right: 30px;
+background: url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;
+}
+</style>
+
+ <link rel="stylesheet" href="http://static.blog.csdn.net/css/replace.css"/>
+<div id="relate" data-mod="popu_218"  class="tracking-ad">
+        <div class="relate_t">
+            <h3><span>参考知识库</span></h3>
+        </div>
+        <div class="relate_c">
+        </div>
+</div>
+ 
+
+<dl class="blog-ass-articl" id="res-relatived" > 
+    <div class="embody embody_b" id="libkeyparent"  style="display:none">
+            <span class="embody_t">更多资料请参考：</span>
+            <div class="embody_c" id="libkey"></div>
+    </div>
+
+
+     <dt><span>猜你在找</span></dt>    
+
+
+   
+
+
+    <div id="adCollege" style="width: 42%;float: left;"> 
+        <script src="http://csdnimg.cn/jobreco/job_reco.js" type="text/javascript"></script> 
+        <script type="text/javascript">
+            csdn.position.showEdu({
+                sourceType: "blog",
+                searchType: "detail",
+                searchKey: "17889787",
+                username: "",
+                recordcount: "5",
+                containerId: "adCollege" //容器DIV的id。 
+            });
+        </script> 
+    </div>  
+
+    
+     <div id="res"  data-mod="popu_36"  class="tracking-ad" style="width: 42%;float: left;margin-right: 30px;"></div>
+   
+</dl>
+
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            var searchtitletags = 'Vim插件管理利器——Vundle' + ',' + $("#tags").html();
+            searchService({
+                index: 'blog',
+                query: searchtitletags,
+                from: 5,
+                size: 5,
+                appendTo: '#res',
+                url: 'recommend',
+                his: 2,
+                client: "blog_cf_enhance",
+                tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+            });
+        }, 500);
+    });    
+
+ </script>  
+
+
+    <div id="ad_cen">        
+<ins data-revive-zoneid="71" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>    </div>  
+
+    <!-- 广告位开始 -->
+    <ins data-revive-zoneid="72" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins>
+    <!-- 广告位结束 -->
+
+<div class="comment_class">
+    <div id="comment_title" class="panel_head">
+        <span class="see_comment">查看评论</span><a name="comments"></a></div>
+    <div id="comment_list">
+    </div>
+    <div id="comment_bar">
+    </div>
+    <div id="comment_form">
+    </div>
+    <div class="announce">
+        * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+</div>
+
+<script type="text/javascript">
+    var fileName = '17889787';
+    var commentscount = 1;
+    var islock = false
+</script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+<div id="report_dialog">
+</div>
+
+<div id="d-top"  style="bottom:60px;">
+
+        <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="http://static.blog.csdn.net/images/blog-icon-reply.png" alt="快速回复">
+        </a>    
+    <a id="d-top-a" class="btn btn-top backtop"  style="display: none;" title="返回顶部" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_huidaodingbu'])" style="">         
+         <img src="http://static.blog.csdn.net/images/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        $("#ad_frm_0").height("90px");
+        
+        setTimeout(function(){
+            $("#ad_frm_2").height("200px");
+        },1000);    
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+
+
+<div class="tag_list" style="display:none"></div>
+  <script  language="javascript" type='text/javascript'>     
+      $(function(){
+              setTimeout(function(){
+                  $.get("/jiaolongdy/svc/GetTagContent",function(data){
+                      $(".tag_list").html(data).show();
+                  });     
+              });
+          },500);                       
+ </script> 
+
+
+<div id="pop_win" style="display:none ;position: absolute; z-index: 10000; border: 1px solid rgb(220, 220, 220); top: 222.5px; left: 630px; opacity: 1; background: none 0px 0px repeat scroll rgb(255, 255, 255);">
+    
+</div>
+<div id="popup_mask"></div>
+<style>
+    #popup_mask
+    {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        z-index: 9999;
+        left: 0px;
+        top: 0px;
+        opacity: 0.3;
+        filter: alpha(opacity=30);
+        display: none;
+    }
+
+</style>
+
+
+
+
+<script type="text/javascript">
+    $(function(){
+        setTimeout(function(){
+            $(".comment_body:contains('回复')").each(function(index,item){
+                var u=$(this).text().split('：')[0].toString().replace("回复","")
+                var thisComment=$(this);
+                if(u)
+                {
+                    $.getJSON("https://passport.csdn.net/get/nick?callback=?", {users: u}, function(a) {
+                        if(a!=null&&a.data!=null&&a.data.length>0)
+                        {
+                            nick=a.data[0].n; 
+                            if(u!=nick)
+                            {
+                                thisComment.text(thisComment.text().replace(u,nick));  
+                            }
+                        }       
+                    });  
+                }
+            });         
+
+        },200);  
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },5000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },10000);
+
+        setTimeout(function(){
+            $(".math").each(function(index,value){$(this).find("span").last().css("color","#fff"); })
+        },15000);
+        
+        setTimeout(function(){
+            $("a img[src='http://js.tongji.linezing.com/stats.gif']").parent().css({"position":"absolute","left":"50%"});
+        },300);
+    });
+
+    function loginbox(){
+        var $logpop=$("#pop_win");
+        $logpop.html('<iframe src="https://passport.csdn.net/account/loginbox?service=http://static.blog.csdn.net/callback.htm" frameborder="0" height="600" width="400" scrolling="no"></iframe>');
+
+        $('#popup_mask').css({
+            opacity: 0.5,
+            width: $( document ).width() + 'px',
+            height:  $( document ).height() + 'px'
+        });
+        $('#popup_mask').css("display","block");
+ 
+        $logpop.css( {
+            top: ($( window ).height() - $logpop.height())/ 2  + $( window 
+       ).scrollTop() + 'px',
+            left:($( window ).width() - $logpop.width())/ 2
+        } );
+ 
+        setTimeout( function () {
+            $logpop.show();
+            $logpop.css( {
+                opacity: 1
+            } );
+        }, 200 );
+ 
+        $('#popup_mask').unbind("click");
+        $('#popup_mask').bind("click", function(){
+            $('#popup_mask').hide();
+            var $clopop = $("#pop_win");
+            $("#common_ask_div_sc").css("display","none");
+            $clopop.css( {
+                opacity: 0
+            } );
+            setTimeout( function () {
+                $clopop.hide();
+            }, 350 );
+            return false;
+        });
+    }   
+
+</script>
+ <script language="javascript" type="text/javascript" src="http://ads.csdn.net/js/async_new.js"></script>      
+
+
+
+
+                        <div class="clear">
+                        </div>
+                    </div>                   
+                
+            </div>
+                   
+           <div id="side">
+               
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/jiaolongdy" target="_blank">
+    <img src="http://avatar.csdn.net/8/1/B/1_jiaolongdy.jpg" title="访问我的空间" style="max-width:90%"/>
+    </a>
+    <br />
+    <span><a href="http://my.csdn.net/jiaolongdy" class="user_name" target="_blank">jiaolongdy</a></span>
+</div>
+<div class="interact">
+
+    <a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]"></a>
+
+ <a href="javascript:void(0);" class="letter"  title="[发私信]" onclick="window.open('http://msg.csdn.net/letters/model?receiver=jiaolongdy','_blank','height=350,width=700');_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_sixin'])"></a>  
+</div>
+<div id="blog_medal">
+                <div id="bms_box">
+                                            <a  target="_blank">
+                                                    <img src="http://c.csdnimg.cn/jifen/images/xunzhang/xunzhang/chizhiyiheng.png" onmouseover="m_over_m(this,4)" onmouseout="m_out_m()" alt="1" >
+                                            </a>
+               </div>
+</div>
+<ul id="blog_rank">
+    <li>访问：<span>159974次</span></li>
+    <li>积分：<span>2326</span> </li>    
+    <li >等级： <span style="position:relative;display:inline-block;z-index:1" >
+            <img src="http://c.csdnimg.cn/jifen/images/xunzhang/jianzhang/blog5.png" alt="" style="vertical-align: middle;" id="leveImg">
+            <div id="smallTittle" style=" position: absolute;  left: -24px;  top: 25px;  text-align: center;  width: 101px;  height: 32px;  background-color: #fff;  line-height: 32px;  border: 2px #DDDDDD solid;  box-shadow: 0px 2px 2px rgba (0,0,0,0.1);  display: none;   z-index: 999;">
+            <div style="left: 42%;  top: -8px;  position: absolute;  width: 0;  height: 0;  border-left: 10px solid transparent;  border-right: 10px solid transparent;  border-bottom: 8px solid #EAEAEA;"></div>
+            积分：2326 </div>
+        </span>  </li>
+    <li>排名：<span>第13292名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>82篇</span></li>
+    <li>转载：<span>43篇</span></li>
+    <li>译文：<span>1篇</span></li>
+    <li>评论：<span>16条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字" /></span>
+        <input id="btnSubmit" type="button" value="搜索" title="search in blog" />
+        <input type="hidden" name="q" id="inputQ" />
+        <input type="hidden" name="t" value="blog" />
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $("#btnSubmit").click(function () {           
+            search();
+        });
+
+        $("#frmSearch").submit(function () {
+            search();
+            return false;
+        });
+
+        function search()
+        {
+            var url = "http://so.csdn.net/so/search/s.do?q=" + encodeURIComponent($("#inputSearch").val()) + "&u=" + username + "&t=blog";
+            window.location.href = url;
+        }   
+    });
+</script><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">    
+                 <li>
+                    <a href="/jiaolongdy/article/category/636965" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">.net</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/657952" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Bloom Filter</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636966" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">C/C++</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/628360" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">CORBA</a><span>(5)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636963" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">DCOM</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/649822" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">dos</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/628361" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">Linux</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/649994" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MapReduce</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/628362" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">MPI</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/645233" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ORBacus</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/783231" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">SVN</a><span>(11)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/650872" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">VC</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636967" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">人生感悟</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636964" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">多线程</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636968" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">学习方法</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/759069" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">工作记录</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636961" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">操作系统</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/649798" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库（基础）</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/649799" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">数据库（应用）</a><span>(2)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/637089" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">水晶报表</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/652539" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">电脑相关</a><span>(4)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/668118" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">科研</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/658808" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">算法</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/636962" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">编程相关</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/683950" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">网站</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/783258" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">项目管理实践教程</a><span>(8)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/1382963" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">ubuntu</a><span>(3)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/1841795" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">vim</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/2280745" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">读书笔记</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/2651943" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">linux</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/2670499" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">regex</a><span>(0)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/3087307" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">python</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/5762447" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">mac</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/5949095" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">go</a><span>(7)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/6048978" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">sed</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/6137770" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">git</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/6191156" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">架构</a><span>(1)</span>
+                </li>
+                 <li>
+                    <a href="/jiaolongdy/article/category/6191157" onclick="_gaq.push(['_trackEvent','function', 'onclick', 'blog_articles_wenzhangfenlei']); ">微服务</a><span>(1)</span>
+                </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list">
+<!--归档统计-->
+<li><a href="/jiaolongdy/article/month/2016/04">2016年04月</a><span>(3)</span></li><li><a href="/jiaolongdy/article/month/2016/03">2016年03月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2016/02">2016年02月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2015/12">2015年12月</a><span>(3)</span></li><li><a href="/jiaolongdy/article/month/2015/11">2015年11月</a><span>(5)</span></li><li><a href="/jiaolongdy/article/month/2015/10">2015年10月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2015/08">2015年08月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2015/05">2015年05月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2015/04">2015年04月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2015/03">2015年03月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2014/12">2014年12月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2014/11">2014年11月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2014/10">2014年10月</a><span>(3)</span></li><li><a href="/jiaolongdy/article/month/2014/09">2014年09月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2014/08">2014年08月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2014/06">2014年06月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2014/05">2014年05月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2014/01">2014年01月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2013/11">2013年11月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2013/07">2013年07月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2013/04">2013年04月</a><span>(16)</span></li><li><a href="/jiaolongdy/article/month/2011/03">2011年03月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2011/02">2011年02月</a><span>(11)</span></li><li><a href="/jiaolongdy/article/month/2010/12">2010年12月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2010/11">2010年11月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2010/07">2010年07月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2010/05">2010年05月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2010/04">2010年04月</a><span>(6)</span></li><li><a href="/jiaolongdy/article/month/2010/03">2010年03月</a><span>(5)</span></li><li><a href="/jiaolongdy/article/month/2010/02">2010年02月</a><span>(12)</span></li><li><a href="/jiaolongdy/article/month/2010/01">2010年01月</a><span>(19)</span></li><li><a href="/jiaolongdy/article/month/2009/12">2009年12月</a><span>(9)</span></li><li><a href="/jiaolongdy/article/month/2009/03">2009年03月</a><span>(1)</span></li><li><a href="/jiaolongdy/article/month/2009/01">2009年01月</a><span>(2)</span></li><li><a href="/jiaolongdy/article/month/2008/12">2008年12月</a><span>(2)</span></li>
+</div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="/jiaolongdy/article/details/17889787" title="Vim插件管理利器——Vundle">Vim插件管理利器——Vundle</a><span>(30445)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/49254511" title="mac OS X El Capitan xcrun: error: invalid active developer path missing xcrun at">mac OS X El Capitan xcrun: error: invalid active developer path missing xcrun at</a><span>(7570)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/40374435" title="linux watch——重复执行同一命令">linux watch——重复执行同一命令</a><span>(6924)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5089420" title="[转]水晶报表的宽度调整方法（设计器、代码调整、rpt文件属性）">[转]水晶报表的宽度调整方法（设计器、代码调整、rpt文件属性）</a><span>(5212)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/51188798" title="​永不失联！如何实现微服务架构中的服务发现？">​永不失联！如何实现微服务架构中的服务发现？</a><span>(4460)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/6106782" title="[转]VC 6.0 快捷键添加/取消注释">[转]VC 6.0 快捷键添加/取消注释</a><span>(4051)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/38350043" title="C/C++中计算两个时间相差的天数">C/C++中计算两个时间相差的天数</a><span>(3498)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5543657" title="[转]ping有滴声/ping有报警声/ping出现问号解决办法">[转]ping有滴声/ping有报警声/ping出现问号解决办法</a><span>(3253)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/8752706" title="使grub4dos引导启动linux">使grub4dos引导启动linux</a><span>(3225)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/3835849" title="如何读论文">如何读论文</a><span>(3036)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="/jiaolongdy/article/details/5425189" title="［转］如何搜索计算机科学类的中英文论文">［转］如何搜索计算机科学类的中英文论文</a><span>(3)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5089420" title="[转]水晶报表的宽度调整方法（设计器、代码调整、rpt文件属性）">[转]水晶报表的宽度调整方法（设计器、代码调整、rpt文件属性）</a><span>(2)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/3620800" title="大数运算">大数运算</a><span>(2)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5457872" title="[笔记]Win32多线程API">[笔记]Win32多线程API</a><span>(2)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5282517" title="[转]可编辑列表控件（支持TAB键）">[转]可编辑列表控件（支持TAB键）</a><span>(2)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5297562" title="[转]IE Javascript 脚本失效解决办法">[转]IE Javascript 脚本失效解决办法</a><span>(1)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/17889787" title="Vim插件管理利器——Vundle">Vim插件管理利器——Vundle</a><span>(1)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/5205766" title="[转]Orbacus名字服务的使用">[转]Orbacus名字服务的使用</a><span>(1)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/6106782" title="[转]VC 6.0 快捷键添加/取消注释">[转]VC 6.0 快捷键添加/取消注释</a><span>(1)</span>
+</li>
+<li>
+<a href="/jiaolongdy/article/details/6039911" title="会议文章目录制作全过程">会议文章目录制作全过程</a><span>(1)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend">
+<ul>
+<li><a href="http://blog.csdn.net/mmoaay/article/details/54562045" target="_blank">* 造轮子 | 如何设计一个面向协议的 iOS 网络请求库</a></li>
+<li><a href="http://blog.csdn.net/guolin_blog/article/details/53122387" 
+target="_blank">* Android新特性介绍，ConstraintLayout完全解析</a></li>
+<li><a href="http://blog.csdn.net/lmj623565791/article/details/54882693"target="_blank">* Android 热修复 Tinker接入及源码浅析</a></li>
+<li><a href="http://blog.csdn.net/zwgdft/article/details/54728677" target="_blank">* 创业公司做数据分析（六）数据仓库的建设</a></li>
+<li><a href="http://blog.csdn.net/chenssy/article/details/54883355" 
+target="_blank">* 【死磕Java并发】-----深入分析synchronized的实现原理</a></li>
+
+
+</ul></ul>
+</div>
+
+
+<div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="/jiaolongdy/article/details/17889787#comments">Vim插件管理利器——Vundle</a>
+    <p style="margin:0px;"><a href="/f_passion" class="user_name">f_passion</a>:
+呀。有解释呢。GitHub上写着是“plugin”，它和Bundle同等吗？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/5457872#comments">[笔记]Win32多线程API</a>
+    <p style="margin:0px;"><a href="/jiaolongdy" class="user_name">jiaolongdy</a>:
+@craigtao:一直没有留意你的留言，这么长时间才修改，请见谅。谢谢指出错误！
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/5457872#comments">[笔记]Win32多线程API</a>
+    <p style="margin:0px;"><a href="/craigtao" class="user_name">craigtao</a>:
+printf () ,,函数斜杠换行都错了，
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/5282517#comments">[转]可编辑列表控件（支持TAB键）</a>
+    <p style="margin:0px;"><a href="/zh382559883" class="user_name">zh382559883</a>:
+m_edit.GetCtrlData(),我也是这样做的，但是为什么会报一个错： error C20...
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/6106782#comments">[转]VC 6.0 快捷键添加/取消注释</a>
+    <p style="margin:0px;"><a href="/leather0906" class="user_name">leather0906</a>:
+看懂了，谢谢
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/6039911#comments">会议文章目录制作全过程</a>
+    <p style="margin:0px;"><a href="/jiaolongdy" class="user_name">jiaolongdy</a>:
+文中的  /1 应该改成  \1
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/6039911#comments">[转]可编辑列表控件（支持TAB键）</a>
+    <p style="margin:0px;"><a href="/yanmanm" class="user_name">yanmanm</a>:
+能否把这个代码发给我？
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/5425189#comments">［转］如何搜索计算机科学类的中英文论文</a>
+    <p style="margin:0px;"><a href="/dandanaisen" class="user_name">dandanaisen</a>:
+
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/5425189#comments">［转］如何搜索计算机科学类的中英文论文</a>
+    <p style="margin:0px;"><a href="/匿名用户" class="user_name">匿名用户</a>:
+
+    </p>
+    </li>
+    <li>
+   
+         <a href="/jiaolongdy/article/details/5089420#comments">[转]水晶报表的宽度调整方法（设计器、代码调整、rpt文件属性）</a>
+    <p style="margin:0px;"><a href="/csdnadmin" class="user_name">csdnadmin</a>:
+我博客里面有方法
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+
+
+                   <!-- 广告位开始 --> 
+                    <ins data-revive-zoneid="190" data-revive-id="8c38e720de1c90a6f6ff52f3f89c4d57"></ins> 
+                    <!-- 广告位结束 -->
+
+           </div>   
+
+            <div class="clear">
+            </div>
+        </div>
+
+        
+
+<script type="text/javascript" src="http://c.csdnimg.cn/rabbit/cnick/cnick.js"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/newblog.min.js"></script>
+
+
+<script type="text/javascript" src="http://medal.blog.csdn.net/showblogmedal.ashx?blogid=328987"></script>
+<script type="text/javascript" src="http://static.blog.csdn.net/scripts/JavaScript1.js"></script>
+
+    <script type="text/javascript" src="http://passport.csdn.net/content/loginbox/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script>
+<script type="text/javascript" src="http://www.csdn.net/ui/scripts/Csdn/counter.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<span class='tracking-ad' data-mod='popu_167'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a></span>"
+                    + "<span class='tracking-ad' data-mod='popu_170'><a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a></span>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+
+        $(".bar").show();
+    });
+</script>
+
+
+
+
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnId="header_notice_num" wrapId="note1" count="5" subCount="5" type="text/javascript" src="http://c.csdnimg.cn/public/common/toolbar/js/toolbar.js"></script>     <!--new top-->
+   
+    <link href="http://c.csdnimg.cn/comm_ask/css/ask_float_block.css" type="text/css" rel="stylesheet" />
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/wmd.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/showdown.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/libs/prettify.js'></script>
+    <script language='JavaScript' type='text/javascript' src='http://c.csdnimg.cn/comm_ask/js/apps/ask_float_block.js'></script>
+   
+
+   
+
+  <div id="a52b5334d" style="width: 1px; height: 1px; display: none;">
+                    <script id="adJs52b5334"></script>
+                    <script>document.getElementById("adJs52b5334").src = "http://ads.csdn.net/js/opt/52b5334.js?t=" + Math.random();</script>
+   </div>
+
+    <link rel="stylesheet" href="http://static.blog.csdn.net/css/blog_code.css" />
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/saveToCode.js"></script>
+      <script type="text/javascript" src="//csdnimg.cn/rabbit/tracking-ad/main.js?75eacd8"></script>
+
+     <link rel="stylesheet" href="http://static.blog.csdn.net/css/fa.css" />
+
+    <div class="pop_CA_cover"  style="display:none"></div>
+    <div class="pop pop_CA"  style="display:none">
+          <div class="CA_header">
+            收藏助手
+            <span class="cancel_icon"  id="fapancle"  onclick="$('.pop_CA').hide();$('.pop_CA_cover').hide();"></span>
+          </div>
+          <iframe src="" id="fa" frameborder="0" width="100%" height="360"  scrolling="no" />
+    </div>
+</body>
+</html>   
+ 
