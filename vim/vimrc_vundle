@@ -56,7 +56,8 @@ Plugin 'plasticboy/vim-markdown'
 " markdown preview支持
 Plugin 'iamcco/mathjax-support-for-mkdp'
 Plugin 'iamcco/markdown-preview.vim'
-" windows要把chrome的路径添加到PATH环境变量里
+" let g:mkdp_path_to_chrome = "/C/Program\\ Files\\ \\(x86\\)/Google/Chrome/Application/chrome"     " windows
+" let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"    " mac
 let g:mkdp_path_to_chrome = "chrome"
 let g:mkdp_auto_close = 0
 nmap mo <Plug>MarkdownPreview
