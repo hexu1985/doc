@@ -49,6 +49,20 @@ let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplForceSyntaxEnable = 1
 let g:miniBufExplorerMoreThanOne=2
 
+" markdown语法支持
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
+" markdown preview支持
+Plugin 'iamcco/mathjax-support-for-mkdp'
+Plugin 'iamcco/markdown-preview.vim'
+" let g:mkdp_path_to_chrome = "/C/Program\\ Files\\ \\(x86\\)/Google/Chrome/Application/chrome"     " windows
+" let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"    " mac
+let g:mkdp_path_to_chrome = "chrome"
+let g:mkdp_auto_close = 0
+nmap mo <Plug>MarkdownPreview
+nmap mc <Plug>StopMarkdownPreview
+
 " 每个插件都应该在这一行之前  
 call vundle#end()            " required
 
