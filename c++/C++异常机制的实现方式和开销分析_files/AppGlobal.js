@@ -1,0 +1,2 @@
+(function(){function a(){BAIY.IO.LoadCss("/css/mobile.css")}if(BAIY.MOB.IsOnAndroid()&&-1!=navigator.userAgent.indexOf("HUAWEI")){if(window.devicePixelRatio>=3){a();return}if(window.screen.width<window.screen.height&&window.devicePixelRatio>2){a();return}}if(BAIY.MOB.IsMobileRuntime()){var b=nInitWinW=window.screen.width,c=nInitWinH=window.screen.height;if(90==window.orientation||-90==window.orientation)b=nInitWinW>nInitWinH?nInitWinW:nInitWinH,c=nInitWinW>nInitWinH?nInitWinH:nInitWinW;(b<980||c<
+350)&&a()}})();
