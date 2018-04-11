@@ -1,0 +1,155 @@
+————————安装交叉编译环境————————
+
+sudo mkdir /usr/local/arm
+sudo tar -zxvf 20150309_TL7789_Image/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12.tar.gz -C /usr/local/arm/
+设置环境变量，在vi ~/.bashrc、/etc/bash.bashrc、/etc/environment最后加入
+export PATH=$PATH:/usr/local/arm/gcc-4.6.2-glibc-2.13-linaro-multilib-2011.12/fsl-linaro-toolchain/bin/
+检查是否将路径加入到PATH
+echo $PATH
+测试是否安装成功
+arm-none-linux-gnueabi-g++ -v
+sudo apt-get update
+sudo apt-get upgrade
+
+
+系统是64位的那就会报错，因为64位的系统缺少32位的库，需要在安装
+sudo apt-get install ia32-libs
+
+crscd@ubuntu:~/Downloads$ sudo apt-get install ia32-libs
+[sudo] password for crscd: 
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Package ia32-libs is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  lib32z1 lib32ncurses5 lib32bz2-1.0
+
+E: Package 'ia32-libs' has no installation candidate
+
+
+sudo apt-get install lib32z1
+执行arm-none-linux-gnueabi-g++ -v测试通过
+
+
+
+
+
+
+
+————————安装QT交叉编译环境————————
+
+sudo apt-get install g++
+
+sudo ./configure -prefix /usr/local/QtEmbedded-4.8.6-arm -embedded arm -host-little-endian -no-cups -no-3dnow -nomake examples -nomake demos -nomake docs -xplatform qws/linux-arm-gnueabi-g++ -little-endian -opensource -confirm-license -lrt
+
+
+make 或 make -j8 （-j8表示8线程并行编译，加快速度）
+
+
+报arm-none-linux-gnueabi-g++:Command not found
+
+
+
+加sudo后找不到命令
+编辑/etc/sudoers文件，把Defaults env_reset改成Defaults ! env_reset 编辑.bashrc,最后添加alias sudo='sudo env PATH=$PATH'
+
+make install
+
+设置环境变量
+export ARMQTDIR=/usr/local/QtEmbedded-4.8.6-arm
+export PATH=$ARMQTDIR/bin:$PATH
+export LD_LIBRARY_PATH=$ARMQTDIR/lib:$LD_LIBRARY_PATH
+export QMAKESPEC=$ARMQTDIR/mkspecs/qws/linux-arm-gnueabi-g++
+使其生效：source ~/.bashrc
+
+
+
+
+
+
+
+————————编译SSDB数据库————————
+
+进入deps/snappy-1.1.0
+./configure CC=arm-none-linux-gnueabi-gcc --host=arm-linux
+make
+查看编译是否正确，objdump -a .libs/libsnappy.a
+
+进入deps/jemalloc-4.1.0
+没有configure，执行./autogen.sh
+./configure CC=arm-none-linux-gnueabi-gcc --host=arm-linux
+make
+查看编译是否正确，objdump -a lib/libjemalloc.a 
+
+进入deps/leveldb-1.18
+make CXX=arm-none-linux-gnueabi-gcc
+查看编译是否正确，objdump -a libleveldb.a
+
+修改build.sh
+CC=arm-none-linux-gnueabi-gcc
+CXX=arm-none-linux-gnueabi-g++
+注释掉snappy和jemalloc编译相关的./configure make等
+
+运行build.sh
+make
+查看编译是否正确，file ssdb-server
+
+
+
+
+
+
+————————编译libpcap 1.8.1————————
+
+
+确保你的系统已经安装了flex和bison
+
+修改confiugre文件，注释掉下面内容
+#if test -z "$with_pcap" && test "$cross_compiling" = yes; then
+#	as_fn_error $? "pcap type not determined when cross-compiling; use --#with-pcap=..." "$LINENO" 5
+#fi
+
+./configure CC=arm-none-linux-gnueabi-gcc --host=arm-linux
+make
+查看编译是否正确，objdump -a libpcap.a
+
+
+
+
+
+
+
+
+————————编译netsnmp————————
+
+
+./configure --host=arm-linux --with-cc=arm-none-linux-gnueabi-gcc --with-ar=arm-none-linux-gnueabi-ar --prefix=/usr/local/arm-netsnmp --without-perl-modules
+--without-perl-modules未启作用，在apps/Makefile,agent/Makefile中删掉-lperl
+sudo make install
+到安装路径下，查看编译是否正确，objdump -a libnetsnmp.a   objdump -a libnetsnmpagent.a
+
+
+
+
+
+
+
+
+————————编译boost1.57.0————————
+
+./bootstrap.sh
+修改生成的project-config.jam文件：
+
+using gcc : arm : arm-none-linux-gnueabi-gcc ;
+
+option.set prefix : /usr/local/arm-boost ;
+option.set exec-prefix : /usr/local/arm-boost ;
+option.set libdir : /usr/local/arm-boost/lib ;
+option.set includedir : /usr/local/arm-boost/include ;
+
+sudo ./bjam stage --layout=tagged --build-type=complete
+
+sudo ./b2
+sudo ./b2 install
