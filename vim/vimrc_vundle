@@ -27,7 +27,7 @@ Plugin 'gmarik/Vundle.vim'
 " Tagbar配置
 Plugin 'Tagbar'
 let g:tagbar_ctags_bin='ctags'
-let g:tagbar_width=20
+let g:tagbar_width=30
 let g:tagbar_left=1
 "let g:tagbar_right=1
 "autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
@@ -35,9 +35,10 @@ nmap tb :TagbarToggle<cr>
 
 " NERDTree配置, 首先要安装NERDTree: 
 Plugin 'The-NERD-tree'
+let NERDTreeShowHidden=1
 let NERDTreeWinPos='right'
 let NERDTreeShowBookmarks=1
-let NERDTreeWinSize=20
+let NERDTreeWinSize=30
 nmap nt :NERDTreeToggle<cr>
 
 nmap tt tbnt
