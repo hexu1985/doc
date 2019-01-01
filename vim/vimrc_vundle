@@ -5,7 +5,7 @@
 " 现在安装Vundle, 如下所示.
 " 请注意:Vundle本身是另一种Vim插件.
 " 因而, 我们将Vundle安装在之前创建的~/.vim/bundle下。
-" $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" $ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 " cp 当前文件到 ~/.vimrc
 
 " 安装插件, 执行 :PluginInstall
@@ -22,21 +22,22 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()  
  
 " 这应该始终是第一个 
-Plugin 'gmarik/Vundle.vim' 
+Plugin 'VundleVim/Vundle.vim' 
  
 " Tagbar配置
 Plugin 'Tagbar'
 let g:tagbar_ctags_bin='ctags'
 let g:tagbar_width=30
-let g:tagbar_left=1
-"let g:tagbar_right=1
+"let g:tagbar_left=1
+let g:tagbar_right=1
 "autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
 nmap tb :TagbarToggle<cr>
 
 " NERDTree配置, 首先要安装NERDTree: 
 Plugin 'The-NERD-tree'
 let NERDTreeShowHidden=1
-let NERDTreeWinPos='right'
+let NERDTreeWinPos='left'
+"let NERDTreeWinPos='right'
 let NERDTreeShowBookmarks=1
 let NERDTreeWinSize=30
 nmap nt :NERDTreeToggle<cr>
@@ -49,6 +50,13 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplForceSyntaxEnable = 1
 let g:miniBufExplorerMoreThanOne=2
+
+" DoxygenToolkit配置, 首先要安装DoxygenToolkit
+Plugin 'vim-scripts/DoxygenToolkit.vim'
+let g:DoxygenToolkit_authorName="hexu_1985@sina.com"
+let g:DoxygenToolkit_versionString="1.0"
+nmap tx :DoxAuthor<cr>
+nmap ty :Dox<cr>
 
 " 每个插件都应该在这一行之前  
 call vundle#end()            " required
