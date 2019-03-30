@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<title>Problema file ClangTools4.dll | Qt Forum</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="content-type" content="text/html; charset=UTF-8" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="mobile-web-app-capable" content="yes" />
+	<meta property="og:site_name" content="Qt Forum" />
+	<meta name="msapplication-badge" content="frequency=30; polling-uri=https://forum.qt.io/sitemap.xml" />
+	<meta name="keywords" content="Qt,discussion,question,q&amp;a,answer,forum" />
+	<meta name="msapplication-square150x150logo" content="https://ddgobkiprc33d.cloudfront.net/bb9f67d1-3dc4-46a8-a767-fc0da3035553.png" />
+	<meta name="title" content="Problema file ClangTools4.dll" />
+	<meta name="description" content="Aggiornamento. Ho risolto il problema della dll installando Clang con questo comando: pacman -S mingw-w64-x86_64-clang mingw-w64-i686-clang  (come spiegato qui https:&#x2F;&#x2F;gist.github.com&#x2F;bigworld12&#x2F;c2f2ec25af416f72b6c5f3a9fb4df16f) Però ancora non riesco a c..." />
+	<meta property="og:title" content="Problema file ClangTools4.dll" />
+	<meta property="og:description" content="Aggiornamento. Ho risolto il problema della dll installando Clang con questo comando: pacman -S mingw-w64-x86_64-clang mingw-w64-i686-clang  (come spiegato qui https:&#x2F;&#x2F;gist.github.com&#x2F;bigworld12&#x2F;c2f2ec25af416f72b6c5f3a9fb4df16f) Però ancora non riesco a c..." />
+	<meta property="og:type" content="article" />
+	<meta property="og:image" content="https://www.gravatar.com/avatar/8b3ce69baa1aed46126381d83308cd67?size=192&d=mm" />
+	<meta property="og:image:url" content="https://www.gravatar.com/avatar/8b3ce69baa1aed46126381d83308cd67?size=192&d=mm" />
+	<meta property="article:published_time" content="2019-03-13T17:32:02.597Z" />
+	<meta property="article:modified_time" content="2019-03-14T14:03:58.891Z" />
+	<meta property="article:section" content="Italian" />
+	<meta property="og:url" content="https:&#x2F;&#x2F;forum.qt.io&#x2F;topic&#x2F;100690&#x2F;problema-file-clangtools4-dll&#x2F;2" />
+	<meta property="og:image:width" content="200" />
+	<meta property="og:image:height" content="200" />
+	<link rel="stylesheet" type="text/css" href="/assets/stylesheet.css?v=8c66gqt62ts" />
+	
+	<link rel="icon" type="image/x-icon" href="/favicon.ico?v=8c66gqt62ts" />
+	<link rel="manifest" href="/manifest.json" />
+	<link rel="search" type="application/opensearchdescription+xml" href="/osd.xml" />
+	<link rel="stylesheet" href="/plugins/nodebb-plugin-markdown/styles/googlecode.css" />
+	<link rel="prefetch" href="/assets/src/modules/highlight.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/language/en-GB/markdown.json?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer/uploads.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer/drafts.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer/tags.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer/categoryList.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer/resize.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/src/modules/composer/autocomplete.js?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/templates/composer.tpl?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/language/en-GB/topic.json?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/language/en-GB/modules.json?v=8c66gqt62ts" />
+	<link rel="prefetch" href="/assets/language/en-GB/tags.json?v=8c66gqt62ts" />
+	<link rel="alternate" type="application/rss+xml" href="https://forum.qt.io/topic/100690.rss" />
+	<link rel="up" href="https://forum.qt.io/category/30/italian" />
+
+	<script>
+		var RELATIVE_PATH = "";
+		var config = JSON.parse('{"environment":"production","relative_path":"","version":"1.5.0","siteTitle":"Qt Forum","browserTitle":"Qt Forum","titleLayout":"&#123;pageTitle&#125; | &#123;browserTitle&#125;","showSiteTitle":true,"minimumTitleLength":"3","maximumTitleLength":"255","minimumPostLength":"8","maximumPostLength":"32767","minimumTagsPerTopic":0,"maximumTagsPerTopic":5,"minimumTagLength":3,"maximumTagLength":15,"hasImageUploadPlugin":true,"useOutgoingLinksPage":false,"allowGuestSearching":true,"allowGuestUserSearching":false,"allowGuestHandles":false,"allowFileUploads":true,"allowTopicsThumbnail":false,"usePagination":false,"disableChat":false,"disableChatMessageEditing":false,"socketioTransports":["websocket","polling"],"websocketAddress":"","maxReconnectionAttempts":"5","reconnectionDelay":"3000","topicsPerPage":"40","postsPerPage":"40","maximumFileSize":"2048","theme:id":"nodebb-theme-qt","theme:src":"","defaultLang":"en-GB","userLang":"en-GB","loggedIn":false,"cache-buster":"v=8c66gqt62ts","requireEmailConfirmation":false,"topicPostSort":"oldest_to_newest","categoryTopicSort":"newest_to_oldest","csrf_token":"N7A4c1ZE-bejAofsls08HFEYP7T8DEQI4pos","searchEnabled":true,"bootswatchSkin":"noskin","defaultBootswatchSkin":"noskin","timeagoCutoff":"","cookies":{"enabled":false,"message":"[[global:cookies.message]]","dismiss":"[[global:cookies.accept]]","link":"[[global:cookies.learn_more]]"},"topicSearchEnabled":false,"delayImageLoading":true,"markdown":{"highlight":1,"theme":"googlecode.css"},"hideSubCategories":false,"hideCategoryLastPost":false,"enableQuickReply":false,"composer-default":{},"question-and-answer":{"makeDefault":"on","defaultCid":"0","forceQuestions":"on","defaultCid_4":"off","defaultCid_10":"off","defaultCid_11":"off","defaultCid_12":"off","defaultCid_13":"off","defaultCid_14":"off","defaultCid_52":"off","defaultCid_17":"off","defaultCid_21":"off","defaultCid_54":"off","defaultCid_20":"off","defaultCid_15":"off","defaultCid_45":"off","defaultCid_18":"off","defaultCid_19":"off","defaultCid_22":"off","defaultCid_53":"off","defaultCid_3":"off","defaultCid_6":"off","defaultCid_7":"off","defaultCid_23":"off","defaultCid_8":"off","defaultCid_9":"off","defaultCid_24":"off","defaultCid_25":"off","defaultCid_49":"off","defaultCid_48":"off","defaultCid_47":"off","defaultCid_34":"off","defaultCid_35":"off","defaultCid_36":"off","defaultCid_29":"off","defaultCid_39":"off","defaultCid_37":"off","defaultCid_46":"off","defaultCid_28":"off","defaultCid_43":"off","defaultCid_33":"off","defaultCid_26":"off","defaultCid_30":"off","defaultCid_40":"off","defaultCid_38":"off","defaultCid_42":"off","defaultCid_32":"off","defaultCid_41":"off","defaultCid_27":"off","defaultCid_31":"off","defaultCid_50":"off","defaultCid_51":"off","defaultCid_2":"off","defaultCid_5":"off","defaultCid_16":"off","defaultCid_44":"off","defaultCid_55":"off"}}');
+		var app = {
+			template: "topic",
+			user: JSON.parse('{"uid":0,"username":"Guest","userslug":"","email":"","picture":"","status":"offline","reputation":0,"email:confirmed":false,"isAdmin":false,"isGlobalMod":false,"isMod":false,"isEmailConfirmSent":false}')
+		};
+	</script>
+
+	<script src="/assets/nodebb.min.js?v=8c66gqt62ts"></script>
+
+	
+
+	
+	
+</head>
+
+<body class="page-topic page-topic-100690 page-topic-problema-file-clangtools4-dll skin-noskin">
+	<nav id="menu" class="hidden">
+		<section class="menu-profile">
+			
+		</section>
+
+		<section class="menu-section" data-section="navigation">
+			<h3 class="menu-section-title">Navigation</h3>
+			<ul class="menu-section-list"></ul>
+		</section>
+
+		
+	</nav>
+
+	<main id="panel">
+		<nav class="navbar navbar-default navbar-fixed-top header" id="header-menu" component="navbar">
+			<div class="container">
+							<div class="navbar-header">
+				<button type="button" class="navbar-toggle" id="mobile-menu">
+					<span component="notifications/icon" class="notification-icon fa fa-fw fa-bell-o" data-content="0"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a href="/">
+					<img alt="" class=" forum-logo" src="https://ddgobkiprc33d.cloudfront.net/bb9f67d1-3dc4-46a8-a767-fc0da3035553.png" />
+				</a>
+								<a href="/">
+					<h1 class="navbar-brand forum-title">Qt Forum</h1>
+				</a>
+
+				<div component="navbar/title" class="visible-xs hidden">
+					<span></span>
+				</div>
+			</div>
+
+			<div id="nav-dropdown" class="hidden-xs">
+												<ul id="logged-out-menu" class="nav navbar-nav navbar-right">
+					
+					<li>
+						<a href="/login">
+							<i class="fa fa-sign-in visible-xs-inline"></i>
+							<span>Login</span>
+						</a>
+					</li>
+				</ul>
+								<ul class="nav navbar-nav navbar-right">
+					<li>
+						<form id="search-form" class="navbar-form navbar-right hidden-xs" role="search" method="GET" action="">
+							<button id="search-button" type="button" class="btn btn-link"><i class="fa fa-search fa-fw" title="Search"></i></button>
+							<div class="hidden" id="search-fields">
+								<div class="form-group">
+									<input type="text" class="form-control" placeholder="Search" name="query" value="">
+									<a href="#"><i class="fa fa-gears fa-fw advanced-search-link"></i></a>
+								</div>
+								<button type="submit" class="btn btn-default hide">Search</button>
+							</div>
+						</form>
+					</li>
+					<li class="visible-xs" id="search-menu">
+						<a href="/search">
+							<i class="fa fa-search fa-fw"></i> Search
+						</a>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right hidden-xs">
+					<li>
+						<a href="#" id="reconnect" class="hide" title="Connection to Qt Forum has been lost, attempting to reconnect...">
+							<i class="fa fa-check"></i>
+						</a>
+					</li>
+				</ul>
+
+				<ul class="nav navbar-nav navbar-right pagination-block visible-lg visible-md">
+					<li class="dropdown">
+						<a><i class="fa fa-angle-double-up pointer fa-fw pagetop"></i></a>
+						<a><i class="fa fa-angle-up pointer fa-fw pageup"></i></a>
+
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<span class="pagination-text"></span>
+						</a>
+
+						<a><i class="fa fa-angle-down pointer fa-fw pagedown"></i></a>
+						<a><i class="fa fa-angle-double-down pointer fa-fw pagebottom"></i></a>
+
+						<div class="progress-container">
+							<div class="progress-bar"></div>
+						</div>
+
+						<ul class="dropdown-menu" role="menu">
+  							<input type="text" class="form-control" id="indexInput" placeholder="Enter index">
+  						</ul>
+					</li>
+				</ul>
+
+				<ul id="main-nav" class="nav navbar-nav">
+															<li class="">
+						<a href="/categories" title="Categories" >
+														<i class="fa fa-fw fa-list"></i>
+
+														<span class="visible-xs-inline">Categories</span>
+						</a>
+					</li>
+									
+														<li class="">
+						<a href="/recent" title="Recent" >
+														<i class="fa fa-fw fa-clock-o"></i>
+
+														<span class="visible-xs-inline">Recent</span>
+						</a>
+					</li>
+														<li class="">
+						<a href="/tags" title="Tags" >
+														<i class="fa fa-fw fa-tags"></i>
+
+														<span class="visible-xs-inline">Tags</span>
+						</a>
+					</li>
+														<li class="">
+						<a href="/popular" title="Popular" >
+														<i class="fa fa-fw fa-fire"></i>
+
+														<span class="visible-xs-inline">Popular</span>
+						</a>
+					</li>
+									
+														<li class="">
+						<a href="/groups" title="Groups" >
+														<i class="fa fa-fw fa-group"></i>
+
+														<span class="visible-xs-inline">Groups</span>
+						</a>
+					</li>
+									
+														<li class="">
+						<a href="/search" title="Search" >
+														<i class="fa fa-fw fa-search"></i>
+
+														<span class="visible-xs-inline">Search</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			</div>
+		</nav>
+		<div class="container" id="content">
+			<noscript>
+		<div class="alert alert-danger">
+			<p>
+				Your browser does not seem to support JavaScript. As a result, your viewing experience will be diminished, and you have been placed in <strong>read-only mode</strong>.
+			</p>
+			<p>
+				Please download a browser that supports JavaScript, or enable it if it's disabled (i.e. NoScript).
+			</p>
+		</div>
+	</noscript>
+<ol class="breadcrumb">
+		<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb" >
+		<a href="/" itemprop="url">
+			<span itemprop="title">
+				Home
+				
+			</span>
+		</a>
+	</li>
+	<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb" >
+		<a href="/category/36/international" itemprop="url">
+			<span itemprop="title">
+				International
+				
+			</span>
+		</a>
+	</li>
+	<li itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb" >
+		<a href="/category/30/italian" itemprop="url">
+			<span itemprop="title">
+				Italian
+				
+			</span>
+		</a>
+	</li>
+	<li component="breadcrumb/current" itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb" class="active">
+		
+			<span itemprop="title">
+				Problema file ClangTools4.dll
+												<a target="_blank" href="/topic/100690.rss"><i class="fa fa-rss-square"></i></a>
+			</span>
+		
+	</li>
+</ol>
+<div widget-area="header"></div>
+<div class="row">
+	<div class="topic col-lg-12 col-sm-12" has-widget-class="topic col-lg-9 col-sm-12" has-widget-target="sidebar">
+
+		<h1 component="post/header" class="hidden-xs" itemprop="name">
+
+			<i class="pull-left fa fa-thumb-tack hidden" title="Pinned"></i>
+			<i class="pull-left fa fa-lock hidden" title="Locked"></i>
+			<i class="pull-left fa fa-arrow-circle-right hidden" title="Moved"></i>
+			
+
+			<span class="topic-title" component="topic/title">Problema file ClangTools4.dll</span>
+		</h1>
+
+		<div component="topic/deleted/message" class="alert alert-warning hidden clearfix">
+			<span class="pull-left">This topic has been deleted. Only users with topic management privileges can see it.</span>
+			<span class="pull-right">
+				
+			</span>
+		</div>
+
+		<hr class="visible-xs" />
+
+		<ul component="topic" class="posts" data-tid="100690" data-cid="30">
+							<li component="post" class="" data-index="0" data-pid="517335" data-uid="46624" data-timestamp="1552498322597" data-username="Alexv92" data-userslug="alexv92" itemscope itemtype="http://schema.org/Comment">
+					<a component="post/anchor" data-index="0" name="0"></a>
+
+					<meta itemprop="datePublished" content="2019-03-13T17:32:02.597Z">
+					<meta itemprop="dateModified" content="2019-03-13T17:33:34.070Z">
+
+					<div class="clearfix post-header">
+	<div class="icon pull-left">
+		<a href="/user/alexv92">
+						<img component="user/picture" data-uid="46624" src="https://www.gravatar.com/avatar/8b3ce69baa1aed46126381d83308cd67?size=192&d=mm" align="left" itemprop="image" />
+			<i component="user/status" class="fa fa-circle status offline" title="Offline"></i>
+
+		</a>
+	</div>
+
+	<small class="pull-left">
+		<strong>
+			<a href="/user/alexv92" itemprop="author" data-username="Alexv92" data-uid="46624">Alexv92</a>
+		</strong>
+
+		
+
+		
+
+		<div class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+			<a class="permalink" href="/post/517335"><span class="timeago" title="2019-03-13T17:32:02.597Z"></span></a>
+
+			<i class="fa fa-pencil-square pointer edit-icon "></i>
+
+			<small data-editor="alexv92" component="post/editor" class="hidden">last edited by Alexv92 <span class="timeago" title="2019-03-13T17:33:34.070Z"></span></small>
+
+			
+
+			<span>
+				
+			</span>
+		</div>
+		<span class="bookmarked"><i class="fa fa-bookmark-o"></i></span>
+
+	</small>
+</div>
+
+<br />
+
+<div class="content" component="post/content" itemprop="text">
+	<p>Salve,<br />
+ho installato QT e QT Creator mediante il tool MSYS2 seguendo questa procedura:<br />
+<a href="https://wiki.qt.io/MSYS2#Obtain_Pre-Built_Qt_.26_QtCreator_binary_files_and_Use_instantly_without_Building.2FCompiling" rel="nofollow">https://wiki.qt.io/MSYS2#Obtain_Pre-Built_Qt_.26_QtCreator_binary_files_and_Use_instantly_without_Building.2FCompiling</a></p>
+<p>Il problema è che quando vado a lanciarlo, mi da questo errore:<br />
+&quot;C:\msys64\mingw64\lib\qtcreator\plugins\ClangTools4.dll: Cannot load library C:\msys64\mingw64\lib\qtcreator\plugins\ClangTools4.dll: Impossibile trovare il modulo specificato.&quot;</p>
+<p>Ho controllato nella cartella plugin e la dll c'è. In più l'IDE non fa compilare (il comando è disattivato).<br />
+Sapreste aiutarmi? Vi ringrazio.</p>
+
+</div>
+
+<div class="clearfix post-footer">
+	
+
+	<small class="pull-right">
+		<span class="post-tools">
+			<a component="post/reply" href="#" class="no-select hidden">Reply</a>
+			<a component="post/quote" href="#" class="no-select hidden">Quote</a>
+		</span>
+
+				<span class="votes">
+			<a component="post/upvote" href="#" class="">
+				<i class="fa fa-chevron-up"></i>
+			</a>
+
+			<span component="post/vote-count" data-votes="0">0</span>
+
+						<a component="post/downvote" href="#" class="">
+				<i class="fa fa-chevron-down"></i>
+			</a>
+		</span>
+
+		<span component="post/tools" class="dropdown moderator-tools bottom-sheet ">
+	<a href="#" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-v"></i></a>
+	<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+</span>
+
+	</small>
+
+		<a component="post/reply-count" href="#" class="threaded-replies no-select hidden">
+		<span component="post/reply-count/avatars" class="avatars ">
+			
+		</span>
+
+		<span class="replies-count" component="post/reply-count/text" data-replies="0">0 Replies</span>
+		<span class="replies-last hidden-xs">Last reply <span class="timeago" title=""></span></span>
+
+		<i class="fa fa-fw fa-chevron-right" component="post/replies/open"></i>
+		<i class="fa fa-fw fa-chevron-down hidden" component="post/replies/close"></i>
+		<i class="fa fa-fw fa-spin fa-spinner hidden" component="post/replies/loading"></i>
+	</a>
+</div>
+
+<hr />
+
+										<div class="post-bar-placeholder"></div>
+				</li>
+						<li component="post" class="" data-index="1" data-pid="517499" data-uid="46624" data-timestamp="1552572238891" data-username="Alexv92" data-userslug="alexv92" itemscope itemtype="http://schema.org/Comment">
+					<a component="post/anchor" data-index="1" name="1"></a>
+
+					<meta itemprop="datePublished" content="2019-03-14T14:03:58.891Z">
+					<meta itemprop="dateModified" content="2019-03-14T14:04:49.761Z">
+
+					<div class="clearfix post-header">
+	<div class="icon pull-left">
+		<a href="/user/alexv92">
+						<img component="user/picture" data-uid="46624" src="https://www.gravatar.com/avatar/8b3ce69baa1aed46126381d83308cd67?size=192&d=mm" align="left" itemprop="image" />
+			<i component="user/status" class="fa fa-circle status offline" title="Offline"></i>
+
+		</a>
+	</div>
+
+	<small class="pull-left">
+		<strong>
+			<a href="/user/alexv92" itemprop="author" data-username="Alexv92" data-uid="46624">Alexv92</a>
+		</strong>
+
+		
+
+		
+
+		<div class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+			<a class="permalink" href="/post/517499"><span class="timeago" title="2019-03-14T14:03:58.891Z"></span></a>
+
+			<i class="fa fa-pencil-square pointer edit-icon "></i>
+
+			<small data-editor="alexv92" component="post/editor" class="hidden">last edited by Alexv92 <span class="timeago" title="2019-03-14T14:04:49.761Z"></span></small>
+
+			
+
+			<span>
+				
+			</span>
+		</div>
+		<span class="bookmarked"><i class="fa fa-bookmark-o"></i></span>
+
+	</small>
+</div>
+
+<br />
+
+<div class="content" component="post/content" itemprop="text">
+	<p>Aggiornamento.<br />
+Ho risolto il problema della dll installando Clang con questo comando:</p>
+<pre><code>pacman -S mingw-w64-x86_64-clang mingw-w64-i686-clang
+</code></pre>
+<p>(come spiegato qui <a href="https://gist.github.com/bigworld12/c2f2ec25af416f72b6c5f3a9fb4df16f" rel="nofollow">https://gist.github.com/bigworld12/c2f2ec25af416f72b6c5f3a9fb4df16f</a>)<br />
+Però ancora non riesco a compilare.</p>
+
+</div>
+
+<div class="clearfix post-footer">
+	
+
+	<small class="pull-right">
+		<span class="post-tools">
+			<a component="post/reply" href="#" class="no-select hidden">Reply</a>
+			<a component="post/quote" href="#" class="no-select hidden">Quote</a>
+		</span>
+
+				<span class="votes">
+			<a component="post/upvote" href="#" class="">
+				<i class="fa fa-chevron-up"></i>
+			</a>
+
+			<span component="post/vote-count" data-votes="1">1</span>
+
+						<a component="post/downvote" href="#" class="">
+				<i class="fa fa-chevron-down"></i>
+			</a>
+		</span>
+
+		<span component="post/tools" class="dropdown moderator-tools bottom-sheet ">
+	<a href="#" data-toggle="dropdown"><i class="fa fa-fw fa-ellipsis-v"></i></a>
+	<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+</span>
+
+	</small>
+
+		<a component="post/reply-count" href="#" class="threaded-replies no-select hidden">
+		<span component="post/reply-count/avatars" class="avatars ">
+			
+		</span>
+
+		<span class="replies-count" component="post/reply-count/text" data-replies="0">0 Replies</span>
+		<span class="replies-last hidden-xs">Last reply <span class="timeago" title=""></span></span>
+
+		<i class="fa fa-fw fa-chevron-right" component="post/replies/open"></i>
+		<i class="fa fa-fw fa-chevron-down hidden" component="post/replies/close"></i>
+		<i class="fa fa-fw fa-spin fa-spinner hidden" component="post/replies/loading"></i>
+	</a>
+</div>
+
+<hr />
+
+					
+				</li>
+		</ul>
+
+		
+
+		<div class="post-bar">
+			<div class="clearfix">
+	<div class="tags pull-left">
+		
+	</div>
+
+	<div class="topic-main-buttons pull-right">
+		<span class="loading-indicator btn pull-left hidden" done="0">
+			<span class="hidden-xs">Loading More Posts</span> <i class="fa fa-refresh fa-spin"></i>
+		</span>
+
+		<div class="stats hidden-xs">
+	<span component="topic/post-count" class="human-readable-number" title="2">2</span><br />
+	<small>Posts</small>
+</div>
+<div class="stats hidden-xs">
+	<span class="human-readable-number" title="102">102</span><br />
+	<small>Views</small>
+</div>
+
+		<div component="topic/reply/container" class="btn-group action-bar hidden">
+	<button class="btn btn-primary" component="topic/reply">Reply</button>
+	<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu pull-right" role="menu">
+		<li><a href="#" component="topic/reply-as-topic">Reply as topic</a></li>
+	</ul>
+</div>
+
+<a component="topic/reply/guest" href="/login" class="btn btn-primary">Log in to reply</a>
+
+		
+
+		
+
+		
+
+		<div class="pull-right">&nbsp;
+		
+		</div>
+	</div>
+</div>
+<hr/>
+		</div>
+
+		
+
+		<div class="visible-xs visible-sm pagination-block text-center">
+			<div class="progress-bar"></div>
+			<div class="wrapper">
+				<i class="fa fa-2x fa-angle-double-up pointer fa-fw pagetop"></i>
+				<i class="fa fa-2x fa-angle-up pointer fa-fw pageup"></i>
+				<span class="pagination-text"></span>
+				<i class="fa fa-2x fa-angle-down pointer fa-fw pagedown"></i>
+				<i class="fa fa-2x fa-angle-double-down pointer fa-fw pagebottom"></i>
+			</div>
+		</div>
+	</div>
+	<div widget-area="sidebar" class="col-lg-3 col-sm-12 hidden"></div>
+</div>
+<div widget-area="footer"></div>
+
+<noscript>
+	<div component="pagination" class="text-center pagination-container hidden">
+	<ul class="pagination hidden-xs">
+		<li class="previous pull-left disabled">
+			<a href="?" data-page="1"><i class="fa fa-chevron-left"></i> </a>
+		</li>
+
+		
+
+		<li class="next pull-right disabled">
+			<a href="?" data-page="1"> <i class="fa fa-chevron-right"></i></a>
+		</li>
+	</ul>
+
+	<ul class="pagination hidden-sm hidden-md hidden-lg">
+		<li class="first disabled">
+			<a href="?page=1" data-page="1"><i class="fa fa-fast-backward"></i> </a>
+		</li>
+		
+		<li class="previous disabled">
+			<a href="?" data-page="1"><i class="fa fa-chevron-left"></i> </a>
+		</li>
+
+		<li component="pagination/select-page" class="page select-page">
+			<a href="#">1 / 1</a>
+		</li>
+		
+		<li class="next disabled">
+			<a href="?" data-page="1"> <i class="fa fa-chevron-right"></i></a>
+		</li>
+		
+		<li class="last disabled">
+			<a href="?page=1" data-page="1"><i class="fa fa-fast-forward"></i> </a>
+		</li>
+	</ul>
+</div>
+</noscript>
+<script id="ajaxify-data" type="application/json">{"tid":100690,"uid":46624,"cid":"30","mainPid":"517335","title":"Problema file ClangTools4.dll","slug":"100690/problema-file-clangtools4-dll","timestamp":1552498322597,"lastposttime":1552572238891,"postcount":2,"viewcount":102,"locked":false,"deleted":false,"pinned":false,"isQuestion":1,"isSolved":0,"thumb":"","teaserPid":"517499","titleRaw":"Problema file ClangTools4.dll","timestampISO":"2019-03-13T17:32:02.597Z","lastposttimeISO":"2019-03-14T14:03:58.891Z","tags":[],"posts":[{"pid":517335,"uid":46624,"tid":100690,"content":"<p>Salve,<br />\nho installato QT e QT Creator mediante il tool MSYS2 seguendo questa procedura:<br />\n<a href=\"https://wiki.qt.io/MSYS2#Obtain_Pre-Built_Qt_.26_QtCreator_binary_files_and_Use_instantly_without_Building.2FCompiling\" rel=\"nofollow\">https://wiki.qt.io/MSYS2#Obtain_Pre-Built_Qt_.26_QtCreator_binary_files_and_Use_instantly_without_Building.2FCompiling<\/a><\/p>\n<p>Il problema è che quando vado a lanciarlo, mi da questo errore:<br />\n&quot;C:\\msys64\\mingw64\\lib\\qtcreator\\plugins\\ClangTools4.dll: Cannot load library C:\\msys64\\mingw64\\lib\\qtcreator\\plugins\\ClangTools4.dll: Impossibile trovare il modulo specificato.&quot;<\/p>\n<p>Ho controllato nella cartella plugin e la dll c'è. In più l'IDE non fa compilare (il comando è disattivato).<br />\nSapreste aiutarmi? Vi ringrazio.<\/p>\n","timestamp":1552498322597,"deleted":false,"edited":1552498414070,"editor":{"username":"Alexv92","userslug":"alexv92","uid":46624},"upvotes":0,"downvotes":0,"votes":0,"timestampISO":"2019-03-13T17:32:02.597Z","editedISO":"2019-03-13T17:33:34.070Z","index":0,"user":{"username":"Alexv92","userslug":"alexv92","lastonline":1552673979601,"picture":"https://www.gravatar.com/avatar/8b3ce69baa1aed46126381d83308cd67?size=192&d=mm","fullname":"","signature":"","reputation":1,"postcount":2,"banned":false,"status":"offline","uid":46624,"groupTitle":null,"icon:text":"A","icon:bgColor":"#673ab7","lastonlineISO":"2019-03-15T18:19:39.601Z","custom_profile_info":[]},"bookmarked":false,"upvoted":false,"downvoted":false,"replies":{"users":[],"timestampISO":"","count":0},"selfPost":false,"display_edit_tools":false,"display_delete_tools":false,"display_moderator_tools":false,"display_move_tools":false,"display_post_menu":true},{"pid":517499,"uid":46624,"tid":100690,"content":"<p>Aggiornamento.<br />\nHo risolto il problema della dll installando Clang con questo comando:<\/p>\n<pre><code>pacman -S mingw-w64-x86_64-clang mingw-w64-i686-clang\n<\/code><\/pre>\n<p>(come spiegato qui <a href=\"https://gist.github.com/bigworld12/c2f2ec25af416f72b6c5f3a9fb4df16f\" rel=\"nofollow\">https://gist.github.com/bigworld12/c2f2ec25af416f72b6c5f3a9fb4df16f<\/a>)<br />\nPerò ancora non riesco a compilare.<\/p>\n","timestamp":1552572238891,"deleted":false,"edited":1552572289761,"editor":{"username":"Alexv92","userslug":"alexv92","uid":46624},"upvotes":1,"downvotes":0,"votes":1,"timestampISO":"2019-03-14T14:03:58.891Z","editedISO":"2019-03-14T14:04:49.761Z","index":1,"user":{"username":"Alexv92","userslug":"alexv92","lastonline":1552673979601,"picture":"https://www.gravatar.com/avatar/8b3ce69baa1aed46126381d83308cd67?size=192&d=mm","fullname":"","signature":"","reputation":1,"postcount":2,"banned":false,"status":"offline","uid":46624,"groupTitle":null,"icon:text":"A","icon:bgColor":"#673ab7","lastonlineISO":"2019-03-15T18:19:39.601Z","custom_profile_info":[]},"bookmarked":false,"upvoted":false,"downvoted":false,"replies":{"users":[],"timestampISO":"","count":0},"selfPost":false,"display_edit_tools":false,"display_delete_tools":false,"display_moderator_tools":false,"display_move_tools":false,"display_post_menu":true}],"category":{"cid":30,"name":"Italian","description":"A forum for those speaking Italian","icon":"fa-comment","bgColor":"#41cd52","color":"#ffffff","slug":"30/italian","parentCid":"36","topic_count":315,"post_count":1407,"disabled":false,"order":10,"link":"","numRecentReplies":1,"class":"col-md-4 col-xs-12","imageClass":"auto","totalPostCount":1407,"totalTopicCount":315,"descriptionParsed":"A forum for those speaking Italian"},"thread_tools":[{"class":"toggleSolved alert-success topic-unsolved","title":"Mark as Solved","icon":"fa-check-circle"},{"class":"toggleQuestionStatus","title":"Make this a normal topic","icon":"fa-comments"}],"isFollowing":false,"isNotFollowing":true,"isIgnoring":false,"bookmark":null,"postSharing":[{"id":"facebook","name":"Facebook","class":"fa-facebook","activated":true},{"id":"twitter","name":"Twitter","class":"fa-twitter","activated":true},{"id":"google","name":"Google+","class":"fa-google-plus","activated":true}],"deleter":null,"deletedTimestampISO":"","related":[],"unreplied":false,"icons":[],"breadcrumbs":[{"text":"[[global:home]]","url":"/"},{"text":"International","url":"/category/36/international"},{"text":"Italian","url":"/category/30/italian"},{"text":"Problema file ClangTools4.dll"}],"privileges":{"topics:reply":false,"topics:read":true,"topics:delete":false,"posts:edit":false,"posts:delete":false,"read":true,"view_thread_tools":false,"editable":false,"deletable":false,"view_deleted":false,"isAdminOrMod":false,"disabled":false,"tid":"100690","uid":0},"topicStaleDays":60,"reputation:disabled":false,"downvote:disabled":false,"feeds:disableRSS":false,"bookmarkThreshold":5,"postEditDuration":0,"postDeleteDuration":0,"scrollToMyPost":true,"rssFeedUrl":"/topic/100690.rss","pagination":{"prev":{"page":1,"active":false},"next":{"page":1,"active":false},"rel":[],"pages":[],"currentPage":1,"pageCount":1},"loggedIn":false,"relative_path":"","template":{"name":"topic","topic":true},"url":"/topic/100690/problema-file-clangtools4-dll/2","bodyClass":"page-topic page-topic-100690 page-topic-problema-file-clangtools4-dll"}</script>		</div><!-- END container -->
+	</main>
+
+	<div class="hide">
+	<script type="text/tpl" data-template="500">
+&#x3C;div class=&#x22;alert alert-danger&#x22;&#x3E;
+&#x9;&#x3C;strong&#x3E;Internal Error.&#x3C;/strong&#x3E;
+&#x9;&#x3C;p&#x3E;Oops! Looks like something went wrong!&#x3C;/p&#x3E;
+&#x9;&#x3C;p&#x3E;&#x3C;/p&#x3E;
+&#x9;&#x3C;!-- IF error --&#x3E;&#x3C;p&#x3E;&#x3C;/p&#x3E;&#x3C;!-- ENDIF error --&#x3E;
+&#x3C;/div&#x3E;
+</script>
+	</div>
+
+	<div class="topic-search hidden">
+		<div class="btn-group">
+			<button type="button" class="btn btn-default count"></button>
+			<button type="button" class="btn btn-default prev"><i class="fa fa-fw fa-angle-up"></i></button>
+			<button type="button" class="btn btn-default next"><i class="fa fa-fw fa-angle-down"></i></button>
+		</div>
+	</div>
+
+	<div component="toaster/tray" class="alert-window">
+		<div id="reconnect-alert" class="alert alert-dismissable alert-warning clearfix hide" component="toaster/toast">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			<p>Looks like your connection to Qt Forum was lost, please wait while we try to reconnect.</p>
+		</div>
+	</div>
+
+	<script>
+		require(['forum/footer']);
+	</script>
+</body>
+</html>
