@@ -1,0 +1,4231 @@
+<!DOCTYPE html>
+<html class="wf-proximanova-n6-active wf-proximanova-n4-active wf-proximanova-i4-active wf-proximanova-n3-active wf-active" style="" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>How to Install and Configure VNC on Ubuntu 16.04 | DigitalOcean</title>
+
+<meta name="description" content="In this guide, we will be setting up VNC on a Ubuntu 16.04 server and connecting to it securely through an SSH tunnel. The VNC server we will be using is TightVNC, a fast and lightweight remote control package. This choice will ensure that our VNC con">
+<meta name="keywords" content="Miscellaneous">
+
+<meta name="og:title" content="How to Install and Configure VNC on Ubuntu 16.04 | DigitalOcean">
+<meta name="og:description" content="In this guide, we will be setting up VNC on a Ubuntu 16.04 server and connecting to it securely through an SSH tunnel. The VNC server we will be using is TightVNC, a fast and lightweight remote control package. This choice will ensure that our VNC con">
+<meta name="og:site_name" content="DigitalOcean">
+<meta name="og:type" content="article">
+<meta name="og:image" content="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/VNC_Configure_tw_mostov.png?1468953094">
+
+<meta name="twitter:site" content="DigitalOcean">
+<meta name="twitter:title" content="How to Install and Configure VNC on Ubuntu 16.04 | DigitalOcean">
+<meta name="twitter:description" content="In this guide, we will be setting up VNC on a Ubuntu 16.04 server and connecting to it securely through an SSH tunnel. The VNC server we will be using is TightVNC, a fast and lightweight remote control package. This choice will ensure that our VNC con">
+<meta name="twitter:creator" content="DigitalOcean">
+<meta name="twitter:card" content="photo">
+<meta name="twitter:url" content="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04">
+<meta name="twitter:image" content="https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/VNC_Configure_tw_mostov.png?1468953094">
+
+  <link rel="canonical" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04">
+
+<link rel="preconnect" href="https://digitalocean.cdn.prismic.io/">
+<link rel="preconnect" href="https://hello.myfonts.net/">
+
+        <link rel="alternate" hreflang="en" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04">
+      <link rel="alternate" hreflang="es" href="https://www.digitalocean.com/community/tutorials/como-instalar-y-configurar-vnc-en-ubuntu-16-04-es">
+      <link rel="alternate" hreflang="pt" href="https://www.digitalocean.com/community/tutorials/como-instalar-e-configurar-o-vnc-no-ubuntu-16-04-pt">
+      <link rel="alternate" hreflang="ru" href="https://www.digitalocean.com/community/tutorials/vnc-ubuntu-16-04-ru">
+
+
+    <link rel="stylesheet" media="all" href="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/application-4d941f24506b2cbd7465abb2526a46e3.css">
+
+    
+    <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="IKhc3/JRglJDfO9th1Q02I9h7VGH82qQmALzcZKsqrM5TVqQcv8GsrUffMY8mHhmXO1i3x7EXP5yZKTrsBtIvA==">
+    <script type="text/javascript" async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/insight.js"></script><script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/inferredEvents.js" async=""></script><script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/836120723106227.js" async=""></script><script async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/fbevents.js"></script><script type="text/javascript" async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/conversion_async.js"></script><script type="text/javascript" async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/roundtrip.js"></script><script type="text/javascript" async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/linkid.js"></script><script type="text/javascript" async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/analytics.js"></script><script async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/gtm.js"></script><script type="text/javascript" async="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/analytics_002.js"></script><script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/prerequisites-9a51dfaadf0d3629cc636286133a958d.js"></script>
+    <script>
+//<![CDATA[
+
+  window.cookieDomain = '.digitalocean.com';
+
+//]]>
+</script><script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/cookieConsent.js"></script>
+<link rel="stylesheet" href="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/cookieConsent.css">
+
+    <script type="text/javascript">
+  if(window.analytics=window.analytics||[],window.analytics.included)window.console&&console.error&&console.error("analytics.js included twice");else{window.analytics.included=!0,window.analytics.methods=["identify","group","track","page","pageview","alias","ready","on","once","off","trackLink","trackForm","trackClick","trackSubmit"],window.analytics.factory=function(a){return function(){var n=Array.prototype.slice.call(arguments);return n.unshift(a),window.analytics.push(n),window.analytics}};for(var i=0;i<window.analytics.methods.length;i++){var key=window.analytics.methods[i];window.analytics[key]=window.analytics.factory(key)}window.analytics.load=function(a){var n=document.createElement("script");n.type="text/javascript",n.async=!0,n.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+a+"/analytics.min.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(n,t)},window.analytics.SNIPPET_VERSION="2.0.9",
+    window.analytics.load("puo3uv968t")}
+  window.analytics.page();
+</script>
+
+
+<!-- Google Tag Manager -->
+<script>
+  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KHWBBT');
+</script>
+<!-- End Google Tag Manager -->
+
+<script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/internalCookies-d2a3579f6b37d00c8045b16853b90462.js"></script>
+
+      <script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/izu1uqu.js"></script>
+      <style type="text/css">.tk-proxima-nova{font-family:"proxima-nova",sans-serif;}</style><style type="text/css">@font-face{font-family:tk-proxima-nova-n6;src:url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:tk-proxima-nova-n4;src:url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:tk-proxima-nova-i4;src:url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:tk-proxima-nova-n3;src:url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}</style><script>try{Typekit.load({ async: true });}catch(e){}</script>
+      <script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/polyfill.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://www.digitalocean.com/community/tutorials/feed">
+    <script>
+      window.comApp = {
+        prefix: '/community',
+        svgIconPath: 'https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg',
+        railsEnv: 'production',
+        rootUrl: 'https://www.digitalocean.com/community',
+        algolia_application_id: '6ZHEUVKJ88',
+        algolia_api_key: 'c5470567eae7fa1177d43222e18ba086'
+      };
+    </script>
+      <script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/forms2.js"></script>
+
+    <script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/application-1270f044c25d6cdd81711c215fa0a123.js"></script>
+  <style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/l?subset_id=2&fvd=n6&v=3) format("woff2"),url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/d?subset_id=2&fvd=n6&v=3) format("woff"),url(https://use.typekit.net/af/27776b/00000000000000003b9b0939/27/a?subset_id=2&fvd=n6&v=3) format("opentype");font-weight:600;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/4838bd/00000000000000003b9b0934/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/l?subset_id=2&fvd=i4&v=3) format("woff2"),url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/d?subset_id=2&fvd=i4&v=3) format("woff"),url(https://use.typekit.net/af/6aec08/00000000000000003b9b0935/27/a?subset_id=2&fvd=i4&v=3) format("opentype");font-weight:400;font-style:italic;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/437c3d/00000000000000003b9b0932/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;}</style><style>.fluidvids {width: 100%; max-width: 100%; position: relative;}.fluidvids-item {position: absolute; top: 0px; left: 0px; width: 100%; height: 100%;}</style><link id="mktoForms2BaseStyle" rel="stylesheet" type="text/css" href="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/forms2.css"><link id="mktoForms2ThemeStyle" rel="stylesheet" type="text/css" href="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/forms2-theme-simple.css"><script type="text/javascript" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/S4BPDI4QWNB57PEKEZSLIP"></script><script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/a"></script><script async="true" type="text/javascript" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/4IDGVTPEAFC4TM2QKYNQ53"></script><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_003.txt" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_003.gif" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_004.gif" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out.txt" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out.htm" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_002.txt" width="1" height="1"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out.gif" width="1" height="1"></div><script type="text/javascript" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/sendrolling.js"></script><div style="width: 1px; height: 1px; display: inline; position: absolute;"><img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_002.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_005.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_007.gif" width="1" height="1">
+<img style="border-style:none;" alt="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/out_006.gif" width="1" height="1">
+</div></head>
+  <body class="feature-filter-bar feature-upvotes tutorials-controller tutorial-single" data-env="production" data-prefix="/community" data-user-id="" data-facebook-app-id="694818843983011" data-completed-tutorial-id="" data-tutorial-id="1943" data-js="tutorial">
+    
+
+    <div class="outside_viewport">
+        <div id="contents-modal" class="modal fade mini-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Contents</h1>
+          <button class="close-button icon icon-close-light" data-dismiss="modal" aria-label="close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-of-contents-modal tocify"><ul id="tocify-header0" class="tocify-header"><li class="tocify-item" data-unique="prerequisites"><a>Prerequisites</a></li></ul><ul id="tocify-header1" class="tocify-header"><li class="tocify-item" data-unique="step-1-—-installing-the-desktop-environment-and-vnc-server"><a>Step 1 — Installing the Desktop Environment and VNC Server</a></li></ul><ul id="tocify-header2" class="tocify-header"><li class="tocify-item" data-unique="step-2-—-configuring-the-vnc-server"><a>Step 2 — Configuring the VNC Server</a></li></ul><ul id="tocify-header3" class="tocify-header"><li class="tocify-item" data-unique="step-3-—-testing-the-vnc-desktop"><a>Step 3 — Testing the VNC Desktop</a></li></ul><ul id="tocify-header4" class="tocify-header"><li class="tocify-item" data-unique="step-4-—-creating-a-vnc-service-file"><a>Step 4 — Creating a VNC Service File</a></li></ul><ul id="tocify-header5" class="tocify-header"><li class="tocify-item tocify-focus" data-unique="conclusion"><a>Conclusion</a></li></ul></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="translation-modal" class="modal fade mini-modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1>Language</h1>
+          <a class="close-button" data-dismiss="modal" aria-label="close" href=""><span class="icon icon-close-light"></span></a>
+        </div>
+        <div class="modal-body">
+
+          <div class="content-translations">
+            <div class="current-language">
+              <ul class="languages large">
+                <li class="current">
+                  <span class="icon icon-check-light"></span>
+                  English
+                </li>
+
+
+                    <li>
+                      <a class="edit" title="Español" href="https://www.digitalocean.com/community/tutorials/como-instalar-y-configurar-vnc-en-ubuntu-16-04-es">
+                        Español
+</a>                    </li>
+                    <li>
+                      <a class="edit" title="Português" href="https://www.digitalocean.com/community/tutorials/como-instalar-e-configurar-o-vnc-no-ubuntu-16-04-pt">
+                        Português
+</a>                    </li>
+                    <li>
+                      <a class="edit" title="Русский" href="https://www.digitalocean.com/community/tutorials/vnc-ubuntu-16-04-ru">
+                        Русский
+</a>                    </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="share-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Share</h1>
+        <button type="button" class="close-button icon icon-close-light" aria-label="close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="social-sharing social-sharing-container">
+          <ul class="top ">
+            <li class="shareBtn" id="sbTwitter">
+              <a href="http://twitter.com/share?text=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-icon share-popup" title="Share on Twitter" target="_blank">
+                <span class="sIcon icon-bird"></span>
+              </a>
+              <a href="http://twitter.com/share?text=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-link share-popup" title="Share on Twitter" target="_blank">
+                Twitter
+              </a>
+            </li>
+            <li class="shareBtn" id="sbFacebook">
+              <a class="share-icon share-popup" href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=fbshare" title="Share on Facebook" target="_blank">
+                <span class="sIcon icon-facebook-B"></span>
+              </a>
+
+              <a class="share-link share-popup" href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=fbshare" title="Share on Facebook" target="_blank">
+                Facebook
+              </a>
+            </li>
+            <li class="shareBtn" id="sbYC">
+              <a href="https://news.ycombinator.com/submitlink?t=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-icon share-popup" target="_blank" title="Submit to Hacker News">
+                <span class="sIcon icon-hacker-news"></span>
+              </a>
+              <a href="https://news.ycombinator.com/submitlink?t=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-link share-popup" target="_blank" title="Submit to Hacker News">
+                Hacker News
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="table-of-contents has-init sticky" style="top: 72px;">
+    <div data-js="tableOfContentsDesktop" class="tocify"><ul id="tocify-header0" class="tocify-header"><li class="tocify-item" data-unique="prerequisites"><a>Prerequisites</a></li></ul><ul id="tocify-header1" class="tocify-header"><li class="tocify-item" data-unique="step-1-—-installing-the-desktop-environment-and-vnc-server"><a>Step 1 — Installing the Desktop Environment and VNC Server</a></li></ul><ul id="tocify-header2" class="tocify-header"><li class="tocify-item" data-unique="step-2-—-configuring-the-vnc-server"><a>Step 2 — Configuring the VNC Server</a></li></ul><ul id="tocify-header3" class="tocify-header"><li class="tocify-item" data-unique="step-3-—-testing-the-vnc-desktop"><a>Step 3 — Testing the VNC Desktop</a></li></ul><ul id="tocify-header4" class="tocify-header"><li class="tocify-item" data-unique="step-4-—-creating-a-vnc-service-file"><a>Step 4 — Creating a VNC Service File</a></li></ul><ul id="tocify-header5" class="tocify-header"><li class="tocify-item tocify-focus" data-unique="conclusion"><a>Conclusion</a></li></ul></div>
+    <button type="button" class="Button--reset Tutorial-button " data-js="markAsComplete" data-tutorialinteraction="" data-tutorialsingle=""><svg class="svg-icon svg-icon-completed"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-completed"></use></svg><span>Mark as Complete</span></button>
+  </div>
+  
+  <div id="share-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Share</h1>
+        <button type="button" class="close-button icon icon-close-light" aria-label="close" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="social-sharing social-sharing-container">
+          <ul class="bottom ">
+            <li class="shareBtn" id="sbTwitter">
+              <a href="http://twitter.com/share?text=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-icon share-popup" title="Share on Twitter" target="_blank">
+                <span class="sIcon icon-bird"></span>
+              </a>
+              <a href="http://twitter.com/share?text=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;url=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=twshare" class="share-link share-popup" title="Share on Twitter" target="_blank">
+                Twitter
+              </a>
+            </li>
+            <li class="shareBtn" id="sbFacebook">
+              <a class="share-icon share-popup" href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=fbshare" title="Share on Facebook" target="_blank">
+                <span class="sIcon icon-facebook-B"></span>
+              </a>
+
+              <a class="share-link share-popup" href="https://www.facebook.com/sharer/sharer.php?u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=fbshare" title="Share on Facebook" target="_blank">
+                Facebook
+              </a>
+            </li>
+            <li class="shareBtn" id="sbYC">
+              <a href="https://news.ycombinator.com/submitlink?t=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-icon share-popup" target="_blank" title="Submit to Hacker News">
+                <span class="sIcon icon-hacker-news"></span>
+              </a>
+              <a href="https://news.ycombinator.com/submitlink?t=How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04&amp;u=https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04&amp;utm_medium=community&amp;utm_source=hnshare" class="share-link share-popup" target="_blank" title="Submit to Hacker News">
+                Hacker News
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+
+      
+    </div>
+
+      
+      
+<div style="display: none;">
+  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+    <symbol id="do_nav-logo" xmlns="http://www.w3.org/2000/svg"> <title>DigitalOcean home</title> <g fill="currentColor" fill-rule="evenodd"> <path d="M14.4942 29v-5.5674c5.9572 0 10.5633-5.8478 8.2892-12.059-.8425-2.3006-2.693-4.1355-5.0126-4.9706-6.262-2.2534-12.1564 2.3135-12.1573 8.2207 0 0-.0006.0014-.0014.0014H0C0 5.2123 9.1687-2.1167 19.1138.9624c4.3459 1.3457 7.7993 4.7708 9.1561 9.081C31.3742 19.9068 23.985 29 14.4942 29"></path> <path d="M14.507 23.4468H8.9103v-5.549s.0005-.0011.0011-.0011h5.5949c.0006 0 .0009.0006.0009.0006v5.5495M8.9093 27.7118H4.6105l-.0012-.0012v-4.2638h4.3009v4.2638l-.0009.0012M4.6125 23.4468H1.0088c-.0015 0-.0026-.0012-.0026-.0012v-3.5724s.0011-.0025.0026-.0025h3.601c.0015 0 .0027.0011.0027.0011v3.575M43.2806 9.6357h1.649c1.8346 0 3.345.358 4.49 1.0647 1.2714.7603 1.9164 2.2069 1.9164 4.2991 0 2.1554-.6465 3.6671-1.9207 4.4942h-.0008c-1.0971.7196-2.5981 1.0846-4.462 1.0846h-1.6719V9.6357zm8.324-1.0736c-1.6598-1.142-3.7252-1.721-6.1387-1.721h-5.2537V23.373h5.2537c2.4074 0 4.4737-.6113 6.1407-1.8157.907-.6382 1.6197-1.5304 2.1185-2.651.4962-1.1144.7479-2.4288.7479-3.9067 0-1.4605-.2517-2.758-.7482-3.857-.4988-1.104-1.212-1.972-2.1202-2.5804zM58.1303 6.6376c-.5051 0-.9403.1777-1.2906.5254-.3546.335-.5346.7597-.5346 1.2618 0 .501.1791.9322.532 1.2825.3529.35.788.528 1.2932.528.5042 0 .9394-.178 1.2928-.528.3535-.3508.5324-.7821.5324-1.2825 0-.5015-.18-.926-.5324-1.2592-.3534-.3503-.7886-.528-1.2928-.528M56.6247 23.3729h2.9538V11.7294h-2.9538zM69.5321 19.5787c-.5162.5814-1.1793.8635-2.0264.8635-.8471 0-1.5064-.282-2.015-.863-.5065-.5777-.7637-1.3439-.7637-2.2773 0-.9479.2572-1.7238.764-2.3058.502-.576 1.1796-.8683 2.0147-.8683.8465 0 1.5096.284 2.0262.8695.5142.582.7751 1.3573.7751 2.3046 0 .9328-.2609 1.6988-.7749 2.2768zm.775-6.8767c-.8908-.7858-1.8858-1.2444-2.9614-1.2444-1.6305 0-2.9859.5598-4.0276 1.662-1.0555 1.0932-1.5907 2.5006-1.5907 4.1823 0 1.644.5269 3.0464 1.568 4.1709 1.0498 1.088 2.4123 1.6396 4.0503 1.6396 1.139 0 2.1182-.3144 2.9157-.9356v.268c0 .9662-.2608 1.7176-.7751 2.234-.5137.5154-1.226.7764-2.1173.7764-1.3637 0-2.2183-.5314-3.2589-1.9262l-2.0115 1.917.0542.0754c.4346.605 1.1 1.197 1.9785 1.7594.8787.5603 1.9832.8447 3.2832.8447 1.7536 0 3.1726-.5363 4.2172-1.5933 1.0506-1.0628 1.5835-2.486 1.5835-4.2286V11.7294H70.307v.9726zM75.7434 23.3729h2.9541V11.7294h-2.9541zM77.249 6.6376c-.5052 0-.94.1777-1.2906.5254-.3547.335-.5344.7597-.5344 1.2618 0 .501.1789.9322.532 1.2825.353.35.7878.528 1.293.528.5045 0 .9396-.178 1.2928-.528.3535-.3508.5323-.7821.5323-1.2825 0-.5015-.1797-.926-.5323-1.2592-.3532-.3503-.7883-.528-1.2929-.528M85.1724 8.5831h-2.9082v3.1463h-1.6888v2.6702h1.6888v4.8365c0 1.5134.3047 2.5964.9064 3.2181.6031.6247 1.6741.9414 3.1831.9414.48 0 .963-.0156 1.4354-.0463l.133-.0088v-2.6683l-1.013.0526c-.7033 0-1.1728-.1226-1.3961-.3637-.226-.245-.3406-.7636-.3406-1.5404v-4.421h2.7497v-2.6703h-2.7497V8.583M101.7735 23.3729h2.9544V6.8412h-2.9544zM134.5728 19.2094c-.5286.5874-1.0693 1.0966-1.4855 1.3613v.0005c-.4085.2599-.924.3918-1.532.3918-.8703 0-1.5703-.3144-2.1405-.9621-.567-.644-.8545-1.4716-.8545-2.4613s.2838-1.8162.8436-2.4556c.5625-.6434 1.2588-.9562 2.1285-.9562.9515 0 1.9548.5869 2.8145 1.5947l1.9525-1.8568c-1.273-1.6433-2.897-2.4081-4.8352-2.4081-1.622 0-3.028.5862-4.1788 1.7411-1.1446 1.147-1.7251 2.6074-1.7251 4.3409 0 1.7335.58 3.1977 1.7234 4.352 1.1447 1.1557 2.5514 1.7417 4.1805 1.7417 2.139 0 3.8651-.9158 5.029-2.5935l-1.9204-1.8304M140.2405 16.0973c.1422-.5567.401-1.0207.7714-1.381.4005-.3906.9214-.5885 1.5489-.5885.716 0 1.2702.2019 1.6474.6014.3495.3696.5467.8296.588 1.368h-4.5557zm6.4569-2.7414c-.4191-.5788-.9896-1.0448-1.6965-1.3854-.7047-.3404-1.526-.513-2.441-.513-1.6489 0-2.9982.6037-4.0113 1.7946-.9836 1.182-1.4818 2.651-1.4818 4.3665 0 1.7648.547 3.2253 1.6254 4.341 1.0727 1.1105 2.5083 1.6737 4.267 1.6737 1.992 0 3.627-.799 4.8587-2.3752l.0666-.0847-1.9273-1.837c-.1789.2139-.4317.4561-.6628.6722-.2918.273-.5659.4842-.8588.6289-.4415.218-.9369.3255-1.4907.3255-.8187 0-1.4964-.2388-2.0147-.71-.4847-.4403-.768-1.0345-.843-1.7683h7.8265l.0264-1.0693c0-.7569-.1038-1.4862-.3088-2.1677a6.312 6.312 0 0 0-.934-1.8918zM152.797 18.9234c.3352-.2318.8085-.3483 1.4073-.3483.7112 0 1.4654.1413 2.2426.421v1.1421c-.6421.592-1.4996.8922-2.5499.8922-.5114 0-.909-.1126-1.1822-.3355-.2683-.218-.3985-.4955-.3985-.847 0-.3994.1571-.7022.4808-.9245zm5.2452-6.3229h-.0003c-.8952-.758-2.1328-1.143-3.678-1.143-.9829 0-1.902.2144-2.7336.6324-.7691.387-1.5245 1.0275-2.0043 1.8662l.0298.0358 1.8917 1.796c.7791-1.2322 1.6454-1.66 2.7941-1.66.6172 0 1.1298.1643 1.5234.4881.3916.3216.5819.7304.5819 1.249v.5652c-.7324-.221-1.4629-.333-2.1738-.333-1.47 0-2.6663.3432-3.555 1.0193-.9.6852-1.3562 1.665-1.3562 2.9125 0 1.094.3847 1.9829 1.1461 2.6433.7677.6372 1.7275.961 2.8524.961 1.1246 0 2.177-.4495 3.132-1.2191v.9587h2.9089v-7.4852c0-1.4173-.4572-2.523-1.3591-3.2872zM170.7656 12.8285c-.8227-.9092-1.9791-1.371-3.4371-1.371-1.172 0-2.1236.3338-2.8357.9926v-.7207h-2.897v11.6435h2.954v-6.4215c0-.8823.2119-1.5828.6293-2.0826.4162-.4987.989-.741 1.75-.741.6691 0 1.1765.2167 1.5506.662.3759.4474.5662 1.0638.5662 1.8335v6.7496H172v-6.7496c0-1.6127-.415-2.889-1.2344-3.7948M92.8158 18.9234c.3351-.2318.8087-.3483 1.4075-.3483.7112 0 1.4652.1413 2.2426.421v1.1421c-.6421.592-1.4998.8922-2.5502.8922-.5114 0-.9087-.1126-1.1819-.3355-.2683-.218-.3988-.4955-.3988-.847 0-.3994.1574-.7022.4808-.9245zm5.2451-6.3229h-.0003c-.8952-.758-2.1328-1.143-3.6776-1.143-.983 0-1.902.2144-2.7337.6324-.7694.387-1.5247 1.0275-2.0043 1.8662l.0295.0358 1.8917 1.796c.7792-1.2322 1.6458-1.66 2.7941-1.66.6172 0 1.1298.1643 1.5234.4881.3916.3216.5822.7304.5822 1.249v.5652c-.7327-.221-1.4631-.333-2.174-.333-1.47 0-2.6664.3432-3.555 1.0193-.8999.6852-1.3562 1.665-1.3562 2.9125 0 1.094.3847 1.9829 1.1463 2.6433.7677.6372 1.7272.961 2.8524.961 1.1246 0 2.1766-.4495 3.1318-1.2191v.9587H99.42v-7.4852c0-1.4173-.457-2.523-1.359-3.2872zM115.4464 9.5808c-3.0682 0-5.5645 2.4755-5.5645 5.5188s2.4963 5.5188 5.5645 5.5188c3.0682 0 5.5645-2.4755 5.5645-5.5188s-2.4963-5.5188-5.5645-5.5188zm0 14.0408c-4.7383 0-8.5928-3.8228-8.5928-8.522 0-4.6994 3.8545-8.5223 8.5928-8.5223 4.738 0 8.5925 3.8229 8.5925 8.5223 0 4.6992-3.8545 8.522-8.5925 8.522z"></path> </g> </symbol>
+    <symbol id="do_nav-community_logo" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 532.2 99.8" fill="currentColor"> <path class="st0" d="M98.5,23c15.5,0,27.7,12.1,27.7,28.2c0,16.1-12.3,28.1-27.7,28.1c-15.6,0-27.7-11.9-27.7-28.1 C70.8,35.1,82.9,23,98.5,23z M98.5,67.9c8.7,0,14.9-7,14.9-16.8c0-9.8-6.2-16.8-14.9-16.8c-8.8,0-15,7-15,16.8 C83.5,60.9,89.7,67.9,98.5,67.9z"></path> <path class="st0" d="M166.8,45.9c0-7-3.5-11.6-9.9-11.6c-7.2,0-11.1,5.3-11.1,13.1V78h-12.5V24.3h12.3V29c2.4-2.8,7-6,13.9-6 c7.3,0,12.2,3.1,15,7c4.4-4.9,10-7,16.8-7c14.4,0,21.4,8.5,21.4,23.8V78h-12.5V45.9c0-7-3.5-11.6-9.9-11.6 c-7.2,0-11.2,5.3-11.2,13.1V78h-12.4V45.9z"></path> <path class="st0" d="M255.5,45.9c0-7-3.5-11.6-9.9-11.6c-7.2,0-11.1,5.3-11.1,13.1V78h-12.5V24.3h12.3V29c2.4-2.8,7-6,13.9-6 c7.3,0,12.2,3.1,15,7c4.4-4.9,10-7,16.8-7c14.4,0,21.4,8.5,21.4,23.8V78h-12.5V45.9c0-7-3.5-11.6-9.9-11.6 c-7.2,0-11.2,5.3-11.2,13.1V78h-12.4V45.9z"></path> <path class="st0" d="M322.5,56.4c0,7,3.6,11.6,10.1,11.6c7.2,0,11.2-5.6,11.2-13.5V24.3h12.5V78h-12.3v-4.4 c-3.4,3.7-8.1,5.6-13.9,5.6c-11.9,0-20.1-8.4-20.1-23.7V24.3h12.5V56.4z"></path> <path class="st0" d="M378.2,78h-12.5V24.3h12.3v4.4c2.7-3.1,7.7-5.7,13.9-5.7c13.1,0,21.3,8.5,21.3,23.8V78h-12.5V46.8 c0-7.5-3.7-12.5-10.6-12.5c-7.8,0-11.8,5.6-11.8,14V78z"></path> <path class="st0" d="M427.8,0.2c4.4,0,7.9,3.4,7.9,7.8s-3.5,7.9-7.9,7.9c-4.4,0-7.9-3.5-7.9-7.9S423.4,0.2,427.8,0.2z M421.4,24.3 h12.5V78h-12.5V24.3z"></path> <path class="st0" d="M446.7,59.1V35.5h-6.5V24.3h6.5v-15H459v15h12.2v11.2H459v21.7c0,7.8,1.8,9.8,8.8,9.8c1.2,0,4.1-0.2,4.1-0.2 v11.2c0,0-2.4,0.2-6.7,0.2C451.2,78.1,446.7,72.7,446.7,59.1z"></path> <path class="st0" d="M497.3,78.7l-21.3-54.4h14.2l14,38.8l14.2-38.8h13.6l-24.1,60.2c-3.7,9.4-7.2,15.3-21.3,15.3 c-2.5,0-4.8-0.1-4.8-0.1V88c0,0,1.5,0.1,2.8,0.1c7.6,0,9.8-2.3,11.8-7.8L497.3,78.7z"></path> <path class="st0" d="M62.4,55.9c-5.3,7-12.2,11.4-22.1,11.4c-15.6,0-27-11.7-27-27.5c0-16.1,11.4-27.8,26.5-27.8 c10,0,16.8,4.8,21.3,11.3l8.4-8.8C63.1,5.7,53.3,0,39.7,0C17.1,0,0,15.9,0,39.8c0,23.4,17.1,39.4,40.1,39.4c13.1,0,22-4.9,28.6-12.2 L62.4,55.9z"></path> </symbol>
+    <symbol id="do_nav-control_panel_icon" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M19.6875 23.4862C19.6885 23.9722 19.4965 24.4388 19.1537 24.7833C18.8109 25.1279 18.3454 25.3222 17.8594 25.3237H3.23438C2.99366 25.3232 2.75539 25.2753 2.53321 25.1827C2.31102 25.09 2.10927 24.9545 1.93949 24.7839C1.7697 24.6132 1.63522 24.4108 1.54373 24.1881C1.45223 23.9655 1.40552 23.727 1.40626 23.4862V3.25498C1.40577 3.01417 1.45271 2.77562 1.54441 2.55295C1.63611 2.33028 1.77077 2.12785 1.9407 1.95722C2.11063 1.7866 2.31251 1.65111 2.5348 1.5585C2.75709 1.46589 2.99545 1.41797 3.23626 1.41748L17.8613 1.44186C18.347 1.44384 18.812 1.63843 19.1544 1.98292C19.4968 2.32741 19.6885 2.79366 19.6875 3.27936V23.4862Z" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M43.5863 12.27C43.5828 12.7516 43.3883 13.212 43.0456 13.5503C42.7028 13.8885 42.2397 14.0768 41.7582 14.0738H27.1332C26.8947 14.0755 26.6582 14.0302 26.4372 13.9405C26.2162 13.8507 26.015 13.7183 25.8453 13.5508C25.6755 13.3833 25.5404 13.1839 25.4477 12.9642C25.355 12.7444 25.3065 12.5085 25.3051 12.27V3.24565C25.308 2.76461 25.5019 2.30442 25.8439 1.96621C26.186 1.62799 26.6484 1.43941 27.1294 1.4419L41.7544 1.41753C42.2365 1.41403 42.7002 1.60205 43.0437 1.94027C43.3872 2.27849 43.5823 2.73924 43.5863 3.22128V12.27Z" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M19.6875 41.7956C19.686 42.0347 19.6375 42.2712 19.5446 42.4915C19.4518 42.7118 19.3164 42.9117 19.1463 43.0797C18.9762 43.2477 18.7747 43.3806 18.5532 43.4707C18.3318 43.5609 18.0947 43.6065 17.8556 43.605L3.23063 43.5806C2.74908 43.5826 2.28644 43.3934 1.94436 43.0545C1.60228 42.7155 1.40873 42.2547 1.40625 41.7731V32.7563C1.40748 32.5175 1.45575 32.2813 1.54831 32.0612C1.64087 31.8412 1.7759 31.6415 1.94569 31.4736C2.11547 31.3057 2.31667 31.173 2.53779 31.0829C2.75892 30.9929 2.99562 30.9473 3.23438 30.9488H17.8594C18.3414 30.9463 18.8047 31.1352 19.1475 31.4742C19.4903 31.8131 19.6845 32.2742 19.6875 32.7563V41.7956Z" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M27.1349 43.605C26.894 43.6045 26.6555 43.5565 26.433 43.4638C26.2106 43.3711 26.0087 43.2354 25.8387 43.0646C25.6688 42.8937 25.5341 42.6911 25.4426 42.4682C25.351 42.2453 25.3042 42.0066 25.3049 41.7656V21.5381C25.3042 21.2973 25.3509 21.0587 25.4424 20.8359C25.5338 20.6132 25.6683 20.4106 25.8381 20.2398C26.0078 20.069 26.2095 19.9333 26.4317 19.8405C26.6539 19.7476 26.8923 19.6995 27.1331 19.6987H41.7581C41.9989 19.6995 42.2372 19.7476 42.4594 19.8405C42.6816 19.9333 42.8833 20.069 43.0531 20.2398C43.2228 20.4106 43.3573 20.6132 43.4488 20.8359C43.5402 21.0587 43.5869 21.2973 43.5862 21.5381V41.7412C43.5872 42.2271 43.3955 42.6935 43.0532 43.0383C42.7109 43.3831 42.2458 43.5781 41.7599 43.5806L27.1349 43.605Z" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </symbol>
+    <symbol id="do_nav-community_icon" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0)"> <path d="M12.6562 10.5469C12.6562 9.85155 12.8624 9.17184 13.2487 8.5937C13.635 8.01556 14.1841 7.56495 14.8265 7.29886C15.4689 7.03277 16.1758 6.96315 16.8577 7.0988C17.5397 7.23445 18.1661 7.56929 18.6578 8.06095C19.1495 8.55262 19.4843 9.17905 19.6199 9.86101C19.7556 10.543 19.686 11.2499 19.4199 11.8922C19.1538 12.5346 18.7032 13.0837 18.1251 13.47C17.5469 13.8563 16.8672 14.0625 16.1719 14.0625" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16.1719 18.2812C16.0328 18.2812 15.8969 18.3225 15.7812 18.3997C15.6656 18.477 15.5755 18.5868 15.5223 18.7153C15.4691 18.8438 15.4551 18.9852 15.4823 19.1215C15.5094 19.2579 15.5764 19.3832 15.6747 19.4816C15.773 19.5799 15.8983 19.6469 16.0347 19.674C16.1711 19.7011 16.3125 19.6872 16.4409 19.634C16.5694 19.5808 16.6792 19.4906 16.7565 19.375C16.8338 19.2594 16.875 19.1234 16.875 18.9844C16.875 18.7979 16.8009 18.6191 16.6691 18.4872C16.5372 18.3553 16.3584 18.2812 16.1719 18.2812Z" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M32.3438 4.21875V12.6562" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M29.5312 1.40625C30.2772 1.40625 30.9925 1.70257 31.52 2.23001C32.0474 2.75746 32.3438 3.47283 32.3438 4.21875" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4.21875 1.40625H29.5312" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1.40625 4.21875C1.40625 3.47283 1.70257 2.75746 2.23001 2.23001C2.75746 1.70257 3.47283 1.40625 4.21875 1.40625" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1.40625 23.9062V4.21875" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M4.21875 26.7188C3.47283 26.7187 2.75746 26.4224 2.23001 25.895C1.70257 25.3675 1.40625 24.6522 1.40625 23.9062" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9.84375 26.7188H4.21875" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9.84375 35.1562V26.7188" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15.4688 30.9375L9.84375 35.1562" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M43.5938 35.1562H37.9688V43.5938L29.5312 35.1562H21.0938V18.2812H43.5938V35.1562Z" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M32.3438 23.9062V29.5312" stroke="#0069FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> <defs> <clipPath id="clip0"> <rect width="45" height="45" fill="white"></rect> </clipPath> </defs> </symbol>
+    <symbol id="do_nav-search" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z"></path></symbol>
+    <symbol id="do_nav-logomark" x="0px" y="0px" viewBox="65.2 173.5 180 180" fill="currentColor"><path d="M155.2,351.7v-34.2c36.2,0,64.3-35.9,50.4-74c-5.1-14.1-16.4-25.4-30.5-30.5c-38.1-13.8-74,14.2-74,50.4l0,0H67c0-57.7,55.8-102.7,116.3-83.8c26.4,8.3,47.5,29.3,55.7,55.7C257.9,295.9,213,351.7,155.2,351.7z"></path> <polygon points="155.3,317.6 121.3,317.6 121.3,283.6 121.3,283.6 155.3,283.6 155.3,283.6"></polygon> <polygon points="121.3,343.8 95.1,343.8 95.1,343.8 95.1,317.6 121.3,317.6"></polygon> <path d="M95.1,317.6H73.2l0,0v-21.9l0,0h21.9l0,0V317.6z"></path></symbol>
+    <symbol id="do_nav-write4do" viewBox="0 0 30 30" fill="none" stroke="currentColor"> <path d="M16.3063 17.67L11.6663 18.3338L12.3288 13.6925L24.2613 1.76002C24.7887 1.23257 25.5041 0.936249 26.25 0.936249C26.6194 0.936249 26.9851 1.009 27.3263 1.15034C27.6675 1.29168 27.9776 1.49885 28.2388 1.76002C28.4999 2.02118 28.7071 2.33123 28.8484 2.67246C28.9898 3.01369 29.0625 3.37942 29.0625 3.74877C29.0625 4.11811 28.9898 4.48384 28.8484 4.82507C28.7071 5.1663 28.4999 5.47635 28.2388 5.73752L16.3063 17.67Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M22.935 3.08624L26.9125 7.06374" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M23.4375 17.8125V27.1875C23.4375 27.6848 23.24 28.1617 22.8883 28.5133C22.5367 28.865 22.0598 29.0625 21.5625 29.0625H2.8125C2.31522 29.0625 1.83831 28.865 1.48667 28.5133C1.13504 28.1617 0.9375 27.6848 0.9375 27.1875V8.4375C0.9375 7.94022 1.13504 7.46331 1.48667 7.11167C1.83831 6.76004 2.31522 6.5625 2.8125 6.5625H12.1875" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </symbol>
+    <symbol id="do_nav-meetups" viewBox="0 0 30 30" fill="none" stroke="currentColor"> <path d="M27.1901 4.6875H2.81506C1.77953 4.6875 0.940063 5.52697 0.940063 6.5625V27.1875C0.940063 28.223 1.77953 29.0625 2.81506 29.0625H27.1901C28.2256 29.0625 29.0651 28.223 29.0651 27.1875V6.5625C29.0651 5.52697 28.2256 4.6875 27.1901 4.6875Z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M0.940063 12.1875H29.0651" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M8.44006 7.5V0.9375" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M21.5651 7.5V0.9375" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </symbol>
+    <symbol id="do_nav-hacktoberfest" viewBox="0 0 30 30" fill="none" stroke="currentColor"> <path d="M19.2063 24.9918L16.5714 22.3569V14.4854L13.986 17.0708V23.5755L12.5615 25L11.1371 23.5591V8.44175L10.7419 8.04652L8.93042 9.8662L8 8.94401L11.9358 5.00823L11.944 5.01647L12.1005 5.16468L13.9778 7.04199V13.8431L16.5632 11.2577V8.42528L15.2705 7.12433L17.3948 5L19.4286 7.03376V20.9572L20.4249 21.9535L21.6352 20.7431L22.5492 21.6571L19.2063 24.9918Z" fill="currentcolor"></path> <rect x="0.75" y="0.75" width="28.5" height="28.5" rx="2.25" stroke-width="1.5" stroke="currentColor"></rect> </symbol>
+    <symbol id="do_nav-build" viewBox="0 0 16 16" fill="none" stroke="currentColor"> <path d="M1.5 14.5C1.23478 14.5 0.98043 14.3946 0.792893 14.2071C0.605357 14.0196 0.5 13.7652 0.5 13.5V2.57667C0.500879 2.29139 0.614596 2.01804 0.81632 1.81632C1.01804 1.6146 1.29139 1.50088 1.57667 1.5H14.4287C14.7125 1.50088 14.9845 1.61403 15.1852 1.81476C15.386 2.01548 15.4991 2.28747 15.5 2.57133V13.4233C15.4991 13.7086 15.3854 13.982 15.1837 14.1837C14.982 14.3854 14.7086 14.4991 14.4233 14.5H1.5Z" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15.5 4.5H0.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M11 7.5L13 9.5L11 11.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M5 7.5L3 9.5L5 11.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M9 7.5L7 11.5" stroke-linecap="round" stroke-linejoin="round"></path> </symbol>
+  </svg>
+</div>
+
+<nav class="do_nav" role="navigation" aria-label="Navigation">
+  <ul role="menubar" class="utility">
+    <li role="banner" data-flex="grow" data-show="always"><a href="https://blog.digitalocean.com/doks-in-ga/" data-pill="new" title="DigitalOcean Kubernetes is now Generally Available." target="_blank" rel="noopener">DigitalOcean Kubernetes is now Generally Available. Learn more ❯ </a></li>
+    <li role="menuitem">
+      <a href="https://www.digitalocean.com/products/">Products</a>
+    </li>
+    <li role="menuitem">
+      <a href="https://www.digitalocean.com/pricing/">Pricing</a>
+    </li>
+    <li role="menuitem" aria-haspopup="true" tabindex="0">
+      <span class="expander">Docs</span>
+      <div class="mini" aria-expanded="false">
+        <ul role="menu">
+          <li role="menuitem">
+            <a href="https://www.digitalocean.com/docs/">Product Docs</a>
+          </li>
+          <li role="menuitem">
+            <a href="https://developers.digitalocean.com/documentation/">API Docs</a>
+          </li>
+        </ul>
+      </div>
+    </li>
+      <li role="menuitem" aria-haspopup="true" tabindex="0">
+      <span class="expander">Log in</span>
+        <div class="mini" aria-expanded="false">
+          <header>Log in to</header>
+          <ul role="menu">
+            <li role="menuitem">
+              <svg><use xlink:href="#do_nav-community_icon"></use></svg>
+              <a id="log-in" href="https://www.digitalocean.com/community/auth/digitalocean">Community</a>
+            </li>
+            <li role="menuitem">
+              <svg><use xlink:href="#do_nav-control_panel_icon"></use></svg>
+              <a href="https://cloud.digitalocean.com/registrations/new">Control Panel</a>
+            </li>
+          </ul>
+        </div>
+      </li>
+  </ul>
+  
+  <ul role="menubar" class="primary">
+    <li role="menuitem" data-show="always">
+      <a href="https://www.digitalocean.com/">
+        <svg shape-rendering="auto"><use xlink:href="#do_nav-logomark"></use></svg>
+      </a>
+    </li>
+    <li role="menuitem" data-show="always">
+      <a role="home" title="DigitalOcean Community Home" href="https://www.digitalocean.com/community">
+        <svg width="120px" height="24px" shape-rendering="auto"><use xlink:href="#do_nav-community_logo"></use></svg>
+</a>    </li>
+    <li role="menuitem">
+      <a data-activatable="true" href="https://www.digitalocean.com/community/tutorials" class="active">Tutorials</a>
+    </li>
+    <li role="menuitem">
+      <a data-activatable="true" href="https://www.digitalocean.com/community/questions">Questions</a>
+    </li>
+    <li role="menuitem" aria-haspopup="true" class="mega_parent" tabindex="0">
+      <span class="expander">Get Involved</span>
+      <div class="mega" aria-expanded="false">
+        <div class="section column">
+          <header>Participate</header>
+          <ul role="menu">
+            <li role="menuitem">
+              <a href="https://www.digitalocean.com/write-for-donations/" class="with_image">
+                <svg>
+                  <use xlink:href="#do_nav-write4do"></use>
+                </svg>
+                <p>
+                  <strong>Write for DigitalOcean</strong>
+                  You get paid, we donate to tech non-profits.
+                </p>
+              </a>
+            </li>
+            <li role="menuitem">
+              <a href="https://www.meetup.com/pro/digitalocean" class="with_image">
+                <svg>
+                  <use xlink:href="#do_nav-meetups"></use>
+                </svg>
+                <p>
+                  <strong>DigitalOcean Meetups</strong>
+                  Find and meet other developers in your city.
+                </p>
+              </a>
+            </li>
+            <li role="menuitem">
+              <a href="https://hacktoberfest.digitalocean.com/" class="with_image">
+                <svg>
+                  <use xlink:href="#do_nav-hacktoberfest"></use>
+                </svg>
+                <p>
+                  <strong>Hacktoberfest</strong>
+                  Contribute to Open Source
+                </p>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="section column">
+          <header>
+            <svg>
+              <use xlink:href="#do_nav-build"></use>
+            </svg>
+            Build with DigitalOcean
+          </header>
+          <ul role="menu" class="indent">
+            <li role="menuitem">
+              <a title="Community-built tools and integrations that use the DigitalOcean API" href="https://www.digitalocean.com/community/projects">Community Tools and Integrations</a>
+            </li>
+            <li role="menuitem"><a href="https://www.digitalocean.com/hatch/" title="Build your startup on DigitalOcean.">Hatch Startup Program</a></li>
+            <li role="menuitem"><a href="https://marketplace.digitalocean.com/vendors/" title="List your open source One-Click Application in the DigitalOcean Marketplace">Marketplace Partner Program</a></li>
+            <li role="menuitem"><a href="https://www.digitalocean.com/droplets-for-demos/" title="DigitalOcean credits to fund research for conference and meetup presentations">Presentation Grants</a></li>
+            <li role="menuitem"><a href="https://github.com/digitalocean">DigitalOcean on GitHub</a></li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li role="menuitem" data-show="mobile" data-flex="grow" class="right">
+      <a href="javascript:void(0);" data-js="modal_toggle">
+        <span class="icon-menu-thin"></span>
+      </a>
+    </li>
+    <li role="menuitem" aria-haspopup="true" data-flex="grow">
+      <form name="do_nav-search" method="GET" action="https://www.digitalocean.com/community/search">
+        <label for="q">
+          <svg shape-rendering="auto" width="14px" height="14px"><use xlink:href="#do_nav-search"></use></svg>
+        </label>
+        <input type="text" name="q" id="q" title="Search" placeholder="Search DigitalOcean" autocomplete="off" spellcheck="false" class="search">
+        </form>
+        <div class="mini search-results-dropdown" aria-expanded="false">
+            <div class="header-search-results-list"></div>
+            <div id="btn-wrap">
+              <a class="more-search-results" data-search-path="/community/search" href="https://www.digitalocean.com/community/search">
+                View All Results
+              </a>
+            </div>
+        </div>
+    </li>
+    <li role="menuitem">
+      <a class="button primary" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+    </li>
+  </ul>
+
+  <div class="mobile_nav_bg" data-js="modal_toggle"></div>
+  <div class="mobile_nav">
+    <a data-dismiss="modal" aria-label="close" href="javascript:void(0);" data-js="modal_toggle"><span class="icon-close"></span></a>
+    <header>Community</header>
+    <ul role="menu">
+      <li role="menuitem">
+        <a data-activatable="true" href="https://www.digitalocean.com/community/tutorials" class="active">Tutorials</a>
+      </li>
+      <li role="menuitem">
+        <a data-activatable="true" href="https://www.digitalocean.com/community/questions">Questions</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.meetup.com/pro/digitalocean">Meetups</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/write-for-donations/">Write for us</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://hacktoberfest.digitalocean.com/">Hacktoberfest</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/community/projects">Community Projects</a>
+      </li>
+    </ul>
+    <header>Products</header>
+    <ul role="menu">
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/">Homepage</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/pricing">Pricing</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/products">Product Overview</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://marketplace.digitalocean.com/">Marketplace</a>
+      </li>
+    </ul>
+    <header>Customers</header>
+    <ul role="menu">
+      <li role="menuitem">
+        <a href="https://cloud.digitalocean.com/login">Control panel</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/docs/">Documentation</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/company/contact/#support">Contact Support</a>
+      </li>
+      <li role="menuitem">
+        <a href="https://www.digitalocean.com/company/contact/sales/">Contact Sales</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+
+<header>
+  <div class="legacy-header ">
+    <div class="flash-container">
+      
+    </div>
+
+    <div class="wrapper">
+      
+    </div>
+  </div>
+</header>
+
+
+      
+
+      <div class="wrapper layout-wrapper">
+
+        
+
+
+
+
+
+
+
+
+
+<div class="section-content section-content-growable content Tutorial-content content-has-mobile-image">
+  <div class="postable-info-bar-container">
+  <div class="postable-info-bar">
+    <div class="author-byline">
+      
+    </div>
+
+    <div class="right-section">
+      
+
+        <div class="section-item section-item-translations">
+          <div class="content-translations">
+  <div class="current-language">
+    <a href="#" class="language-button" title="English" data-toggle="modal" data-target="#translation-modal">
+      Language: EN
+      <span class="icon icon-arrow-up"></span>
+      <span class="icon icon-arrow-down"></span>
+    </a>
+  </div>
+</div>
+
+
+
+        </div>
+
+      <div class="section-item section-item-subscribe">
+  <span class="opt-in-switch off signed-out-subscribe">
+    <span class="subscribe-label">
+      <span class="icon icon-subscribe"></span>
+      <span class="subscription-label subscribe">Subscribe</span>
+      <span class="icon icon-subscribed"></span>
+      <span class="subscription-label subscribed">Subscribed</span>
+    </span>
+    <a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a>
+  </span>
+</div>
+
+<div class="section-item social-sharing-item">
+  <div class="sharing">
+  <a class="share-button" href="#" data-toggle="modal" data-target="#share-modal">
+    <span class="icon icon-share-square"></span>
+    <span class="share-button-text">Share</span>
+  </a>
+</div>
+
+</div>
+
+        <div class="section-item table-of-contents-triggers"><div class="toc-trigger-mobile" data-toggle="modal" data-target="#contents-modal">
+  <a href="javascript:void(0);">
+    <span class="icon icon-contents"></span>
+    <span class="title">Contents</span>
+    <span class="icon icon-arrow-down"></span>
+  </a>
+</div>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+    <img alt="How to Install and Configure VNC on Ubuntu 16.04" title="How to Install and Configure VNC on Ubuntu 16.04" class="tutorial-image-mobile" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/VNC_Configure_tw_mostov.png">
+
+  <div class="container tutorial-header">
+      <img alt="How to Install and Configure VNC on Ubuntu 16.04" title="How to Install and Configure VNC on Ubuntu 16.04" class="tutorial-image" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/VNC_Configure_tw_mostov.png">
+
+      <div class="info-cta">
+    <a class="icon-close-light" href="javascript:void();"></a>
+    We hope you find this tutorial helpful. In addition to guides like 
+this one, we provide simple cloud infrastructure for developers. <a href="https://www.digitalocean.com/?utm_medium=community&amp;utm_source=community_gencta&amp;utm_campaign=needaserver&amp;utm_content=how-to-install-and-configure-vnc-on-ubuntu-16-04">
+        Learn more →
+</a>  </div>
+
+
+    <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="1943" data-upvotable-type="Tutorial"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">44</span></button>
+
+    <h1 class="content-title Tutorial-header">
+      <button type="button" class="Button--reset Tutorial-headerButton " data-toggle="tooltip" title="" data-js="markAsComplete" data-tutorialinteraction="" data-tutorialsingle="" data-original-title="Mark as Complete">
+        <svg class="svg-icon svg-icon-completed"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-completed"></use></svg>
+      </button> How to Install and Configure VNC on Ubuntu 16.04
+    </h1>
+
+    <span class="meta-section timestamp"><span class="tutorial-date-text">Posted</span><span class="tutorial-date">April 26, 2016</span></span>
+
+    <span class="meta-section pageviews"><span class="icon icon-eye v-mid"></span><span class="views-count v-mid">1.1m</span><span class="sr-only"> views</span></span>
+
+    <span class="meta-section tags">
+      <a class="tag" href="https://www.digitalocean.com/community/tags/miscellaneous?type=tutorials">Miscellaneous</a>
+      <a class="tag" href="https://www.digitalocean.com/community/tags/ubuntu?type=tutorials">Ubuntu</a> <a class="tag" href="https://www.digitalocean.com/community/tags/ubuntu-16-04?type=tutorials">Ubuntu 16.04</a>
+    </span>
+  </div>
+
+  <div class="tutorial-authors">
+    <div class="postable-info-bar-container">
+  <ul class="postable-info-bar">
+      <li class="author-byline">
+        <a href="https://www.digitalocean.com/community/users/finid">
+            <div class="tutorial-author-avatar">
+              <img alt="finid" class="avatar avatar-small" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/989a7705a77732d888ddaff8b440fc3d.png" width="80" height="80">
+            </div>
+
+          <div class="author-and-date">
+            <div class="tutorial-author">
+              <div class="by">By: </div>
+              finid
+            </div>
+          </div>
+</a>      </li>
+  </ul>
+</div>
+
+  </div>
+
+    <div class="container versioned-tutorial-group-navigation" data-versioned-tutorial-group-navigation="" style="height: 59px;">
+  <div class="versioned-tutorial-group-navigation__header" data-versioned-tutorial-group-navigation-header="">
+    <h5 class="versioned-tutorial-group-navigation__heading">
+      Not using <strong>Ubuntu 16.04</strong>? Choose a different version:
+    </h5>
+    <span class="versioned-tutorial-group-navigation__arrow">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 105.565 60.872"><path d="M2.526 46.087c-3.37 3.382-3.37 8.868 0 12.246 3.37 3.386 8.832 3.386 12.202 0l43.384-43.547c3.37-3.382 3.37-8.87 0-12.246-3.37-3.386-8.833-3.386-12.202 0L2.526 46.087z" fill="#fff"></path><path d="M90.835 58.333c3.37 3.386 8.833 3.386 12.202 0 3.37-3.378 3.37-8.864 0-12.246L59.654 2.54c-3.37-3.386-8.832-3.386-12.202 0-3.37 3.377-3.37 8.864 0 12.246l43.383 43.547z" fill="#fff"></path></svg>
+
+    </span>
+  </div>
+  <div class="versioned-tutorial-group-navigation__body" data-versioned-tutorial-group-navigation-body="">
+    <ul class="versioned-tutorial-group-navigation__list">
+    <li class="versioned-tutorial-group-navigation__list-item">
+  <a class="versioned-tutorial-group-navigation__link" title="Debian 9" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-debian-9">
+    <span class="text">Debian 9</span>
+    <span class="icon-arrow-down versioned-tutorial-group-navigation__link-arrow"></span>
+</a></li>
+<li class="versioned-tutorial-group-navigation__list-item">
+  <a class="versioned-tutorial-group-navigation__link" title="Debian 8" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-vnc-server-on-debian-8">
+    <span class="text">Debian 8</span>
+    <span class="icon-arrow-down versioned-tutorial-group-navigation__link-arrow"></span>
+</a></li>
+<li class="versioned-tutorial-group-navigation__list-item">
+  <a class="versioned-tutorial-group-navigation__link" title="Ubuntu 18.04" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-18-04">
+    <span class="text">Ubuntu 18.04</span>
+    <span class="icon-arrow-down versioned-tutorial-group-navigation__link-arrow"></span>
+</a></li>
+<li class="versioned-tutorial-group-navigation__list-item">
+  <a class="versioned-tutorial-group-navigation__link" title="Ubuntu 14.04" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-14-04">
+    <span class="text">Ubuntu 14.04</span>
+    <span class="icon-arrow-down versioned-tutorial-group-navigation__link-arrow"></span>
+</a></li>
+
+    <li class="versioned-tutorial-group-navigation__list-item">
+  <a data-tutorial-request="" data-distribution-version-id="12" data-versioned-tutorial-group-id="47" href="javascript:;" class="versioned-tutorial-group-navigation__link versioned-tutorial-group-navigation__link--unavailable" title="Automated: Docker">
+    <span class="text">Automated: Docker</span>
+    <small class="versioned-tutorial-group-navigation__request" data-tutorial-request-status-indicator="">request</small>
+  </a>
+</li>
+<li class="versioned-tutorial-group-navigation__list-item">
+  <a data-tutorial-request="" data-distribution-version-id="14" data-versioned-tutorial-group-id="47" href="javascript:;" class="versioned-tutorial-group-navigation__link versioned-tutorial-group-navigation__link--unavailable" title="Automated: Bash">
+    <span class="text">Automated: Bash</span>
+    <small class="versioned-tutorial-group-navigation__request" data-tutorial-request-status-indicator="">request</small>
+  </a>
+</li>
+<li class="versioned-tutorial-group-navigation__list-item">
+  <a data-tutorial-request="" data-distribution-version-id="13" data-versioned-tutorial-group-id="47" href="javascript:;" class="versioned-tutorial-group-navigation__link versioned-tutorial-group-navigation__link--unavailable" title="Automated: Ansible">
+    <span class="text">Automated: Ansible</span>
+    <small class="versioned-tutorial-group-navigation__request" data-tutorial-request-status-indicator="">request</small>
+  </a>
+</li>
+<li class="versioned-tutorial-group-navigation__list-item">
+  <a data-tutorial-request="" data-distribution-version-id="5" data-versioned-tutorial-group-id="47" href="javascript:;" class="versioned-tutorial-group-navigation__link versioned-tutorial-group-navigation__link--unavailable" title="CentOS 7">
+    <span class="text">CentOS 7</span>
+    <small class="versioned-tutorial-group-navigation__request" data-tutorial-request-status-indicator="">request</small>
+  </a>
+</li>
+
+      <li class="versioned-tutorial-group-navigation__list-item"></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    <div class="content-body tutorial-content" data-growable-markdown="">
+      
+      <h3 id="introduction">Introduction</h3>
+
+<p>VNC, or "Virtual Network Computing", is a connection system that 
+allows you to use your keyboard and mouse to interact with a graphical 
+desktop environment on a remote server. It makes managing files, 
+software, and settings on a remote server easier for users who are not 
+yet comfortable with the command line.</p>
+
+<p>In this guide, we will be setting up VNC on an Ubuntu 16.04 server 
+and connecting to it securely through an SSH tunnel. The VNC server we 
+will be using is TightVNC, a fast and lightweight remote control 
+package. This choice will ensure that our VNC connection will be smooth 
+and stable even on slower internet connections.</p>
+
+<div name="prerequisites" data-unique="prerequisites"></div><h2 id="prerequisites">Prerequisites</h2>
+
+<p>To complete this tutorial, you'll need:</p>
+
+<ul>
+<li><p>An Ubuntu 16.04 Droplet set up via the <a href="https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04">Ubuntu 16.04 initial server setup tutorial</a>,
+ which includes having a sudo non-root user. Note that this tutorial can
+ be completed using any size Droplet, but a VNC built on a smaller 
+droplet may have more limits on functionality than a larger one.</p></li>
+<li><p>A local computer with a VNC client installed that supports VNC 
+connections over SSH tunnels. If you are using Windows, you could use 
+TightVNC, RealVNC, or UltraVNC. Mac OS X users can use the built-in 
+Screen Sharing program, or can use a cross-platform app like RealVNC. 
+Linux users can choose from many options: <code>vinagre</code>, <code>krdc</code>, RealVNC, TightVNC, and more.</p></li>
+</ul>
+
+<div name="step-1-—-installing-the-desktop-environment-and-vnc-server" data-unique="step-1-—-installing-the-desktop-environment-and-vnc-server"></div><h2 id="step-1-—-installing-the-desktop-environment-and-vnc-server">Step 1 — Installing the Desktop Environment and VNC Server</h2>
+
+<p>By default, an Ubuntu 16.04 Droplet does not come with a graphical 
+desktop environment or a VNC server installed, so we'll begin by 
+installing those. Specifically, we will install packages for the latest 
+Xfce desktop environment and the TightVNC package available in the 
+official Ubuntu repository.</p>
+
+<p>On your server, install the Xfce and TightVNC packages.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo apt-get update
+</li><li class="line" prefix="$">sudo apt install xfce4 xfce4-goodies tightvncserver
+</li></ul></code></pre>
+<p>To complete the VNC server's initial configuration after installation, use the <code>vncserver</code> command to set up a secure password.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">vncserver
+</li></ul></code></pre>
+<p>You'll be prompted to enter and verify a password, and also a 
+view-only password. Users who log in with the view-only password will 
+not be able to control the VNC instance with their mouse or keyboard. 
+This is a helpful option if you want to demonstrate something to other 
+people using your VNC server, but isn't necessary.</p>
+
+<p>Running <code>vncserver</code> completes the installation of VNC by 
+creating default configuration files and connection information for our 
+server to use. With these packages installed, you are now ready to 
+configure your VNC server.</p>
+
+<div name="step-2-—-configuring-the-vnc-server" data-unique="step-2-—-configuring-the-vnc-server"></div><h2 id="step-2-—-configuring-the-vnc-server">Step 2 — Configuring the VNC Server</h2>
+
+<p>First, we need to tell our VNC server what commands to perform when 
+it starts up. These commands are located in a configuration file called <code>xstartup</code> in the <code>.vnc</code> folder under your home directory. The startup script was created when you ran the <code>vncserver</code> in the previous step, but we need modify some of the commands for the Xfce desktop.</p>
+
+<p>When VNC is first set up, it launches a default server instance on 
+port 5901. This port is called a display port, and is referred to by VNC
+ as <code>:1</code>. VNC can launch multiple instances on other display ports, like <code>:2</code>, <code>:3</code>, etc. When working with VNC servers, remember that <code>:X</code> is a display port that refers to <code>5900+X</code>.</p>
+
+<p>Because we are going to be changing how the VNC server is configured,
+ we'll need to first stop the VNC server instance that is running on 
+port 5901.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">vncserver -kill :1
+</li></ul></code></pre>
+<p>The output should look like this, with a different PID:</p>
+<pre class="code-pre "><code langs=""><div class="secondary-code-label " title="Output">Output</div>Killing Xtightvnc process ID 17648
+</code></pre>
+<p>Before we begin configuring the new <code>xstartup</code> file, let's back up the original.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">mv ~/.vnc/xstartup ~/.vnc/xstartup.bak
+</li></ul></code></pre>
+<p>Now create a new <code>xstartup</code> file with <code>nano</code> or your favorite text editor.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">nano ~/.vnc/xstartup
+</li></ul></code></pre>
+<p>Paste these commands into the file so that they are performed 
+automatically whenever you start or restart the VNC server, then save 
+and close the file.</p>
+<pre class="code-pre "><code langs=""><div class="secondary-code-label " title="~/.vnc/xstartup">~/.vnc/xstartup</div>#!/bin/bash
+xrdb $HOME/.Xresources
+startxfce4 &amp;
+</code></pre>
+<p>The first command in the file, <code>xrdb $HOME/.Xresources</code>, tells VNC's GUI framework to read the server user's <code>.Xresources</code> file. <code>.Xresources</code>
+ is where a user can make changes to certain settings of the graphical 
+desktop, like terminal colors, cursor themes, and font rendering. The 
+second command simply tells the server to launch Xfce, which is where 
+you will find all of the graphical software that you need to comfortably
+ manage your server.</p>
+
+<p>To ensure that the VNC server will be able to use this new startup 
+file properly, we'll need to grant executable privileges to it.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo chmod +x ~/.vnc/xstartup
+</li></ul></code></pre>
+<p>Now, restart the VNC server.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">vncserver
+</li></ul></code></pre>
+<p>The server should be started with an output similar to this:</p>
+<pre class="code-pre "><code langs=""><div class="secondary-code-label " title="Output">Output</div>New 'X' desktop is your_server_name.com:1
+
+Starting applications specified in /home/sammy/.vnc/xstartup
+Log file is /home/sammy/.vnc/liniverse.com:1.log
+</code></pre>
+<div name="step-3-—-testing-the-vnc-desktop" data-unique="step-3-—-testing-the-vnc-desktop"></div><h2 id="step-3-—-testing-the-vnc-desktop">Step 3 — Testing the VNC Desktop</h2>
+
+<p>In this step, we'll test the connectivity of your VNC server.</p>
+
+<p>First, we need to create an SSH connection on your local computer that securely forwards to the <code>localhost</code> connection for VNC. You can do this via the terminal on Linux or OS X with following command. Remember to replace <code><span class="highlight">user</span></code> and <code><span class="highlight">server_ip_address</span></code> with the sudo non-root username and IP address of your server.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">ssh -L 5901:127.0.0.1:5901 -N -f -l <span class="highlight">username</span> <span class="highlight">server_ip_address</span>
+</li></ul></code></pre>
+<p>If you are using a graphical SSH client, like PuTTY, use <code><span class="highlight">server_ip_address</span></code> as the connection IP, and set <code>localhost:5901</code> as a new forwarded port in the program's SSH tunnel settings.</p>
+
+<p>Next, you may now use a VNC client to attempt a connection to the VNC server at <code>localhost:5901</code>. You'll be prompted to authenticate. The correct password to use is the one you set in Step 1.</p>
+
+<p>Once you are connected, you should see the default Xfce desktop. It should look something like this:</p>
+
+<p class="growable"><img src="http://i.imgur.com/X4eEcuV.png" alt="VNC connection to Ubuntu 16.04 server"></p>
+
+<p>You can access files in your home directory with the file manager or from the command line, as seen here:</p>
+
+<p class="growable"><img src="http://i.imgur.com/n5VPuSa.png" alt="Files via VNC connection to Ubuntu 16.04"></p>
+
+<div name="step-4-—-creating-a-vnc-service-file" data-unique="step-4-—-creating-a-vnc-service-file"></div><h2 id="step-4-—-creating-a-vnc-service-file">Step 4 — Creating a VNC Service File</h2>
+
+<p>Next, we'll set up the VNC server as a systemd service. This will 
+make it possible to start, stop, and restart it as needed, like any 
+other systemd service.</p>
+
+<p>First, create a new unit file called <code>/etc/systemd/system/vncserver@.service</code> using your favorite text editor:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo nano /etc/systemd/system/vncserver@.service
+</li></ul></code></pre>
+<p>Copy and paste the following into it. Be sure to change the value of <strong>User</strong> and the username in the value of <strong>PIDFILE</strong> to match your username.</p>
+<pre class="code-pre "><code langs=""><div class="secondary-code-label " title="/etc/systemd/system/vncserver@.service ">/etc/systemd/system/vncserver@.service </div>[Unit]
+Description=Start TightVNC server at startup
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=<span class="highlight">sammy</span>
+PAMName=login
+PIDFile=/home/<span class="highlight">sammy</span>/.vnc/%H:%i.pid
+ExecStartPre=-/usr/bin/vncserver -kill :%i &gt; /dev/null 2&gt;&amp;1
+ExecStart=/usr/bin/vncserver -depth 24 -geometry 1280x800 :%i
+ExecStop=/usr/bin/vncserver -kill :%i
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Save and close the file.</p>
+
+<p>Next, make the system aware of the new unit file.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl daemon-reload
+</li></ul></code></pre>
+<p>Enable the unit file.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl enable vncserver@1.service
+</li></ul></code></pre>
+<p>The <code>1</code> following the <code>@</code> sign signifies which display number the service should appear over, in this case the default <code>:1</code> as was discussed above. <br>
+Stop the current instance of the VNC server if it's still running.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">vncserver -kill :1
+</li></ul></code></pre>
+<p>Then start it as you would start any other systemd service.</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl start vncserver@1
+</li></ul></code></pre>
+<p>You can verify that it started with this command:</p>
+<pre class="code-pre command"><code langs=""><ul class="prefixed"><li class="line" prefix="$">sudo systemctl status vncserver@1
+</li></ul></code></pre>
+<p>If it started correctly, the output should look like this:</p>
+<div class="code-label " title="Output">Output</div><pre class="code-pre "><code langs="">vncserver@1.service - TightVNC server on Ubuntu 16.04
+   Loaded: loaded (/etc/systemd/system/vncserver@.service; enabled; vendor preset: enabled)
+   <span class="highlight">Active: active (running)</span> since Mon 2016-04-25 03:21:34 EDT; 6s ago
+  Process: 2924 ExecStop=/usr/bin/vncserver -kill :%i (code=exited, status=0/SUCCESS)
+
+...
+
+ systemd[1]: Starting TightVNC server on Ubuntu 16.04...
+ systemd[2938]: pam_unix(login:session): session opened for user finid by (uid=0)
+ systemd[2949]: pam_unix(login:session): session opened for user finid by (uid=0)
+ systemd[1]: Started TightVNC server on Ubuntu 16.04.
+</code></pre>
+<div name="conclusion" data-unique="conclusion"></div><h2 id="conclusion">Conclusion</h2>
+
+<p>You should now have a secured VNC server up and running on your 
+Ubuntu 16.04 server. Now you'll be able to manage your files, software, 
+and settings with an easy-to-use and familiar graphical interface.</p>
+
+    </div>
+</div>
+
+<div class="tutorial-footer">
+  <div class="tutorial-footer-details">
+
+  <div class="postable-info-bar-container">
+  <div class="postable-info-bar">
+    <div class="author-byline">
+      <div class="postable-info-bar-container">
+  <ul class="postable-info-bar">
+      <li class="author-byline">
+        <a href="https://www.digitalocean.com/community/users/finid">
+            <div class="tutorial-author-avatar">
+              <img alt="finid" class="avatar avatar-small" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/989a7705a77732d888ddaff8b440fc3d.png" width="80" height="80">
+            </div>
+
+          <div class="author-and-date">
+            <div class="tutorial-author">
+              <div class="by">By: </div>
+              finid
+            </div>
+          </div>
+</a>      </li>
+  </ul>
+</div>
+
+    </div>
+    <div class="right-section">
+      <div class="upvote-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="false" data-upvotable-id="1943" data-upvotable-type="Tutorial"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-heart"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-heart"></use></svg></span><span class="new-upvote-text">Upvote</span><span class="new-upvote-count">44</span></button>
+      </div>
+      <div class="section-item section-item-subscribe">
+  <span class="opt-in-switch off signed-out-subscribe">
+    <span class="subscribe-label">
+      <span class="icon icon-subscribe"></span>
+      <span class="subscription-label subscribe">Subscribe</span>
+      <span class="icon icon-subscribed"></span>
+      <span class="subscription-label subscribed">Subscribed</span>
+    </span>
+    <a data-toggle="modal" data-target="#sign-in-modal" class="mini-switch-container" href="javascript:void(0);"><div class="mini-switch off signed-out-subscribe"><div class="switch-handle"></div></div></a>
+  </span>
+</div>
+
+<div class="section-item social-sharing-item">
+  <div class="sharing">
+  <a class="share-button" href="#" data-toggle="modal" data-target="#share-modal">
+    <span class="icon icon-share-square"></span>
+    <span class="share-button-text">Share</span>
+  </a>
+</div>
+
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+  <div class="section-content tutorial-contributors two">
+
+      <div class="tutorial-footer-user">
+        <a href="https://www.digitalocean.com/community/users/hazelnut">
+            <div class="tutorial-footer-user-avatar-container">
+              <div class="mod-avatar mod-avatar-small"><img class="avatar avatar-small" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/6cbcddbff2a699eb6c34ad6c4ca1a211b4e173a0.jpg" alt="6cbcddbff2a699eb6c34ad6c4ca1a211b4e173a0"><span class="mod-star" title="" data-toggle="tooltip" data-container="body" data-original-title="MOD"><span class="mod-star-icon"></span></span></div>
+            </div>
+
+          </a><div class="user-info"><a href="https://www.digitalocean.com/community/users/hazelnut">
+            <div class="tutorial-user-type">Editor:</div>
+            </a><a href="https://www.digitalocean.com/community/users/hazelnut">Hazel Virdó</a>
+          </div>
+      </div>
+
+  </div>
+</div>
+
+
+  
+  <div class="tutorial-ctas" style="background-image:url(https://assets.digitalocean.com/labs/btp/marketplace.jpg); background-color:#0e46f9; background-position:bottom center; padding-top:-10px;">
+  <div class="section-content">
+    <div class="cta-description">
+      <h2 style="color: rgb(255, 255, 255);">Introducing: DigitalOcean Marketplace</h2>
+
+      <p style="color: rgb(255, 255, 255); padding: 15px 0px; line-height: 1.3em;">38
+ Pre-Built Open-Source Applications ready to deploy on DigitalOcean 
+Droplets in less than 60 Seconds. Including LAMP, Docker, GitLab, 
+Jenkins, Plesk, cPanel, WordPress, and many more.</p>
+
+      <a class="cloud-tutorial-cta" href="https://marketplace.digitalocean.com/category/all?utm_source=comm_exp&amp;utm_medium=btp_everyone_else_marketplace" style="background:#FFF;color:#0069FF;">View Applications</a>
+    </div>
+  </div>
+</div>
+    <div class="related-tutorials">
+    <div class="section-content">
+      <h2>Related Tutorials</h2>
+
+      <ul>
+        <li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-a-remote-desktop-with-x2go-on-debian-8">How to Set Up a Remote Desktop with X2Go on Debian 8</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-find-broken-links-on-your-website-using-wget-on-debian-7">How To Find Broken Links on Your Website Using Wget on Debian 7</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-seti-home-on-ubuntu-14-04-or-debian-7">How To Set Up SETI@home on Ubuntu 14.04 or Debian 7</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-set-up-an-osrm-server-on-ubuntu-14-04">How To Set Up an OSRM Server on Ubuntu 14.04</a></li>
+<li><a class="related-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-sphinx-on-ubuntu-14-04">How To Install and Configure Sphinx on Ubuntu 14.04</a></li>
+
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<div class="content-comments">
+  <div class="section-content">
+    <div class="tutorial commentable" id="tutorial_1943">
+
+  <div class="comments-header">
+    <h4 class="comments-count"><span>81 Comments</span></h4>
+  </div>
+
+  <div class="response response-form no-avatar">
+  <div class="js-display-on-error flash error hidden"></div>
+
+
+  <form class="content-form disabled-form" id="new_comment" action="/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04/comments" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓" disabled="disabled">
+
+    <div class="meltdown_wrap" style="height: auto;"><div class="meltdown_topmargin"></div><div class="meltdown_bar"><ul class="meltdown_controls meltdown_controls_preview"><li class="meltdown_control-preview meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Toggle Preview"><span>Preview</span></li></ul><div class="preview-header">Markdown Preview</div><ul class="meltdown_controls meltdown_controls_main"><li class="meltdown_control-bold meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Bold"><span unselectable="on">B</span></li><li class="meltdown_control-italics meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Italics"><span unselectable="on">I</span></li><li class="meltdown_control-h1 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 1"><span unselectable="on">H1</span></li><li class="meltdown_control-h2 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 2"><span unselectable="on">H2</span></li><li class="meltdown_control-h3 meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Header 3"><span unselectable="on">H3</span></li><li class="meltdown_control-ul meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Unordered List"><span unselectable="on">UL</span></li><li class="meltdown_control-ol meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Ordered List"><span unselectable="on">OL</span></li><li class="meltdown_control-link meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Link"><span unselectable="on">Link</span></li><li class="meltdown_control-code meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Code"><span unselectable="on">Code</span></li><li class="meltdown_control-highlight meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Highlight"><span unselectable="on">Highlight</span></li><li class="meltdown_control-table meltdown_control meltdown_controlbutton disabled" title="" data-original-title="Table"><span unselectable="on">Table</span></li></ul></div><div class="meltdown_editor-wrap"><div class="meltdown_editor-deco"><textarea name="comment[content]" id="comment_content" placeholder="Leave a comment..." class="js-comment-content tutorial-comment-field meltdown_editor" data-markdown="true" disabled="disabled" style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 120px;"></textarea></div></div><div class="meltdown_preview-wrap"><div class="meltdown_preview-wrap2"><div class="meltdown_preview-error-message">Could not load preview. <a href="#">Try again</a></div><div class="meltdown_preview-loading-message">Loading preview...</div><div class="meltdown_preview content-body"></div></div></div><div class="meltdown_bottommargin"></div></div>
+
+      <div class="log-in-notice "><a href="https://www.digitalocean.com/community/auth/digitalocean">Log In to Comment</a></div>
+
+    <div class="clearfix"></div>
+</form>
+</div>
+
+
+  <div class="comments">
+    <ul class="response-list">
+          <a class="hidden" rel="nofollow" data-remote="true" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04/comments">Load</a>
+    <li id="comment_46645" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="46645" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/kbitson">kbitson</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=46645">May  4, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Awesome, worked like a charm. I would like 
+to note, though, that I did not need step 3 (tunneling via PuTTY) -- I 
+was able to connect directly to my droplet ( IP:port ) using VNC Viewer.
+ Thank you!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_46645">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_46946" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="46946" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/guntbert">guntbert</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=46946">May 13, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>You are missing the key point here: accessing your server over an unencrypted connection is Not A Good Idea™.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_46946">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_46946"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_70955" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="70955" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/valeriodeluca">valeriodeluca</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=70955">May 31, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>not works</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_70955">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_70955"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_75243" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="75243" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/vapinpagan">vapinpagan</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=75243">November 20, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>um, the whole point of tunneling is a secure connection, not a need to do so. </p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_75243">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_75243"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_46645"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_46947" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="46947" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/guntbert">guntbert</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=46947">May 13, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thank you for the great article. I especially like how you always provide a <em>little</em> more information than essentially necessary to accomplish the goal.  </p>
+
+<p>This way you enable us to see the context - I really enjoyed it.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_46947">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_46947"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_47600" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="47600" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/pikadudeno1">pikadudeno1</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=47600">June  3, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>How do I enable clipboard-sharing after following these instructions?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_47600">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_58517" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="58517" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/cmosguy">cmosguy</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=58517">April 10, 2017</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Hey <a href="https://www.digitalocean.com/community/users/pikadudeno1" class="username-tag">@pikadudeno1</a> so what I discovered was  I had to put the following lines in either my ~/.vnc/xstartup or a .bashrc file:</p>
+
+<p>autocutsel -fork</p>
+
+<p>Hope this helps.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_58517">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_58517"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_47600"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_48192" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="48192" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/enorm">eNORm</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=48192">June 20, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p><code>sudo systemctl enable vncserver@1.service</code></p>
+
+<p><strong>should be?</strong> </p>
+
+<p><code>sudo systemctl enable vncserver@.service</code></p>
+
+<p>or not, <a href="https://www.digitalocean.com/community/users/1" class="username-tag">@1</a> means its a parameter "1" that is passed to the service, so to start a service on display 1? Can I use </p>
+
+<p><code>sudo systemctl enable vncserver@1.service</code></p>
+
+<p><code>sudo systemctl enable vncserver@2.service</code></p>
+
+<p><code>sudo systemctl enable vncserver@3.service</code></p>
+
+<p>To have 3 vnc displays running? </p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_48192">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_48192"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_48233" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="48233" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/greatwall">GreatWall</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=48233">June 21, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Excellent Tutorial!! I got "connection refused" on ssh command in Step 3. It may be due to I tried to set up xRDP before.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_48233">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_70956" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="70956" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/valeriodeluca">valeriodeluca</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=70956">May 31, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>me too</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_70956">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_70956"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_48233"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_49001" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="49001" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/mirkotebaldi">mirkotebaldi</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=49001">July 13, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>sudo systemctl daemon-reload
+
+</p><p>sudo: systemctl: command not found</p>
+
+<p>So ... now ?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_49001">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_54134" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="54134" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/scriptmyjob">ScriptMyJob</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=54134">December 28, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Based on that information you are not running systemd. </p>
+
+<p>Side note: It's good to see Ubuntu finally decided to go with systemd. </p>
+
+<p>If I were you I would verify that you are running Ubuntu 16.04 (or some other similar systemd variant).</p>
+
+<p>It is incredibly important to think logically about this sort of 
+thing when it happens.  I guarantee you that this is not going to be the
+ last time that something like this will happen.  My usual 
+troubleshooting steps are:</p>
+
+<ol>
+<li>What was my expected output?</li>
+<li>What was my actual output?</li>
+<li>Did I spell it right? (I am horrible about spelling)</li>
+<li>Is this a package that can be installed if this not currently installed?</li>
+<li>Should I google this error or is this something that I can figure out myself?</li>
+<li>Re attempt with additional troubleshooting steps if necessary.</li>
+<li>Ask others for help only after being able to reproduce steps and cite sources.</li>
+</ol>
+
+<p>This is really what separates the the Linux Admins from the rage 
+clicking Windows Users.  If you implement this into your methodology 
+people we be more likely to help you when you have an issue.</p>
+
+<p>Hope that this helps you out.</p>
+
+<p>Best Regards,<br>
+Robert J.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_54134">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_54134"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_70957" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="70957" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/valeriodeluca">valeriodeluca</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=70957">May 31, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>and now? vinagre? how?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_70957">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_70957"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_49001"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_49117" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="49117" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/dylanh724">dylanh724</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=49117">July 16, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><pre class="code-pre "><code langs="">sudo apt-get install xfce4 xfce4-goodies tightvncserver
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Some packages could not be installed. This may mean that you have
+requested an impossible situation or if you are using the unstable
+distribution that some required packages have not yet been created
+or been moved out of Incoming.
+The following information may help to resolve the situation:
+
+The following packages have unmet dependencies:
+ tightvncserver : Depends: x11-utils
+ xfce4 : Depends: xfce4-panel (&gt;= 4.10.0) but it is not going to be installed
+         Depends: xfce4-mixer (&gt;= 4.10.0) but it is not going to be installed
+         Depends: orage (&gt;= 4.8.0) but it is not going to be installed
+         Recommends: xorg but it is not going to be installed
+ xfce4-goodies : Depends: xfce4-battery-plugin but it is not going to be installed
+                 Depends: xfce4-clipman-plugin but it is not going to be installed
+                 Depends: xfce4-cpufreq-plugin but it is not going to be installed
+                 Depends: xfce4-cpugraph-plugin but it is not going to be installed
+                 Depends: xfce4-datetime-plugin but it is not going to be installed
+                 Depends: xfce4-diskperf-plugin but it is not going to be installed
+                 Depends: xfce4-fsguard-plugin but it is not going to be installed
+                 Depends: xfce4-genmon-plugin but it is not going to be installed
+                 Depends: xfce4-mailwatch-plugin but it is not going to be installed
+                 Depends: xfce4-mount-plugin but it is not going to be installed
+                 Depends: xfce4-netload-plugin but it is not going to be installed
+                 Depends: xfce4-notes-plugin but it is not going to be installed
+                 Depends: xfce4-places-plugin but it is not going to be installed
+                 Depends: xfce4-quicklauncher-plugin but it is not going to be installed
+                 Depends: xfce4-sensors-plugin but it is not going to be installed
+                 Depends: xfce4-smartbookmark-plugin but it is not going to be installed
+                 Depends: xfce4-systemload-plugin but it is not going to be installed
+                 Depends: xfce4-timer-plugin but it is not going to be installed
+                 Depends: xfce4-verve-plugin but it is not going to be installed
+                 Depends: xfce4-wavelan-plugin but it is not going to be installed
+                 Depends: xfce4-weather-plugin but it is not going to be installed
+                 Depends: xfce4-xkb-plugin but it is not going to be installed
+                 Depends: thunar-media-tags-plugin but it is not going to be installed
+                 Depends: mousepad but it is not going to be installed
+                 Depends: xfce4-dict but it is not going to be installed
+                 Depends: xfce4-screenshooter but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+
+</code></pre></div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_49117">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_49117"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_49128" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="49128" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/dylanh724">dylanh724</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=49128">July 17, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Can you offer more details about the SSH tunnel settings? I can't get this working with PuttY</p>
+
+<p><strong>EDIT</strong>: Found a better description here:<br>
+<a href="http://www.liquidweb.com/kb/how-to-configure-a-vnc-server-to-use-an-ssh-tunnel-on-ubuntu-14-04-lts/" rel="nofollow">http://www.liquidweb.com/kb/how-to-configure-a-vnc-server-to-use-an-ssh-tunnel-on-ubuntu-14-04-lts/</a></p>
+
+<p><strong>To Connect via PuTTy</strong></p>
+
+<p>Under Connection -&gt; SSH -&gt; Tunnels add:</p>
+
+<p>Source port: 5901<br>
+Destination: localhost:5901</p>
+
+<p>And connect to your server at its IP address and port 22 via PuTTY.</p>
+
+<p>And then connect to localhost:5901 via a VNC viewer such as TightVNC.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_49128">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_57253" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="57253" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/bchellingworth">bchellingworth</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=57253">March 14, 2017</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I got stuck at this point to, i have tried 
+the above but I'm getting "Remote machine actively refused connection" 
+(paraphrasing).</p>
+
+<p>I can connect if I open VNC viewer and connect to my<em>server</em>ip:5901 but I can get it to work with localhost.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_57253">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_67001" data-level="2" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="67001" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/joeomundson">joeomundson</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=67001">January  9, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I followed these instructions:</p>
+
+<p><a href="http://www.mit.edu/%7Eavp/lqcd/ssh-vnc.html" rel="nofollow">http://www.mit.edu/~avp/lqcd/ssh-vnc.html</a></p>
+
+<p>call vncserver using:<br>
+vncserver :7 -geometry 1364x766 -localhost</p>
+
+<p>the -localhost argument makes it so the tightvnc server only accepts 
+connections from itself (127.0.0.1)-- now people can't try to brute 
+force their way in by accessing (server IP):1 or whatever.</p>
+
+<p>In puTTy, I used:<br>
+Source port: 5902<br>
+Destination: 127.0.0.1:5907</p>
+
+<p>In tightVNC, I used:<br>
+localhost:2</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_67001">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_67001"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_57253"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_49128"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_49130" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="49130" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/dylanh724">dylanh724</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=49130">July 17, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Hmm when I login with the tunneling, it 
+just throws me into a normal SSH session. Is it because I'm using ssl 
+keys login ? Does this effect what happens?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_49130">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_49130"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_50192" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="50192" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">2</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/francorossini19">francorossini19</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=50192">August 17, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I have 3 problems </p>
+
+<p>1) After "sudo systemctl start vncserver@1" command</p>
+
+<p>I have an error</p>
+<pre class="code-pre "><code langs="">Job for vncserver@1.service failed because the control process exited with error code. See "systemctl status vncserver@1.service" and "journalctl -xe" for details.
+</code></pre>
+<p>I update with sudo apt-get update but problem persist</p>
+
+<p><a href="http://i.imgur.com/EaNt3Su.png" rel="nofollow">Error Log</a></p>
+
+<p>2) how can i login into VNC changing user from root to normal user in ubuntu 16,04?</p>
+
+<p>3) Some UI XFCE4 elements are missed - why happens?<br>
+<em>sudo apt install xfce4 xfce4-goodies tightvncserver</em> command is uncomplete?</p>
+
+<p>I solve with this plus command</p>
+<pre class="code-pre "><code langs="">sudo apt-get install gnome-icon-theme-full tango-icon-theme
+</code></pre></div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_50192">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_70958" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="70958" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/valeriodeluca">valeriodeluca</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=70958">May 31, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>me too, how fix 1)?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_70958">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_70958"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_50192"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_50286" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="50286" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/ronniem71">ronniem71</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=50286">August 20, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>This guide is totally useless,  went 
+through every step EXACTLY and get errors at ssh -L 5901:127.0.0.1:5901 
+-N -f -l username server<em>ip</em>address  and sudo systemctl enable <a href="mailto:vncserver@1.service" rel="nofollow">vncserver@1.service</a>  and so far the support from DigitalOcean via support ticket has NOT BE up to par.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_50286">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_50286"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_50877" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="50877" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/hrskrs">hrskrs</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=50877">September  9, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><pre class="code-pre "><code langs="">sudo systemctl start vncserver@1
+</code></pre>
+<p>gives <strong>Invalid Argument</strong></p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_50877">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_51847" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="51847" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/afermon">afermon</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=51847">October  7, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Check the file <code>/etc/systemd/system/vncserver@.service</code>  </p>
+
+<p>It should not have the path in the top.</p>
+<pre class="code-pre "><code langs="">[Unit]
+Description=Start TightVNC server at startup
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=USER
+PAMName=login
+PIDFile=/home/USER/.vnc/%H:%i.pid
+ExecStartPre=-/usr/bin/vncserver -kill :%i &gt; /dev/null 2&gt;&amp;1
+ExecStart=/usr/bin/vncserver -depth 24 -geometry 1280x800 :%i
+ExecStop=/usr/bin/vncserver -kill :%i
+
+[Install]
+WantedBy=multi-user.target
+</code></pre></div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_51847">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_51847"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_50877"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_51042" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="51042" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/marcgirondot">marcgirondot</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=51042">September 13, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thanks for this great tutorial. The only change that I have been force to do was here:<br>
+ssh -L 5901:127.0.0.1:5901 -N -f -l username server<em>ip</em>address</p>
+
+<p>It didn't work for me but </p>
+
+<p>ssh -L 8080:127.0.0.1:5901 -N -f -l username server<em>ip</em>address</p>
+
+<p>works great with <br>
+vmc://localhost:8080</p>
+
+<p>Thanks again !</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_51042">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_70959" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="70959" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/valeriodeluca">valeriodeluca</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=70959">May 31, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>what do you mean with "vmc://localhost:8080"? settings in vinagre?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_70959">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_70959"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_75244" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="75244" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/vapinpagan">vapinpagan</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=75244">November 20, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>could be a router port issue</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_75244">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_75244"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_51042"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_51651" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="51651" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/goldensun">GoldenSun</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=51651">October  1, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><pre class="code-pre "><code langs="">sudo systemctl enable vncserver@1.service
+</code></pre>
+<p>gives an output below:</p>
+<pre class="code-pre "><code langs="">Failed to execute operation: Invalid argument
+</code></pre>
+<p>I have tried using username as my login name and root, neither of them worked.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_51651">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_51651"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_52013" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="52013" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/saaamkookie">saaamkookie</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=52013">October 13, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>So as soon as i remote is with the VNC session (the xfce4 desktop is displayed) but with errors. </p>
+
+<p>xfce unable to determine failsafe session name. possible causes: 
+xfconfd isn't running (D-Bus setup problem); environment variable $XDG<em>CONFIG</em>DIRS is set incorrectly (must include... and so on.</p>
+
+<p>Read elsewhere that this is a permissions problem of some kind and was wondering if someone could explain how to resolve?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_52013">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_65769" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="65769" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/elliotr">elliotr</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=65769">November 12, 2017</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I've had the same errors showing up on all 
+kinds of configurations of xfce4. None of the advice I could find from 
+googling produced a solution. In my case the solution I found was to 
+completely remove xfce4, keeping the tightvncserver program and then 
+installing ubuntu desktop with startup script from this thread <a href="https://askubuntu.com/questions/475023/how-to-make-vnc-server-work-with-ubuntu-desktop-without-xfce" rel="nofollow">ask ubuntu</a></p>
+
+<p>Works fine with basic non unity ubuntu desktop, no errors, solution found!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_65769">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_65769"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_52013"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_52141" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="52141" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">1</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/vpsfix">vpsfix</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=52141">October 17, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I recorded my screen while setting up VNC on Ubuntu 16.04. Here's the YouTube video if anyone want to watch and learn.<br>
+<a href="https://www.youtube.com/watch?v=f-NS4IM3NEI" rel="nofollow">https://www.youtube.com/watch?v=f-NS4IM3NEI</a></p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_52141">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_75245" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="75245" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/vapinpagan">vapinpagan</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=75245">November 20, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>does absolutely no good if this tutorial is all about Ubuntu which is LINUX and your video uses nothing but Winblows...</p>
+
+<p>Sorry, but a blind monkey can set this up and use it in Winblows.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_75245">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_75245"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_52141"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_53353" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="53353" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/mgalacci">mgalacci</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=53353">November 28, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>I have a problem with keyboard layout<br>
+I have installed the server on "Debian stretch". Works well.<br>
+But when i access from the client in Kde (also on Debian streth - krdc 
+or VNC Viewer) I get an error with keyboard. For instance, pressing "f",
+ appear letter "h"</p>
+
+<p>Some idea?</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_53353">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_53353"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_53855" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="53855" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/nick32">nick32</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=53855">December 15, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>Thank you! Very useful article</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_53855">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_53855"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_54038" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="54038" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/joe2">joe2</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=54038">December 23, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p><a href="https://www.digitalocean.com/community/users/finid" class="username-tag">@finid</a> <a href="https://www.digitalocean.com/community/users/hazelnut" class="username-tag">@hazelnut</a> I had to use <code>tightvncserver</code> rather than <code>vncserver</code> as the command. Just thought I'd let you know :) Thanks for the tutorial!</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_54038">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_54038"></div>
+</div>
+    </div>
+
+  </li>
+
+      <li id="comment_54122" data-level="0" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container ">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="54122" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/silverline">silverline</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=54122">December 27, 2016</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>This tutorial is totally useless. There is 
+no $HOME/.Xresources in Ubuntu 16.04, to start with. I could not manage 
+to create a working VNC connection to my Ubuntu machine, despite the 
+very promising name.</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_54122">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+      <li id="comment_75246" data-level="1" class="comment-container" style="">
+    <div class="response comment-body-container    " data-highlight="">
+      <div class="comment-upvote-container comment-reply-container">
+        <button name="button" type="button" class="new-upvote-button" data-include-caret="true" data-upvotable-id="75246" data-upvotable-type="Comment"><span class="icon new-upvote-icon"><svg class="svg-icon svg-icon-upvote-empty"><use xlink:href="https://www.digitalocean.com/assets/community/icon-sprite-d76eb75d70ccf8ffb4c0b47b7dbc88ca.svg#icon-upvote-empty"></use></svg></span><span class="new-upvote-count">0</span></button>
+      </div>
+      <div class="ox-auto">
+        <div class="comment-header">
+          <span class="response-name"><a class="username" href="https://www.digitalocean.com/community/users/vapinpagan">vapinpagan</a></span>
+          
+          <span class="response-time"><a rel="nofollow" class="post-time-link" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04?comment=75246">November 20, 2018</a></span>
+
+          
+        </div>
+
+          <div class="response-body content-body">
+            <div class=""><p>maybe because you breezed through the 
+tutorial being very impatient. If you read through the tutorial slowly 
+so that you understand you will realize your statement makes no sense at
+ all...</p>
+</div>
+            
+          </div>
+
+        
+
+        <div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+
+
+        <div class="content-actions">
+  <div class="comment-actions">
+
+    
+
+    
+  </div>
+
+  <div class="comment-moderation-actions">
+    <ul class="comment-moderation-actions-list ">
+      
+
+
+
+
+
+
+
+    </ul>
+  </div>
+</div>
+
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="response-comments">
+      <div class="response_comment commentable comment" id="response_comment_75246">
+
+
+  <div class="comments">
+    <ul class="response-list">
+      
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_75246"></div>
+</div>
+    </div>
+
+  </li>
+
+
+
+    </ul>
+  </div>
+
+
+  <div id="reply_anchor_comment_54122"></div>
+</div>
+    </div>
+
+  </li></ul><div class="comment-pagination"><span class="previous_page disabled">Previous</span> <em class="current">1</em> <a rel="next nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04/comments?page=2">2</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04/comments?page=3">3</a> <a rel="nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04/comments?page=4">4</a> <a class="next_page" rel="next nofollow" href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04/comments?page=2">Next</a></div>
+
+      <div class="comments-spinner" style="display: none;"><div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+</div>
+  </div>
+
+  <div class="load-more-container"><a class="load-more" href="javascript:void(0);"><span class="load-more-text">Load More Comments</span><div class="comments-spinner" style="display: none;"><div class="spinner spinner-large">
+  <div class="bounce1"></div>
+  <div class="bounce2"></div>
+  <div class="bounce3"></div>
+  
+</div>
+</div></a></div>
+</div>
+
+
+  </div>
+</div>
+
+<div class="creative-commons">
+  <a class="creative-commons-image" href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img rel="license" alt="Creative Commons License" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/creativecommons-08b32a9279fcd47fcd78ac6a26331389.png"></a>
+    <div class="license-text">This work is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</div>
+</div>
+
+
+
+
+
+        <div class="clearfix"></div>
+      </div>
+
+
+          <footer>
+      <section>
+          <a href="https://www.digitalocean.com/write-for-donations/" class="panel">
+          <div class="photo_wrap">
+            <img class="photo" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/70910e9fdeb57be46aaa209ce8d9b4dc8e117fab_w4do2.jpg" alt="">
+          </div>
+          <span class="heading">Become a contributor</span>
+          <p>
+              You get paid, we donate to tech nonprofits.
+          </p>
+        </a>
+          <a href="https://www.meetup.com/pro/digitalocean" class="panel">
+          <div class="photo_wrap">
+            <img class="photo" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/2491485f96735e5982e330914d8a617f85395fab_meetups.jpg" alt="">
+          </div>
+          <span class="heading">Connect with other developers</span>
+          <p>
+              Find a DigitalOcean Meetup near you.
+          </p>
+        </a>
+          <a href="https://www.digitalocean.com/community/newsletter" class="panel">
+          <div class="photo_wrap">
+            <img class="photo" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/ca12c951cc76f33037f3384bba9942545d160d82_iaan_illo.jpg" alt="">
+          </div>
+          <span class="heading">Get our biweekly newsletter</span>
+          <p>
+              Sign up for Infrastructure as a Newsletter.
+          </p>
+        </a>
+    </section>
+    <section class="slim ">
+      <span class="heading">Featured on Community</span>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-kubernetes">Intro to Kubernetes</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3">Learn Python 3</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/community/tutorials/machine-learning-projects-python-a-digitalocean-ebook">Machine Learning in Python</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/community/tutorials/how-to-write-your-first-program-in-go">Getting started with Go</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/community/tutorial_series/from-containers-to-kubernetes-with-node-js">Migrate Node.js to Kubernetes</a>
+      <hr>
+      <span class="heading">DigitalOcean Products</span>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/products/droplets/">Droplets</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/products/managed-databases/">Managed Databases</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/products/kubernetes/">Managed Kubernetes</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://www.digitalocean.com/products/spaces/">Spaces Object Storage</a>
+          <a href="https://www.digitalocean.com/community/users/dvhxihuacz"></a><a href="https://marketplace.digitalocean.com/">Marketplace</a>
+    </section>
+      <section class="product">
+        <a class="copy" href="https://www.digitalocean.com/products">
+          <h3>Welcome to the developer cloud</h3>
+          <p>DigitalOcean makes it simple to launch in the cloud and 
+scale up as you grow – whether you’re running one virtual machine or ten
+ thousand.</p>
+          <span class="link_text">Learn More</span></a>
+        
+        <div class="feature">
+          <a class="img_wrap" href="https://www.digitalocean.com/products">
+            <img class="photo" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/95c1215227aa7f39f2bd23076de28feb969741c7_cloud.png" alt="DigitalOcean Cloud Control Panel">
+          </a>
+        </div>
+      </section>
+      <section class="dark">
+        <div class="vlist grow">
+          <a href="https://www.digitalocean.com/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+              <title>DigitalOcean Homepage</title>
+              <g fill="#0080FF" fill-rule="evenodd">
+                <path d="M24.9153 50v-9.661c10.226 0 18.1638-10.1413 14.2372-20.904-1.4406-3.983-4.6327-7.1751-8.6158-8.6158C19.774 6.921 9.6327 14.8305 9.6327 25.0565H0C0 8.7571 15.7627-3.9548 32.8531 1.3842c7.4576 2.3446 13.418 8.2768 15.7345 15.7344C53.9266 34.2373 41.2429 50 24.9153 50">
+                </path>
+                <path d="M15.339 40.3672h9.6045v-9.6045H15.339zM7.9379 47.7684h7.401v-7.4012H7.938zM1.7514 40.3672H7.938v-6.1864H1.7514z">
+                </path>
+              </g>
+            </svg>
+          </a>
+          <br><br>
+          © <script type="text/javascript">
+            document.write(new Date().getFullYear());
+
+          </script>2019 DigitalOcean, LLC. All rights reserved.
+        </div>
+
+            <div class="vlist">
+              <span class="heading">Company</span>
+              <ul>
+                  <li>
+                    <a href="https://www.digitalocean.com/about/">About</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/about/leadership/">Leadership</a>
+                  </li>
+                  <li>
+                    <a href="https://blog.digitalocean.com/">Blog</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/careers/">Careers</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/partners/">Partners</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/referral-program/">Referral Program</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/press/">Press</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/legal/">Legal &amp; Security</a>
+                  </li>
+              </ul>
+            </div>
+            <div class="vlist">
+              <span class="heading">Products</span>
+              <ul>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/">Products Overview</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/pricing/">Pricing</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/droplets/">Droplets</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/kubernetes/">Kubernetes</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/managed-databases/">Managed Databases</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/spaces/">Spaces</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/marketplace/">Marketplace</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/load-balancer/">Load Balancers</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/block-storage/">Block Storage</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/products/tools-and-integrations/">Tools &amp; Integrations</a>
+                  </li>
+                  <li>
+                    <a href="https://developers.digitalocean.com/documentation/">API</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/docs">Documentation</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/docs/release-notes/">Release Notes</a>
+                  </li>
+              </ul>
+            </div>
+            <div class="vlist">
+              <span class="heading">Community</span>
+              <ul>
+                  <li>
+                    <a href="https://www.digitalocean.com/community/tutorials">Tutorials</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/community/questions">Q&amp;A</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/community/projects">Projects and Integrations</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/community/tags">Tags</a>
+                  </li>
+                  <li>
+                    <a href="https://www.meetup.com/pro/digitalocean/?utm_source=do_www">Meetups</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/write-for-donations/">Write for DOnations</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/droplets-for-demos/">Droplets for Demos</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/hatch/">Hatch Startup Program</a>
+                  </li>
+                  <li>
+                    <a href="http://store.digitalocean.com/">Shop Swag</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/research/">Research Program</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/currents/">Currents Research</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/open-source/">Open Source</a>
+                  </li>
+              </ul>
+            </div>
+            <div class="vlist">
+              <span class="heading">Contact</span>
+              <ul>
+                  <li>
+                    <a href="https://www.digitalocean.com/support/">Support</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/company/contact/sales/">Sales</a>
+                  </li>
+                  <li>
+                    <a href="https://www.digitalocean.com/company/contact/#abuse">Report Abuse</a>
+                  </li>
+                  <li>
+                    <a href="https://status.digitalocean.com/">System Status</a>
+                  </li>
+              </ul>
+            </div>
+      </section>
+    </footer>
+
+
+      <div id="sign-in-modal" class="modal fade mini-modal" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1>Almost there!</h1>
+        <a class="close-button" data-dismiss="modal" aria-label="close" href=""><span class="icon icon-close-light"></span></a>
+      </div>
+      <div class="modal-body">
+        <div class="sign-in-message">Sign into your account, or create a new one, to start interacting.</div>
+
+        <div class="sign-in-modal-actions">
+          <a class="sign-in-link button blue-button" data-default-url="/community/auth/digitalocean" href="https://www.digitalocean.com/community/auth/digitalocean">Log In</a>
+          <a class="sign-up-link button green-button" data-default-url="/community/auth/digitalocean?display=sessionless+register" href="https://www.digitalocean.com/community/auth/digitalocean?display=sessionless+register">Sign Up</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+      <script>
+    $(function() {
+      VTGNavigationDropdown($('[data-versioned-tutorial-group-navigation]'));
+      createTutorialRequest({
+        $tutorialRequestLinks: $("[data-tutorial-request]"),
+        tutorialRequestStatusSelector: "[data-tutorial-request-status-indicator]",
+        tutorialRequestUrl: "/community/api/tutorial_requests",
+      });
+    });
+  </script>
+
+  <script>
+    $(function() {
+      if (!!window.init_sharing) {
+        window.init_sharing();
+      }
+      new window.NewsletterSignup();
+      new window.GrowableMarkdown({ target: '[data-growable-markdown]' });
+    });
+  </script>
+  <script type="application/ld+json">
+    {"@context":"http://schema.org","@type":"Article","name":"How to Install and Configure VNC on Ubuntu 16.04","headline":"How to Install and Configure VNC on Ubuntu 16.04","alternativeHeadline":"How to Install and Configure VNC on Ubuntu 16.04","description":"In this guide, we will be setting up VNC on a Ubuntu 16.04 server and connecting to it securely through an SSH tunnel. The VNC server we will be using is TightVNC, a fast and lightweight remote control package. This choice will ensure that our VNC connection will be smooth and stable even on slower internet connections.","keywords":"Miscellaneous,ATL","url":"https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04"},"dateModified":"2018-01-16T03:48:16Z","inLanguage":"en","accessMode":"textual","accessModeSufficient":"textual","isAccessibleForFree":true,"license":"https://creativecommons.org/licenses/by-nc-sa/4.0/","publishingPrinciples":"https://www.digitalocean.com/community/tutorials/technical-recommendations-and-best-practices-for-digitalocean-s-tutorials","author":[{"@type":"Person","name":"finid","@id":"https://www.digitalocean.com/community/users/finid"}],"datePublished":"2016-04-26T20:08:59Z","editor":{"@type":"Person","name":"Hazel Virdó","@id":"hazelnut"},"image":{"@type":"ImageObject","url":"https://community-cdn-digitalocean-com.global.ssl.fastly.net/assets/tutorials/images/large/VNC_Configure_tw_mostov.png?1468953094","height":375,"width":750},"interactionStatistic":[{"@type":"InteractionCounter","interactionType":"http://schema.org/LikeAction","userInteractionCount":"50"},{"@type":"InteractionCounter","interactionType":"http://schema.org/CommentAction","userInteractionCount":"62"}],"sourceOrganization":{"@type":"Organization","name":"DigitalOcean Community","url":"https://www.digitalocean.com/community"},"publisher":{"@type":"Organization","name":"DigitalOcean","url":"https://www.digitalocean.com","logo":{"@type":"ImageObject","url":"https://assets.digitalocean.com/logos/DO_Logo_horizontal_blue.png","width":351,"height":60}}}
+  </script>
+  <script>
+    $(function() {
+      setTimeout(function(){
+        $.getJSON(
+          'https://assets.digitalocean.com/labs/btp.json',
+          function(data) {
+            new BelowTutorialPanel(data);
+          }
+        );
+      }, 2000);
+    });
+  </script>
+
+
+    
+  
+
+<div class="_panel_1nv7e_1 _fadeout_1nv7e_12" style="display: none;"><div class="_wrap_1nv7e_16">
+          <p class="_text_1nv7e_24">
+            We use cookies to provide our services and for analytics and marketing.
+            To find out more about our use of cookies,
+            please see our
+            <a class="_link_1nv7e_33" target="_blank" tabindex="0" href="https://www.digitalocean.com/legal/privacy-policy/">Privacy Policy</a>.
+            By continuing to browse our website, you agree to our use of&nbsp;cookies.
+          </p>
+          <button class="_button_1nv7e_39">
+            OK
+          </button>
+        </div></div><textarea tabindex="-1" aria-hidden="true" ,="" style="position: absolute; inset: -999px auto auto 0px; border: 0px none; padding: 0px; box-sizing: content-box; overflow-wrap: break-word; height: 0px !important; min-height: 0px !important; overflow: hidden; transition: none 0s ease 0s; font-family: monospace; font-size: 16px; font-weight: 400; font-style: normal; letter-spacing: 0px; text-transform: none; word-spacing: 0px; text-indent: 0px; line-height: 18px; width: 713px;" class="autosizejs" id="autosizejs">Leave a comment...
+</textarea><a id="scrollUp" href="#top" style="position: fixed; z-index: 1000;">Scroll to top</a><div id="scrollUp-active" style="position: absolute; top: 300px; width: 100%; border-top: 1px dotted rgb(0, 255, 255); z-index: 1000;"></div><div id="mktoStyleLoaded" style="display: none; border-top-color: rgb(18, 52, 86);"></div><form novalidate="novalidate" style="font-family: Helvetica, Arial, sans-serif; font-size: 13px; color: rgb(51, 51, 51); visibility: hidden; position: absolute; top: -500px; left: -1000px; width: 1654px;" class="mktoForm mktoHasWidth mktoLayoutLeft"></form><iframe name="mktoFormsXDIframe0.6146851584471185" id="MktoForms2XDIframe" style="display: none;" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/XDFrame.htm"></iframe><script type="text/javascript" id="">window.addEventListener("cookieconsent_statuschange",function(){window.dataLayer.push({event:"cc_dismiss"})});function getCookie(a){var b="; "+document.cookie;a=b.split("; "+a+"\x3d");if(2==a.length)return a.pop().split(";").shift()}getCookie("cookieconsent_status")&&window.dataLayer.push({event:"cc_dismiss"});</script><script type="text/javascript" id="">document.querySelector('li[role\x3d"banner"]').innerHTML='\x3ca href\x3d"https://blog.digitalocean.com/doks-in-ga/" data-pill\x3d"new" title\x3d"DigitalOcean Kubernetes is now Generally Available." target\x3d"_blank" rel\x3d"noopener"\x3eDigitalOcean Kubernetes is now Generally Available. Learn more \u276f \x3c/a\x3e';</script>
+
+<script type="text/javascript" id="" src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/js"></script>
+<script type="text/javascript" id="">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date);gtag("config","AW-836091520");</script>
+
+<script src="How%20to%20Install%20and%20Configure%20VNC%20on%20Ubuntu%2016.04%20%20%20DigitalOcean_files/a_002" type="text/javascript"></script></body></html>
