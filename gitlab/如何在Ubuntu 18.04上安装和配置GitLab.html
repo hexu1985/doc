@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)https://www.howtoing.com/how-to-install-and-configure-gitlab-on-ubuntu-18-04 -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>如何在Ubuntu 18.04上安装和配置GitLab</title>
+    <meta name="description" content="GitLab CE或Community Edition是一个开源应用程序，主要用于托管Git存储库，还有其他与开发相关的功能，如问题跟踪。在本指南中，我们将介绍如何在Ubuntu 18.04服务器上安装和配置GitLab。">
+    <meta id="token" name="token" value="mSHCsKdXvagItJWEXxVPvnehvt4KaUNTueJyrdF0">
+    <link rel="shortcut icon" href="https://www.howtoing.com/favicon.ico" type="image/x-icon">
+        <!--     <link rel="stylesheet" type="text/css" href="http://www.ui3g.com/demos/show/1619/bootstrap-3.3.5/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/bootstrap.css">
+    <link rel="stylesheet" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/w3.css">
+        <link rel="stylesheet" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/style.css" media="screen" title="app" charset="utf-8">
+    <link rel="stylesheet" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/prettify.css">
+        <link rel="stylesheet" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/font-awesome.min.css">
+    <link href="./如何在Ubuntu 18.04上安装和配置GitLab_files/css" rel="stylesheet">
+    <script src="./如何在Ubuntu 18.04上安装和配置GitLab_files/osd.js.下载"></script><script src="./如何在Ubuntu 18.04上安装和配置GitLab_files/ca-pub-7163569408396951.js.下载"></script><script src="./如何在Ubuntu 18.04上安装和配置GitLab_files/jquery.min.js.下载"></script>
+<link rel="preload" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/f.txt" as="script"><script type="text/javascript" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f.txt"></script><link rel="preload" href="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(1).txt" as="script"><script type="text/javascript" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(1).txt"></script><link rel="preload" href="https://pagead2.googlesyndication.com/pagead/js/r20190710/r20190131/show_ads_impl.js" as="script"></head>
+
+<body>
+    <!--header -->
+            <div class="w3-white w3-common-bj">
+  <!-- nav responesive -->
+  <div class="row w3-common-nav w3-display-container">
+   <!-- search modal -->
+     <div id="id01" style="display:none;">
+                <div class="w3-modal-content" style="width:100%;">
+                     <form action="https://www.howtoing.com/search" method="get" accept-charset="utf-8">
+                        <div class="w3-display-container w3-bar w3-white w3-search-input" style="position:relative;z-index:999;background-color:red;">
+                            <input id="search" style="min-width:80%;line-height:60px;" type="text" name="query" class="w3-bar-item w3-input w3-left w3-medium post-m-search-input" placeholder="搜索一下，你就知道了！">
+                            <a class="w3-bar-item w3-button w3-white w3-hover-none w3-right w3-xlarge w3-display-right" onclick="document.getElementById(&#39;id01&#39;).style.display=&#39;none&#39;">×</a>
+                            <button type="submit" class="w3-bar-item w3-button w3-hover-none w3-right w3-medium w3-display-right" style="right:45px;"><i class="fa fa-search"></i></button>
+                        </div>
+                      </form>
+                </div>
+          </div>
+
+         <div class="w3-display-left">
+          <a href="https://www.howtoing.com/" class="index-logo-words w3-bar-item w3-white w3-hover-none w3-button w3-xlarge">Howtoing运维教程</a>
+         <!--  <a href="/" class="w3-bar-item w3-white w3-hover-none w3-button w3-display-left w3-logo-word" style="left:160px;"> Images &amp; Videos on Instagram</a> -->
+         </div>
+        <div class="w3-display-right">
+            <a id="query" onclick="document.getElementById(&#39;id01&#39;).style.display=&#39;block&#39;;
+              document.getElementById(&#39;search&#39;).focus();" href="javascript:void(0)" class="w3-bar-item w3-button w3-hover-none w3-right w3-xlarge w3-display-right"><i class="fa fa-search"></i></a>
+        </div>
+    </div>
+</div>
+<!-- Slideshow -->
+<div class="w3-content w3-display-container" style="max-width:1048px;min-height:160px;    margin-top: 10px;">
+  <!-- Slideshow -->
+      <div class="w3-display-container mySlides w3-animate-opacity" style="display: block;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">云计算&amp;大数据</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/cloud" title="Cloud">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Cloud</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/clustering" title="Clustering">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Clustering</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/hadoop" title="Hadoop">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Hadoop</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/storage" title="Storage">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Storage</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/big-data" title="大数据">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              大数据</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/chrome" title="Chrome浏览器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Chrome浏览器</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">运维</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/recovery-tools" title="恢复工具">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              恢复工具</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/errors" title="errors">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              errors</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/editors" title="Editors">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Editors</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/awk-command" title="Awk命令">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Awk命令</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/postfix" title="Postfix">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Postfix</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/sed-command" title="Sed 命令">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Sed 命令</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ci-cd" title="CI/CD">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              CI/CD</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/configuration-management" title="配置管理">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              配置管理</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/monitoring" title="Monitoring">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Monitoring</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/file-managers" title="文件管理">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              文件管理</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ansible" title="Ansible">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ansible</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ssh" title="SSH">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              SSH</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/backups" title="备份">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              备份</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/desktop" title="desktop">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              desktop</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ghost" title="Ghost">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ghost</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/dkim" title="DKIM">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              DKIM</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/joomla" title="Joomla">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Joomla</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/commercial" title="commercial">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              commercial</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/dokku" title="Dokku">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Dokku</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/backup" title="backup">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              backup</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/other" title="other">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              other</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">架构</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/docker" title="Docker">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Docker</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/django" title="Django">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Django</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/drupal" title="Drupal">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Drupal</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/sinatra" title="Sinatra">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Sinatra</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">操作系统</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/kali-linux" title="Kali Linux">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Kali Linux</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mandriva" title="mandriva">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              mandriva</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/rhcsa" title="RHCSA认证">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              RHCSA认证</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/kernel" title="kernel">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              kernel</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/pclinuxos" title="pclinuxos">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              pclinuxos</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/raspbian" title="raspbian">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              raspbian</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/tails-os" title="Tails OS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Tails OS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ubuntu" title="Ubuntu">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ubuntu</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/centos" title="CentOS系统">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              CentOS系统</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/fedora" title="Fedora">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Fedora</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-tutorials" title="Linux 教程">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux 教程</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/rhel" title="RHEL">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              RHEL</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linuxmint" title="LinuxMint">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              LinuxMint</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/elementary-os" title="Elementary OS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Elementary OS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/opensuse" title="OpenSuse">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              OpenSuse</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/windows-tutorials" title="Windows 教程">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Windows 教程</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-players" title="Linux 播放器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux 播放器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/devuan-linux" title="Devuan Linux">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Devuan Linux</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/pc-bsd" title="PC-BSD">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              PC-BSD</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/suse" title="Suse">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Suse</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-apps" title="Linux系统应用">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux系统应用</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-products" title="Linux 产品">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux 产品</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/bodhi-linux" title="Bodhi Linux">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Bodhi Linux</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/parrot-os" title="Parrot OS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Parrot OS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/lfce" title="LFCE">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              LFCE</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/pear-linux" title="Pear Linux">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Pear Linux</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-mint" title="Linux Mint">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux Mint</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-commands" title="Linux命令">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux命令</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/gentoo" title="Gentoo">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Gentoo</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/zentyal" title="Zentyal">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Zentyal</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/uberstudent" title="Uberstudent">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Uberstudent</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-desktop" title="Linux桌面">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux桌面</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-lite" title="Linux Lite">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux Lite</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/fuduntu" title="Fuduntu">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Fuduntu</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/xubuntu" title="Xubuntu">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Xubuntu</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/scientific-linux" title="Scientific Linux">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Scientific Linux</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/clear-os" title="Clear OS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Clear OS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux" title="Linux介绍">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux介绍</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/lfcs" title="LFCS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              LFCS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-certifications" title="Linux认证">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux认证</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ubuntu-16-04" title="Ubuntu 16.04">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ubuntu 16.04</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-fixes" title="Linux修复">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux修复</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/poll" title="POLL字符设备驱动函数">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              POLL字符设备驱动函数</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/debian-9" title="Debian 9">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Debian 9</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/zorin-os" title="Zorin OS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Zorin OS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/lxc" title="LXC内核虚拟化技术">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              LXC内核虚拟化技术</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-talks" title="Linux Talks">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux Talks</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/rhce" title="RHCE">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              RHCE</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/new-linux-distros" title="最新的Linux发行">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              最新的Linux发行</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/coreos" title="CoreOS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              CoreOS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-basics" title="Linux基础">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux基础</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/redhat" title="RedHat">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              RedHat</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/freebsd" title="FreeBSD">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              FreeBSD</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/netrunner" title="Netrunner">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Netrunner</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-distributions" title="Linux版本">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux版本</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-quiz" title="Linux 测试">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux 测试</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/manjaro" title="Manjaro">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Manjaro</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/arch-linux" title="Arch Linux">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Arch Linux</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/windows" title="Windows">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Windows</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/debian" title="Debian">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Debian</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-training" title="Linux 培训">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux 培训</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/arch" title="Arch">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Arch</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/linux-distros" title="Linux发行版">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Linux发行版</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">开发工具</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/sdk" title="SDK">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              SDK</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/monitoring-tools" title="监控工具">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              监控工具</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/opera" title="Opera">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Opera</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/xen" title="xen">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              xen</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ajenti" title="Ajenti">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ajenti</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/amazon-tools" title="Amazon 工具包">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Amazon 工具包</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/svn" title="SVN">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              SVN</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/yum" title="Yum">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Yum</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/pentoo" title="Pentoo测试工具">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Pentoo测试工具</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/package-managers" title="Package Managers">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Package Managers</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/vim-editor" title="Vim Editor">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Vim Editor</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/gtk" title="GTK">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              GTK</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/terminals" title="Terminals终端">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Terminals终端</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/git" title="GIT">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              GIT</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/kwheezy" title="KWheezy">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              KWheezy</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/samba" title="Samba">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Samba</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ftp-servers" title="FTP Servers">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              FTP Servers</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/package-management" title="软件包管理">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              软件包管理</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/system-tools" title="系统工具">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              系统工具</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/deployment" title="Deployment">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Deployment</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/control-panel" title="控制面板">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              控制面板</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/monit" title="Monit">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Monit</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/nagios" title="Nagios">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Nagios</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/nrpe" title="NRPE监控">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              NRPE监控</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/firefox" title="Firefox浏览器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Firefox浏览器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/api" title="API">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              API</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">编程语言</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/c-c" title="c/c++">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              c/c++</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/programming" title="Programming">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Programming</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ruby" title="Ruby">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ruby</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/data-analysis" title="Data Analysis">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Data Analysis</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/php" title="PHP">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              PHP</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/php-frameworks" title="PHP框架">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              PHP框架</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/virtualization" title="虚拟化">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              虚拟化</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/c-programming" title="C编程">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              C编程</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/python" title="python">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              python</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/perl" title="Perl">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Perl</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/python-scripts" title="Python 脚本">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Python 脚本</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/miscellaneous" title="Miscellaneous">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Miscellaneous</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/go" title="Go">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Go</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/c-language" title="C语言">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              C语言</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ruby-on-rails" title="Ruby 软件工程师">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ruby 软件工程师</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/python-frameworks" title="Python 框架">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Python 框架</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/java" title="JAVA">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              JAVA</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/shell" title="shell">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              shell</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/bash-shell" title="Bash Shell">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Bash Shell</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">WEB开发设计</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-scanner" title="Web 扫描">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Web 扫描</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/wordpress" title="WordPress">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              WordPress</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/themes-icons" title="主题和icon图标">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              主题和icon图标</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/javascript" title="JavaScript">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              JavaScript</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-apps" title="Web 应用">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Web 应用</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/android" title="android">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              android</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-hosting" title="Web 托管">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Web 托管</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-browsers" title="Web 浏览器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Web 浏览器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mean" title="MEAN">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              MEAN</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/openlitespeed" title="OpenLiteSpeed">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              OpenLiteSpeed</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/blueprint" title="Blueprint">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Blueprint</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-design" title="Web 设计">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Web 设计</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">服务器</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/virtualbox" title="virtualbox">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              virtualbox</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/tomcat" title="Tomcat">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Tomcat</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/dovecot" title="dovecot">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              dovecot</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/iis" title="IIS服务器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              IIS服务器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/suse-apache" title="suse.apache">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              suse.apache</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/vmware" title="vmware">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              vmware</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/openvz" title="openvz">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              openvz</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/xmpp" title="XMPP">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              XMPP</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-servers" title="Web 服务器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Web 服务器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/powerdns" title="powerdns">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              powerdns</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mydns" title="mydns">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              mydns</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/djbdns" title="djbdns">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              djbdns</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/apache" title="Apache">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Apache</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mail-servers" title="Mail Servers">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Mail Servers</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/xenserver" title="XenServer">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              XenServer</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/freenas" title="FreeNAS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              FreeNAS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/amazon-web-services" title="Amazon 网站服务">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Amazon 网站服务</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mail-server" title="邮件服务器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              邮件服务器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/caching-server" title="缓存服务器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              缓存服务器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/parse" title="Parse">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Parse</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/lighttpd" title="Lighttpd">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Lighttpd</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mail-services" title="Mail服务">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Mail服务</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/openstack" title="开源栈">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              开源栈</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/digitalocean" title="DigitalOcean">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              DigitalOcean</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/logging" title="日志">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              日志</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/elasticsearch" title="弹性搜索">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              弹性搜索</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/vsftpd" title="VsFTPd">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              VsFTPd</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/high-availability" title="高可用">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              高可用</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/nginx" title="Nginx">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Nginx</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/block-storage" title="块存储">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              块存储</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/digitalocean-articles" title="DigitalOcean 文章">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              DigitalOcean 文章</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/node-js" title="Node.js">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Node.js</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/wildfly" title="WildFly">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              WildFly</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/lamp-stack" title="LAMP 栈">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              LAMP 栈</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/server-optimization" title="服务器优化">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              服务器优化</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/load-balancing" title="Load Balancing">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Load Balancing</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/nodejs" title="Nodejs">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Nodejs</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/lemp" title="LEMP">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              LEMP</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/bind" title="bind">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              bind</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/squid" title="Squid">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Squid</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ispconfig" title="ispconfig">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              ispconfig</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/web-server" title="web server">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              web server</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/caching" title="缓存">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              缓存</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/citrix-xenserver" title="Citrix XenServer">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Citrix XenServer</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/anti-spam-virus" title="anti-spam/virus">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              anti-spam/virus</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">数据库</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mariadb" title="MariaDB">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              MariaDB</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mysql" title="MySQL">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              MySQL</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/databases" title="数据库管理">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              数据库管理</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/sql-server" title="SQL Server">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              SQL Server</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/oracle" title="Oracle">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Oracle</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mssql" title="MSSQL">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              MSSQL</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/postgresql" title="PostgreSQL">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              PostgreSQL</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/mongodb" title="MongoDB">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              MongoDB</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/redis-server" title="Redis Server">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Redis Server</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/redis" title="Redis">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Redis</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/nosql" title="NoSQL">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              NoSQL</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/couchdb" title="CouchDB">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              CouchDB</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">网络安全</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/kvm" title="KVM">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              KVM</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/network-services" title="网络服务">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              网络服务</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/nfs" title="NFS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              NFS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/networking" title="Networking">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Networking</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/dhcp" title="DHCP">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              DHCP</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/security" title="安全">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              安全</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/filesystem" title="Filesystem">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Filesystem</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ftp" title="FTP">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              FTP</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/telnet" title="Telnet">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Telnet</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/openldap" title="OpenLDAP轻型目录访问协议">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              OpenLDAP轻型目录访问协议</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/pxe" title="PXE预启动执行环境">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              PXE预启动执行环境</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/vnc" title="VNC虚拟网络控制台">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              VNC虚拟网络控制台</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/vpn" title="VPN">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              VPN</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/torrent-clients" title="Torrent Clients">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Torrent Clients</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/raid-array" title="RAID-ARRAY冗余磁盘阵列">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              RAID-ARRAY冗余磁盘阵列</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/firewalls" title="Firewalls">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Firewalls</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/vps" title="VPS虚拟专用服务器">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              VPS虚拟专用服务器</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/network" title="网络知识">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              网络知识</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/raid" title="Raid">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Raid</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/firewall" title="Firewall">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Firewall</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ipv6" title="IPv6">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              IPv6</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/proxy" title="代理">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              代理</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/dns" title="DNS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              DNS</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">其他</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/interview-questions" title="Interview Questions">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Interview Questions</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/uncategorized" title="更多分类">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              更多分类</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/opensource" title="opensource">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              opensource</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/deals" title="Deals">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Deals</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ide" title="IDE">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              IDE</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/top-tools" title="Top Tools">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Top Tools</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/desktops" title="Desktops">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Desktops</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/career" title="Career">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Career</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/general-talks" title="General Talks">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              General Talks</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/content-management-system" title="Content Management System">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Content Management System</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/celebrate" title="Celebrate">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Celebrate</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/product-reviews" title="Product Reviews">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Product Reviews</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/download-managers" title="下载管理">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              下载管理</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/cherokee" title="Cherokee">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Cherokee</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ecommerce" title="Ecommerce">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Ecommerce</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/samba4-active-directory" title="Samba4 Active Directory">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Samba4 Active Directory</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/install" title="Install">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Install</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/google-apps" title="谷歌应用">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              谷歌应用</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/applications" title="Applications">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Applications</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/one-click-install-apps" title="单击安装APPS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              单击安装APPS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/scaling" title="Scaling">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Scaling</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/development" title="Development">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Development</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/let-s-encrypt" title="Let&#39;s Encrypt">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Let's Encrypt</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/games" title="Games">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Games</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/glusterfs" title="GlusterFS">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              GlusterFS</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/chef" title="Chef">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Chef</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/general-articles" title="General Articles">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              General Articles</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/getting-started" title="Getting Started">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Getting Started</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/social-media" title="Social Media">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Social Media</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/email" title="Email">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Email</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/quickstart" title="Quickstart">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Quickstart</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/sendmail" title="Sendmail">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Sendmail</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/media-players" title="媒体播放">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              媒体播放</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/whm-cpanel" title="WHM/cPanel">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              WHM/cPanel</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/faq" title="FAQ">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              FAQ</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/control-panels" title="Control Panels">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Control Panels</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/messaging" title="Messaging">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Messaging</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/issues" title="Issues">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Issues</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/cheat-sheets" title="Cheat Sheets">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              Cheat Sheets</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/cms" title="内容管理系统">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              内容管理系统</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/open-source" title="开源">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              开源</div></a>
+          </div>
+                    <div class="w3-tag w3-round w3-green index-class">
+          <a href="https://www.howtoing.com/category/ebooks" title="eBooks">
+              <div class="w3-tag w3-round w3-green w3-border w3-border-white">
+              eBooks</div></a>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Object Storage</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Conceptual</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Product Documentation</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">ZoneMinder</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Kubernetes</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Text Editors</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">DigitalOcean Cloud Firewalls</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Billing</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Programming Project</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Ubuntu 18.04</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Initial Server Setup</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">R</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Networking Commands</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">CDN</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Microservices</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Terraform</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Solutions</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Machine Learning</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Custom Images</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Development Tools</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Linux Auditing</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Media Streaming</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Encryption Tools</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Raspberry Pi</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    <div class="w3-display-container mySlides w3-animate-opacity" style="display: none;">
+      <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/workbench.jpg" style="width:100%;max-height:160px;">
+      <div class="w3-display-topmiddle w3-text-white w3-container w3-padding-32 w3-hide-small index-banner-name">
+        <span class="w3-white w3-padding-large w3-xlarge w3-round w3-opacity">Debian 10</span>
+      </div>
+
+      <!-- class -->
+      <div class="w3-container index-tag">
+
+          <div class="w3-tag w3-round index-class w3-dark-grey ">
+              <div class="w3-tag w3-round w3-dark-grey w3-border w3-border-white">
+                热门分类
+              </div>
+          </div>
+          
+      </div>
+
+
+  </div>
+    
+  <button class="w3-button w3-light-grey noselection w3-display-topleft w3-index-banner-pre w3-opacity" onclick="plusDivs(-1)">❮</button>
+
+  <button class="w3-button w3-light-grey noselection w3-display-topright w3-index-banner-next w3-opacity" onclick="plusDivs(+1)">❯</button>
+</div>        <!-- main -->
+    <div class="container" style="padding:0;margin:0 auto;width:1048px;">
+        <div class="w3-row">
+                <div class="w3-row" id="jiathis_main">
+        <div class="w3-col index-left">
+            <div class="w3-container w3-center delete-common-m-p">
+    <h2>如何在Ubuntu 18.04上安装和配置GitLab</h2>
+
+    <div class="w3-panel w3-leftbar w3-light-grey post-title-bottom-tag">
+                <p>GitLab CE或Community Edition是一个开源应用程序，主要用于托管Git存储库，还有其他与开发相关的功能，如问题跟踪。在本指南中，我们将介绍如何在Ubuntu 18.04服务器上安装和配置GitLab。</p>
+            </div>
+
+    <div class="w3-row post-title-bottom-tag">
+        <div class="w3-col" style="width:70%">
+                        <p>
+                <span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">分类:</span>
+                                    <a href="https://www.howtoing.com/category/git"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">GIT</span></a>
+                                    <a href="https://www.howtoing.com/category/applications"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">Applications</span></a>
+                                    <a href="https://www.howtoing.com/category/let-s-encrypt"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">Let's Encrypt</span></a>
+                                    <a href="https://www.howtoing.com/category/developer-kits"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">开发工具</span></a>
+                                    <a href="https://www.howtoing.com/category/others"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">其他</span></a>
+                                    <a href="https://www.howtoing.com/category/ubuntu-18-04"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">Ubuntu 18.04</span></a>
+                            </p>
+                    </div>
+        <div class="w3-col" style="width:30%;">
+            <p style="text-align:right;">
+                 <span class="post-tag-line-height index-post-bottom-line-word w3-right"> <i class="fa fa-clock-o" aria-hidden="true">&nbsp;2018-07-09 11:14:27</i></span>
+               <!-- <span class="post-tag-line-height index-post-bottom-line-word w3-right"> <i class="fa fa-heart" aria-hidden="true">&nbsp;146</i> </span>
+                <span class="post-tag-line-height index-post-bottom-line-word w3-right" ><i class="fa fa-comments" aria-hidden="true">&nbsp;</i>87</span>-->
+            </p>
+        </div>
+    </div>
+
+    <!-- content start -->
+    <div class="w3-panel post-title-bottom-tag" style="text-align:left;">
+	<!--      
+	<div style="float: left;padding-right: 20px;padding-top: 5px;">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:336px;height:280px"
+                 data-ad-client="ca-pub-7163569408396951"
+                 data-ad-slot="7352319254"></ins>
+            <script>
+            $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})});
+            </script>
+
+	</div>
+-->
+        <p> <span> <em>本教程的先前版本由<a href="https://www.digitalocean.com/community/users/jellingwood">Justin Ellingwood</a>编写</em></span> </p><h3 id="introduction"> <span>介绍</span> </h3><p> <span> <a href="https://gitlab.com/gitlab-org/gitlab-ce">GitLab CE</a>或Community Edition是一个开源应用程序，主要用于托管Git存储库，以及其他与开发相关的功能，如问题跟踪。</span> <span>它旨在使用您自己的基础架构进行托管，并为您的开发团队提供部署内部存储库的灵活性，与用户交互的公共方式，或者为贡献者提供托管自己项目的方法。</span> </p><p> <span> GitLab项目使用简单的安装机制在您自己的硬件上设置GitLab实例变得相对简单。</span> <span>在本指南中，我们将介绍如何在Ubuntu 18.04服务器上安装和配置GitLab。</span> </p><h2 id="prerequisites"> <span>先决条件</span> </h2><p> <span>在本教程中，您将需要：</span> </p><ul><li> <span>一个Ubuntu 18.04服务器，带有非root sudo用户和基本防火墙。</span> <span>要进行此设置，请按照我们的<a href="https://www.howtoing.com/initial-server-setup-with-ubuntu-18-04/">Ubuntu 18.04初始服务器设置指南进行操作</a> 。</span> </li></ul><p> <span>已<a href="http://docs.gitlab.com/ce/install/requirements.html#hardware-requirements">发布的GitLab硬件要求</a>建议使用服务器：</span> </p><ul><li> <span> 2个核心</span> </li><li> <span> 8GB的RAM</span> </li></ul><p> <span>虽然您可以通过替换一些交换空间来获取RAM，但不建议这样做。</span> <span>对于本指南，我们假设您至少拥有上述资源。</span> </p><ul><li> <span>域名指向您的服务器。</span> <span>有关更多信息，请参阅有关如何<a href="https://www.digitalocean.com/docs/networking/dns/quickstart/">在DigitalOcean上开始使用DNS的</a>文档。</span> <span>本教程将使用域名<strong>example.com</strong> 。</span> </li></ul><h2 id="step-1-—-installing-the-dependencies"> <span>第1步 - 安装依赖项</span> </h2><p> <span>在我们自己安装GitLab之前，安装一些在安装过程中持续使用的软件非常重要。</span> <span>幸运的是，可以从Ubuntu的默认包存储库轻松安装所有必需的软件。</span> </p><p><span>由于这是我们第一次在此会话期间使用<code>apt</code> ，因此我们可以刷新本地包索引，然后键入以下内容来安装依赖项：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo apt update
+sudo apt install ca</span><span class="pun">-</span><span class="pln">certificates curl openssh</span><span class="pun">-</span><span class="pln">server postfix</span></code></pre><p> <span>您可能已经安装了一些此软件。</span> <span>对于<code>postfix</code>安装，请在出现提示时选择“ <strong>Internet站点”</strong> 。</span> <span>在下一个屏幕上，输入服务器的域名以配置系统发送邮件的方式。</span> </p><h2 id="step-2-—-installing-gitlab"> <span>第2步 - 安装GitLab</span> </h2><script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+<ins class="adsbygoogle" style="display: block; text-align: center; height: 182px;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-7163569408396951" data-ad-slot="7452267897" data-adsbygoogle-status="done"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:182px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><ins id="aswift_0_anchor" style="display:block;border:none;height:182px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><iframe width="728" height="182" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0px;width:728px;height:182px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource.html"></iframe></ins></ins></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><p> <span>现在依赖关系到位，我们可以自己安装GitLab。</span> <span>这是一个简单的过程，它利用安装脚本使用GitLab存储库配置系统。</span> </p><p> <span>进入<code>/tmp</code>目录，然后下载安装脚本：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">cd </span><span class="pun">/</span><span class="pln">tmp
+curl </span><span class="pun">-</span><span class="pln">LO https</span><span class="pun">:</span><span class="com">//packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh</span></code></pre><p> <span>您可以随意检查下载的脚本，以确保您对所需的操作感到满意。</span> <span>您还可以在<a href="https://packages.gitlab.com/gitlab/gitlab-ce/install">此处</a>找到该脚本的托管版本：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">less </span><span class="pun">/</span><span class="pln">tmp</span><span class="pun">/</span><span class="pln">script</span><span class="pun">.</span><span class="pln">deb</span><span class="pun">.</span><span class="pln">sh</span></code></pre><p> <span>一旦您对脚本的安全性感到满意，请运行安装程序：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo bash </span><span class="pun">/</span><span class="pln">tmp</span><span class="pun">/</span><span class="pln">script</span><span class="pun">.</span><span class="pln">deb</span><span class="pun">.</span><span class="pln">sh</span></code></pre><p> <span>该脚本将设置您的服务器以使用GitLab维护的存储库。</span> <span>这使您可以使用与其他系统软件包相同的软件包管理工具来管理GitLab。</span> <span>完成后，您可以使用<code>apt</code>安装实际的GitLab应用程序：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo apt install gitlab</span><span class="pun">-</span><span class="pln">ce</span></code></pre><p> <span>这将在您的系统上安装必要的组件。</span> </p><h2 id="step-3-—-adjusting-the-firewall-rules"> <span>第3步 - 调整防火墙规则</span> </h2><p> <span>在配置GitLab之前，您需要确保防火墙规则足够宽松以允许Web流量。</span> <span>如果您遵循先决条件中链接的指南，则将启用<code>ufw</code>防火墙。</span> </p><p> <span>键入以下内容查看活动防火墙的当前状态：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo ufw status</span></code></pre><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><label class="secondary-code-label" title="Output"><span class="typ">Output</span></label><span class="typ">Status</span><span class="pun">:</span><span class="pln"> active
+
+</span><span class="typ">To</span><span class="pln">                         </span><span class="typ">Action</span><span class="pln">      </span><span class="typ">From</span><span class="pln">
+</span><span class="pun">--</span><span class="pln">                         </span><span class="pun">------</span><span class="pln">      </span><span class="pun">----</span><span class="pln">
+</span><span class="typ">OpenSSH</span><span class="pln">                    ALLOW       </span><span class="typ">Anywhere</span><span class="pln">                  
+</span><span class="typ">OpenSSH</span><span class="pln"> </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span><span class="pln">               ALLOW       </span><span class="typ">Anywhere</span><span class="pln"> </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span></code></pre><p> <span>如您所见，当前规则允许SSH流量通过，但对其他服务的访问受到限制。</span> <span>由于GitLab是一个Web应用程序，我们应该允许HTTP访问。</span> <span>因为我们将利用GitLab从<a href="https://letsencrypt.org/">Let's Encrypt</a>请求和启用免费TLS / SSL证书<a href="https://letsencrypt.org/">的功能</a> ，所以我们也允许HTTPS访问。</span> </p><p> <span> <code>/etc/services</code>文件中提供了HTTP和HTTPS的端口映射协议，因此我们可以按名称允许该流量。</span> <span>如果您尚未启用OpenSSH流量，则现在也应该允许该流量：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo ufw allow http
+sudo ufw allow https
+sudo ufw allow </span><span class="typ">OpenSSH</span></code></pre><p> <span>再次检查<code>ufw status</code> ;</span> <span>您应该看到配置为至少这两个服务的访问权限：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo ufw status</span></code></pre><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><label class="secondary-code-label" title="Output"><span class="typ">Output</span></label><span class="typ">Status</span><span class="pun">:</span><span class="pln"> active
+
+</span><span class="typ">To</span><span class="pln">                         </span><span class="typ">Action</span><span class="pln">      </span><span class="typ">From</span><span class="pln">
+</span><span class="pun">--</span><span class="pln">                         </span><span class="pun">------</span><span class="pln">      </span><span class="pun">----</span><span class="pln">
+</span><span class="typ">OpenSSH</span><span class="pln">                    ALLOW       </span><span class="typ">Anywhere</span><span class="pln">                  
+</span><span class="lit">80</span><span class="pun">/</span><span class="pln">tcp                     ALLOW       </span><span class="typ">Anywhere</span><span class="pln">                  
+</span><span class="lit">443</span><span class="pun">/</span><span class="pln">tcp                    ALLOW       </span><span class="typ">Anywhere</span><span class="pln">                  
+</span><span class="typ">OpenSSH</span><span class="pln"> </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span><span class="pln">               ALLOW       </span><span class="typ">Anywhere</span><span class="pln"> </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span><span class="pln">             
+</span><span class="lit">80</span><span class="pun">/</span><span class="pln">tcp </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span><span class="pln">                ALLOW       </span><span class="typ">Anywhere</span><span class="pln"> </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span><span class="pln">             
+</span><span class="lit">443</span><span class="pun">/</span><span class="pln">tcp </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span><span class="pln">               ALLOW       </span><span class="typ">Anywhere</span><span class="pln"> </span><span class="pun">(</span><span class="pln">v6</span><span class="pun">)</span></code></pre><p> <span>上面的输出表明配置应用程序后可以访问GitLab Web界面。</span> </p><h2 id="step-4-—-editing-the-gitlab-configuration-file"> <span>第4步 - 编辑GitLab配置文件</span> </h2><script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+<ins class="adsbygoogle" style="display: block; text-align: center; height: 182px; width: 728px;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-7163569408396951" data-ad-slot="7452267897" data-adsbygoogle-status="done"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:182px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><ins id="aswift_1_anchor" style="display: block; border: none; height: 182px; margin: 0px; padding: 0px; position: relative; visibility: visible; width: 728px; background-color: transparent; overflow: hidden;"><iframe width="728" height="182" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0px;width:728px;height:182px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(1).html"></iframe></ins></ins></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><p> <span>在使用该应用程序之前，需要更新配置文件并运行重新配置命令。</span> <span>首先，打开Gitlab的配置文件：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo nano </span><span class="pun">/</span><span class="pln">etc</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">/</span><span class="pln">gitlab</span><span class="pun">.</span><span class="pln">rb</span></code></pre><p> <span>在top附近是<code>external_url</code>配置行。</span> <span>更新它以匹配您的域。</span> <span>将<code>http</code>更改为<code>https</code>以便GitLab自动将用户重定向到受Let's加密证书保护的站点：</span> </p><div class="code-label " title="/etc/gitlab/gitlab.rb"> <span> /etc/gitlab/gitlab.rb</span> </div><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><span class="com">##! For more details on configuring external_url see:</span><span class="pln">
+</span><span class="com">##! https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab</span><span class="pln">
+external_url </span><span class="str">'http</span><span class="highlight"><span class="str">s</span></span><span class="str">://</span><span class="highlight"><span class="str">example.com</span></span><span class="str">'</span></code></pre><p> <span>接下来，查找<code>letsencrypt['contact_emails']</code>设置。</span> <span>此设置定义了一个电子邮件地址列表，如果您的域存在问题，Let的加密项目可以用来与您联系。</span> <span>取消注释并填写此内容是一个好主意，以便您知道任何问题：</span> </p><div class="code-label " title="/etc/gitlab/gitlab.rb"> <span> /etc/gitlab/gitlab.rb</span> </div><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><span class="pln">letsencrypt</span><span class="pun">[</span><span class="str">'contact_emails'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">[</span><span class="str">'</span><span class="highlight"><span class="str">sammy@example.com</span></span><span class="str">'</span><span class="pun">]</span></code></pre><p> <span>保存并关闭文件。</span> <span>运行以下命令重新配置Gitlab：</span> </p><pre class="code-pre command prettyprint prettyprinted" style=""><code langs=""><span class="pln">sudo gitlab</span><span class="pun">-</span><span class="pln">ctl reconfigure</span></code></pre><p> <span>这将使用它可以找到的有关您的服务器的信息初始化GitLab。</span> <span>这是一个完全自动化的过程，因此您不必回答任何提示。</span> <span>该过程还将为您的域配置Let's Encrypt证书。</span> </p><h2 id="step-5-—-performing-initial-configuration-through-the-web-interface"> <span>第5步  - 通过Web界面执行初始配置</span> </h2><p> <span>在允许GitLab运行和访问的情况下，我们可以通过Web界面执行应用程序的一些初始配置。</span> </p><h3 id="logging-in-for-the-first-time"> <span>首次登录</span> </h3><p> <span>在Web浏览器中访问GitLab服务器的域名：</span> </p><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><span class="pln">https</span><span class="pun">:</span><span class="com">//</span><span class="highlight"><span class="com">example.com</span></span>
+</code></pre><p> <span>在您第一次访问时，您应该看到为管理帐户设置密码的初始提示：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/gitlab_initial_password2.png" alt="GitLab初始密码设置提示"></p><p> <span>在初始密码提示中，提供并确认管理帐户的安全密码。</span> <span>完成后单击“ <strong>更改密码”</strong>按钮。</span> </p><p> <span>您将被重定向到传统的GitLab登录页面：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/gitlab_first_signin2.png" alt="GitLab首先登录提示"></p><p> <span>在这里，您可以使用刚刚设置的密码登录。</span> <span>凭证是：</span> </p><ul><li> <span>用户名： <strong>root</strong></span> </li><li> <span>密码：[您设置的密码]</span> </li></ul><p> <span>在现有用户的字段中输入这些值，然后单击“ <strong>登录”</strong>按钮。</span> <span>您将登录该应用程序并进入登录页面，提示您开始添加项目：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/landing_page2.png" alt="GitLab初始登录登陆页面"></p><p> <span>您现在可以进行一些简单的更改，以便按照您的方式设置GitLab。</span> </p><h3 id="adjusting-your-profile-settings"> <span>调整配置文件设置</span> </h3><p> <span>在全新安装后您应该做的第一件事就是让您的个人资料更好。</span> <span> GitLab选择了一些合理的默认值，但是一旦开始使用该软件，这些默认值通常都不合适。</span> </p><p> <span>要进行必要的修改，请单击界面右上角的用户图标。</span> <span>在显示的下拉菜单中，选择<strong>设置</strong> ：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/profile_settings_button2.png" alt="GitLab配置文件设置按钮"></p><p> <span>您将进入设置的“ <strong>个人资料”</strong>部分：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/profile_settings2.png" alt="GitLab配置文件设置页面"></p><p> <span>将<strong>名称</strong>和<strong>电子邮件</strong>地址从“管理员”和“ <a href="mailto:admin@example.com">admin@example.com</a> ”调整为更准确的名称。</span> <span>您选择的名称将显示给其他用户，而电子邮件将用于默认头像检测，通知，通过界面的Git操作等。</span> </p><p> <span>完成后，单击底部的“ <strong>更新配置文件设置”</strong>按钮：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/update_profile_settings_button2.png" alt="GitLab更新配置文件设置按钮"></p><p> <span>确认电子邮件将发送至您提供的地址。</span> <span>按照电子邮件中的说明确认您的帐户，以便您可以开始使用GitLab。</span> </p><h3 id="changing-your-account-name"> <span>更改您的帐户名称</span> </h3><p> <span>接下来，单击左侧菜单栏中的<strong>Account</strong>项：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/account_menu_item2.png" alt="GitLab帐户菜单项"></p><p> <span>在这里，您可以找到您的私有API令牌或配置双因素身份验证。</span> <span>但是，我们目前感兴趣的功能是<strong>更改用户名</strong>部分。</span> </p><p> <span>默认情况下，第一个管理帐户的名称为<strong>root</strong> 。</span> <span>由于这是一个已知的帐户名称，因此将其更改为其他名称会更安全。</span> <span>您仍将拥有管理权限;</span> <span>唯一会改变的是名字。</span> <span>用您首选的用户名替换<strong>root</strong> ：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/change_username2.png" alt="GitLab更改用户名部分"></p><p> <span>单击“ <strong>更新用户名”</strong>按钮进行更改：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/update_username_button2.png" alt="GitLab更新用户名按钮"></p><p> <span>下次登录GitLab时，请记住使用新用户名。</span> </p><h3 id="adding-an-ssh-key-to-your-account"> <span>在您的帐户中添加SSH密钥</span> </h3><p> <span>在大多数情况下，您需要使用带有Git的SSH密钥与GitLab项目进行交互。</span> <span>为此，您需要将SSH公钥添加到GitLab帐户。</span> </p><p> <span>如果您已在<strong>本地计算机</strong>上创建了SSH密钥对，则通常可以通过键入以下内容来查看公钥：</span> </p><pre class="code-pre command local-environment prettyprint prettyprinted" style=""><code langs=""><span class="pln">cat </span><span class="pun">~</span><span class="str">/.ssh/</span><span class="pln">id_rsa</span><span class="pun">.</span><span class="pln">pub</span></code></pre><p> <span>您应该看到一大块文本，如下所示：</span> </p><pre class="code-pre local-environment prettyprint prettyprinted" style=""><code langs=""><label class="secondary-code-label" title="Output"><span class="typ">Output</span></label><span class="typ">ssh</span><span class="pun">-</span><span class="pln">rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMuyMtMl6aWwqBCvQx7YXvZd7bCFVDsyln3yh5</span><span class="pun">/</span><span class="lit">8Pu23LW88VXfJgsBvhZZ9W0rPBGYyzE</span><span class="pun">/</span><span class="typ">TDzwwITvVQcKrwQrvQlYxTVbqZQDlmsC41HnwDfGFXg</span><span class="pun">+</span><span class="typ">QouZemQ2YgMeHfBzy</span><span class="pun">+</span><span class="pln">w26</span><span class="pun">/</span><span class="pln">gg480nC2PPNd0OG79</span><span class="pun">+</span><span class="pln">e7gFVrTL79JA</span><span class="pun">/</span><span class="typ">MyePBugvYqOAbl30h7M1a7EHP3IV5DQUQg4YUq49v4d3AvM0aia4EUowJs0P</span><span class="pun">/</span><span class="pln">j83nsZt8yiE2JEYR03kDgT</span><span class="pun">/</span><span class="pln">qziPK7LnVFqpFDSPC3MR3b8B354E9Af4C</span><span class="pun">/</span><span class="typ">JHgvglv2tsxOyvKupyZonbyr68CqSorO2rAwY</span><span class="pun">/</span><span class="pln">jWFEiArIaVuDiR9YM5 sammy@mydesktop</span></code></pre><p> <span>复制此文本并返回GitLab Web界面中的“配置文件设置”页面。</span> </p><p> <span>相反，如果您收到类似这样的消息，则表示您的计算机上尚未配置SSH密钥对：</span> </p><pre class="code-pre local-environment prettyprint prettyprinted" style=""><code langs=""><label class="secondary-code-label" title="Output"><span class="typ">Output</span></label><span class="typ">cat</span><span class="pun">:</span><span class="pln"> </span><span class="str">/home/</span><span class="pln">sammy</span><span class="pun">/.</span><span class="pln">ssh</span><span class="pun">/</span><span class="pln">id_rsa</span><span class="pun">.</span><span class="pln">pub</span><span class="pun">:</span><span class="pln"> </span><span class="typ">No</span><span class="pln"> such file </span><span class="kwd">or</span><span class="pln"> directory</span></code></pre><p> <span>如果是这种情况，您可以通过键入以下内容来创建SSH密钥对：</span> </p><pre class="code-pre command local-environment prettyprint prettyprinted" style=""><code langs=""><span class="pln">ssh</span><span class="pun">-</span><span class="pln">keygen</span></code></pre><p> <span>接受默认值并选择提供密码以在本地保护密钥：</span> </p><pre class="code-pre local-environment prettyprint prettyprinted" style=""><code langs=""><label class="secondary-code-label" title="Output"><span class="typ">Output</span></label><span class="typ">Generating</span><span class="pln"> </span><span class="kwd">public</span><span class="pun">/</span><span class="kwd">private</span><span class="pln"> rsa key pair</span><span class="pun">.</span><span class="pln">
+</span><span class="typ">Enter</span><span class="pln"> file </span><span class="kwd">in</span><span class="pln"> which to save the key </span><span class="pun">(</span><span class="str">/home/</span><span class="pln">sammy</span><span class="pun">/.</span><span class="pln">ssh</span><span class="pun">/</span><span class="pln">id_rsa</span><span class="pun">):</span><span class="pln">
+</span><span class="typ">Enter</span><span class="pln"> passphrase </span><span class="pun">(</span><span class="pln">empty </span><span class="kwd">for</span><span class="pln"> </span><span class="kwd">no</span><span class="pln"> passphrase</span><span class="pun">):</span><span class="pln">
+</span><span class="typ">Enter</span><span class="pln"> same passphrase again</span><span class="pun">:</span><span class="pln">
+</span><span class="typ">Your</span><span class="pln"> identification has been saved </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">/</span><span class="pln">home</span><span class="pun">/</span><span class="pln">sammy</span><span class="pun">/.</span><span class="pln">ssh</span><span class="pun">/</span><span class="pln">id_rsa</span><span class="pun">.</span><span class="pln">
+</span><span class="typ">Your</span><span class="pln"> </span><span class="kwd">public</span><span class="pln"> key has been saved </span><span class="kwd">in</span><span class="pln"> </span><span class="pun">/</span><span class="pln">home</span><span class="pun">/</span><span class="pln">sammy</span><span class="pun">/.</span><span class="pln">ssh</span><span class="pun">/</span><span class="pln">id_rsa</span><span class="pun">.</span><span class="pln">pub</span><span class="pun">.</span><span class="pln">
+</span><span class="typ">The</span><span class="pln"> key fingerprint </span><span class="kwd">is</span><span class="pun">:</span><span class="pln">
+SHA256</span><span class="pun">:</span><span class="pln">I8v5</span><span class="pun">/</span><span class="pln">M5xOicZRZq</span><span class="pun">/</span><span class="typ">XRcSBNxTQV2BZszjlWaIHi5chc0</span><span class="pln"> sammy@gitlab</span><span class="pun">.</span><span class="pln">docsthat</span><span class="pun">.</span><span class="pln">work
+</span><span class="typ">The</span><span class="pln"> key</span><span class="str">'s randomart image is:
++---[RSA 2048]----+
+|          ..%o==B|
+|           *.E =.|
+|        . ++= B  |
+|         ooo.o . |
+|      . S .o  . .|
+|     . + .. .   o|
+|      +   .o.o ..|
+|       o .++o .  |
+|        oo=+     |
++----[SHA256]-----+</span></code></pre><p> <span>完成此操作后，您可以通过键入以下内容显示上述公钥：</span> </p><pre class="code-pre command local-environment prettyprint prettyprinted" style=""><code langs=""><span class="pln">cat </span><span class="pun">~</span><span class="str">/.ssh/</span><span class="pln">id_rsa</span><span class="pun">.</span><span class="pln">pub</span></code></pre><pre class="code-pre local-environment prettyprint prettyprinted" style=""><code langs=""><label class="secondary-code-label" title="Output"><span class="typ">Output</span></label><span class="typ">ssh</span><span class="pun">-</span><span class="pln">rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDMuyMtMl6aWwqBCvQx7YXvZd7bCFVDsyln3yh5</span><span class="pun">/</span><span class="lit">8Pu23LW88VXfJgsBvhZZ9W0rPBGYyzE</span><span class="pun">/</span><span class="typ">TDzwwITvVQcKrwQrvQlYxTVbqZQDlmsC41HnwDfGFXg</span><span class="pun">+</span><span class="typ">QouZemQ2YgMeHfBzy</span><span class="pun">+</span><span class="pln">w26</span><span class="pun">/</span><span class="pln">gg480nC2PPNd0OG79</span><span class="pun">+</span><span class="pln">e7gFVrTL79JA</span><span class="pun">/</span><span class="typ">MyePBugvYqOAbl30h7M1a7EHP3IV5DQUQg4YUq49v4d3AvM0aia4EUowJs0P</span><span class="pun">/</span><span class="pln">j83nsZt8yiE2JEYR03kDgT</span><span class="pun">/</span><span class="pln">qziPK7LnVFqpFDSPC3MR3b8B354E9Af4C</span><span class="pun">/</span><span class="typ">JHgvglv2tsxOyvKupyZonbyr68CqSorO2rAwY</span><span class="pun">/</span><span class="pln">jWFEiArIaVuDiR9YM5 sammy@mydesktop</span></code></pre><p> <span>复制显示的文本块，然后返回到GitLab Web界面中的配置文件<strong>设置</strong> 。</span> </p><p> <span>单击左侧菜单中的<strong>SSH Keys</strong>项：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/ssh_keys_menu_item2.png" alt="GitLab SSH Keys菜单项"></p><p> <span>在提供的空间中粘贴从本地计算机复制的公钥。</span> <span>为其指定一个描述性标题，然后单击“ <strong>添加”键</strong>按钮：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/add_ssh_key2.png" alt="GitLab添加SSH密钥"></p><p> <span>您现在应该能够从本地计算机管理GitLab项目和存储库，而无需提供GitLab帐户凭据。</span> </p><h2 id="step-6-—-restricting-or-disabling-public-sign-ups-optional"> <span>第6步 - 限制或禁用公共注册（可选）</span> </h2><script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+<ins class="adsbygoogle" style="display: block; text-align: center; height: 182px;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-7163569408396951" data-ad-slot="7452267897" data-adsbygoogle-status="done"><ins id="aswift_2_expand" style="display:inline-table;border:none;height:182px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><ins id="aswift_2_anchor" style="display:block;border:none;height:182px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><iframe width="728" height="182" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0px;width:728px;height:182px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(2).html"></iframe></ins></ins></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><p> <span>您可能已经注意到，当您访问GitLab实例的登录页面时，任何人都可以注册一个帐户。</span> <span>如果您希望托管公共项目，这可能是您想要的。</span> <span>然而，很多时候，需要更多限制性设置。</span> </p><p> <span>首先，点击页面顶部主菜单栏中的<strong>扳手图标</strong> ，进入管理区域：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/admin_area_button2.png" alt="GitLab管理区域按钮"></p><p> <span>在随后的页面上，您可以看到整个GitLab实例的概述。</span> <span>要调整设置，请单击左侧菜单底部的<strong>“设置”</strong>项：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/admin_settings_button2.png" alt="GitLab管理设置按钮"></p><p> <span>您将进入GitLab实例的全局设置。</span> <span>在这里，您可以调整一些影响新用户是否可以注册的设置及其访问级别。</span> </p><h3 id="disabling-sign-ups"> <span>禁用注册</span> </h3><p> <span>如果您希望完全禁用注册（您仍然可以为新用户手动创建帐户），请向下滚动到“ <strong>注册限制”</strong>部分。</span> </p><p> <span>取消选中已<strong>启用注册</strong>复选框：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/deselect_sign-ups_enabled.png" alt="GitLab取消选择启用注册"></p><p> <span>向下滚动到底部，然后单击“ <strong>保存更改”</strong>按钮：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/new_save_changes_button.png" alt="GitLab保存设置按钮"></p><p> <span>现在应该从GitLab登录页面中删除注册部分。</span> </p><h3 id="restricting-sign-ups-by-domain"> <span>通过域限制注册</span> </h3><p> <span>如果您将GitLab用作提供与域关联的电子邮件地址的组织的一部分，则可以按域限制注册，而不是完全禁用它们。</span> </p><p> <span>在“ <strong>注册限制”</strong>部分中，选择“ <strong>在注册时发送确认电子邮件”</strong>框，这样，用户只有在确认其电子邮件后才能登录。</span> </p><p> <span>接下来，将您的域或域添加到<strong>白名单域以进行注册</strong> ，每行一个域。</span> <span>您可以使用星号“*”指定通配符域：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/restrict_sign-ups_by_domain.png" alt="GitLab限制域名注册"></p><p> <span>向下滚动到底部，然后单击“ <strong>保存更改”</strong>按钮：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/new_save_changes_button.png" alt="GitLab保存设置按钮"></p><p> <span>现在应该从GitLab登录页面中删除注册部分。</span> </p><h3 id="restricting-project-creation"> <span>限制项目创建</span> </h3><p> <span>默认情况下，新用户最多可以创建10个项目。</span> <span>如果您希望允许来自外部的新用户进行可见性和参与，但希望限制他们创建新项目的权限，则可以在“ <strong>帐户和限制设置”</strong>部分中执行此操作。</span> </p><p> <span>在内部，您可以将<strong>默认项目限制</strong>更改为0以完全禁用新用户创建项目：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/set_projects_to_zero.png" alt="GitLab将项目设置为零"></p><p> <span>新用户仍可手动添加到项目中，并可访问其他用户创建的内部或公共项目。</span> </p><p> <span>向下滚动到底部，然后单击“ <strong>保存更改”</strong>按钮：</span> </p><p><img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/new_save_changes_button.png" alt="GitLab保存设置按钮"></p><p> <span>新用户现在可以创建帐户，但无法创建项目。</span> </p><h3 id="renewing-let-39-s-encrypt-certificates"> <span>更新让我们加密证书</span> </h3><p> <span>默认情况下，GitLab的计划任务设置为每隔四天午夜后更新Let的加密证书，确切的分钟基于您的<code>external_url</code> 。</span> <span>您可以在<code>/etc/gitlab/gitlab.rb</code>文件中修改这些设置。</span> <span>例如，如果您想在12:30每7天更新一次，可以按如下方式进行配置：</span> </p><div class="code-label " title="/etc/gitlab/gitlab.rb"> <span> /etc/gitlab/gitlab.rb</span> </div><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><span class="pln">letsencrypt</span><span class="pun">[</span><span class="str">'auto_renew_hour'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"12"</span><span class="pln">
+letsencrypt</span><span class="pun">[</span><span class="str">'auto_renew_minute'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"30"</span><span class="pln">
+letsencrypt</span><span class="pun">[</span><span class="str">'auto_renew_day_of_month'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="str">"*/7"</span></code></pre><p> <span>您还可以通过向<code>/etc/gitlab/gitlab.rb</code>添加其他设置来禁用自动续订：</span> </p><div class="code-label " title="/etc/gitlab/gitlab.rb"> <span> /etc/gitlab/gitlab.rb</span> </div><pre class="code-pre prettyprint prettyprinted" style=""><code langs=""><span class="pln">letsencrypt</span><span class="pun">[</span><span class="str">'auto_renew'</span><span class="pun">]</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">false</span></code></pre><p> <span>通过自动续订，您无需担心服务中断。</span> </p><h2 id="conclusion"> <span>结论</span> </h2><p> <span>您现在应该在自己的服务器上托管一个正常工作的GitLab实例。</span> <span>您可以开始导入或创建新项目，并为您的团队配置适当的访问级别。</span> <span> GitLab会定期添加功能并对其平台进行更新，因此请务必查看项目主页以及时了解最新任何改进或重要通知。</span> </p><script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+<ins class="adsbygoogle" style="display: block; text-align: center; height: 182px; width: 728px;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-7163569408396951" data-ad-slot="7452267897" data-adsbygoogle-status="done"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:182px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><ins id="aswift_3_anchor" style="display: block; border: none; height: 182px; margin: 0px; padding: 0px; position: relative; visibility: visible; width: 728px; background-color: transparent; overflow: hidden;"><iframe width="728" height="182" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;border:0px;width:728px;height:182px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(3).html"></iframe></ins></ins></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+    <div class="w3-row">
+
+            <script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+            <!-- howtoing-post-content-left-ads-336*280 -->
+            <ins class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-7163569408396951" data-ad-slot="7352319254" data-adsbygoogle-status="done"><ins id="aswift_4_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent;"><ins id="aswift_4_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent;"><iframe width="336" height="280" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;border:0px;width:336px;height:280px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(4).html"></iframe></ins></ins></ins>
+            <script>
+            $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})});  
+            </script>
+
+    </div>
+        <div class="w3-row post-post-bottom-tag">
+        <span class="post-tag-line-height post-tag w3-tag  w3-left w3-small w3-green" style="color:gray;">Tag标签：</span>
+                    <a href="https://www.howtoing.com/tag/git"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">git</span></a>
+                    <a href="https://www.howtoing.com/tag/applications"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">Applications</span></a>
+                    <a href="https://www.howtoing.com/tag/let-s-encrypt"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">Let's Encrypt</span></a>
+                    <a href="https://www.howtoing.com/tag/ubuntu-18-04"><span class="post-tag-line-height post-tag w3-tag w3-left w3-small w3-green" style="color:gray;">Ubuntu 18.04</span></a>
+            </div>
+        <!-- content end -->
+</div>
+            <div class="w3-row">
+    <div class="w3-half w3-container w3-next-wrap">
+                <p class="w3-left w3-pre-post">上一篇</p><br>
+        <p class="w3-left delete-common-m-p"><a href="https://www.howtoing.com/how-to-set-up-nginx-with-http-2-support-on-ubuntu-18-04">如何在Ubuntu 18.04上使用HTTP / 2支持设置Nginx</a></p>
+            </div>
+    <div class="w3-half w3-container w3-next-wrap">
+                <p class="w3-right w3-new-post">下一篇</p><br>
+        <p class="w3-right delete-common-m-p"><a href="https://www.howtoing.com/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04">如何在Ubuntu 18.04上使用mdadm创建RAID阵列</a></p>
+            </div>
+</div>            <!-- <h3 class="w3-center w3-bottombar w3-border-gray post-relation-article">相关文章</h3> -->
+<br>
+<div id="London" class="w3-container city delete-common-m-p">
+    <script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+        <ins class="adsbygoogle" style="display: block; height: 436px;" data-ad-format="autorelaxed" data-ad-client="ca-pub-9856485789689900" data-ad-slot="9308464999" data-adsbygoogle-status="done"><ins id="aswift_6_expand" style="display:inline-table;border:none;height:436px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><ins id="aswift_6_anchor" style="display:block;border:none;height:436px;margin:0;padding:0;position:relative;visibility:visible;width:728px;background-color:transparent;"><iframe width="728" height="436" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_6" name="aswift_6" style="left:0;position:absolute;top:0;border:0px;width:728px;height:436px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(5).html"></iframe></ins></ins></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+</div>
+        </div>
+        <div class="w3-col index-right">
+
+    <div class="w3-row index-common-h2">
+        文章分类<span class="w3-badge w3-right w3-margin-right"> 10 </span>
+    </div>
+  <div class="w3-row">
+    <div class="w3-col s6 w3-dark-grey w3-center" style="padding:10px 0px;"> <a href="https://www.howtoing.com/category/cloud">运维</a></div>
+    <div class="w3-col s6 w3-dark-grey w3-center w3-border-left w3-border-bottom w3-border-color-white" style="padding:10px 0px;"><i class="fa fa-sitemap" aria-hidden="true"></i> <a href="https://www.howtoing.com/category/system-architecture">架构</a></div>
+    <div class="w3-col s6 w3-dark-grey w3-center" style="padding:10px 0px;">
+      <i class="fa fa-wrench" aria-hidden="true"></i> <a href="https://www.howtoing.com/category/developer-kits">开发工具</a>
+    </div>
+    <div class="w3-col s6 w3-dark-grey w3-center w3-border-left w3-border-bottom w3-border-color-white" style="padding:10px 0px;"><i class="fa fa-linux" aria-hidden="true"></i> <a href="https://www.howtoing.com/category/operating-system">操作系统</a></div>
+    <div class="w3-col s6 w3-dark-grey w3-center" style="padding:10px 0px;"><i class="fa fa-code" aria-hidden="true"></i> <a href="https://www.howtoing.com/category/programming-2">编程语言</a></div>
+    <div class="w3-col s6 w3-dark-grey w3-center w3-border-left w3-border-bottom w3-border-color-white" style="padding:10px 0px;"><a href="https://www.howtoing.com/category/html-css">WEB开发设计</a></div>
+    <div class="w3-col s6 w3-dark-grey w3-center" style="padding:10px 0px;"><i class="fa fa-server" aria-hidden="true"></i> <a href="https://www.howtoing.com/category/server">服务器</a></div>
+    <div class="w3-col s6 w3-dark-grey w3-center w3-border-left w3-border-bottom w3-border-color-white" style="padding:10px 0px;"><i class="fa fa-database" aria-hidden="true"></i>  <a href="https://www.howtoing.com/category/database">数据库</a></div>
+     <div class="w3-col s6 w3-dark-grey w3-center w3-border-left w3-border-bottom w3-border-color-white" style="padding:10px 0px;"> <a href="https://www.howtoing.com/category/network-security">网络安全</a></div>
+
+      <div class="w3-col s6 w3-dark-grey w3-center w3-border-left w3-border-bottom w3-border-color-white" style="padding:10px 0px;">  <a href="https://www.howtoing.com/category/others">综合分类</a></div>
+  </div>
+    <div class="w3-row index-common-h2">
+        热门文章<span class="w3-badge w3-right w3-margin-right">8</span>
+    </div>
+        <div class="w3-row">
+        <ul class="w3-ul delete-common-m-p">
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/how-to-set-up-the-code-server-cloud-ide-platform-on-digitalocean-kubernetes">如何在DigitalOcean Kubernetes上设置代码服务器Cloud IDE平台</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/how-to-set-up-a-node-js-application-for-production-on-debian-10">如何在Debian 10上设置Node.js生产应用程序</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/rdesktop-connect-windows-desktop-from-linux">rdesktop  - 从Linux连接Windows桌面的RDP客户端</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/how-to-install-the-anaconda-python-distribution-on-debian-10">如何在Debian 10上安装Anaconda Python发行版</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/how-to-set-up-a-firewall-with-ufw-on-debian-10">如何在Debian 10上使用UFW设置防火墙</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/install-node-js-in-rhel-8">如何在RHEL 8中安装Node.js.</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/install-python-in-rhel-8">如何在RHEL 8中安装Python 3或Python 2</a></li>
+                    <li class="index-hot-article"><a href="https://www.howtoing.com/sql-buddy-mysql-administration-tool-for-linux">SQL Buddy  - 基于Web的MySQL管理工具</a></li>
+                  </ul>
+    </div>
+    
+    <div class="w3-row index-common-right-ads">
+    <script async="" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/f(2).txt"></script>
+    <!-- howtoing-side-300*600 -->
+    <ins class="adsbygoogle" style="display: inline-block; width: 300px; height: 250px;" data-ad-client="ca-pub-7163569408396951" data-ad-slot="7372376843" data-adsbygoogle-status="done"><ins id="aswift_7_expand" style="display:inline-table;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><ins id="aswift_7_anchor" style="display:block;border:none;height:250px;margin:0;padding:0;position:relative;visibility:visible;width:300px;background-color:transparent;"><iframe width="300" height="250" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_7" name="aswift_7" style="left:0;position:absolute;top:0;border:0px;width:300px;height:250px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(6).html"></iframe></ins></ins></ins>
+    <script>
+      $(document).ready(function(){(adsbygoogle = window.adsbygoogle || []).push({})});
+    </script>
+    </div>
+
+
+     <div class="w3-row">
+      <div class="w3-row w3-border index-qq">
+         <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/linux_wechat.jpg" width="220px"><br>
+         <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/linux_qq2.jpg" width="220px"><br>
+          <img src="./如何在Ubuntu 18.04上安装和配置GitLab_files/follow-us.png" width="220px">
+          <p class="delete-common-m-p">Linux入门</p>
+          <p class="delete-common-m-p">QQ交流群:308781113(已满)</p>
+      </div>
+    </div>
+
+
+
+</div>
+    </div>
+        </div>
+    </div>
+    <!-- footer -->
+            <footer class="w3-center w3-light-grey w3-margin-top w3-padding-24 w3-medium">
+      <p>howtoing.com是一个运维教程站，开始于2012年5月。这里提供如何简单的学习引导Linux/Windows系统管理员的目标。我们一直在努力提供简单易学高质量的文章。</p>
+      <p>联系邮箱: howtoing@foxmail.com</p>
+      <p>©2019 Howtoing运维教程 京ICP备17008628号-1
+      </p>
+</footer>    
+        <script src="./如何在Ubuntu 18.04上安装和配置GitLab_files/bootstrap.min.js.下载" charset="utf-8"></script>
+    <!-- <script src="/js/dynamicscrollspy.js" charset="utf-8"></script> -->
+    <script src="./如何在Ubuntu 18.04上安装和配置GitLab_files/prettify.js.下载" charset="utf-8"></script>
+    <script src="./如何在Ubuntu 18.04上安装和配置GitLab_files/howto.js.下载" charset="utf-8"></script>
+        <!-- share -->
+        <!-- Start of StatCounter Code for Default Guide -->
+    <script type="text/javascript">
+    var sc_project=11028908; 
+    var sc_invisible=1; 
+    var sc_security="bc715dee"; 
+    var scJsHost = (("https:" == document.location.protocol) ?
+    "https://secure." : "http://www.");
+    document.write("<sc"+"ript type='text/javascript' src='" +
+    scJsHost+
+    "statcounter.com/counter/counter.js'></"+"script>");
+    </script><script type="text/javascript" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/counter.js.下载"></script>
+    <noscript><div class="statcounter"><a title="Web Analytics"
+    href="http://statcounter.com/" target="_blank"><img
+    class="statcounter"
+    src="//c.statcounter.com/11028908/0/bc715dee/1/" alt="Web
+    Analytics"></a></div></noscript>
+    <!-- End of StatCounter Code for Default Guide -->
+
+<ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;"><ins id="aswift_5_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><ins id="aswift_5_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent;"><iframe frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_5" name="aswift_5" style="left:0;position:absolute;top:0;border:0px;width:0px;height:0px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(7).html"></iframe></ins></ins></ins><iframe id="google_osd_static_frame_7177308632556" name="google_osd_static_frame" style="display: none; width: 0px; height: 0px;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(8).html"></iframe></body><iframe id="google_shimpl" style="display: none;" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/saved_resource(9).html"></iframe><iframe id="google_esf" name="google_esf" src="./如何在Ubuntu 18.04上安装和配置GitLab_files/zrt_lookup.html" data-ad-client="ca-pub-7163569408396951" style="display: none;"></iframe></html>
