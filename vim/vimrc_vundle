@@ -58,6 +58,10 @@ let g:DoxygenToolkit_versionString="1.0"
 nmap tx :DoxAuthor<cr>
 nmap ty :Dox<cr>
 
+" markdown语法支持
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+
 " 每个插件都应该在这一行之前  
 call vundle#end()            " required
 
