@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="origin" />
+    <meta property="og:description" content="一、背景 由于windows和linux对换行的标识不一样，不同系统的代码传递导致代码格式的改变中可能会带来程序无法正常编译通过的问题。因此根据一些编译的错误提示，可以定位到是文件格式的问题，要对程序" />
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>如何查看文件是dos格式还是unix格式的？ - juejiang - 博客园</title>
+    <link id="favicon" rel="shortcut icon" href="//common.cnblogs.com/favicon.svg" type="image/svg+xml" />
+    
+    <link rel="stylesheet" href="/css/blog-common.min.css?v=eJQE8raBiZQaXXSaPTciUQCLTIh6ozn6FTo1VIJimsY" />
+    <link id="MainCss" rel="stylesheet" href="/skins/coffee/bundle-coffee.min.css?v=F9ODK0b_BexrGFuzwObB8A2Gx3VnPgTALBeh3BNdKdg" />
+    <link type="text/css" rel="stylesheet" href="https://www.cnblogs.com/jiangz/custom.css?v=u8S8qUwIUmZ7iFh&#x2B;EmfbOX45oJY=" />
+    <link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/coffee/bundle-coffee-mobile.min.css?v=_A34W8fnMJT0tcRq18x5CRz6GYA4gZvedLXGAkdf2Ms" />
+    
+    <link type="application/rss+xml" rel="alternate" href="https://www.cnblogs.com/jiangz/rss" />
+    <link type="application/rsd+xml" rel="EditURI" href="https://www.cnblogs.com/jiangz/rsd.xml" />
+    <link type="application/wlwmanifest+xml" rel="wlwmanifest" href="https://www.cnblogs.com/jiangz/wlwmanifest.xml" />
+    <script>
+        var currentBlogId = 135502;
+        var currentBlogApp = 'jiangz';
+        var cb_enable_mathjax = false;
+        var isLogined = false;
+        var isBlogOwner = false;
+        var skinName = 'coffee';
+        var visitorUserId = '';
+    </script>
+        <script>
+            var currentPostDateAdded = '2015-01-17 11:12';
+        </script>
+    <script src="https://common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+    <script src="/js/blog-common.min.js?v=GDDxNTMu__UMoAAQQRU0L1SpIm25Aa4OuTxtHI5XsGc"></script>
+    
+    
+    
+</head>
+<body>
+    <a name="top"></a>
+    
+    
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a href="https://www.cnblogs.com/jiangz/"><img id="blogLogo" src="/skins/custom/images/logo.gif" alt="返回主页" /></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle HeaderMainTitle" href="https://www.cnblogs.com/jiangz/">juejiang</a>
+</h1>
+<h2>
+分享，学习
+</h2>
+
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		<div id="navigator">
+			
+<ul id="navList">
+	<li><a id="blog_nav_sitehome" class="menu" href="https://www.cnblogs.com/">
+博客园</a>
+</li>
+	<li>
+<a id="blog_nav_myhome" class="menu" href="https://www.cnblogs.com/jiangz/">
+首页</a>
+</li>
+	<li>
+
+<a id="blog_nav_newpost" class="menu" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">
+新随笔</a>
+</li>
+	<li>
+<a id="blog_nav_contact" class="menu" href="https://msg.cnblogs.com/send/juejiang">
+联系</a></li>
+	<li>
+<a id="blog_nav_admin" class="menu" href="https://i.cnblogs.com/">
+管理</a>
+</li>
+	<li>
+<a id="blog_nav_rss" class="menu" href="javascript:void(0)" data-rss="https://www.cnblogs.com/jiangz/rss/">
+订阅</a>
+	
+<a id="blog_nav_rss_image" href="https://www.cnblogs.com/jiangz/rss/">
+    <img src="/skins/coffee/images/xml.gif" alt="订阅" />
+</a></li>
+</ul>
+
+
+
+			<div class="blogStats">
+				
+				<!--done-->
+随笔- 
+97&nbsp;
+文章- 
+0&nbsp;
+评论- 
+26&nbsp;
+
+
+
+				
+			</div><!--end: blogStats -->
+		</div><!--end: navigator 博客导航栏 -->
+		<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class = "postTitle">
+			
+<a id="cb_post_title_url" class="postTitle2 vertical-middle" href="https://www.cnblogs.com/jiangz/p/4231279.html">
+    <span>如何查看文件是dos格式还是unix格式的？</span>
+    
+
+
+</a>
+
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			
+<div id="cnblogs_post_body" class="blogpost-body">
+    <h2>一、背景</h2>
+<p>&nbsp; &nbsp;由于windows和linux对换行的标识不一样，不同系统的代码传递导致代码格式的改变中可能会带来程序无法正常编译通过的问题。因此根据一些编译的错误提示，可以定位到是文件格式的问题，要对程序的文本文件进行转换。</p>
+<h2>二、解决方法</h2>
+<p>&nbsp; &nbsp;windows标识一行的结束用的是回车换行符，即'\r\n',也叫做CRLF。linux对一行结束的标识则只有换行，即'\n',也就是LF。将程序从windows下copy至linux下时，只需要使用如下命令对所有的文件进行格式转换即可(参考[1])。</p>
+<p><code>&nbsp; &nbsp;find . -type f -exec dos2unix {} \;</code></p>
+<h2>三、查看文件类型的方法</h2>
+<h3>3.1windows下使用notepad++的话，可以设置显示所有字符(参考[2])，且notepad++右下角会显示文件类型。</h3>
+<p><img src="https://images0.cnblogs.com/blog/475022/201501/172303309334390.png" alt=""></p>
+<h3>3.2linux下使用vim(参考[3])</h3>
+<p>&nbsp; &nbsp;使用vim打开文件，输入:set ff?。根据返回结果可以文件类型</p>
+<h3>3.3linux下使用gedit</h3>
+<p>&nbsp; &nbsp;使用gedit打开文件，搜索'\r\n'，看每行末尾是否存在。存在则通常是dos类型，不存在则是unix类型。</p>
+<h2>四、参考文献</h2>
+<p>[1]<a href="http://stackoverflow.com/questions/11929461/dos2unix-command-on-entire-directory">linux - dos2Unix command on entire directory - Stack Overflow</a></p>
+<p>[2]<a href="http://www.crifan.com/files/doc/docbook/rec_soft_npp/release/htmls/npp_func_show_special_char.html">3.10.&nbsp;Notepad++支持显示回车符，换行符，TAB键，行首，行尾等特殊字符</a></p>
+<p>[3]<a href="http://vim.wikia.com/wiki/Change_end-of-line_format_for_dos-mac-unix">File format - Vim Tips Wiki</a></p>
+</div>
+<div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+    <div id="blog_post_info"></div>
+    <div class="clear"></div>
+    <div id="post_next_prev"></div>
+</div>
+		</div>
+		<div class="postDesc">posted @ 
+<span id="post-date">2015-01-17 23:12</span>&nbsp;
+<a href="https://www.cnblogs.com/jiangz/">juejiang</a>&nbsp;
+阅读(<span id="post_view_count">8347</span>)&nbsp;
+评论(<span id="post_comment_count">0</span>)&nbsp;
+<a href="https://i.cnblogs.com/EditPosts.aspx?postid=4231279" rel="nofollow">编辑</a>&nbsp;
+<a href="javascript:void(0)" onclick="AddToWz(4231279);return false;">收藏</a></div>
+	</div>
+	
+	
+</div><!--end: topics 文章、评论容器-->
+<script src="https://common.cnblogs.com/highlight/9.12.0/highlight.min.js"></script>
+<script>markdown_highlight();</script>
+<script>
+    var allowComments = true, cb_blogId = 135502, cb_blogApp = 'jiangz', cb_blogUserGuid = '52317d02-7d3b-e211-aa8f-842b2b196315';
+    var cb_entryId = 4231279, cb_entryCreatedDate = '2015-01-17 23:12', cb_postType = 1;
+    loadViewCount(cb_entryId);
+</script><a name="!comments"></a>
+<div id="blog-comments-placeholder"></div>
+<script>
+    var commentManager = new blogCommentManager();
+    commentManager.renderComments(0);
+</script>
+<div id="comment_form" class="commentform">
+    <a name="commentform"></a>
+    <div id="divCommentShow"></div>
+    <div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="#" onclick="return RefreshPage();">刷新页面</a><a href="#top">返回顶部</a></div>
+    <div id="comment_form_container"></div>
+    <div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+    <div id="ad_t2"></div>
+    <div id="opt_under_post"></div>
+    <div id="cnblogs_c1" class="c_ad_block">
+        <div id='div-gpt-ad-1592365906576-0' style='width: 300px; height: 250px;'></div>
+    </div>
+    <div id="under_post_news"></div>
+    <div id="cnblogs_c2" class="c_ad_block">
+        <div id='div-gpt-ad-1592366332455-0' style='width: 468px; height: 60px;'></div>
+    </div>
+    <div id="under_post_kb"></div>
+    <div id="HistoryToday" class="c_ad_block"></div>
+    <script type="text/javascript">
+        fixPostBody();
+        deliverBigBanner();
+setTimeout(function() { incrementViewCount(cb_entryId); }, 50);        deliverT2();
+        deliverC1C2();
+        loadNewsAndKb();
+        loadBlogSignature();
+LoadPostCategoriesTags(cb_blogId, cb_entryId);        LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+        GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+        loadOptUnderPost();
+        GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);
+    </script>
+</div></div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<div id="sidebar_news" class="newsItem">
+            <script>loadBlogNews();</script>
+</div>
+
+<div id="sidebar_ad"></div>
+			<div id="calendar"><div id="blog-calendar" style="display:none"></div><script>loadBlogDefaultCalendar();</script></div>
+			
+			<DIV id="leftcontentcontainer">
+				<div id="blog-sidecolumn"></div>
+                    <script>loadBlogSideColumn();</script>
+			</DIV>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		<!--done-->
+Copyright &copy; 2020 juejiang
+<br /><span id="poweredby">Powered by .NET Core on Kubernetes</span>
+
+
+
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+    
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?39b794a97f47c65b6b2e4e1741dcba38";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>
