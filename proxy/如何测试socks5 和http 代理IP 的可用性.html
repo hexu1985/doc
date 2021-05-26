@@ -1,0 +1,1168 @@
+  <!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>如何测试socks5 和http 代理IP 的可用性 - 帮助文档 - 青果网络</title>
+    <meta name="keywords" content="代理IP,socks5,http,可用性" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" type="text/css" href="/static/default-themes/home/css/setPublicStyle/setPublicStyle.css">
+<link href="/static/home-ico/favicon.ico" rel="icon" type="image/x-icon" />
+<!-- 添加字体图标 -->
+<link rel="stylesheet" href="/static/default-themes/home/hicon/style.css">
+<!-- 设置默认样式和清除默认样式 -->
+<link rel="stylesheet" href="/static/default-themes/home/css/setPublicStyle/setPublicStyle.css">
+<!-- 设置整体颜色 -->
+<link rel="stylesheet" href="/static/default-themes/home/css/setStyleColor/setStyleColor.css">
+<!-- 设置图标 -->
+<link rel="stylesheet" href="/static/default-themes/home/css/setStyleIcon/setStyleIcon.css">
+<!-- 页面样式 -->
+<link rel="stylesheet" href="/static/default-themes/home/css/setPublicStyle/commonStyle.css">
+<link rel="stylesheet" href="/static/default-themes/home/css/setPublicStyle/header.css">
+<link rel="stylesheet" href="/static/default-themes/home/css/setPublicStyle/footer.css">
+<link rel="stylesheet" href="/static/default-themes/home/css/qg.css">
+<link rel="stylesheet" href="/static/default-themes/home/css/customColor.css">
+<!-- 引入rem.css -->
+<link rel="stylesheet" href="/static/default-themes/home/css/rem/rem.css">
+<!-- <link rel="stylesheet" href="/static/default-themes/home/css/home.css"> -->
+<!-- 引入rem.js -->
+<!-- <script src="/static/default-themes/home/rem/rem.js"></script> -->
+<script src="/static/default-themes/home/js/jquery.js"></script>
+<script src="/static/default-themes/home/js/jquery.actual.min.js"></script>
+<script src="/static/default-themes/home/js/public.js"></script>
+<script src="/static/default-themes/home/js/home.js"></script>
+<script src="/static/default-themes/home/js/product_common.js"></script>
+<script src="/static/default-themes/home/js/qg.js"></script>
+<script src="/static/default-themes/home/js/cookie.js"></script>
+
+<!-- 公共方法库 -->
+<script src="/static/default-themes/js/common.js"></script>
+<div class="hide">
+	<!--统计代码标签-->
+	<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?d9279b216b645de791122bdc5ba51973";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script></div>
+<!-- <script>
+    // 添加版本号
+    setTimeout(function(){
+        var version = '3.0.1';
+        $('link,script').each(function (idx,item) {
+            if($(item).attr('src')){
+                $(item).attr('src',$(item).attr('src',)+'?v='+version)
+            }
+            if($(item).attr('href')){
+                $(item).attr('href',$(item).attr('href',)+'?v='+version)
+            }
+        })
+    },300)
+</script> -->
+<meta name="baidu-site-verification" content="code-YvepMErNN4" />
+<script src="https://pv.sohu.com/cityjson?ie=utf-8" async></script>
+<script>
+    function set_client_ip_cookie() {
+        if (typeof(returnCitySN) == "undefined") {
+            requestAnimationFrame(set_client_ip_cookie)
+            return
+        }
+        $.cookie('client_ip',returnCitySN.cip)
+    }
+
+    set_client_ip_cookie()
+</script>
+    <link rel="stylesheet" href="/static/default-themes/home/css/help_center_article.css">
+    <link rel="stylesheet" href="/static/default-themes/home/css/editormd.css" />
+    <script src="/static/default-themes/home/js/help_center_list.js"></script>
+</head>
+<body>
+    <style>
+        #fixed{
+            display: none;
+        }
+        pre img{
+            max-width: 100%;
+        }
+    </style>
+<!-- header -->
+<div id="header" class="whole-bg-color clearfix">
+    <div class="clearfix header-outer">
+        <div class="head-left fl">
+            <div class="head-logo fl">
+                <a href="/" style="background: url('https://cos.qg.net/Uploads/image/2020-07-07/5f03e85dd7dfd.png') center no-repeat;background-size: contain;"></a>
+            </div>
+            <div class="head-nav fl">
+                <div class="head-nav-item"><a href="/"><span>首页</span></a></div>
+                <div class="head-nav-item"><a toggle="products"><span>产品</span></a></div>
+                <div class="head-nav-item">
+                    <a href="javascript:;"><span>文档</span></a>
+                    <div class="head-drop">
+                        <a href="/help.html">帮助文档</a>
+                        <a href="/api.html">API文档</a>
+                        <a href="/news.html">新闻公告</a>
+                        <a href="/info.html">行业资讯</a>
+                    </div>
+                </div>
+                <div class="head-nav-item"><a href="/partner/aff.html"><span>推广返佣</span></a></div>
+                <div class="head-nav-item"><a href="/page/about.html"><span>关于我们</span></a></div>
+            </div>
+        </div>
+        <div class="head-right fr">
+            <div class="filing fl">
+                <a href="/user/" class="fl"><span><em>控制台</em></span></a>
+                <div class="line fl"><span>|</span></div>
+                <a href="http://beian.qg.net" class="fl" target="_blank"><span><em>备案中心</em></span></a>
+            </div>
+            <div class="user fr">
+                <div class="not-logged-in active-show">
+                    <div class="login fl">
+                        <a href="/login/" class="login-btn ">登&nbsp;录</a>
+                    </div>
+                    <div class="register fl">
+                        <div class="register-btn-wrap">
+                            <a href="/register/" class="register-btn whole-font-color">免费注册</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="log-in">
+                    <div class="avatar fl">
+                        <div class="avatar-wrap">
+                            <img src="/static/default-themes/home/image/logo/avatar_logo.png" alt="头像">
+                        </div>
+                    </div>
+                    <div class="to-down-icon fl">
+                        <span></span>
+                    </div>
+                    <div class="pop-up-box">
+                        <div class="name">
+                          <div class="top">
+                            <h3 class="clearfix">
+                              <a href='/user'>
+                                <span class="fl" id="username">青果网络</span>
+                              </a>
+                            </h3>
+                            <div class="attestation-wrap">
+                              <div class="attest clearfix" style="display:none;">
+                                <a href='/user/auth/index'>
+                                    <span class="fl" style="color: #69babc;">实名认证<em class="tag">个人</em></span>
+                                </a>
+                              </div>
+                              <div class="attest clearfix" style="display:none;">
+                                  <a href='/user/auth/index'>
+                                      <span class="fl" style="color: #F6AE54;">未实名认证</span>
+                                  </a>    
+                              </div>
+                            </div>
+                          </div>
+                            <div class="money">
+                                <div class="wrap">
+                                  <i class="fl icon money-icon">hicon4</i>
+                                  <span id="money"></span>
+                                </div>
+                                <a href="/user/payment" class="payment">充值</a>
+                            </div>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href="/user/order/">
+                                    <i class="fl icon order-icon">hicon127</i>
+                                    <span class="fl">未支付订单</span>
+                                    <em class='fl' id="orderCount"></em>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/ticket">
+                                    <i class="fl icon manage-icon">hicon128</i>
+                                    <span class="fl">我的工单</span>
+                                    <em class='fl' id="serverCount"></em>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/user/message/">
+                                    <i class="fl icon news-icon">hicon129</i>
+                                    <span class="fl">未读消息</span>
+                                    <em class='fl' id="msgCount"></em>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="btn clearfix">
+                            <a href="/user/members/" class="manange fl" style=padding-left:0>会员中心</a>
+                            <a href="/home/login/logout" class="drop-out fr">退出</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="head-bottom">
+            <div class="products">
+                <nav>
+                    <a href="javascript:;" class="clearfix whole-bg-color">
+                        <span class="fl active-span">所有产品</span>
+                        <i class="icon-nav list-icon fr"></i>
+                    </a>
+                                            <a href="javascript:;" class="clearfix">
+                            <span class="fl">云计算</span>
+                            <i class="icon-nav fr"></i>
+                        </a>
+                                            <a href="javascript:;" class="clearfix">
+                            <span class="fl">云网融合</span>
+                            <i class="icon-nav fr"></i>
+                        </a>
+                                            <a href="javascript:;" class="clearfix">
+                            <span class="fl">IDC服务</span>
+                            <i class="icon-nav fr"></i>
+                        </a>
+                                            <a href="javascript:;" class="clearfix">
+                            <span class="fl">云市场</span>
+                            <i class="icon-nav fr"></i>
+                        </a>
+                                    </nav>
+                <div class="nav-item">
+                    <div class="item item-active">
+                                                    <dl>
+                                <dt>云计算</dt>
+                                                                    <dd><a href="/product/cloud.html">青果云</a></dd>
+                                                                    <dd><a href="/product/qcloud.html">腾讯云</a></dd>
+                                                                    <dd><a href="/product/aliyun.html">阿里云</a></dd>
+                                                                    <dd><a href="/product/dianxin.html">电信云</a></dd>
+                                                                    <dd><a href="/product/huaweiyun.html">华为云</a></dd>
+                                                                    <dd><a href="/product/qianhai.html">前海云</a></dd>
+                                                                    <dd><a href="/product/jingan.html">景安云</a></dd>
+                                                            </dl>
+                                                    <dl>
+                                <dt>云网融合</dt>
+                                                                    <dd><a href="/product/cloud-pc.html">云电脑</a></dd>
+                                                                    <dd><a href="/product/cdn.html">融合CDN</a></dd>
+                                                                    <dd><a href="/product/proxyip.html">代理IP</a></dd>
+                                                                    <dd><a href="/product/click.html">云点击</a></dd>
+                                                                    <dd><a href="/product/adsl.html">拨号VPS</a></dd>
+                                                            </dl>
+                                                    <dl>
+                                <dt>IDC服务</dt>
+                                                                    <dd><a href="/product/zuyong.html">服务器租用</a></dd>
+                                                                    <dd><a href="/product/tuoguan.html">服务器托管</a></dd>
+                                                            </dl>
+                                                    <dl>
+                                <dt>云市场</dt>
+                                                                    <dd><a href="/product/chuangyu.html">创宇信用</a></dd>
+                                                                    <dd><a href="/product/kexin.html">可信网站</a></dd>
+                                                                    <dd><a href="/product/baoleiji.html">堡垒机</a></dd>
+                                                                    <dd><a href="/product/authorize.html">云授权</a></dd>
+                                                            </dl>
+                                            </div>
+    
+                                            <div class="item">
+                            <ul>
+                                                                    <li>
+                                        <a href="/product/cloud.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">青果云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>精选稀缺优质线路，纯SSD架构虚拟化，高IOPS低延迟。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/qcloud.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">腾讯云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>腾讯云授权服务中心，提供购买、代付、返款等优惠方式。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/aliyun.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">阿里云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>阿里云授权服务中心，提供购买、代付、返款等优惠方式。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/dianxin.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">电信云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>基于中国电信遍布全国的IDC网络，节点覆盖全国31 个省、自治区</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/huaweiyun.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">华为云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>华为云授权服务中心，提供购买、代付、返款等优惠方式。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/qianhai.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">前海云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>提供动态BGP、静态BGP、高防等优质线路云服务器。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/jingan.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">景安云</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>固定套餐云，可独立运行和管理的云主机，购买更便捷。</p>
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        </div>
+                                            <div class="item">
+                            <ul>
+                                                                    <li>
+                                        <a href="/product/cloud-pc.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">云电脑</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>宽带PPPoE拨号独享网络，超高下行带宽速率助力远程办公。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/cdn.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">融合CDN</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>轻松融合多家CDN厂商，让域名享受最优的加速服务。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/proxyip.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">代理IP</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>地区广IP多，网速快延迟低稳定性好！</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/click.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">云点击</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>网站SEO关键词排名优化、排名监控工具。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/adsl.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">拨号VPS</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>汇聚全国各省份拨号VPS，助力自动化应用长时间运行。</p>
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        </div>
+                                            <div class="item">
+                            <ul>
+                                                                    <li>
+                                        <a href="/product/zuyong.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">服务器租用</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>自研自动化装机系统，支持在线管理功能。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/tuoguan.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">服务器托管</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>优选五星级机房，给您高品质的托管服务。</p>
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        </div>
+                                            <div class="item">
+                            <ul>
+                                                                    <li>
+                                        <a href="/product/chuangyu.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">创宇信用</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>提供QQ聊天窗口、搜狗搜索结果绿色V标认证。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/kexin.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">可信网站</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>第三方网站真实身份验证服务，验证网站真实身份。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/baoleiji.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">堡垒机</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>新一代堡垒机，为您“从心”定义了堡垒机。</p>
+                                        </a>
+                                    </li>
+                                                                    <li>
+                                        <a href="/product/authorize.html">
+                                            <div class="title clearfix">
+                                                <h3 class="fl">云授权</h3>
+                                                <span class="fl"></span>
+                                            </div>
+                                            <p>QStack云管系统，免费助力中小IDC云化。</p>
+                                        </a>
+                                    </li>
+                                                            </ul>
+                        </div>
+                                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- header end-->
+<script src="/static/default-themes/js/babel-polyfill.js"></script>
+<div id="section">
+    <div class="doc-list">
+        <div class="nav">
+	<div class="head">
+		<h3>云IP</h3>
+		<div id="help_aside">
+			<img src="/static/default-themes/home/image/icon/help_more.png" class="more" alt="">
+			<div class="aside help_aside">
+											<div class="side-item">
+							<a href="/list/64.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>弹性云</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/88.html" class="item-cell">青果云</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/92.html" class="item-cell">腾讯云</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/89.html" class="item-cell">阿里云</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/93.html" class="item-cell">电信云</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/149.html" class="item-cell">华为云</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/90.html" class="item-cell">操作指南</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/72.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>云IP</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/102.html" class="item-cell">拨号VPS</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/103.html" class="item-cell">代理IP</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/104.html" class="item-cell">云电脑</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/148.html" class="item-cell">云点击</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/73.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>服务器</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/98.html" class="item-cell">服务器托管</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/99.html" class="item-cell">服务器租用</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/100.html" class="item-cell">操作指南</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/74.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>云市场</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/95.html" class="item-cell">创宇信用</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/96.html" class="item-cell">堡垒机</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/97.html" class="item-cell">可信认证</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/152.html" class="item-cell">云授权</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/71.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>运维指南</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/105.html" class="item-cell">系统</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/107.html" class="item-cell">网络</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/108.html" class="item-cell">硬件</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/65.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>备案服务</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/110.html" class="item-cell">备案指南</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/111.html" class="item-cell">管局备案要求</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/63.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>其他</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/85.html" class="item-cell">财务相关</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/86.html" class="item-cell">会员相关</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/87.html" class="item-cell">合同协议</a>
+											</div>
+																												<div class="item-list">
+												<a href="/list/127.html" class="item-cell">法律法规</a>
+											</div>
+																														</div>
+											<div class="side-item">
+							<a href="/list/153.html" class="side-title">
+								<i class="whole-font-color">hicon146</i>
+								<span>QStack云管系统</span>
+							</a>
+																		<div class="item-list">
+												<a href="/list/154.html" class="item-cell">安装部署</a>
+											</div>
+																														</div>
+								</div>
+		</div>
+	</div>
+	<div class="problem-lis">
+				<div class="menu-item">
+			<div class="menu-title" data-id="102" data-lv="1">
+				<a href="/list/102.html">拨号VPS</a>
+									<i class="menu-arrow">hicon27</i>
+							</div>
+		</div>
+
+				<div class="menu-item">
+			<div class="menu-title" data-id="103" data-lv="1">
+				<a href="/list/103.html">代理IP</a>
+									<i class="menu-arrow">hicon27</i>
+							</div>
+		</div>
+
+				<div class="menu-item">
+			<div class="menu-title" data-id="104" data-lv="1">
+				<a href="/list/104.html">云电脑</a>
+							</div>
+		</div>
+
+				<div class="menu-item">
+			<div class="menu-title" data-id="148" data-lv="1">
+				<a href="/list/148.html">云点击</a>
+							</div>
+		</div>
+
+			</div>
+</div>
+<script>
+	console.log({"1":{"id":1,"title":"\u5e2e\u52a9\u6587\u6863","keywords":null,"description":null,"file":"help","type":1,"pid":0,"column":null,"num":11,"sort":0,"son":{"64":{"id":64,"title":"\u5f39\u6027\u4e91","keywords":"","description":"","file":"cloud","type":1,"pid":1,"column":"1,64","num":0,"sort":1,"son":{"88":{"id":88,"title":"\u9752\u679c\u4e91","keywords":"","description":"","file":"qgcloud","type":1,"pid":64,"column":"1,64,88","num":0,"sort":1,"son":{"125":{"id":125,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":88,"column":"1,64,88,125","num":0,"sort":0},"126":{"id":126,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":88,"column":"1,64,88,126","num":0,"sort":1}}},"92":{"id":92,"title":"\u817e\u8baf\u4e91","keywords":"","description":"","file":"qcloud","type":1,"pid":64,"column":"1,64,92","num":0,"sort":2,"son":{"130":{"id":130,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":92,"column":"1,64,92,130","num":0,"sort":0},"131":{"id":131,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":92,"column":"1,64,92,131","num":0,"sort":1}}},"89":{"id":89,"title":"\u963f\u91cc\u4e91","keywords":"","description":"","file":"aliyun","type":1,"pid":64,"column":"1,64,89","num":0,"sort":3,"son":{"128":{"id":128,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":89,"column":"1,64,89,128","num":0,"sort":0},"129":{"id":129,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":89,"column":"1,64,89,129","num":0,"sort":1}}},"93":{"id":93,"title":"\u7535\u4fe1\u4e91","keywords":"","description":"","file":"ctyun","type":1,"pid":64,"column":"1,64,93","num":0,"sort":4,"son":{"132":{"id":132,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":93,"column":"1,64,93,132","num":0,"sort":0},"133":{"id":133,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":93,"column":"1,64,93,133","num":0,"sort":1}}},"149":{"id":149,"title":"\u534e\u4e3a\u4e91","keywords":"","description":"","file":"huawei","type":1,"pid":64,"column":"1,64,149","num":0,"sort":5,"son":{"150":{"id":150,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"huawei-suggest","type":1,"pid":149,"column":"1,64,149,150","num":0,"sort":0},"151":{"id":151,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"huawei-faq","type":1,"pid":149,"column":"1,64,149,151","num":0,"sort":1}}},"90":{"id":90,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"","file":"operate","type":1,"pid":64,"column":"1,64,90","num":0,"sort":6}}},"72":{"id":72,"title":"\u4e91IP","keywords":"","description":"","file":"proxyip","type":1,"pid":1,"column":"1,72","num":0,"sort":2,"son":{"102":{"id":102,"title":"\u62e8\u53f7VPS","keywords":"","description":"","file":"VPS","type":1,"pid":72,"column":"1,72,102","num":0,"sort":0,"son":{"134":{"id":134,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"\u62e8\u53f7VPS\u4ea7\u54c1\u4ecb\u7ecd","file":"introduction","type":1,"pid":102,"column":"1,72,102,134","num":0,"sort":0},"135":{"id":135,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"","file":"operate","type":1,"pid":102,"column":"1,72,102,135","num":0,"sort":1},"136":{"id":136,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":102,"column":"1,72,102,136","num":0,"sort":2}}},"103":{"id":103,"title":"\u4ee3\u7406IP","keywords":"","description":"","file":"proxyIp","type":1,"pid":72,"column":"1,72,103","num":0,"sort":0,"son":{"137":{"id":137,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"\u4ee3\u7406IP\u4ea7\u54c1\u4ecb\u7ecd","file":"introduction","type":1,"pid":103,"column":"1,72,103,137","num":0,"sort":0},"138":{"id":138,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"\u4ee3\u7406IP\u64cd\u4f5c\u6307\u5357","file":"operate","type":1,"pid":103,"column":"1,72,103,138","num":0,"sort":1},"139":{"id":139,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":103,"column":"1,72,103,139","num":0,"sort":2},"116":{"id":116,"title":"\u8c03\u7528\u65b9\u5f0f","keywords":"","description":"","file":"method","type":1,"pid":103,"column":"1,72,103,116","num":0,"sort":3}}},"104":{"id":104,"title":"\u4e91\u7535\u8111","keywords":"","description":"","file":"cloud","type":1,"pid":72,"column":"1,72,104","num":0,"sort":0},"148":{"id":148,"title":"\u4e91\u70b9\u51fb","keywords":"\u4e91\u70b9\u51fb,\u5173\u952e\u8bcd\u6392\u540d,\u7f51\u7ad9\u8bbf\u95ee\u901f\u5ea6","description":"","file":"click","type":1,"pid":72,"column":"1,72,148","num":0,"sort":5}}},"73":{"id":73,"title":"\u670d\u52a1\u5668","keywords":"","description":"","file":"server","type":1,"pid":1,"column":"1,73","num":0,"sort":3,"son":{"98":{"id":98,"title":"\u670d\u52a1\u5668\u6258\u7ba1","keywords":"","description":"","file":"server-hosting","type":1,"pid":73,"column":"1,73,98","num":0,"sort":0},"99":{"id":99,"title":"\u670d\u52a1\u5668\u79df\u7528","keywords":"","description":"","file":"server-rental","type":1,"pid":73,"column":"1,73,99","num":0,"sort":1},"100":{"id":100,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"","file":"operate","type":1,"pid":73,"column":"1,73,100","num":0,"sort":2}}},"74":{"id":74,"title":"\u4e91\u5e02\u573a","keywords":"","description":"","file":"market","type":1,"pid":1,"column":"1,74","num":0,"sort":4,"son":{"95":{"id":95,"title":"\u521b\u5b87\u4fe1\u7528","keywords":"","description":"","file":"known","type":1,"pid":74,"column":"1,74,95","num":0,"sort":0},"96":{"id":96,"title":"\u5821\u5792\u673a","keywords":"","description":"","file":"baolei","type":1,"pid":74,"column":"1,74,96","num":0,"sort":0},"97":{"id":97,"title":"\u53ef\u4fe1\u8ba4\u8bc1","keywords":"","description":"","file":"kexin","type":1,"pid":74,"column":"1,74,97","num":0,"sort":0},"152":{"id":152,"title":"\u4e91\u6388\u6743","keywords":"","description":"","file":"authorize","type":1,"pid":74,"column":"1,74,152","num":0,"sort":0}}},"71":{"id":71,"title":"\u8fd0\u7ef4\u6307\u5357","keywords":"","description":"","file":"devops","type":1,"pid":1,"column":"1,71","num":0,"sort":5,"son":{"105":{"id":105,"title":"\u7cfb\u7edf","keywords":"","description":"","file":"system","type":1,"pid":71,"column":"1,71,105","num":0,"sort":0},"107":{"id":107,"title":"\u7f51\u7edc","keywords":"","description":"","file":"nerwork","type":1,"pid":71,"column":"1,71,107","num":0,"sort":1},"108":{"id":108,"title":"\u786c\u4ef6","keywords":"","description":"","file":"hardware","type":1,"pid":71,"column":"1,71,108","num":0,"sort":2}}},"65":{"id":65,"title":"\u5907\u6848\u670d\u52a1","keywords":"","description":"","file":"icp","type":1,"pid":1,"column":"1,65","num":0,"sort":6,"son":{"110":{"id":110,"title":"\u5907\u6848\u6307\u5357","keywords":"","description":"","file":"icpguide","type":1,"pid":65,"column":"1,65,110","num":0,"sort":0},"111":{"id":111,"title":"\u7ba1\u5c40\u5907\u6848\u8981\u6c42","keywords":"","description":"","file":"administration","type":1,"pid":65,"column":"1,65,111","num":0,"sort":0}}},"63":{"id":63,"title":"\u5176\u4ed6","keywords":"","description":"","file":"other","type":1,"pid":1,"column":"1,63","num":0,"sort":7,"son":{"85":{"id":85,"title":"\u8d22\u52a1\u76f8\u5173","keywords":"","description":"","file":"finance","type":1,"pid":63,"column":"1,63,85","num":0,"sort":0},"86":{"id":86,"title":"\u4f1a\u5458\u76f8\u5173","keywords":"","description":"","file":"member","type":1,"pid":63,"column":"1,63,86","num":0,"sort":1},"87":{"id":87,"title":"\u5408\u540c\u534f\u8bae","keywords":"","description":"","file":"agreement","type":1,"pid":63,"column":"1,63,87","num":0,"sort":3},"127":{"id":127,"title":"\u6cd5\u5f8b\u6cd5\u89c4","keywords":"","description":"","file":"law","type":1,"pid":63,"column":"1,63,127","num":0,"sort":4}}},"153":{"id":153,"title":"QStack\u4e91\u7ba1\u7cfb\u7edf","keywords":"","description":"","file":"qstack","type":1,"pid":1,"column":"1,153","num":0,"sort":8,"son":{"154":{"id":154,"title":"\u5b89\u88c5\u90e8\u7f72","keywords":"","description":"","file":"install","type":1,"pid":153,"column":"1,153,154","num":0,"sort":0}}}}},"2":{"id":2,"title":"\u65b0\u95fb\u516c\u544a","keywords":null,"description":null,"file":"news","type":2,"pid":0,"column":null,"num":1,"sort":0,"son":{"94":{"id":94,"title":"\u5b98\u65b9\u516c\u544a","keywords":"","description":"","file":"notice","type":2,"pid":2,"column":"2,94","num":0,"sort":1},"124":{"id":124,"title":"\u4f18\u60e0\u6d3b\u52a8","keywords":"","description":"","file":"activity","type":2,"pid":2,"column":"2,124","num":0,"sort":2}}},"3":{"id":3,"title":"API\u6587\u6863","keywords":null,"description":null,"file":"api","type":3,"pid":0,"column":null,"num":1,"sort":0,"son":{"156":{"id":156,"title":"\u516c\u5171API","keywords":"","description":"","file":"common","type":3,"pid":3,"column":"3,156","num":0,"sort":0,"son":{"158":{"id":158,"title":"\u8c03\u7528\u65b9\u5f0f","keywords":"","description":"","file":"commonAPI","type":3,"pid":156,"column":"3,156,158","num":0,"sort":0}}},"140":{"id":140,"title":"\u4e91\u8ba1\u7b97","keywords":"","description":"","file":"cloud","type":3,"pid":3,"column":"3,140","num":0,"sort":1,"son":{"142":{"id":142,"title":"\u4ea7\u54c1\u76f8\u5173","keywords":"","description":"","file":"products","type":3,"pid":140,"column":"3,140,142","num":0,"sort":0},"143":{"id":143,"title":"\u4e1a\u52a1\u76f8\u5173","keywords":"","description":"","file":"business","type":3,"pid":140,"column":"3,140,143","num":0,"sort":1},"144":{"id":144,"title":"\u4f7f\u7528\u76f8\u5173","keywords":"","description":"","file":"use","type":3,"pid":140,"column":"3,140,144","num":0,"sort":2}}},"117":{"id":117,"title":"\u4ee3\u7406IP","keywords":"","description":"","file":"proxyip","type":3,"pid":3,"column":"3,117","num":0,"sort":2,"son":{"160":{"id":160,"title":"\u4f7f\u7528\u76f8\u5173","keywords":"","description":"","file":"AgencyIpUse","type":3,"pid":117,"column":"3,117,160","num":0,"sort":0},"161":{"id":161,"title":"\u4ea7\u54c1\u76f8\u5173","keywords":"","description":"","file":"IP_products","type":3,"pid":117,"column":"3,117,161","num":0,"sort":0},"162":{"id":162,"title":"\u4e1a\u52a1\u76f8\u5173","keywords":"","description":"","file":"IP_business","type":3,"pid":117,"column":"3,117,162","num":0,"sort":0},"163":{"id":163,"title":"\u8d44\u6e90\u5305\u76f8\u5173","keywords":"","description":"","file":"IP_resource","type":3,"pid":117,"column":"3,117,163","num":0,"sort":0},"164":{"id":164,"title":"\u5bc6\u94a5\u76f8\u5173","keywords":"","description":"","file":"IP_key","type":3,"pid":117,"column":"3,117,164","num":0,"sort":0}}},"141":{"id":141,"title":"\u670d\u52a1\u5668","keywords":"","description":"","file":"idc","type":3,"pid":3,"column":"3,141","num":0,"sort":3,"son":{"145":{"id":145,"title":"\u4ea7\u54c1\u76f8\u5173","keywords":"","description":"","file":"products","type":3,"pid":141,"column":"3,141,145","num":0,"sort":0},"146":{"id":146,"title":"\u4e1a\u52a1\u76f8\u5173","keywords":"","description":"","file":"business","type":3,"pid":141,"column":"3,141,146","num":0,"sort":1},"147":{"id":147,"title":"\u4f7f\u7528\u76f8\u5173","keywords":"","description":"","file":"use","type":3,"pid":141,"column":"3,141,147","num":0,"sort":2}}}}},"4":{"id":4,"title":"\u8d44\u8baf","keywords":null,"description":null,"file":"info","type":4,"pid":0,"column":null,"num":0,"sort":0,"son":{"123":{"id":123,"title":"\u884c\u4e1a\u8d44\u8baf","keywords":"","description":"","file":"it","type":4,"pid":4,"column":"4,123","num":0,"sort":0}}},"5":{"id":5,"title":"\u5185\u90e8\u77e5\u8bc6\u5e93","keywords":null,"description":null,"file":null,"type":5,"pid":0,"column":null,"num":7,"sort":0,"son":{"75":{"id":75,"title":"\u7cfb\u7edf\u57fa\u7840","keywords":"","description":"","file":"System","type":5,"pid":5,"column":"5,75","num":0,"sort":0,"son":{"82":{"id":82,"title":"Windows\u7cfb\u7edf","keywords":"","description":"","file":"Windows","type":5,"pid":75,"column":"5,82","num":0,"sort":0},"83":{"id":83,"title":"Linux\u7cfb\u7edf","keywords":"","description":"","file":"Linux","type":5,"pid":75,"column":"5,75,83","num":0,"sort":0},"84":{"id":84,"title":"\u8f6f\u4ef6\u5e94\u7528","keywords":"","description":"","file":"Apply","type":5,"pid":75,"column":"5,75,84","num":0,"sort":0}}},"76":{"id":76,"title":"\u7f51\u7edc","keywords":"","description":"","file":"Network","type":5,"pid":5,"column":"5,76","num":0,"sort":0,"son":{"113":{"id":113,"title":"\u4ea4\u6362\u673a\u57fa\u7840","keywords":"","description":"","file":"Switch","type":5,"pid":76,"column":"5,76,113","num":0,"sort":0},"114":{"id":114,"title":"\u7f51\u7edc\u76d1\u63a7","keywords":"","description":"","file":"Monitor","type":5,"pid":76,"column":"5,76,114","num":0,"sort":0},"115":{"id":115,"title":"\u8def\u7531\u5668\u57fa\u7840","keywords":"","description":"","file":"Router","type":5,"pid":76,"column":"5,76,115","num":0,"sort":0}}},"77":{"id":77,"title":"\u670d\u52a1\u5668\u786c\u4ef6\u76d1\u63a7\u5347\u7ea7","keywords":"","description":"","file":"Upgrade","type":5,"pid":5,"column":"5,77","num":0,"sort":0},"78":{"id":78,"title":"\u670d\u52a1\u5668\u5e38\u89c1\u786c\u4ef6\u6545\u969c","keywords":"","description":"","file":"Conk Out","type":5,"pid":5,"column":"5,78","num":0,"sort":0},"79":{"id":79,"title":"\u6570\u636e\u5e93","keywords":"","description":"","file":"Data Base","type":5,"pid":5,"column":"5,79","num":0,"sort":0},"80":{"id":80,"title":"\u673a\u623f\u7ebf\u8def\u89c4\u8303","keywords":"","description":"","file":"Standard","type":5,"pid":5,"column":"5,80","num":0,"sort":0},"81":{"id":81,"title":"\u653b\u51fb\u7c7b\u522b","keywords":"","description":"","file":"Aggress","type":5,"pid":5,"column":"5,81","num":0,"sort":0}}}}[1].son[72].son);
+	var treeModel = {
+		tree:{"1":{"id":1,"title":"\u5e2e\u52a9\u6587\u6863","keywords":null,"description":null,"file":"help","type":1,"pid":0,"column":null,"num":11,"sort":0,"son":{"64":{"id":64,"title":"\u5f39\u6027\u4e91","keywords":"","description":"","file":"cloud","type":1,"pid":1,"column":"1,64","num":0,"sort":1,"son":{"88":{"id":88,"title":"\u9752\u679c\u4e91","keywords":"","description":"","file":"qgcloud","type":1,"pid":64,"column":"1,64,88","num":0,"sort":1,"son":{"125":{"id":125,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":88,"column":"1,64,88,125","num":0,"sort":0},"126":{"id":126,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":88,"column":"1,64,88,126","num":0,"sort":1}}},"92":{"id":92,"title":"\u817e\u8baf\u4e91","keywords":"","description":"","file":"qcloud","type":1,"pid":64,"column":"1,64,92","num":0,"sort":2,"son":{"130":{"id":130,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":92,"column":"1,64,92,130","num":0,"sort":0},"131":{"id":131,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":92,"column":"1,64,92,131","num":0,"sort":1}}},"89":{"id":89,"title":"\u963f\u91cc\u4e91","keywords":"","description":"","file":"aliyun","type":1,"pid":64,"column":"1,64,89","num":0,"sort":3,"son":{"128":{"id":128,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":89,"column":"1,64,89,128","num":0,"sort":0},"129":{"id":129,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":89,"column":"1,64,89,129","num":0,"sort":1}}},"93":{"id":93,"title":"\u7535\u4fe1\u4e91","keywords":"","description":"","file":"ctyun","type":1,"pid":64,"column":"1,64,93","num":0,"sort":4,"son":{"132":{"id":132,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"introduction","type":1,"pid":93,"column":"1,64,93,132","num":0,"sort":0},"133":{"id":133,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":93,"column":"1,64,93,133","num":0,"sort":1}}},"149":{"id":149,"title":"\u534e\u4e3a\u4e91","keywords":"","description":"","file":"huawei","type":1,"pid":64,"column":"1,64,149","num":0,"sort":5,"son":{"150":{"id":150,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"","file":"huawei-suggest","type":1,"pid":149,"column":"1,64,149,150","num":0,"sort":0},"151":{"id":151,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"huawei-faq","type":1,"pid":149,"column":"1,64,149,151","num":0,"sort":1}}},"90":{"id":90,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"","file":"operate","type":1,"pid":64,"column":"1,64,90","num":0,"sort":6}}},"72":{"id":72,"title":"\u4e91IP","keywords":"","description":"","file":"proxyip","type":1,"pid":1,"column":"1,72","num":0,"sort":2,"son":{"102":{"id":102,"title":"\u62e8\u53f7VPS","keywords":"","description":"","file":"VPS","type":1,"pid":72,"column":"1,72,102","num":0,"sort":0,"son":{"134":{"id":134,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"\u62e8\u53f7VPS\u4ea7\u54c1\u4ecb\u7ecd","file":"introduction","type":1,"pid":102,"column":"1,72,102,134","num":0,"sort":0},"135":{"id":135,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"","file":"operate","type":1,"pid":102,"column":"1,72,102,135","num":0,"sort":1},"136":{"id":136,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":102,"column":"1,72,102,136","num":0,"sort":2}}},"103":{"id":103,"title":"\u4ee3\u7406IP","keywords":"","description":"","file":"proxyIp","type":1,"pid":72,"column":"1,72,103","num":0,"sort":0,"son":{"137":{"id":137,"title":"\u4ea7\u54c1\u4ecb\u7ecd","keywords":"","description":"\u4ee3\u7406IP\u4ea7\u54c1\u4ecb\u7ecd","file":"introduction","type":1,"pid":103,"column":"1,72,103,137","num":0,"sort":0},"138":{"id":138,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"\u4ee3\u7406IP\u64cd\u4f5c\u6307\u5357","file":"operate","type":1,"pid":103,"column":"1,72,103,138","num":0,"sort":1},"139":{"id":139,"title":"\u5e38\u89c1\u95ee\u9898","keywords":"","description":"","file":"faq","type":1,"pid":103,"column":"1,72,103,139","num":0,"sort":2},"116":{"id":116,"title":"\u8c03\u7528\u65b9\u5f0f","keywords":"","description":"","file":"method","type":1,"pid":103,"column":"1,72,103,116","num":0,"sort":3}}},"104":{"id":104,"title":"\u4e91\u7535\u8111","keywords":"","description":"","file":"cloud","type":1,"pid":72,"column":"1,72,104","num":0,"sort":0},"148":{"id":148,"title":"\u4e91\u70b9\u51fb","keywords":"\u4e91\u70b9\u51fb,\u5173\u952e\u8bcd\u6392\u540d,\u7f51\u7ad9\u8bbf\u95ee\u901f\u5ea6","description":"","file":"click","type":1,"pid":72,"column":"1,72,148","num":0,"sort":5}}},"73":{"id":73,"title":"\u670d\u52a1\u5668","keywords":"","description":"","file":"server","type":1,"pid":1,"column":"1,73","num":0,"sort":3,"son":{"98":{"id":98,"title":"\u670d\u52a1\u5668\u6258\u7ba1","keywords":"","description":"","file":"server-hosting","type":1,"pid":73,"column":"1,73,98","num":0,"sort":0},"99":{"id":99,"title":"\u670d\u52a1\u5668\u79df\u7528","keywords":"","description":"","file":"server-rental","type":1,"pid":73,"column":"1,73,99","num":0,"sort":1},"100":{"id":100,"title":"\u64cd\u4f5c\u6307\u5357","keywords":"","description":"","file":"operate","type":1,"pid":73,"column":"1,73,100","num":0,"sort":2}}},"74":{"id":74,"title":"\u4e91\u5e02\u573a","keywords":"","description":"","file":"market","type":1,"pid":1,"column":"1,74","num":0,"sort":4,"son":{"95":{"id":95,"title":"\u521b\u5b87\u4fe1\u7528","keywords":"","description":"","file":"known","type":1,"pid":74,"column":"1,74,95","num":0,"sort":0},"96":{"id":96,"title":"\u5821\u5792\u673a","keywords":"","description":"","file":"baolei","type":1,"pid":74,"column":"1,74,96","num":0,"sort":0},"97":{"id":97,"title":"\u53ef\u4fe1\u8ba4\u8bc1","keywords":"","description":"","file":"kexin","type":1,"pid":74,"column":"1,74,97","num":0,"sort":0},"152":{"id":152,"title":"\u4e91\u6388\u6743","keywords":"","description":"","file":"authorize","type":1,"pid":74,"column":"1,74,152","num":0,"sort":0}}},"71":{"id":71,"title":"\u8fd0\u7ef4\u6307\u5357","keywords":"","description":"","file":"devops","type":1,"pid":1,"column":"1,71","num":0,"sort":5,"son":{"105":{"id":105,"title":"\u7cfb\u7edf","keywords":"","description":"","file":"system","type":1,"pid":71,"column":"1,71,105","num":0,"sort":0},"107":{"id":107,"title":"\u7f51\u7edc","keywords":"","description":"","file":"nerwork","type":1,"pid":71,"column":"1,71,107","num":0,"sort":1},"108":{"id":108,"title":"\u786c\u4ef6","keywords":"","description":"","file":"hardware","type":1,"pid":71,"column":"1,71,108","num":0,"sort":2}}},"65":{"id":65,"title":"\u5907\u6848\u670d\u52a1","keywords":"","description":"","file":"icp","type":1,"pid":1,"column":"1,65","num":0,"sort":6,"son":{"110":{"id":110,"title":"\u5907\u6848\u6307\u5357","keywords":"","description":"","file":"icpguide","type":1,"pid":65,"column":"1,65,110","num":0,"sort":0},"111":{"id":111,"title":"\u7ba1\u5c40\u5907\u6848\u8981\u6c42","keywords":"","description":"","file":"administration","type":1,"pid":65,"column":"1,65,111","num":0,"sort":0}}},"63":{"id":63,"title":"\u5176\u4ed6","keywords":"","description":"","file":"other","type":1,"pid":1,"column":"1,63","num":0,"sort":7,"son":{"85":{"id":85,"title":"\u8d22\u52a1\u76f8\u5173","keywords":"","description":"","file":"finance","type":1,"pid":63,"column":"1,63,85","num":0,"sort":0},"86":{"id":86,"title":"\u4f1a\u5458\u76f8\u5173","keywords":"","description":"","file":"member","type":1,"pid":63,"column":"1,63,86","num":0,"sort":1},"87":{"id":87,"title":"\u5408\u540c\u534f\u8bae","keywords":"","description":"","file":"agreement","type":1,"pid":63,"column":"1,63,87","num":0,"sort":3},"127":{"id":127,"title":"\u6cd5\u5f8b\u6cd5\u89c4","keywords":"","description":"","file":"law","type":1,"pid":63,"column":"1,63,127","num":0,"sort":4}}},"153":{"id":153,"title":"QStack\u4e91\u7ba1\u7cfb\u7edf","keywords":"","description":"","file":"qstack","type":1,"pid":1,"column":"1,153","num":0,"sort":8,"son":{"154":{"id":154,"title":"\u5b89\u88c5\u90e8\u7f72","keywords":"","description":"","file":"install","type":1,"pid":153,"column":"1,153,154","num":0,"sort":0}}}}},"2":{"id":2,"title":"\u65b0\u95fb\u516c\u544a","keywords":null,"description":null,"file":"news","type":2,"pid":0,"column":null,"num":1,"sort":0,"son":{"94":{"id":94,"title":"\u5b98\u65b9\u516c\u544a","keywords":"","description":"","file":"notice","type":2,"pid":2,"column":"2,94","num":0,"sort":1},"124":{"id":124,"title":"\u4f18\u60e0\u6d3b\u52a8","keywords":"","description":"","file":"activity","type":2,"pid":2,"column":"2,124","num":0,"sort":2}}},"3":{"id":3,"title":"API\u6587\u6863","keywords":null,"description":null,"file":"api","type":3,"pid":0,"column":null,"num":1,"sort":0,"son":{"156":{"id":156,"title":"\u516c\u5171API","keywords":"","description":"","file":"common","type":3,"pid":3,"column":"3,156","num":0,"sort":0,"son":{"158":{"id":158,"title":"\u8c03\u7528\u65b9\u5f0f","keywords":"","description":"","file":"commonAPI","type":3,"pid":156,"column":"3,156,158","num":0,"sort":0}}},"140":{"id":140,"title":"\u4e91\u8ba1\u7b97","keywords":"","description":"","file":"cloud","type":3,"pid":3,"column":"3,140","num":0,"sort":1,"son":{"142":{"id":142,"title":"\u4ea7\u54c1\u76f8\u5173","keywords":"","description":"","file":"products","type":3,"pid":140,"column":"3,140,142","num":0,"sort":0},"143":{"id":143,"title":"\u4e1a\u52a1\u76f8\u5173","keywords":"","description":"","file":"business","type":3,"pid":140,"column":"3,140,143","num":0,"sort":1},"144":{"id":144,"title":"\u4f7f\u7528\u76f8\u5173","keywords":"","description":"","file":"use","type":3,"pid":140,"column":"3,140,144","num":0,"sort":2}}},"117":{"id":117,"title":"\u4ee3\u7406IP","keywords":"","description":"","file":"proxyip","type":3,"pid":3,"column":"3,117","num":0,"sort":2,"son":{"160":{"id":160,"title":"\u4f7f\u7528\u76f8\u5173","keywords":"","description":"","file":"AgencyIpUse","type":3,"pid":117,"column":"3,117,160","num":0,"sort":0},"161":{"id":161,"title":"\u4ea7\u54c1\u76f8\u5173","keywords":"","description":"","file":"IP_products","type":3,"pid":117,"column":"3,117,161","num":0,"sort":0},"162":{"id":162,"title":"\u4e1a\u52a1\u76f8\u5173","keywords":"","description":"","file":"IP_business","type":3,"pid":117,"column":"3,117,162","num":0,"sort":0},"163":{"id":163,"title":"\u8d44\u6e90\u5305\u76f8\u5173","keywords":"","description":"","file":"IP_resource","type":3,"pid":117,"column":"3,117,163","num":0,"sort":0},"164":{"id":164,"title":"\u5bc6\u94a5\u76f8\u5173","keywords":"","description":"","file":"IP_key","type":3,"pid":117,"column":"3,117,164","num":0,"sort":0}}},"141":{"id":141,"title":"\u670d\u52a1\u5668","keywords":"","description":"","file":"idc","type":3,"pid":3,"column":"3,141","num":0,"sort":3,"son":{"145":{"id":145,"title":"\u4ea7\u54c1\u76f8\u5173","keywords":"","description":"","file":"products","type":3,"pid":141,"column":"3,141,145","num":0,"sort":0},"146":{"id":146,"title":"\u4e1a\u52a1\u76f8\u5173","keywords":"","description":"","file":"business","type":3,"pid":141,"column":"3,141,146","num":0,"sort":1},"147":{"id":147,"title":"\u4f7f\u7528\u76f8\u5173","keywords":"","description":"","file":"use","type":3,"pid":141,"column":"3,141,147","num":0,"sort":2}}}}},"4":{"id":4,"title":"\u8d44\u8baf","keywords":null,"description":null,"file":"info","type":4,"pid":0,"column":null,"num":0,"sort":0,"son":{"123":{"id":123,"title":"\u884c\u4e1a\u8d44\u8baf","keywords":"","description":"","file":"it","type":4,"pid":4,"column":"4,123","num":0,"sort":0}}},"5":{"id":5,"title":"\u5185\u90e8\u77e5\u8bc6\u5e93","keywords":null,"description":null,"file":null,"type":5,"pid":0,"column":null,"num":7,"sort":0,"son":{"75":{"id":75,"title":"\u7cfb\u7edf\u57fa\u7840","keywords":"","description":"","file":"System","type":5,"pid":5,"column":"5,75","num":0,"sort":0,"son":{"82":{"id":82,"title":"Windows\u7cfb\u7edf","keywords":"","description":"","file":"Windows","type":5,"pid":75,"column":"5,82","num":0,"sort":0},"83":{"id":83,"title":"Linux\u7cfb\u7edf","keywords":"","description":"","file":"Linux","type":5,"pid":75,"column":"5,75,83","num":0,"sort":0},"84":{"id":84,"title":"\u8f6f\u4ef6\u5e94\u7528","keywords":"","description":"","file":"Apply","type":5,"pid":75,"column":"5,75,84","num":0,"sort":0}}},"76":{"id":76,"title":"\u7f51\u7edc","keywords":"","description":"","file":"Network","type":5,"pid":5,"column":"5,76","num":0,"sort":0,"son":{"113":{"id":113,"title":"\u4ea4\u6362\u673a\u57fa\u7840","keywords":"","description":"","file":"Switch","type":5,"pid":76,"column":"5,76,113","num":0,"sort":0},"114":{"id":114,"title":"\u7f51\u7edc\u76d1\u63a7","keywords":"","description":"","file":"Monitor","type":5,"pid":76,"column":"5,76,114","num":0,"sort":0},"115":{"id":115,"title":"\u8def\u7531\u5668\u57fa\u7840","keywords":"","description":"","file":"Router","type":5,"pid":76,"column":"5,76,115","num":0,"sort":0}}},"77":{"id":77,"title":"\u670d\u52a1\u5668\u786c\u4ef6\u76d1\u63a7\u5347\u7ea7","keywords":"","description":"","file":"Upgrade","type":5,"pid":5,"column":"5,77","num":0,"sort":0},"78":{"id":78,"title":"\u670d\u52a1\u5668\u5e38\u89c1\u786c\u4ef6\u6545\u969c","keywords":"","description":"","file":"Conk Out","type":5,"pid":5,"column":"5,78","num":0,"sort":0},"79":{"id":79,"title":"\u6570\u636e\u5e93","keywords":"","description":"","file":"Data Base","type":5,"pid":5,"column":"5,79","num":0,"sort":0},"80":{"id":80,"title":"\u673a\u623f\u7ebf\u8def\u89c4\u8303","keywords":"","description":"","file":"Standard","type":5,"pid":5,"column":"5,80","num":0,"sort":0},"81":{"id":81,"title":"\u653b\u51fb\u7c7b\u522b","keywords":"","description":"","file":"Aggress","type":5,"pid":5,"column":"5,81","num":0,"sort":0}}}}[1].son[72].son,
+		type:1,
+		child:'son'
+	}
+	$('body').bind('click', function(event) {
+		// IE支持 event.srcElement ， FF支持 event.target    
+		var evt = event.srcElement ? event.srcElement : event.target;    
+		if(evt.id === 'help_aside'||$(evt).parents('#help_aside').length>0){
+
+		}else {
+      $('.help_aside').removeClass('active'); // 如不是则隐藏元素
+      setTimeout(function() {
+        $('.help_aside').css('opacity','0');
+      },200);
+		}   
+	});
+	var obj = "";
+</script>
+        <div class="right-content">
+
+            <div class="search">
+    <input type="text" name="k" value="" placeholder="请输入关键词进行搜索，例：云服务器">
+    <div class="btn-inquire">
+        <a href="javascript:page.search()" class="qg-btn whole-bg-color">
+            <div class="wrap">
+                <i class="icon btn-inquire-icon"></i>
+                <em>查询</em>
+            </div>
+        </a>
+    </div>
+</div>
+<script> 
+
+var page = {
+    search: function search() {
+        var keyword = $('input[name=k]').val();
+        if (keyword.length <= 0) {
+            return;
+        }
+
+        if ($('select[name=site]').val() == '2') {
+            return location.href = 'https://www.baidu.com/s?wd=' + keyword;
+        }
+
+        page.hotKeyword(keyword);
+    },
+    hotKeyword: function hotKeyword(keyword) {
+        location.href = '/help/search?keyword=' + keyword;
+    }
+};</script>
+            <div class="lis">
+                <div class="head-nav">
+                    <i>hicon144</i>
+                    <!--<a href="">首页</a>
+                    <em>></em>
+                    <span>当前页</span>-->
+                    <a href='/help.html'>帮助文档</a><em>></em><a href=/list/72.html><span>云IP</span></a><em>></em><a href=/list/103.html><span>代理IP</span></a><em>></em><a href=/list/138.html><span>操作指南</span></a>                </div>
+                <div class="article">
+                    <!-- <div class="line clearfix">
+                        <span class="fl whole-bg-color"></span>
+                        <span class="fr whole-bg-color"></span>
+                    </div> -->
+                    <div class="article-title">
+                        <h3>如何测试socks5 和http 代理IP 的可用性</h3>
+                    </div>
+                    <div class="release-time clearfix">
+                        <span class="">更新时间:2021-01-28 18:55</span>
+                    </div>
+                    <div class="txt">
+                                                    <div id="article_content">
+                                <p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">在使用代理IP之前，我们经常会先测试下代理IP是否可用，常见的方法有：浏览器设置代理IP测试访问网站，通过QQ登录界面测试，自己写程序代码测试等等，其实还有一种很常见的测试方法，也是很多朋友们喜欢使用的，那就是用Curl命令来测试代理IP是否可用。</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"><span style="padding: 0px; margin: 0px; box-sizing: border-box;">测试socks5代理IP的命令：</span></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">curl --socks5 168.168.168.168:66666  <a href="https://www.baidu.com/">https://www.baidu.com/</a></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"><span style="padding: 0px; margin: 0px; box-sizing: border-box;">测试http代理IP的命令：</span></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">curl --connect-timeout 2 -x 168.168.168.168:88888 <a href="https://www.baidu.com/">https://www.baidu.com/</a></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"> </p>
+<table style="border-collapse: collapse; table-layout: fixed; padding: 0px; margin: 10px 0px; line-height: 1.5; border-top: 1px solid #cccccc; border-left: 1px solid #cccccc;">
+<tbody style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">参数</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">用法</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">-x <a href="host:port">host:port</a>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">-x [protocol://[user:pwd@]host[:port]</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy [protocol://[user:pwd@]host[:port]</p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用HTTP代理访问；如果未指定端口，默认使用8080端口;</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">protocol默认为http_proxy，其他可能的值包括：</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">http_proxy、HTTPS_PROXY、socks4、socks4a、socks5；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">如：</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy 8.8.8.8:8080；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">-x "http_<a href="proxy://user:password@baidu.com:80">proxy://user:password@baidu.com:80</a>"</p>
+</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--socks4 <host[:port]></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--socks4a <host[:port]></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--socks5 <host[:port]></p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用SOCKS4代理；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用SOCKS4A代理；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用SOCKS5代理；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">此参数会覆盖“-x”参数；</p>
+</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-anyauth</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-basic</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-diges</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-negotiate</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-ntlm</p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">代理认证方式，参考：</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--anyauth</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--basic</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--diges</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--negotiate</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--ntlm</p>
+</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">-U <<a href="user:password">user:password</a>></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-user <<a href="user:password">user:password</a>></p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">设置代理的用户名和密码；</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">注意1：HTTP代理IP和socks5代理IP的命令是不一样的，很多朋友测试socks5代理IP，结果写成了测试HTTP代理IP的命令，结果自然不行。</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">注意2：测试前需要知道自己的代理IP是什么授权验证模式，青果云代理IP支持两种授权验证模式，分别是“白名单IP授权”和“用户名+密码”授权，如果是“白名单IP授权”，请确保已经绑定了使用代理的终端的上网IP；如果是“用户名+密码”授权，在curl的时候也需要设置代理的用户名和密码。</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"> </p>                            </div>
+                                            </div>
+                </div>
+            </div>
+            <div class="moreArticle">
+                <a href="/doc/129.html">上一篇：如何使用带有用户名密码认证的HTTP(S)代理</a>
+                <a href="/doc/99.html">下一篇：Mac怎么设置代理IP</a>
+                
+            </div>
+            <div class="guide">
+                <div class="guide-title">本文导读</div>
+                <div class="guide-list">
+                    
+                </div>
+            </div>
+            <div class="others">
+                <div class="title">
+                    <img src="/static/default-themes/home/image/icon/help_others.png" alt="">
+                    <span>相关文章</span>
+                </div>
+                                    <div class="list">
+                        <a href="/doc/170.html" class="item">代理IP使用流程</a>
+                    </div>
+                                    <div class="list">
+                        <a href="/doc/381.html" class="item">代理IP使用说明文档</a>
+                    </div>
+                                    <div class="list">
+                        <a href="/doc/379.html" class="item">隧道代理产品</a>
+                    </div>
+                                    <div class="list">
+                        <a href="/doc/103.html" class="item">Windows设置代理IP</a>
+                    </div>
+                                    <div class="list">
+                        <a href="/doc/95.html" class="item">谷歌浏览器怎么设置代理IP</a>
+                    </div>
+                                    <div class="list">
+                        <a href="/doc/129.html" class="item">如何使用带有用户名密码认证的HTTP(S)代理</a>
+                    </div>
+                            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var hide = true
+    $('.right-content').find('.txt a').each(function(idx,item){
+        console.log(item)
+        if($(item).attr('id')){
+            hide = false
+        }
+    })
+    if(hide){
+        $('.guide').remove();
+        $(document).unbind('scroll')
+    }else{
+        $('.right-content').find('.txt a[id]').each(function(idx,item){
+            var tar = $(item).parent().html().split($(item).prop('outerHTML'))[1];
+            var id = $(item).attr('id');
+            $('.guide-list').append('<a href="#'+id+'" class="guide-link"><span>'+tar+'</a>')
+        })
+        document.onscroll = function(){
+            var scrollT = $(document).scrollTop();
+            var heightF = $('#footer').height();
+            var heightO = $(document).height();
+            var heightW = $(window).height();
+            if(heightO - (scrollT + heightW)<=heightW - heightF){
+                $('.guide').hide()
+            }else{
+                $('.guide').show()
+            }
+        }
+    }
+</script>
+<script>
+    $(function(){
+
+        if(document.querySelector){
+            var el = document.querySelector('#article_content')
+            if(el.attachShadow){
+                el.innerHTML = ''
+                el.attachShadow({mode: 'open'}).innerHTML = '<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">在使用代理IP之前，我们经常会先测试下代理IP是否可用，常见的方法有：浏览器设置代理IP测试访问网站，通过QQ登录界面测试，自己写程序代码测试等等，其实还有一种很常见的测试方法，也是很多朋友们喜欢使用的，那就是用Curl命令来测试代理IP是否可用。</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"><span style="padding: 0px; margin: 0px; box-sizing: border-box;">测试socks5代理IP的命令：</span></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">curl --socks5 168.168.168.168:66666  <a href="https://www.baidu.com/">https://www.baidu.com/</a></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"><span style="padding: 0px; margin: 0px; box-sizing: border-box;">测试http代理IP的命令：</span></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">curl --connect-timeout 2 -x 168.168.168.168:88888 <a href="https://www.baidu.com/">https://www.baidu.com/</a></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"> </p>
+<table style="border-collapse: collapse; table-layout: fixed; padding: 0px; margin: 10px 0px; line-height: 1.5; border-top: 1px solid #cccccc; border-left: 1px solid #cccccc;">
+<tbody style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">参数</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">用法</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">-x <a href="host:port">host:port</a>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">-x [protocol://[user:pwd@]host[:port]</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy [protocol://[user:pwd@]host[:port]</p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用HTTP代理访问；如果未指定端口，默认使用8080端口;</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">protocol默认为http_proxy，其他可能的值包括：</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">http_proxy、HTTPS_PROXY、socks4、socks4a、socks5；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">如：</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy 8.8.8.8:8080；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">-x "http_<a href="proxy://user:password@baidu.com:80">proxy://user:password@baidu.com:80</a>"</p>
+</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--socks4 <host[:port]></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--socks4a <host[:port]></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--socks5 <host[:port]></p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用SOCKS4代理；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用SOCKS4A代理；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">使用SOCKS5代理；</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">此参数会覆盖“-x”参数；</p>
+</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-anyauth</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-basic</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-diges</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-negotiate</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-ntlm</p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">代理认证方式，参考：</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--anyauth</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--basic</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--diges</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--negotiate</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--ntlm</p>
+</td>
+</tr>
+<tr style="padding: 0px; margin: 0px; box-sizing: border-box;">
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="327">
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">-U <<a href="user:password">user:password</a>></p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">--proxy-user <<a href="user:password">user:password</a>></p>
+</td>
+<td style="margin: 0px; padding: 3px 5px; box-sizing: border-box; border-bottom: 1px solid #cccccc; border-right: 1px solid #cccccc;" valign="top" width="471">设置代理的用户名和密码；</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">注意1：HTTP代理IP和socks5代理IP的命令是不一样的，很多朋友测试socks5代理IP，结果写成了测试HTTP代理IP的命令，结果自然不行。</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;">注意2：测试前需要知道自己的代理IP是什么授权验证模式，青果云代理IP支持两种授权验证模式，分别是“白名单IP授权”和“用户名+密码”授权，如果是“白名单IP授权”，请确保已经绑定了使用代理的终端的上网IP；如果是“用户名+密码”授权，在curl的时候也需要设置代理的用户名和密码。</p>
+<p style="margin: 10px 0px; padding: 0px; box-sizing: border-box; line-height: 1.5;"> </p>'
+            }
+        }
+    })
+</script>
+<!-- footer -->
+
+<div id="footer">
+    <div class="footer-wrap">
+        <div class="footer-top">
+            <ul>
+                <li class="footer-nav">
+                    <i>hicon28</i>
+                    <div>
+                        <em>0元</em>
+                        <p>免费试用尝鲜</p>
+                    </div>
+                </li>
+                <li class="footer-nav">
+                    <i>hicon29</i>
+                    <div>
+                        <em>1V1</em>
+                        <p>贴心会员服务</p>
+                    </div>
+                </li>
+                <li class="footer-nav">
+                    <i>hicon30</i>
+                    <div>
+                        <em>99.9%</em>
+                        <p>服务可用性</p>
+                    </div>
+                </li>
+                <li class="footer-nav">
+                    <i>hicon31</i>
+                    <div>
+                        <em>100%</em>
+                        <p>数据安全保障</p>
+                    </div>
+                </li>
+                <li class="footer-nav">
+                    <i>hicon32</i>
+                    <div>
+                        <em>365天</em>
+                        <p>全年不间断在线</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-middle clearfix">
+            <div class="middle-left fl">
+                <div class="qg-logo"  style="background-image:url(https://cos.qg.net/Uploads/image/2020-07-07/5f03e85dd7dfd.png)"></div>
+                <div class="txt">
+                    <p style="white-space: nowrap;">Copyright © 2015-2021 QG.NET. All Rights Reserved.青果网络 版权所有</p>
+                    <p>泉州市青果网络科技有限公司</p>
+                </div>
+                <div class="line clearfix">
+                    <span class="fl whole-bg-color"></span>
+                    <span class="fr whole-bg-color"></span>
+                </div>
+                <div class="contact">
+                    <ul>
+                        <li>咨询电话：4008765417</li>
+                        <li>电子邮箱：tousu@qg.net</li>
+                        <li>商务洽谈：2850322624</li>
+                    </ul>
+                </div>
+                <div class="send clearfix">
+                    <div class="sent-icon foot-weibo-icon fl" onclick="window.open('https://weibo.com/qgnet')">
+                        <i>hicon33</i>
+                        <div class="code">
+                            <img src="https://cos.qg.net/Uploads/image/2019-07-20/5d328152ece68.png" alt="">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+                    <div class="sent-icon foot-weixin-icon fl">
+                        <i>hicon35</i>
+                        <div class="code">
+                            <img src="https://cos.qg.net/Uploads/image/2019-04-28/5cc54189e92fb.jpg" alt="">
+                            <div class="triangle"></div>
+                        </div>
+                    </div>
+
+                    <div class="sent-icon foot-qq-icon fl" onclick="window.open('https://wpa1.qq.com/re6mhG0U?_type=wpa&amp;amp;qidian=true')"><i>hicon34</i></div>
+                    <div class="sent-icon foot-email-icon fl" onclick="window.open('mailto:tousu@qg.net')">
+                        <i>hicon36</i></div>
+                </div>
+            </div>
+            <div class="middle-right fr">
+                <div class="clearfix">
+                    <div class="col-wrap">
+                        <div class="col">
+                            <h3>云产品</h3>
+                            <div class="line clearfix">
+                                <span class="fl whole-bg-color"></span>
+                                <span class="fr whole-bg-color"></span>
+                            </div>
+                            <ul>
+                                <li><a href="/product/cloud.html">云主机</a></li>
+                                <li><a href="/product/cloud-pc.html">云电脑</a></li>
+                                <li><a href="/product/proxyip.html">云IP</a></li>
+                                <li><a href="/product/zuyong.html">服务器租用</a></li>
+                                <li><a href="/product/chuangyu.html">创宇信用</a></li>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <h3>服务与支持</h3>
+                            <div class="line clearfix">
+                                <span class="fl whole-bg-color"></span>
+                                <span class="fr whole-bg-color"></span>
+                            </div>
+                            <ul>
+                                <li><a href="/help.html">帮助文档</a></li>
+                                <li><a href="/api.html">API文档</a></li>
+                                <li><a href="/news.html">新闻公告</a></li>
+                                <li><a href="/info.html">行业资讯</a></li>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <h3>其他链接</h3>
+                            <div class="line clearfix">
+                                <span class="fl whole-bg-color"></span>
+                                <span class="fr whole-bg-color"></span>
+                            </div>
+                            <ul>
+                                <li><a href="/page/about.html" target="_blank">公司简介</a></li>
+                                <li><a href="https://www.qg.net/doc/187.html" target="_blank">服务条款</a></li>
+                                <li><a href="https://www.qg.net/doc/185.html" target="_blank">注册协议</a></li>
+                                <li><a href="https://www.qg.net/doc/186.html" target="_blank">隐私声明</a></li>
+                                <li><a href="https://www.qg.net/doc/205.html" target="_blank">举报中心</a></li>
+                            </ul>
+                        </div>
+                        <div class="col">
+                            <h3>常用工具</h3>
+                            <div class="line clearfix">
+                                <span class="fl whole-bg-color"></span>
+                                <span class="fr whole-bg-color"></span>
+                            </div>
+                            <ul>
+                                <li><a href="http://panel.qg.net" target="_blank">管理面板</a></li>
+                                <li><a href="/tools/IPdebug.html" target="_blank">调试工具</a></li>
+                                <li><a href="/tools/IPget.html" target="_blank">提取工具</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="certification">
+            <ul>
+                                <li>
+                                        <a href="https://v.yunaq.com/certificate?domain=http://www.qg.net" target="_blank">
+                        <img src="https://cos.qg.net/uploads/image/20210115/62843fa3ac1be37d65c446298e697543.png" alt="" style="width: 131px !important;height: 47px !important" />
+                    </a>
+                                    </li>
+                                <li>
+                                        <script id="kXScript" type="text/javascript" src="https://kxlogo.knet.cn/seallogo.dll?sn=e190708350500786845jjw000000&h=47"></script>                                    </li>
+                            </ul>
+        </div>
+        <div class="link-list">
+            <i class="whole-font-color">hicon37</i>
+            <div class="link-box">
+                            </div>
+        </div>
+        <div class="footer-bottom clearfix">
+            <p class="fl"><a href="https://beian.miit.gov.cn" target="_blank" style="color:#6E7792">闽ICP备15008844号-1</a></p>
+            <p class="fl" style="margin-left: .3rem;display: flex;align-items: center;">
+                <img src="/static/default-themes/home/image/home-new/police.png" alt="" style="margin-right: .1rem;">
+                闽公网安备35050302000542号            </p>
+            <p class="fr">高新技术企业编号GR201935001191 | 《中华人民共和国增值电信业务经营许可证》B1-201715201</p>
+        </div>
+    </div>
+</div>
+<div id="fixed">
+    <a href="https://wpa1.qq.com/re6mhG0U?_type=wpa&amp;amp;qidian=true" title="qq" target='_blank' class="fixed-qq-icon">
+        <i>hicon38</i>
+    </a>
+    <a href="javascript:;" title="电话">
+        <i>hicon39</i>
+        <div class="phone">
+            <p>客户热线：4008765417</p>
+            <div class="triangle"></div>
+        </div>
+    </a>
+    <a href="javascript:;" title="二维码">
+        <i>hicon40</i>
+        <div class="code">
+            <img src="https://cos.qg.net/Uploads/image/2019-04-28/5cc54189e92fb.jpg" alt="">
+            <div class="triangle"></div>
+        </div>
+    </a>
+    <a href="#" title="返回顶部"><i>hicon145</i></a>
+    <div id="qq-outer">
+        <div class="qq-title">客户服务中心</div>
+        <div class="qq-inner">
+            <div class="qq-left">
+                <div class="qg-flex">
+                                        <a href="https://wpa1.qq.com/re6mhG0U?_type=wpa&amp;amp;qidian=true" class="qq-item">
+                        <img src="/static/default-themes/home/image/home-qq/qq-icon.png" alt="" class="qq-icon">
+                                                <span>值班客服QQ4006782553</span>
+                                            </a>
+                                    </div>
+            </div>
+            <div class="qq-right">
+                <strong>咨询电话</strong>
+                <div class="qg-flex">
+                    <i class="whole-font-color" style="font-size: .2rem;margin-right: .05rem;">hicon39</i>
+                    <span>4008765417</span>
+                </div>
+                <strong>微信公众号</strong>
+                <img src="https://cos.qg.net/Uploads/image/2019-04-28/5cc54189e92fb.jpg" alt="" class="wechat-icon">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- WPA start -->
+<script id="qd3009008396d9051f458618ca28854a1c0547f342d4" src="https://wp.qiye.qq.com/qidian/3009008396/d9051f458618ca28854a1c0547f342d4" charset="utf-8" async defer></script>
+<!-- WPA end --><script>
+    if($('#show_link').length<=0){
+        $('#footer .link-list').hide()
+    }
+    $('#fixed>a').on('mouseenter',function(){
+        $('#qq-outer').hide()
+    })
+    $('.fixed-qq-icon').on('mouseenter',function(){
+        $('#qq-outer').show()
+    })
+    $('#qq-outer').on('mouseleave',function(){
+        $(this).hide()
+    })
+</script>
+<script>
+    $(function(){
+        var getQQS = setInterval(function(){
+            var qqbox = $('iframe[id^="qidian_wpa_"]')
+            if(qqbox.length>0){
+                clearInterval(getQQS)
+                qqbox.contents().bind('click',function(){
+                    $.ajax({
+                        type: "post",
+                        url: "/api/consult",
+                        data: {},
+                        dataType: "json",
+                        success: function (res) {
+                            
+                        }
+                    });
+                })
+            }
+        },100)
+    })
+</script>
+<script>
+    $(function(){
+        $.ajax({
+            type: "post",
+            url: "/api/visitor" + window.location.search,
+            data: {
+                accessUrl: window.location.pathname + window.location.search,
+            },
+            dataType: "json",
+        });
+    })
+</script>
+<!-- footer end -->
+
+
+</body>
+</html>
+
