@@ -1,0 +1,1506 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://blog.csdn.net/weixin_39758048/article/details/110136419"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="report" content='{"pid": "blog", "spm":"1001.2101"}'>
+    <meta name="referrer" content="always">
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <meta name="applicable-device" content="pc">
+    <link  href="https://g.csdnimg.cn/static/logo/favicon32.ico"  rel="shortcut icon" type="image/x-icon" />
+    <title>pcm 采样率转换_深入了解采样率、位深和比特率（上）_weixin_39758048的博客-CSDN博客</title>
+    <script>
+      (function(){ 
+        var el = document.createElement("script"); 
+        el.src = "https://s3a.pstatp.com/toutiao/push.js?1abfa13dfe74d72d41d83c86d240de427e7cac50c51ead53b2e79d40c7952a23ed7716d05b4a0f683a653eab3e214672511de2457e74e99286eb2c33f4428830"; 
+        el.id = "ttzz"; 
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(el, s);
+      })(window)
+    </script>
+        <meta name="keywords" content="pcm 采样率转换_深入了解采样率、位深和比特率（上）">
+        <meta name="csdn-baidu-search"  content='{"autorun":true,"install":true,"keyword":"pcm 采样率转换_深入了解采样率、位深和比特率（上）"}'>
+    <meta name="description" content="在本文中，我们将介绍采样率和位深的基本原理，以及它们对感知音频质量时产生的影响。如何以数字方式录制声音？当声音发出时，会产生沿空气传播的压力波。如果录音设备(如麦克风)的振膜在附近，空气波会在振膜中产生振动。换能器的魔力会也将这些不断随空气波变化产生的振动转换为电信号。这种连续和成比例的变化也就是“模拟”一词的由来。由振膜本身产生的信号往往都会强度不足，人们需要使用前置的放大器来增强信号...">
+    <script src="//g.csdnimg.cn/tingyun/1.8.5/blog.js" type='text/javascript'></script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-1910fe047e.min.css">
+    <script type="application/ld+json">{"@context":"https://ziyuan.baidu.com/contexts/cambrian.jsonld","@id":"https://blog.csdn.net/weixin_39758048/article/details/110136419","appid":"1638831770136827","pubDate":"2020-11-21T06:45:31","title":"pcm 采样率转换_深入了解采样率、位深和比特率（上）_weixin_39758048的博客-CSDN博客","upDate":"2020-11-21T06:45:31"}</script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-1024/skin-1024-ecd36efea2.min.css">
+    <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var isCorporate = false;//注释删除enterprise
+        var username =  "weixin_39758048";
+        var skinImg = "white";
+        var blog_address = "https://blog.csdn.net/weixin_39758048";
+        var currentUserName = "u013454589";
+        var isOwner = false;
+        var loginUrl = "http://passport.csdn.net/account/login?from=https://blog.csdn.net/weixin_39758048/article/details/110136419";
+        var blogUrl = "https://blog.csdn.net/";
+        var avatar = "https://profile.csdnimg.cn/9/B/8/3_weixin_39758048";
+        var articleTitle = "pcm 采样率转换_深入了解采样率、位深和比特率（上）";
+        var articleDesc = "在本文中，我们将介绍采样率和位深的基本原理，以及它们对感知音频质量时产生的影响。如何以数字方式录制声音？当声音发出时，会产生沿空气传播的压力波。如果录音设备(如麦克风)的振膜在附近，空气波会在振膜中产生振动。换能器的魔力会也将这些不断随空气波变化产生的振动转换为电信号。这种连续和成比例的变化也就是“模拟”一词的由来。由振膜本身产生的信号往往都会强度不足，人们需要使用前置的放大器来增强信号...";
+        var articleTitles = "pcm 采样率转换_深入了解采样率、位深和比特率（上）_weixin_39758048的博客-CSDN博客";
+        var nickName = "weixin_39758048";
+        var articleDetailUrl = "https://blog.csdn.net/weixin_39758048/article/details/110136419";
+        if(window.location.host.split('.').length == 3) {
+            blog_address = blogUrl + username;
+        }
+        var skinStatus = "White";
+        var blogStaticHost = "https://csdnimg.cn/release/blogv2/"
+    </script>
+    <script src="https://g.csdnimg.cn/??fixed-sidebar/1.1.6/fixed-sidebar.js" type="text/javascript"></script>
+    <script src='//g.csdnimg.cn/common/csdn-report/report.js' type='text/javascript'></script>
+    <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css">
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+    <script src="https://dup.baidustatic.com/js/ds.js"></script>
+</head>
+<body class="nodata " style="">
+        <script>
+            var toolbarSearchExt = '{"landingWord":[],"queryWord":"","tag":["pcm 采样率转换"],"title":"pcm 采样率转换_深入了解采样率、位深和比特率（上）"}';
+        </script>
+    <script src="https://g.csdnimg.cn/common/csdn-toolbar/csdn-toolbar.js" type="text/javascript"></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css" />
+<div class="main_father clearfix d-flex justify-content-center" style="height:100%;"> 
+    <div class="container clearfix" id="mainBox">
+        <main>
+<script type="text/javascript">
+    function getQueryString(name) {   
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象  
+      var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+      if( r != null ) return decodeURIComponent( r[2] ); return '';   
+    }
+    function stripscript(s){ 
+      var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%]") 
+      var rs = ""; 
+      for (var i = 0; i < s.length; i++) { 
+        rs = rs+s.substr(i, 1).replace(pattern, ''); 
+      } 
+      return rs; 
+    }
+    var blogHotWords = stripscript(getQueryString('utm_term')).length > 1 ? stripscript(getQueryString('utm_term')) : ''
+</script>
+<div class="blog-content-box">
+        <div class="article-header-box">
+        <div class="article-header">
+            <div class="article-title-box">
+                <h1 class="title-article" id="articleContentId">pcm 采样率转换_深入了解采样率、位深和比特率（上）</h1>
+            </div>
+            <div class="article-info-box">
+                <div class="article-bar-top">
+                    <div class="bar-content">
+                    <a class="follow-nickName " href="https://blog.csdn.net/weixin_39758048" target="_blank" rel="noopener">weixin_39758048</a>
+                    <span class="time">2020-11-21 06:45:31</span>
+                    <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes.png" alt="">
+                    <span class="read-count">1713</span>
+                    <a id="blog_detail_zk_collection" class="un-collection" data-report-click='{"mod":"popu_823","spm":"1001.2101.3001.4232","ab":"new"}'>
+                        <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png" alt="">
+                        <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                        <span class="name">收藏</span>
+                        <span class="get-collection">
+                            1
+                        </span>
+                    </a>
+                    </div>
+                </div>
+                <div class="blog-tags-box">
+                    <div class="tags-box artic-tag-box">
+                            <span class="label">文章标签：</span>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"pcm 采样率转换","ab":"new"}' class="tag-link" href="https://www.csdn.net/tags/MtTakg2sNjM0MDItYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">pcm 采样率转换</a>
+                    </div>
+                </div>
+                <div class="slide-content-box">
+                </div>
+                <div class="operating">
+                </div>
+            </div>
+        </div>
+    </div>
+            <div id="blogColumnPayAdvert">
+                <a href="https://product.z-onesoft.com/developerc/appcreativitycompetition.html" target="_blank"  data-report-view='{"ab":"new","mod":"popu_872","extra":"{\"utm_medium\":\"distribute.pc_relevant_top.589168\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","index":"1","style":"pic_5","strategy":"33_589168_RCMD","dest":"https://product.z-onesoft.com/developerc/appcreativitycompetition.html"}'  data-report-click='{"ab":"new","mod":"popu_872","extra":"{\"utm_medium\":\"distribute.pc_relevant_top.589168\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","index":"1","style":"pic_5","strategy":"33_589168_RCMD","dest":"https://product.z-onesoft.com/developerc/appcreativitycompetition.html"}'  data-report-query='utm_medium=distribute.pc_relevant_top.589168&depth_1-utm_source=distribute.pc_relevant_top.589168'>
+                    <div class="column-advert-box">
+                        <div class="left-advert-box"><img src="https://img-operation.csdnimg.cn/csdn/silkroad/img/1630562590497.png" alt=""></div>
+                        <div class="middle-advert-box">
+                            <div class="title">2021上汽零束汽车智能应用创意大赛火热招募中，最高16w奖金等你来拿！</div>
+                            <div class="introduce other-introduce">诚邀对智能汽车感兴趣的你，参与上汽零束汽车智能应用创意大赛。五大主题任你发挥，打造未来智能物联网Car，更有多重大奖等你来拿！亲，你还在等什么？</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-1a85854398.css">
+                <div id="content_views" class="htmledit_views">
+                    <div class="._5ce-wx-style" style="font-size:16px;"> 
+ <div class="rich_media_content" id="js_content"> 
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/48624104c2fed34533e5eddd68dbc136.png" alt="48624104c2fed34533e5eddd68dbc136.png" /></p>
+  <p>在本文中&#xff0c;我们将介绍采样率和位深的基本原理&#xff0c;以及它们对感知音频质量时产生的影响。</p>
+  <p><strong>如何以数字方式录制声音&#xff1f;</strong></p>
+  <p>当声音发出时&#xff0c;会产生沿空气传播的压力波。如果录音设备(如麦克风)的振膜在附近&#xff0c;空气波会在振膜中产生振动。换能器的魔力会也将这些不断随空气波变化产生的振动转换为电信号。</p>
+  <p><strong>这种连续和成比例的变化也就是“模拟”一词的由来。</strong></p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/55b53132e9cb17e5b144c302c081b53a.png" alt="55b53132e9cb17e5b144c302c081b53a.png" /></p>
+  <p>由振膜本身产生的信号往往都会强度不足&#xff0c;人们需要使用前置的放大器来增强信号&#xff0c;以便可以通过各种方式来记录信号。</p>
+  <p>纵观历史&#xff0c;多种材料都被用来记录和存储信号&#xff0c;包括了石蜡、黑胶唱片和磁带。最终&#xff0c;数字方式被引入其中并变得越来越司空见惯。</p>
+  <p>数字系统(1和0)以采样的方式来记录模拟信号(连续可变值)。</p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/48624104c2fed34533e5eddd68dbc136.png" alt="48624104c2fed34533e5eddd68dbc136.png" /></p>
+  <p><em>低采样率和高采样率的差异</em></p>
+  <p>通过采集并储存足够多的模拟输入信号样本&#xff0c;数字记录可以捕获并能随后再现上述的信号。</p>
+  <p>典型的CD音质数字音频记录为每秒44100个样本&#xff0c;而在高清音频中每秒96000个样本也很常见。</p>
+  <p>采样的方法不止一种&#xff0c;但脉冲编码调制(PCM)则是事实上的标准。</p>
+  <p><strong>什么是脉冲编码调制</strong></p>
+  <p>PCM是事实上的以数字格式记录、存储模拟波的行业标准。在PCM流中&#xff0c;以均匀的时间间隔对音频振幅进行采样。PCM不受专利保护&#xff0c;任何人都可以免费使用它。</p>
+  受专利保护的音频格式的例子有&#xff0c;DTS、Atmos、Dolby Digital等。
+  <p>但是由于以下两个原因&#xff0c;PCM格式的音频并不常见。</p>
+  <ul><li><p>文件大小</p></li><li><p>回放兼容性</p></li></ul>
+  <p><strong>文件大小</strong></p>
+  <p>由于PCM是未经压缩的格式&#xff0c;录制出的文件会占用很大的空间。因此需要用有损或者无损的压缩算法来缩小文件&#xff0c;在保持音频保真度的同时&#xff0c;减小文件大小。</p>
+  <p>Dobly和DTS常被用于这个目的&#xff0c;它们是有损的压缩算法&#xff0c;但对文件的压缩幅度可以高达90%。</p>
+  <p>但不幸的是&#xff0c;Dobly和DTS会将PCM信道编码成比特流来进行存储&#xff0c;而解码回放的方式却并不完美。用这两种方法压缩的音频虽然文件较小&#xff0c;但不能像原始音频那样干净清晰&#xff0c;会导致准确性和质量下降。</p>
+  <p>这就是Dolby Digital TrueHD和DTS-HD Master Audio等无损格式被导入的原因&#xff0c;它们能够完美解码所捕获的PCM音频信号。</p>
+  <p><strong>回放兼容性</strong></p>
+  <p>此外&#xff0c;主流的操作系统(OS)本身并不支持PCM文件的播放。IBM和微软为Windows定义了Waveform Audio Format(WAV)&#xff0c;Apple则为 Macintosh定义了Audio Interchange File Format(AIFF)。这两种格式都可以看做PCM音频格式的容器&#xff0c;并附带有其他信息&#xff0c;例如作者资料和曲目标题等。</p>
+  <p><strong>保真度</strong></p>
+  <p>PCM流的质量/保真度取决于两个指标</p>
+  <ul><li><p>采样率</p></li><li><p>位深</p></li></ul>
+  <p>这两个指标定义了数字文件对原始模拟信号的记录精度。</p>
+  <p><strong>什么是采样率</strong></p>
+  <p>回想下以前的胶片电影。</p>
+  <p>影片静止时其实是一张张的幻灯片&#xff0c;连续播放会制造出动态的幻觉。转换的速度决定了所生成动画的平滑度&#xff0c;转换速度越快、动画效果越好。</p>
+  <p>幻灯片的更换速度就是现代视频中的帧速率。</p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/73e4e64dd8f36fba85e880fbb2ce61dc.png" alt="73e4e64dd8f36fba85e880fbb2ce61dc.png" /></p>
+  <p><em>数字波就像是原始音频信号的快照&#xff0c;采样后的数字波越接近原始声波就具有越高的保真度。</em></p>
+  <p>在数字音频记录中的采样率类似于视频中的帧速率&#xff0c;在每个时间段中收集的声音数据(采样)越多&#xff0c;所捕获的数据就越接近于原始模拟音频。</p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/27f811fb338e9504d1a227e0b359f339.png" alt="27f811fb338e9504d1a227e0b359f339.png" /></p>
+  <p><em>更高的采样率可以更精确地捕获原始音频信号。</em></p>
+  <p>在典型的CD音质数字记录中&#xff0c;采样率为44100或者44.1KHz。要知道人耳能够听到的频率上限为20KHz&#xff0c;那为什么需要这么高的采样率呢&#xff1f;答案是奈奎斯特-香农采样定律。</p>
+  中年的人听力水平通常为12-14KHz。
+  <p><strong>奈奎斯特定律</strong></p>
+  <p>奈奎斯特定律也被称为奈奎斯特频率。这个定律指出&#xff0c;为了在采样时不遗失任何信息&#xff0c;必须以至少两倍于最高预期信号频率的速率进行采样。</p>
+  这样当采样率为44.1KHz(或者说每秒44100个样本)时&#xff0c;可以准确再现约22KHz频率的信号。
+  <p>其他常见采样率的例子是电话中的8KHz&#xff0c;或者蓝光碟片中音轨部分的96KHz到192KHz。在特殊情况下&#xff0c;比如录制超声波动物发出的声音时&#xff0c;也会用到384KHz。</p>
+  <p><strong>什么是位深</strong></p>
+  <p>计算机以1和0存储信息&#xff0c;这些2进制的值就是bit(位)。位数越高表示信息存储空间也就越大。</p>
+  <p>当信号被采样时&#xff0c;需要将被采集的音频信息记录在位中。这就引出了位深的概念&#xff0c;位深决定着可以记录多少信息。24-bit的位深可以记录更多的细微差别&#xff0c;因此会比16-bit位深的采样更精确。</p>
+  <p>让我们来详细看看以上两种位深可以记录的最大值分别是多少&#xff1a;</p>
+  <ul><li><p><strong>16-bit</strong>&#xff1a;是2的16次方&#xff0c;可以记录65536级的信息</p></li></ul>
+  <ul><li><p><strong>24-bit</strong>&#xff1a;是2的24次方&#xff0c;可以记录16777216级的信息</p></li></ul>
+  <p>可以看到两种位深之间存在着巨大的差异。</p>
+  <p><strong>动态范围</strong></p>
+  <p>位深还会对信号的动态范围产生重要影响。16-bit的数字音频最大动态范围是96dB&#xff0c;而24-bit的则为144dB。</p>
+  <p>CD音质的音频是用16-bit位深录制的&#xff0c;这是因为我们通常只需要让声音大到足以听见&#xff0c;同时又不会大到损坏设备或者耳膜。</p>
+  <p>对于44.1KHz的采样率&#xff0c;16-bit的位深足以再现普通人所需的可听频率及动态范围&#xff0c;这就是为什么它成为了CD采用的标准格式。</p>
+  <p><strong>你需要192KHz/24-bit来录音吗&#xff1f;</strong></p>
+  <p>尽管对采样率和位深没有具体的限制&#xff0c;但192KHz/24-bit已经成为高清音频的黄金标准&#xff0c;我们也以这个指标作为高保真音频的参考值。</p>
+  <p>那么在什么情形下需要这样的保真度呢&#xff1f;</p>
+  <p>我们已经知道采样率和位深越高&#xff0c;数字信号就越接近原始的模拟信号。但实际上&#xff0c;这还会带来更大的Headroom(动态余量)。</p>
+  <p><strong>额外的Headroom</strong></p>
+  <p>Headroom指的是音频信号的动态范围和位深允许的动态范围间的差异。这就好比你开着3米高的车子穿过5米净高的天桥&#xff0c;这样你就还有2米的空间以备不时之需。</p>
+  <p>16-bit的采样会为音频工程师带来96dB的动态范围&#xff0c;而24-bit的则会高达144dB&#xff0c;且实际上大多数的音频设备只会达到125dB。</p>
+  <p>有了额外的Headroom&#xff0c;音频工程师可以在更大程度上减少噪音并降低削波产生的机会&#xff0c;避免声音失真。</p>
+  <p>当位深较浅&#xff0c;输入的信号不能完全以数字信号表示时&#xff0c;就会发生削波。</p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/a1b1ef907ce5144ff181f6e94e9bb47c.png" alt="a1b1ef907ce5144ff181f6e94e9bb47c.png" /></p>
+  <p><strong>更大的存储空间</strong></p>
+  <p>除了额外的Headroom&#xff0c;更高的保真度也会需要更大的存储空间。</p>
+  <p><strong>文件大小计算</strong></p>
+  <p>我们假设是5分钟未经压缩的音频。</p>
+  <p>1. 首先用公式&#xff1a;采样率*位深*通道数来计算比特率。</p>
+  假设是2通道的立体声
+  <ul><li><p>44.1KHz/16-bit&#xff1a;44100*16*2&#61;1411200bit/秒(1.4Mbps)</p></li><li><p>192KHz/24-bit&#xff1a;192000*24*2&#61;9216000bit/秒(9.2Mbps)</p></li></ul>
+  <p>2. 我们使用计算得出的比特率&#xff0c;再乘以时长来计算所需存储空间。</p>
+  将得出的字位除以8后得到字节数
+  <ul><li><p>44.1KHz/16-bit&#xff1a;1.4Mbps*300秒&#61;420Mb(52.5MB)</p></li><li><p>192KHz/24-bit&#xff1a;9.2Mbps*300秒&#61;2760Mb(345MB)</p></li></ul>
+  <p>可见需要增加相当大的存储空间。</p>
+  <p><strong>那什么时候需要用到192KHz/24-bit呢&#xff1f;</strong></p>
+  <p>这取决于你需要用文件来做什么。你需要对录音进行加工吗&#xff1f;你有无限的存储空间吗&#xff1f;如果答案是Yes&#xff0c;那么显然应该用这个标准。如果你打算把音乐推流给听众&#xff0c;那么192KHz/24-bit带来的带宽占用和费用增加显然会让他们不满。</p>
+  <p>未完待续</p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/c8eba026797b0569fc9d2bee6a666afa.gif" alt="c8eba026797b0569fc9d2bee6a666afa.gif" /></p>
+  <p>延伸阅读&#xff1a;</p>
+  <p><strong>Serato DJ是什么&#xff1a;历史篇</strong></p>
+  <p><strong>使用Serato Studio快速完成Re-Drum编辑</strong></p>
+  <p><strong>Pioneer DJ DDJ-1000 Vs DDJ-1000SRT</strong></p>
+  <p><strong>对Rotary混音台的崇拜</strong></p>
+  <p><strong>用来寻找DJ音乐的5个非传统方法</strong></p>
+  <p><img src="https://img-blog.csdnimg.cn/img_convert/3dcf16eb3e0e9fa8a34fdb2d9551f4de.png" alt="3dcf16eb3e0e9fa8a34fdb2d9551f4de.png" /></p>
+ </div> 
+</div>
+                </div>
+        </div>
+<div id="recommendDown">
+</div>    </article>
+</div>
+<div class="more-toolbox-new" id="toolBarBox">
+    <div class="left-toolbox">
+        <div class="toolbox-left">
+            <div class="profile-box"><a class="profile-href" target="_blank" href="https://blog.csdn.net/weixin_39758048"><img class="profile-img" src="https://profile.csdnimg.cn/9/B/8/3_weixin_39758048"><span class="profile-name">weixin_39758048</span></a></div>
+            <div class="profile-attend">
+                    <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view='{"mod":"1592215036_002","spm":"1001.2101.3001.4232","extend1":"关注"}'>关注</a>
+                <a class="tool-item-follow active-animation" style="display:none;">关注</a>
+            </div>
+        </div>
+        <div class="toolbox-middle">
+        <ul class="toolbox-list">
+            <li class="tool-item tool-item-size tool-active is-like" id="is-like">
+            <a class="tool-item-href">
+                <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt="">
+                <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart1Active.png" alt="">
+                <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart1White.png" alt="">  
+                <span id="spanCount" class="count ">
+                        3
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">点赞</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-item-comment">
+            <a class="tool-item-href" href="#commentBox">
+                <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCommentWhite.png" alt="">
+                <span class="count">
+                    0
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">评论</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-collection ">
+            <a class="tool-item-href" href="javascript:;" data-report-click='{"mod":"popu_824","spm":"1001.2101.3001.4130","ab":"new"}'>
+                <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectWhite.png" alt="">
+                <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt="">
+                <span class="count get-collection " id="get-collection">
+                    1
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">收藏</span></div>
+            </li>
+            <li class="tool-item tool-active">
+                <a class="" href="javascript:;">
+                    <img class="company active" id="health-companies" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHealthCompanies1Active.gif" alt="一键三连">
+                </a>
+                <div class="tool-hover-tip three-click"><span class="text">一键三连</span></div>
+            </li>
+            <li class="tool-item tool-item-bar">
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-QRcode" id="tool-share">
+                <a class="tool-item-href" href="javascript:;" data-report-click='{"mod":"1582594662_002","spm":"1001.2101.3001.4129","ab":"new"}'>
+                    <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newShareWhite.png" alt="">
+                </a>
+                <div class="QRcode" id="tool-QRcode">
+                    <p class="title">
+                    扫一扫，分享海报
+                    </p>
+                    <div id='shareCode'></div>
+                </div>
+            </li>
+        </ul>
+        </div>
+        <div class="toolbox-right">
+        </div>
+    </div>  
+</div>
+<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/production/qrcode-7c90a92189.min.js"></script>
+<script src="//g.csdnimg.cn/??sharewx/1.2.1/sharewx.js" type="text/javascript"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/user-login/3.0.1/user-login.js"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/collection-box/2.0.6/collection-box.js"></script>
+                <div class="first-recommend-box recommend-box">
+<div class="recommend-item-box type_blog clearfix" data-url="https://mao0514.blog.csdn.net/article/details/79172152"  data-report-view='{"ab":"new","mod":"popu_871","extra":"{\"utm_medium\":\"distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://mao0514.blog.csdn.net/article/details/79172152"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://mao0514.blog.csdn.net/article/details/79172152" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_871","extra":"{\"utm_medium\":\"distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://mao0514.blog.csdn.net/article/details/79172152"}'  data-report-query='utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">实现的<em>pcm</em><em>采样率</em><em>转换</em>（方法2）</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/mao0514" target="_blank"><span class="blog-title">技术联盟</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-26</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					5668
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://mao0514.blog.csdn.net/article/details/79172152" target="_blank"  data-report-click='{"ab":"new","mod":"popu_871","extra":"{\"utm_medium\":\"distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://mao0514.blog.csdn.net/article/details/79172152"}'  data-report-query='utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">A<em>CM</em>实现<em>采样率</em><em>转换</em>&nbsp;&nbsp;&nbsp; 在音频的处理中，<em>采样</em>频率的<em>转换</em>是经常碰到的问题，比如输入44.1k，要求输出48k，或者相反从48k<em>转换</em>到44.1k。表面<em>上</em>看来，只是增加或减少<em>采样</em>点而已。其实不然。如果只是简单地从时间域<em>上</em>进行<em>采样</em>点的增减，必然导致原有波形的改变，从而声音失真，严重的时候更是不堪入耳。正确的方法，应该是对输入的数据进行FFT变换到频域，然后再进行转化。这是一个比较繁琐的过程。那么，有没</div>
+			</a>
+		</div>
+	</div>
+</div>
+                </div>
+            <div class="second-recommend-box recommend-box">
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/yixiaotian2007/6313611"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/yixiaotian2007/6313611"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/yixiaotian2007/6313611" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/yixiaotian2007/6313611"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em><em>采样率</em>下变换</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">09-24</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/yixiaotian2007/6313611" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/yixiaotian2007/6313611"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">Use The A<em>CM</em> to deal with the question of changing the samplerate about the <em>PCM</em> audio</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+<a id="commentBox" name="commentBox"></a>
+<div class="comment-box">
+	<div class="comment-edit-box d-flex">
+		<a id="commentsedit"></a>
+		<div class="user-img">
+			<a href="https://blog.csdn.net/u013454589" target="_blank">
+				<img class="" src="https://profile.csdnimg.cn/2/1/6/3_u013454589">
+			</a>
+		</div>
+		<form id="commentform">
+			<img class="comment-sofa-flag" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentFlag@2x.png">
+      <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="优质评论可以帮助作者获得更高权重" maxlength="1000"></textarea>
+			<div class="comment-emoticon"><img class="comment-emoticon-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/emoticon.png" alt="表情包"></div> 
+      <span class="comment-emoticon-tip">插入表情</span>
+      <div class="comment-emoticon-box">
+        <div class="comment-emoticon-img-box"></div>
+			</div>
+      <div class="opt-box">
+				<div id="ubbtools" class="add_code">
+					<a href="#insertcode" code="code" target="_self"><i class="icon iconfont icon-daima"></i></a>
+				</div>
+				<input type="hidden" id="comment_replyId" name="comment_replyId">
+				<input type="hidden" id="article_id" name="article_id" value="110136419">
+				<input type="hidden" id="comment_userId" name="comment_userId" value="">
+				<input type="hidden" id="commentId" name="commentId" value="">
+				<div class="dropdown" id="myDrap">
+					<a class="dropdown-face d-flex align-items-center" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+						<div class="txt-selected text-truncate">添加代码片</div>
+						<svg class="icon d-block" width="200px" height="100.00px" viewBox="0 0 2048 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path  d="M597.33333292 298.666667h853.333334L1023.99999992 725.333333 597.33333292 298.666667z"  /></svg>
+					</a>
+					<ul class="dropdown-menu" id="commentCode" aria-labelledby="drop4">
+						<li><a data-code="html">HTML/XML</a></li>
+						<li><a data-code="objc">objective-c</a></li>
+						<li><a data-code="ruby">Ruby</a></li>
+						<li><a data-code="php">PHP</a></li>
+						<li><a data-code="csharp">C</a></li>
+						<li><a data-code="cpp">C++</a></li>
+						<li><a data-code="javascript">JavaScript</a></li>
+						<li><a data-code="python">Python</a></li>
+						<li><a data-code="java">Java</a></li>
+						<li><a data-code="css">CSS</a></li>
+						<li><a data-code="sql">SQL</a></li>
+						<li><a data-code="plain">其它</a></li>
+					</ul>
+				</div>
+				<div class="right-box" id="rightBox" data-type="1">
+						<span class="tip">评论将由博主筛选后显示，对所有人可见 |</span>
+							<span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span>
+							<a data-report-click='{"mod":"1582594662_003","spm":"1001.2101.3001.4227","ab":"new"}'><input type="submit"
+									class="btn btn-sm btn-comment" value="发表评论"></a>
+				</div>
+			</div>
+		</form>
+		<input type="button" class="bt-comment-show" value="评论">
+	</div>
+	<div class="comment-list-container">
+		<a id="comments"></a>
+		<div class="comment-list-box">
+		</div>
+		<div id="commentPage" class="pagination-box d-none"></div>
+		<div class="opt-box text-center">
+			<div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div>
+		</div>
+	</div>
+</div>            <div class="recommend-box insert-baidu-box">
+                <div class="recommend-item-box clearfix" style="display:none"></div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_39795116/article/details/110136420"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/weixin_39795116/article/details/110136420"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_39795116/article/details/110136420" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/weixin_39795116/article/details/110136420"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em> <em>采样率</em><em>转换</em>_数字音频基础-----－从<em>PCM</em>说起</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_39795116" target="_blank"><span class="blog-title">weixin_39795116的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-21</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1153
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_39795116/article/details/110136420" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/weixin_39795116/article/details/110136420"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">&ldquo;不得不说，现在网<em>上</em>的文章，包括百科词条，在数字音频基础概念<em>上</em>有太多混乱的表达，甚至存在错误。比如<em>比特率</em>、<em>位</em>率、<em>位</em>速<em>和</em>码率这四个词其实是同一个意思。再比如千<em>比特</em>kb表示1000bit，而不是普遍被认为的1024bit。在字节Byte范畴，千字节则表示1024字节，1KB=1024B。&rdquo;本文从模拟信号的数字化方法讲起，介绍几个基础概念，然后重点区分容易混淆的概念，最后做一些知识扩展。全文目录如下： ...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/Behold1942/article/details/90710933"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"3","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/Behold1942/article/details/90710933"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/Behold1942/article/details/90710933" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"3","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/Behold1942/article/details/90710933"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">为什么<em>PCM</em><em>采样率</em>一般为8khz?</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/Behold1942" target="_blank"><span class="blog-title">Behold1942的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">05-31</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					5539
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/Behold1942/article/details/90710933" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"3","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/Behold1942/article/details/90710933"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">原回答：https://zhidao.baidu.com/question/584934305.html
+
+划重点：
+
+1、<em>PCM</em>早些时候一般用于电话语音传输；
+
+2、电话语音的频率范围是从0-3.4kHz；
+
+3、根据奈奎斯特<em>采样</em>，只要高于最高频率的两倍，就可以实现声音不失真的还原；
+
+4、故只要<em>采样率</em>大于3.4k*2，即可还原电话语音
+
+5、采用8000Hz只是一种ITU（国际电信联盟）规定，...</div>
+			</a>
+		</div>
+	</div>
+</div>
+		<dl id="recommend-item-box-tow" class="recommend-item-box type_blog clearfix">
+			
+		</dl>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/weixin_39466231/10402079"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"4","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/weixin_39466231/10402079"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/weixin_39466231/10402079" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"4","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/weixin_39466231/10402079"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em>文件 16K<em>采样率</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">05-09</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/weixin_39466231/10402079" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"4","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/weixin_39466231/10402079"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>pcm</em>文件 16K<em>采样率</em>  周笔畅《最美的期待》部分。。。。。。。。。。。。。。。。。。。。。。。。。。</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_39972019/article/details/110136442"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"5","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39972019/article/details/110136442"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_39972019/article/details/110136442" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"5","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39972019/article/details/110136442"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em> <em>采样率</em><em>转换</em>_44.1KHz够用吗？我们是否需要更高的<em>采样率</em>？</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_39972019" target="_blank"><span class="blog-title">weixin_39972019的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-21</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					931
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_39972019/article/details/110136442" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"5","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39972019/article/details/110136442"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">以下讨论均基于脉冲编码调制（Pulse Code Modulation，<em>PCM</em>）在回答这个问题之前，首先需要回答的是：高<em>采样率</em>有什么好处？高<em>采样率</em>的好处主要有以下三点：1、能记录更高带宽的音频信号；2、能降低对抗混叠滤波器<em>和</em>抗镜像滤波器的性能要求；3、能提高信噪比；下面我们基于以<em>上</em>三点来分析44.1KHz是否够用。一、<em>采样率</em>与带宽的关系根据香农<em>采样</em>定理，<em>采样率</em>44.1KHz的数字音频格式可以无损地...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_39672396/article/details/110136444"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39672396/article/details/110136444"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_39672396/article/details/110136444" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39672396/article/details/110136444"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em> <em>采样率</em><em>转换</em>_广播百科  <em>采样率</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_39672396" target="_blank"><span class="blog-title">weixin_39672396的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-21</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					407
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_39672396/article/details/110136444" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39672396/article/details/110136444"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">&and;请关注为星标，在知识的海洋每天进步1%第 459期<em>采样率</em>，也称为<em>采样</em>速度或者<em>采样</em>频率，定义了每秒从连续信号中提取并组成离散信号的<em>采样</em>个数，它用赫兹(Hz)来表示。<em>采样</em>频率的倒数是<em>采样</em>周期或者叫作<em>采样</em>时间，它是<em>采样</em>之间的时间间隔。通俗的讲<em>采样</em>频率是指计算机每秒钟采集多少个信号样本。   连续信号在时间(或空间)<em>上</em>以某种方式变化着，而<em>采样</em>过程则是在时间(或空间)<em>上</em>，以T为单<em>位</em>...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qq_25333681/article/details/90682989"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qq_25333681/article/details/90682989"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qq_25333681/article/details/90682989" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qq_25333681/article/details/90682989"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em>数据格式介绍</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qq_25333681" target="_blank"><span class="blog-title">SuperLi</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">05-30</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qq_25333681/article/details/90682989" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qq_25333681/article/details/90682989"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>PCM</em>原始音频数据格式介绍
+文章目录<em>PCM</em>原始音频数据格式介绍什么是<em>PCM</em>Sampling（<em>采样</em>）<em>采样率</em>(Sample rate)Quantization（量化）Encoding（编码）<em>PCM</em>数据常用量化指标<em>PCM</em>数据流音量控制<em>采样率</em>调整
+什么是<em>PCM</em>
+<em>PCM</em>全称Pulse-Code Modulation，翻译一下是脉冲调制编码。
+其实大可以不用关心英文释义，之所以这么命令是因为一些历史原因。
+在...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_39927144/article/details/110136411"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39927144/article/details/110136411"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_39927144/article/details/110136411" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39927144/article/details/110136411"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em> <em>采样率</em><em>转换</em>_音频技术解析：纯理论对比<em>PCM</em><em>和</em>DSD</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_39927144" target="_blank"><span class="blog-title">weixin_39927144的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-21</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					745
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_39927144/article/details/110136411" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_39927144/article/details/110136411"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">一直以来，很多HiFi发烧友在聊音乐的时候，经常会谈论到关于音乐文件<em>采样</em>、<em>位深</em>、码率的相关技术参数。44.1kHz/16bit、96kHz/24bit、192kHz/24bit这种<em>PCM</em>波形规格到底意味着什么、DSD这种全新的规格音质有何优势？今天笔者就以纯理论的角度为大家对比一波WAV<em>和</em>DSD两种文件，欢迎大家进行参考。考虑到不少入门的烧友基础较弱，笔者在第一章先科普一些基础知识，大佬可自行跳过...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/q862343646/10544311"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-9.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"9","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/q862343646/10544311"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/q862343646/10544311" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-9.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"9","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/q862343646/10544311"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-9.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-9.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">c++音频原始数据<em>PCM</em><em>采样率</em><em>转换</em>-源码<em>和</em>demo</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">07-16</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/q862343646/10544311" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-9.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"9","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/q862343646/10544311"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-9.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-9.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">使用webrtc开源库中的算法，将其封装为动态库，用来<em>转换</em>音频原始数据<em>pcm</em><em>采样率</em></div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/huihunxu1307/10863655"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-10.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"10","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/huihunxu1307/10863655"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/huihunxu1307/10863655" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-10.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"10","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/huihunxu1307/10863655"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">DEMO测试用<em>PCM</em>的48000<em>采样率</em>s16</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">12-20</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/huihunxu1307/10863655" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-10.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"10","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/huihunxu1307/10863655"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">DEMO测试用<em>PCM</em>的48000<em>采样率</em>s16,demo中用于冲<em>采样</em>，测试工具播放没问题</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="https://download.csdn.net/download/aibao1266/7545827"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-11.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"11","strategy":"2~default~CTRLIST~default","dest":"https://download.csdn.net/download/aibao1266/7545827"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://download.csdn.net/download/aibao1266/7545827" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-11.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"11","strategy":"2~default~CTRLIST~default","dest":"https://download.csdn.net/download/aibao1266/7545827"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">48000<em>采样率</em> 双声道 16bits <em>pcm</em>文件</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">06-24</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://download.csdn.net/download/aibao1266/7545827" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-11.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"11","strategy":"2~default~CTRLIST~default","dest":"https://download.csdn.net/download/aibao1266/7545827"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">我的另一个却是不是很好，这个直接录得原声，只有十几秒，足够了</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/qq_26975307/11051760"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-12.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"12","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/qq_26975307/11051760"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/qq_26975307/11051760" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-12.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"12","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/qq_26975307/11051760"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">resample, <em>采样率</em><em>转换</em>C代码</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">03-23</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/qq_26975307/11051760" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-12.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"12","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/qq_26975307/11051760"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">可对音频或数字信号进行重<em>采样</em>， 提供了抽取、插值、分数倍<em>采样率</em><em>转换</em>的代码 代码在linux<em>上</em>实现，在windows<em>上</em>只需要建工程编译即可 更多代码，可访问： http://code.google.com/p/falab</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/u013910954/10042543"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-13.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"13","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/u013910954/10042543"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/u013910954/10042543" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-13.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"13","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/u013910954/10042543"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em>压缩以及AD<em>PCM</em>解压缩</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">10-28</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/u013910954/10042543" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-13.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"13","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/u013910954/10042543"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">用Qt creator创建的一个<em>PCM</em>压缩到AD<em>PCM</em>以及AD<em>PCM</em>解压到<em>PCM</em>的工程，采用4bit压缩，压缩之后没有做任何其他处理，会有一点点噪音。</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_course clearfix" data-url="https://edu.csdn.net/course/detail/7417"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-course-2~default~BlogCommendFromBaidu~default-14.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"14","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://edu.csdn.net/course/detail/7417"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://edu.csdn.net/course/detail/7417" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-course-2~default~BlogCommendFromBaidu~default-14.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"14","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://edu.csdn.net/course/detail/7417"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-course-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-course-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">基于NDK、C++、FFmpeg的android视频播放器开发实战</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">03-13</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://edu.csdn.net/course/detail/7417" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-course-2~default~BlogCommendFromBaidu~default-14.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"14","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://edu.csdn.net/course/detail/7417"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-course-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-course-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">课程包含了对流媒体（拉流）的播放，演示了播放rtmp的香港卫视，支持rtsp摄像头<em>和</em>http网络视频的播放，支持访问本地的视频文件，并精确显示<em>和</em>控制播放进度：
+1讲解如何编译Android平台的ffmpeg库，使其支持neon技术<em>和</em>硬解码，并测试性能
+2使用opengles的NDK shader高效播放yuv视频，不耗费cpu性能更优（GPU）
+3代码支持硬解码（省电不耗cpu）<em>和</em>多线程解码（高性能每秒解码240帧1080p）
+4支持网络流媒体（rtmp，rtsp，http）可直接拉流播放电视并支持rtsp摄像头访问
+5课程将设计模式应用到实践 - 观察者，构建者，门面，代理，适配器，单件模式</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/pan0755/article/details/117299277"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/pan0755/article/details/117299277"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/pan0755/article/details/117299277" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/pan0755/article/details/117299277"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">I2S<em>和</em><em>PCM</em>,TDM，音频<em>采样</em><em>位</em>数，<em>采样率</em>，<em>比特率</em></div>
+					<div class="tag">最新发布</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/pan0755" target="_blank"><span class="blog-title">pan0755的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">05-26</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					437
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/pan0755/article/details/117299277" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/pan0755/article/details/117299277"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">I2S总线规范
+
+I2S（Inter-IC Sound Bus）是飞利浦公司为数字音频设备之间的音频数据传输而制定的一种总线标准。在飞利浦公司的I2S标准中，既规定了硬件接口规范，也规定了数字音频数据的格式。I2S有3个主要信号：
+
+1、串行时钟SCLK，也叫<em>位</em>时钟BCLK，即对应数字音频的每一<em>位</em>数据，SCLK有1个脉冲。SCLK的频率=2&times;<em>采样</em>频率&times;<em>采样</em><em>位</em>数。
+
+2、帧时钟LRCK，用于切换左右声道的数据。LRCK为&ldquo;0&rdquo;表示正在传输的是左声道的数据，为&ldquo;1&rdquo;则表示正在传输的是右声道的数据。LRCK的频率</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/leixiaohua1020/article/details/50534316"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/leixiaohua1020/article/details/50534316"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/leixiaohua1020/article/details/50534316" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/leixiaohua1020/article/details/50534316"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">视音频数据处理入门：<em>PCM</em>音频<em>采样</em>数据处理</div>
+					<div class="tag">热门推荐</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/leixiaohua1020" target="_blank"><span class="blog-title">雷霄骅(leixiaohua1020)的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">01-29</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					13万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/leixiaohua1020/article/details/50534316" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/leixiaohua1020/article/details/50534316"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>上</em>一篇文章记录了RGB/YUV视频像素数据的处理方法，本文继续<em>上</em>一篇文章的内容，记录<em>PCM</em>音频<em>采样</em>数据的处理方法。音频<em>采样</em>数据在视频播放器的解码流程中的<em>位</em>置如下图所示。本文分别介绍如下几个<em>PCM</em>音频<em>采样</em>数据处理函数：&nbsp;	分离<em>PCM</em>16LE双声道音频<em>采样</em>数据的左声道<em>和</em>右声道&nbsp;	将<em>PCM</em>16LE双声道音频<em>采样</em>数据中左声道的音量降一半&nbsp;	将<em>PCM</em>16LE双声道音频<em>采样</em>数据的声音速度提高一倍&nbsp;	将<em>PCM</em>1</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/jzjhome/article/details/75270441"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/jzjhome/article/details/75270441"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/jzjhome/article/details/75270441" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/jzjhome/article/details/75270441"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">音频重<em>采样</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/jzjhome" target="_blank"><span class="blog-title">jzjhome的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">07-18</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					4358
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/jzjhome/article/details/75270441" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/jzjhome/article/details/75270441"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>采样率</em><em>转换</em>的开源代码框架有resample、libresample、sndfile-resample、libresample4j等。
+
+libresample&nbsp;andsndfile-resample&nbsp;(fromlibsamplerate)
+ (in the Planet CCRMA Distribution).
+libsoxr, the SoX resampler libraryssrc&nbsp;</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/lichen18848950451/article/details/75568698"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/lichen18848950451/article/details/75568698"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/lichen18848950451/article/details/75568698" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/lichen18848950451/article/details/75568698"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em>数据<em>采样率</em>8k转为16k</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/lichen18848950451" target="_blank"><span class="blog-title">那年晴天的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">07-20</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/lichen18848950451/article/details/75568698" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1634196434861_89580\"}","dist_request_id":"1634196434861_89580","ab_strategy":"ctrlist","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/lichen18848950451/article/details/75568698"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">#include &quot;stdafx.h&quot;
+#include  
+#include 
+using namespace std;
+
+void Resample16K(short* pInAudioData, int nInAudioLen, short* pOutAudioData, int&amp; nOutAudioLen)
+{
+	short* sSampleIn = pInAudioData;
+	int</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+            <div class="template-box">
+                <span>©️2021 CSDN</span>
+                <span>皮肤主题: 1024</span>
+                <span> 设计师:白松林</span>
+                <span>
+                    <a href="https://blog.csdn.net/" class="back-home c-blue c-blue-hover c-blue-focus">返回首页</a>
+                </span>
+            </div>
+<div class="blog-footer-bottom" style="margin-top:10px;"></div>
+<script src="https://g.csdnimg.cn/common/csdn-footer/csdn-footer.js" data-isfootertrack="false" type="text/javascript"></script>
+<script type="text/javascript">
+    window.csdn.csdnFooter.options = {
+        el: '.blog-footer-bottom',
+        type: 2
+    }
+</script>        </main>
+<aside class="blog_container_aside">
+	<div id="asideProfile" class="aside-box">
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://blog.csdn.net/weixin_39758048" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4121","dest":"https://blog.csdn.net/weixin_39758048","ab":"new"}'>
+                <img src="https://profile.csdnimg.cn/9/B/8/3_weixin_39758048" class="avatar_pic">
+            </a>
+        </div>
+        <div class="user-info d-flex flex-column profile-intro-name-box">
+            <div class="profile-intro-name-boxTop">
+                <a href="https://blog.csdn.net/weixin_39758048" class="" id="uid" title="weixin_39758048" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4122","dest":"https://blog.csdn.net/weixin_39758048","ab":"new"}'>
+                    <span class="name " username="weixin_39758048">weixin_39758048</span>
+                </a>
+                <span>
+                </span>
+                <span class="flag expert-blog">
+                <span class="bubble">CSDN认证博客专家</span>
+                </span>
+                <span class="flag company-blog">
+                <span class="bubble">CSDN认证企业博客</span>
+                </span>
+            </div>
+            <div class="profile-intro-name-boxFooter">
+                <span class="personal-home-page personal-home-years">码龄4年</span>
+                    <span class="personal-home-page">
+                    <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证">
+                    <img src="https://csdnimg.cn/identity/nocErtification.png" alt="">
+                    暂无认证
+                    </a>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="135">
+            <a href="https://blog.csdn.net/weixin_39758048" data-report-click='{"mod":"1598321000_001","spm":"1001.2101.3001.4310"}' data-report-query="t=1">  
+                <dt><span class="count">135</span></dt>
+                <dd class="font">原创</dd>
+            </a>
+        </dl>
+        <dl class="text-center" data-report-click='{"mod":"1598321000_002","spm":"1001.2101.3001.4311"}' title="暂无排名">
+            <a href="https://blog.csdn.net/rank/list/weekly" target="_blank">
+                <dt><span class="count">-</span></dt>
+                <dd class="font">周排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" title="301897">
+            <a href="https://blog.csdn.net/rank/list/total" data-report-click='{"mod":"1598321000_003","spm":"1001.2101.3001.4312"}' target="_blank">
+                <dt><span class="count">30万+</span></dt>
+                <dd class="font">总排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" style="min-width:58px" title="44074">  
+            <dt><span class="count">4万+</span></dt>
+            <dd>访问</dd>
+        </dl>
+        <dl class="text-center" title="1级,点击查看等级说明">
+            <dt><a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank">
+                <img class="level" src="https://csdnimg.cn/identity/blog1.png">
+            </a>
+            </dt>
+            <dd>等级</dd>
+        </dl>
+    </div>
+    <div class="item-rank"></div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="39">
+            <dt><span class="count">39</span></dt>
+            <dd>积分</dd>
+        </dl>
+         <dl class="text-center" id="fanBox" title="8">
+            <dt><span class="count" id="fan">8</span></dt>
+            <dd>粉丝</dd>
+        </dl>
+        <dl class="text-center" title="8">
+            <dt><span class="count">8</span></dt>
+            <dd>获赞</dd>
+        </dl>
+        <dl class="text-center" title="0">
+            <dt><span class="count">0</span></dt>
+            <dd>评论</dd>
+        </dl>
+        <dl class="text-center" title="46">
+            <dt><span class="count">46</span></dt>
+            <dd>收藏</dd>
+        </dl>
+    </div>
+    <div class="aside-box-footer" data-report-view='{"spm":"3001.4296"}'>
+        <div class="badge-box d-flex">
+            <div class="badge d-flex">
+                <div class="icon-badge" title="勤写标兵Lv3">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/qixiebiaobing3@240.png" alt="勤写标兵Lv3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-intro-name-boxOpration">
+        <div class="opt-letter-watch-box">
+        <a class="bt-button personal-letter" href="https://im.csdn.net/chat/weixin_39758048" target="_blank" rel="noopener">私信</a>
+        </div>
+        <div class="opt-letter-watch-box"> 
+            <a class="personal-watch bt-button" id="btnAttent" >关注</a>  
+        </div>
+    </div>
+</div>
+<div id="asideSearchArticle" class="aside-box">
+	<div class="aside-content search-comter">
+    <div class="aside-search aside-search-blog">         
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章">
+        <a class="btn-search-blog">
+                    <img src="//csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042">
+        </a>
+    </div>
+    </div>
+</div>
+
+
+<div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list">
+			<li>
+				<a href="https://blog.csdn.net/weixin_39758048/article/details/110136419" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/weixin_39758048/article/details/110136419","ab":"new"}'>
+				pcm 采样率转换_深入了解采样率、位深和比特率（上）
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">1699</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/weixin_39758048/article/details/111276570" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/weixin_39758048/article/details/111276570","ab":"new"}'>
+				图中两点所有路径_采用蚁群算法解决最短路径问题
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">1537</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/weixin_39758048/article/details/111795462" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/weixin_39758048/article/details/111795462","ab":"new"}'>
+				15数字华容道解法 图解_数字华容道解法图解 数字华容道玩法介绍
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">1433</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/weixin_39758048/article/details/112537810" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/weixin_39758048/article/details/112537810","ab":"new"}'>
+				5 速度测试_奥的斯机电ACD4-MRL无机房电梯轿厢防意外移动测试方法
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">1417</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/weixin_39758048/article/details/111707327" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/weixin_39758048/article/details/111707327","ab":"new"}'>
+				删除一行下方单元格上移_每日一技巧：Excel如何快速删除空白行
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">1228</span>
+                </a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="asideNewNps" class="aside-box">
+    <h3 class="aside-title">您愿意向朋友推荐“博客详情页”吗？</h3>
+    <div class="aside-content">
+        <ul class="newnps-list">
+            <li class="newnps-item" data-type="强烈不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel1.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey1.png" alt="">
+                </div>
+                <div class="newnps-text">强烈不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel2.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey2.png" alt="">
+                </div>
+                <div class="newnps-text">不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="一般般">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel3.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey3.png" alt="">
+                </div>
+                <div class="newnps-text">一般般</div>
+            </li>
+            <li class="newnps-item" data-type="推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel4.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey4.png" alt="">
+                </div>
+                <div class="newnps-text">推荐</div>
+            </li>
+            <li class="newnps-item" data-type="强烈推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel5.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey5.png" alt="">
+                </div>
+                <div class="newnps-text">强烈推荐</div>
+            </li>
+        </ul>
+        <div class="newnps-form-box">
+        <div class="newnps-form">
+            <input type="text" placeholder="请输入建议或反馈后点击提交" class="newnps-input">
+            <span class="newnps-btn">提交</span>
+        </div>
+        </div>
+    </div>
+</div>
+<div id="asideArchive" class="aside-box" style=" width:300px;">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix">
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/weixin_39758048/article/details/119632535" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/weixin_39758048/article/details/119632535","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/weixin_39758048/article/details/119632535","ab":"new"}'>云上城之个服务器维护时间,云上城之歌开服时间表 官方最新开服情况</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/weixin_39758048/article/details/119602196" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/weixin_39758048/article/details/119602196","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/weixin_39758048/article/details/119602196","ab":"new"}'>神雕侠侣手游服务器维护,《神雕侠侣》2018年11月1日更新维护新服开启公告</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/weixin_39758048/article/details/119585544" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/weixin_39758048/article/details/119585544","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/weixin_39758048/article/details/119585544","ab":"new"}'>获取服务器信息失效,获取服务器时间失败</a>
+            </li>
+        </ul>
+        <div class="archive-bar"></div>
+        <div class="archive-box">
+                <div class="archive-title">2021</div> 
+                <div class="archive-content">
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/08" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/08"}'>
+                        <span class="time">08月</span>
+                        <span class="count">8篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/07" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/07"}'>
+                        <span class="time">07月</span>
+                        <span class="count">7篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/06" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/06"}'>
+                        <span class="time">06月</span>
+                        <span class="count">15篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/05" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/05"}'>
+                        <span class="time">05月</span>
+                        <span class="count">26篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/04" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/04"}'>
+                        <span class="time">04月</span>
+                        <span class="count">15篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/03" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/03"}'>
+                        <span class="time">03月</span>
+                        <span class="count">24篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/02" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/02"}'>
+                        <span class="time">02月</span>
+                        <span class="count">33篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/01" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/01"}'>
+                        <span class="time">01月</span>
+                        <span class="count">26篇</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/weixin_39758048/article/month/2020/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2020年</span><span class="num">190篇</span></a></div>
+        </div>
+    </div>
+</div>
+	<div id="footerRightAds" class="isShowFooterAds">
+		<div class="aside-box">
+			<div id="kp_box_57" data-pid="57"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PC-博客详情页-矩形-左下视窗（自适应） -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="1894159733"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=57&a=707&c=0&k=&spm=1001.2101.3001.5001&d=1&t=3&u=382358f50ddf492e8264784a46c0f90c" style="display: block;width: 0px;height: 0px;"></div>
+		</div>
+	</div>
+    <!-- 详情页显示目录 -->
+<!--文章目录-->
+<div id="asidedirectory" class="aside-box">
+    <div class='groupfile' id="directory">
+        <h3 class="aside-title">目录</h3>
+        <div class="align-items-stretch group_item">
+            <div class="pos-box">
+            <div class="scroll-box">
+                <div class="toc-box"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</aside>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).parents("p.text-center").remove();
+	})
+</script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-tooltip/2.5/user-tooltip.js"></script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-medal/1.0.7/user-medal.js"></script>    </div>
+<div class="recommend-right  align-items-stretch clearfix" id="rightAside" data-type="recommend">
+    <aside class="recommend-right_aside">
+        <div id="recommend-right" >
+                        <div class='flex-column aside-box groupfile' id="groupfile">
+                <div class="groupfile-div">
+                <h3 class="aside-title">目录</h3>
+                <div class="align-items-stretch group_item">
+                    <div class="pos-box">
+                        <div class="scroll-box">
+                            <div class="toc-box"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div id="recommendAdBox">
+                    <div id="kp_box_479" data-pid="479"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PC-博客详情页-右侧视窗（自适应） -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="3484057394"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=479&a=3267&c=0&k=&spm=1001.2101.3001.4834&d=1&t=3&u=5abca2e22e7146ff898df4524bbdf2ee" style="display: block;width: 0px;height: 0px;"></div>
+                </div>
+<div id="asideArchive" class="aside-box" style=" width:300px;">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix">
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/weixin_39758048/article/details/119632535" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/weixin_39758048/article/details/119632535","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/weixin_39758048/article/details/119632535","ab":"new"}'>云上城之个服务器维护时间,云上城之歌开服时间表 官方最新开服情况</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/weixin_39758048/article/details/119602196" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/weixin_39758048/article/details/119602196","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/weixin_39758048/article/details/119602196","ab":"new"}'>神雕侠侣手游服务器维护,《神雕侠侣》2018年11月1日更新维护新服开启公告</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/weixin_39758048/article/details/119585544" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/weixin_39758048/article/details/119585544","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/weixin_39758048/article/details/119585544","ab":"new"}'>获取服务器信息失效,获取服务器时间失败</a>
+            </li>
+        </ul>
+        <div class="archive-bar"></div>
+        <div class="archive-box">
+                <div class="archive-title">2021</div> 
+                <div class="archive-content">
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/08" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/08"}'>
+                        <span class="time">08月</span>
+                        <span class="count">8篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/07" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/07"}'>
+                        <span class="time">07月</span>
+                        <span class="count">7篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/06" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/06"}'>
+                        <span class="time">06月</span>
+                        <span class="count">15篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/05" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/05"}'>
+                        <span class="time">05月</span>
+                        <span class="count">26篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/04" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/04"}'>
+                        <span class="time">04月</span>
+                        <span class="count">15篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/03" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/03"}'>
+                        <span class="time">03月</span>
+                        <span class="count">24篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/02" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/02"}'>
+                        <span class="time">02月</span>
+                        <span class="count">33篇</span>
+                        </a>
+                    </div>
+                    <div class="archive-item">
+                        <a href="https://blog.csdn.net/weixin_39758048/article/month/2021/01" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":"https://blog.csdn.net/weixin_39758048/article/month/2021/01"}'>
+                        <span class="time">01月</span>
+                        <span class="count">26篇</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/weixin_39758048/article/month/2020/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2020年</span><span class="num">190篇</span></a></div>
+        </div>
+    </div>
+</div>
+        </div>
+    </aside>
+</div>
+
+</div>
+<div class="mask-dark"></div>
+<script>
+    var articleId = 110136419;
+    var commentscount = 0;
+    var curentUrl = "https://blog.csdn.net/weixin_39758048/article/details/110136419";
+    var myUrl = "https://my.csdn.net/";
+    var highlight = ["位深","pcm","深入","采样率","深","比特率","采样","pc","比特","cm","转换","位","了解","和","上"];//高亮数组
+    var isRecommendModule = true;
+    var isBaiduPre = true;
+    var baiduCount = 2;
+    var share_card_url = "https://blog.csdn.net/weixin_39758048/article/shareArticleCardPage?article_id=110136419"
+	var articleType = 0;
+    var baiduKey = "pcm 采样率转换_深入了解采样率、位深和比特率（上）";
+    var userNewReport = false;
+    var needInsertBaidu = true;
+    var recommendRegularDomainArr = ["blog.csdn.net/.+/article/details/","download.csdn.net/download/","edu.csdn.net/course/detail/","ask.csdn.net/questions/","bbs.csdn.net/topics/","www.csdn.net/gather_.+/"]
+    var codeStyle = "";
+    var baiduSearchType = "title";
+    var canRead = true;
+    var blogMoveHomeArticle = true;
+    var showPcWindowAd = false;
+    var showSearchText = "";
+    var linkPage = true;
+    var articleSource = 4;
+    var articleReport = '{"pid": "blog", "spm":"1001.2101"}';
+    var isShowToQuestion = false;
+    var baiduSearchChannel = 'pc_relevant'
+    var baiduSearchIdentification = '.no_search_link'
+    var distRequestId = '1634196434861_89580'
+    var initRewardObject = {
+        giver: currentUserName,
+        anchor: username,
+        articleId: articleId,
+        sign: ''
+    }
+</script>
+<script src="https://csdnimg.cn/public/sandalstrap/1.4/js/sandalstrap.min.js"></script>
+<div class="skin-boxshadow"></div>
+<div class="directory-boxshadow"></div>
+<div class="pay-code">
+    <div class="pay-money">实付<span class="pay-money-span" data-nowprice='' data-oldprice=''>元</span></div>
+    <div class="content-blance"><a class="blance-bt" href="javascript:;">使用余额支付</a></div>
+    <div class="content-code">
+    <div id="payCode" data-id="">
+            <div class="renovate">
+                <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png">
+                <span>点击重新获取</span>
+            </div>
+        </div>
+        <div class="pay-style"><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span><span class="text">扫码支付</span></div>
+    </div>
+    <div class="bt-close"><svg t="1567152543821" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"><defs><style type="text/css"></style></defs><path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path></svg></div>
+    <!-- <p style="margin-top: 8px;font-size: 14px;" class="text-center">支付成功即可阅读</p> -->
+    <div class="pay-balance">
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span>
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span>  
+    <div class="pay-code-tile">
+        <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt="">
+        <div class="pay-code-content">
+            <div class="span">
+                <p class="title">抵扣说明：</p>
+                <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、C币套餐、付费专栏及课程。</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span  >余额充值</span></a>
+</div>
+<div style="display:none;">
+	<img src="" onerror='setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window.location.href="\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74"}},3000);'>
+</div>
+</body>
+    <!-- 富文本柱状图  -->
+	<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css"/>
+	<script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/lib/chart.min.js"></script>
+    <script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/widget2chart.js"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_highlight-db1e81323a.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_common-6a9acd4c62.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/edit_copy_code-1320dfe85c.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-light.css">
+<script>
+ // 全局声明
+ if (window.csdn === undefined) {
+      window.csdn = {};
+    }
+    window.csdn.sideToolbar = {
+        options: {
+            report:{
+                isShow: true,
+            },
+            qr: {
+                isShow: false,
+            },
+            guide: {
+                isShow: true
+            }
+        }
+    }
+    $(function(){
+        $(document).on('click',"a.option-box[data-type='report']",function() {
+            window.csdn.userLogin.loadAjax(function(res){
+                if(userNewReport){
+                     window.csdn.feedback({
+                        "type":'blog',
+                        "rtype":'article',
+                        "rid":articleId,
+                        "reportedName":username,
+                        "title":articleTitle,
+                        "contentUrl":articleDetailUrl,
+                        "callback":function(){
+                            showToast({
+                                text: "感谢您的举报，我们会尽快审核！",
+                                bottom: '10%', //toast距离页面底部的距离
+                                zindex: 9000, //为了防止被其他控件遮盖，z-index默认为2
+                                speed: 500, //toast的显示速度
+                                time: 1500//toast显示多久以后消失
+                            });
+                        }
+                     })
+                }else{
+                    showReport(false,articleTitles);
+                }
+            })
+        });
+    })
+</script>
+    <script src="https://g.csdnimg.cn/baidu-search/1.0.9/baidu-search.js"  type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/download/old_static/js/qrcode.js"></script>
+<script src="https://g.csdnimg.cn/lib/qrcode/1.0.0/qrcode.min.js"></script>
+<script src="https://g.csdnimg.cn/user-ordercart/3.0.0/user-ordercart.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/user-ordertip/4.1.3/user-ordertip.js" type="text/javascript" ></script>
+<script src="https://g.csdnimg.cn/order-payment/3.0.0/order-payment.js" type="text/javascript" ></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/common-24fa4dcb20.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/detail-9f7ba6959d.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/column-f871ff2a6c.min.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/side-toolbar/3.0/side-toolbar.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/copyright/1.0.4/copyright.js" type="text/javascript"></script>
+<script>
+    $(".MathJax").remove();
+    if ($('div.markdown_views pre.prettyprint code.hljs').length > 0) {
+        $('div.markdown_views')[0].className = 'markdown_views';
+    }
+</script>
+<script type="text/javascript" src="https://csdnimg.cn/release/blog_mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            "HTML-CSS": {
+                    linebreaks: { automatic: true, width: "94%container" },
+                    imageFont: null
+            },
+            tex2jax: {
+                preview: "none",
+                ignoreClass:"title-article"
+            },
+            mml2jax: {
+                preview: 'none'
+            }
+    });
+</script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/common/csdn-login-box/csdn-login-box.js"></script></html>

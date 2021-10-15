@@ -1,0 +1,1936 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://blog.csdn.net/aoshilang2249/article/details/38469465"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="report" content='{"pid": "blog", "spm":"1001.2101"}'>
+    <meta name="referrer" content="always">
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <meta name="applicable-device" content="pc">
+    <link  href="https://g.csdnimg.cn/static/logo/favicon32.ico"  rel="shortcut icon" type="image/x-icon" />
+    <title>音频 PCM音频编码格式详解_郎涯技术-CSDN博客_pcm编码</title>
+    <script>
+      (function(){ 
+        var el = document.createElement("script"); 
+        el.src = "https://s3a.pstatp.com/toutiao/push.js?1abfa13dfe74d72d41d83c86d240de427e7cac50c51ead53b2e79d40c7952a23ed7716d05b4a0f683a653eab3e214672511de2457e74e99286eb2c33f4428830"; 
+        el.id = "ttzz"; 
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(el, s);
+      })(window)
+    </script>
+        <meta name="keywords" content="pcm编码">
+        <meta name="csdn-baidu-search"  content='{"autorun":true,"install":true,"keyword":"pcm编码"}'>
+    <meta name="description" content="PCM音频编码格式详解。PCM(Pulse Code Modulation)音频编码格式也被称为脉冲编码调制。就是将声音等模拟信号变成符号化的脉冲列，再进行记录存储。主要涉及原理与存储的介绍。">
+    <script src="//g.csdnimg.cn/tingyun/1.8.5/blog.js" type='text/javascript'></script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-1910fe047e.min.css">
+    <script type="application/ld+json">{"@context":"https://ziyuan.baidu.com/contexts/cambrian.jsonld","@id":"https://blog.csdn.net/aoshilang2249/article/details/38469465","appid":"1638831770136827","pubDate":"2014-08-10T13:49:14","title":"音频 PCM音频编码格式详解_郎涯技术-CSDN博客_pcm编码","upDate":"2014-08-10T13:49:14"}</script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-code/skin-code-ec0336e729.min.css">
+    <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var isCorporate = false;//注释删除enterprise
+        var username =  "aoshilang2249";
+        var skinImg = "white";
+        var blog_address = "https://langyastudio.blog.csdn.net";
+        var currentUserName = "u013454589";
+        var isOwner = false;
+        var loginUrl = "http://passport.csdn.net/account/login?from=https://blog.csdn.net/aoshilang2249/article/details/38469465";
+        var blogUrl = "https://blog.csdn.net/";
+        var avatar = "https://profile.csdnimg.cn/5/F/C/3_aoshilang2249";
+        var articleTitle = "音频 PCM音频编码格式详解";
+        var articleDesc = "PCM音频编码格式详解。PCM(Pulse Code Modulation)音频编码格式也被称为脉冲编码调制。就是将声音等模拟信号变成符号化的脉冲列，再进行记录存储。主要涉及原理与存储的介绍。";
+        var articleTitles = "音频 PCM音频编码格式详解_郎涯技术-CSDN博客_pcm编码";
+        var nickName = "郎涯技术";
+        var articleDetailUrl = "https://langyastudio.blog.csdn.net/article/details/38469465";
+        if(window.location.host.split('.').length == 3) {
+            blog_address = blogUrl + username;
+        }
+        var skinStatus = "White";
+        var blogStaticHost = "https://csdnimg.cn/release/blogv2/"
+    </script>
+    <script src="https://g.csdnimg.cn/??fixed-sidebar/1.1.6/fixed-sidebar.js" type="text/javascript"></script>
+    <script src='//g.csdnimg.cn/common/csdn-report/report.js' type='text/javascript'></script>
+    <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css">
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+    <script src="https://dup.baidustatic.com/js/ds.js"></script>
+</head>
+<body class="nodata " style="">
+        <script>
+            var toolbarSearchExt = '{"landingWord":["pcm编码"],"queryWord":"","tag":["音频","pcm"],"title":"音频 PCM音频编码格式详解"}';
+        </script>
+    <script src="https://g.csdnimg.cn/common/csdn-toolbar/csdn-toolbar.js" type="text/javascript"></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css" />
+<div class="main_father clearfix d-flex justify-content-center" style="height:100%;"> 
+    <div class="container clearfix" id="mainBox">
+        <main>
+<script type="text/javascript">
+    function getQueryString(name) {   
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象  
+      var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+      if( r != null ) return decodeURIComponent( r[2] ); return '';   
+    }
+    function stripscript(s){ 
+      var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%]") 
+      var rs = ""; 
+      for (var i = 0; i < s.length; i++) { 
+        rs = rs+s.substr(i, 1).replace(pattern, ''); 
+      } 
+      return rs; 
+    }
+    var blogHotWords = stripscript(getQueryString('utm_term')).length > 1 ? stripscript(getQueryString('utm_term')) : ''
+</script>
+<div class="blog-content-box">
+        <div class="article-header-box">
+        <div class="article-header">
+            <div class="article-title-box">
+                <h1 class="title-article" id="articleContentId">音频 PCM音频编码格式详解</h1>
+            </div>
+            <div class="article-info-box">
+                <div class="article-bar-top">
+                    <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt="">
+                    <div class="bar-content">
+                    <a class="follow-nickName " href="https://langyastudio.blog.csdn.net" target="_blank" rel="noopener">郎涯技术</a>
+                    <span class="time">2014-08-10 13:49:14</span>
+                    <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes.png" alt="">
+                    <span class="read-count">15483</span>
+                    <a id="blog_detail_zk_collection" class="un-collection" data-report-click='{"mod":"popu_823","spm":"1001.2101.3001.4232","ab":"new"}'>
+                        <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png" alt="">
+                        <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                        <span class="name">收藏</span>
+                        <span class="get-collection">
+                            12
+                        </span>
+                    </a>
+                    </div>
+                </div>
+                <div class="blog-tags-box">
+                    <div class="tags-box artic-tag-box">
+                            <span class="label">分类专栏：</span>
+                                <a class="tag-link" href="https://blog.csdn.net/aoshilang2249/category_2444291.html" target="_blank" rel="noopener">音视频/图像</a>
+                            <span class="label">文章标签：</span>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"音频","ab":"new"}' class="tag-link" href="https://www.csdn.net/tags/MtTaEg0sNDUyODItYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">音频</a>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"pcm","ab":"new"}' class="tag-link" href="https://so.csdn.net/so/search/s.do?q=pcm&amp;t=blog&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank" rel="noopener">pcm</a>
+                    </div>
+                </div>
+                <div class="slide-content-box">
+                    <div class="article-copyright">
+                        <div class="creativecommons">
+                            版权声明：本文为博主原创文章，遵循<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。
+                        </div>
+                        <div class="article-source-link">
+                            本文链接：<a href="https://blog.csdn.net/aoshilang2249/article/details/38469465" target="_blank">https://blog.csdn.net/aoshilang2249/article/details/38469465</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="operating">
+                    <a class="href-article-edit slide-toggle">版权</a>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="blogColumnPayAdvert">
+            <div class="column-group">
+                <div class="column-group-item column-group0 column-group-item-one">
+                    <div class="item-l">
+                        <a class="item-target" href="https://blog.csdn.net/aoshilang2249/category_2444291.html" target="_blank" title="音视频/图像"
+                        data-report-view='{"spm":"1001.2101.3001.6332"}'
+                        data-report-click='{"spm":"1001.2101.3001.6332"}'>
+                            <img class="item-target" src="https://img-blog.csdnimg.cn/20200827142216663.jpg?x-oss-process=image/resize,m_fixed,h_224,w_224" alt="">
+                            <span class="title item-target">音视频/图像</span>
+                        </a>
+                        <span class="dec">专栏收录该内容</span>
+                    </div>
+                    <div class="item-m">
+                        <span>34 篇文章</span>
+                        <span>1 订阅</span>
+                    </div>
+                    <div class="item-r">
+                            <a class="item-target article-column-bt articleColumnFreeBt" data-id="2444291">订阅专栏</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-1a85854398.css">
+                <div id="content_views" class="htmledit_views">
+                    <h3>概念</h3> 
+<p>PCM(Pulse Code Modulation)音频编码格式也被称为<strong>脉冲编码调制</strong>。就是将声音等模拟信号变成符号化的脉冲列&#xff0c;再进行记录存储。</p> 
+<p></p> 
+<h3>原理</h3> 
+<p>把一个时间连续,取值连续的模拟信号变换成时间离散,取值离散的数字信号后在信道中传输.脉冲编码调制就是对模拟</p> 
+<p>信号先抽样,再对样值幅度量化,编码的过程.</p> 
+<p></p> 
+<p><strong>抽样</strong></p> 
+<p>就是对模拟信号进行周期性扫描,把时间上连续的信号变成时间上离散的信号.该模拟信号经过抽样后还应当包含</p> 
+<p>原信号中所有信息,也就是说能无失真的恢复原模拟信号.它的抽样速率的下限是由抽样定理确定的.在该实验中,抽样速</p> 
+<p>率采用8Kbit/s.</p> 
+<p></p> 
+<p><strong>量化</strong></p> 
+<p>就是把经过抽样得到的瞬时值将其幅度离散,即用一组规定的电平,把瞬时抽样值用最接近的电平值来表示. 一个</p> 
+<p>模拟信号经过抽样量化后,得到已量化的脉冲幅度调制信号,它仅为有限个数值.</p> 
+<p></p> 
+<p><strong>编码</strong></p> 
+<p>就是用一组二进制码组来表示每一个有固定电平的量化值.然而,实际上量化是在编码过程中同时完成的,故编码过</p> 
+<p>程也称为模/数变换,可记作A/D.</p> 
+<p></p> 
+<h3>特点</h3> 
+<p>PCM信号未经过任何编码和压缩处理(<strong>无损压缩</strong>)。与模拟信号比&#xff0c;它不易受传送系统的杂波及失真的影响。动态范围宽&#xff0c;可得到音质相当好的效果。</p> 
+<p></p> 
+<p>在Windows平台下&#xff0c;基于PCM编码的WAV是被支持得最好的音频格式&#xff0c;所有音频软件都能完美支持&#xff0c;由于本身可以达到较高的音质的要求&#xff0c;因此&#xff0c;WAV也是音乐编辑创作的首选格式&#xff0c;适合保存音乐素材。因此&#xff0c;基于PCM编码的WAV作为了一种中介的格式&#xff0c;常常使用在其他编码的相互转换之中&#xff0c;例如MP3转换成WMA。</p> 
+<p></p> 
+<p><strong>存储</strong></p> 
+<p><strong>单声道的文件&#xff0c;</strong>采样数据按时间的先后顺序依次存入。(它的基本组织单位是BYTE(8bit)或WORD(16bit))。</p> 
+<p><strong>双声道的文件</strong>&#xff0c;采样数据按时间先后顺序交叉地存入。如图所示:</p> 
+<p><img alt="img" src="https://img-blog.csdnimg.cn/img_convert/3894f9e0b14d1b206332b0ef1fe8f28d.gif" /><img alt="" height="1" src="https://img-blog.csdnimg.cn/20210706165236526.gif" width="1" /></p> 
+<p>PCM的每个样本值包含在一个整数i中&#xff0c;i的长度为容纳指定样本长度所需的最小字节数。 首先存储低有效字节&#xff0c;表示样本幅度的位放在i的高有效位上&#xff0c;剩下的位置为0。</p> 
+<p></p> 
+<blockquote> 
+ <p>参考文章&#xff1a;<a href="http://blog.csdn.net/ownWell/article/details/8114121">http://blog.csdn.net/ownWell/article/details/8114121</a></p> 
+</blockquote>
+                </div>
+        </div>
+    </article>
+</div>
+<div class="more-toolbox-new" id="toolBarBox">
+    <div class="left-toolbox">
+        <div class="toolbox-left">
+            <div class="profile-box"><a class="profile-href" target="_blank" href="https://langyastudio.blog.csdn.net"><img class="profile-img" src="https://profile.csdnimg.cn/5/F/C/3_aoshilang2249"><span class="profile-name">郎涯技术</span></a></div>
+            <div class="profile-attend">
+                    <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view='{"mod":"1592215036_002","spm":"1001.2101.3001.4232","extend1":"关注"}'>关注</a>
+                <a class="tool-item-follow active-animation" style="display:none;">关注</a>
+            </div>
+        </div>
+        <div class="toolbox-middle">
+        <ul class="toolbox-list">
+            <li class="tool-item tool-item-size tool-active is-like" id="is-like">
+            <a class="tool-item-href">
+                <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt="">
+                <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart1Active.png" alt="">
+                <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart1White.png" alt="">  
+                <span id="spanCount" class="count ">
+                        1
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">点赞</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-item-comment">
+            <a class="tool-item-href" href="#commentBox">
+                <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCommentWhite.png" alt="">
+                <span class="count">
+                    0
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">评论</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-collection ">
+            <a class="tool-item-href" href="javascript:;" data-report-click='{"mod":"popu_824","spm":"1001.2101.3001.4130","ab":"new"}'>
+                <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectWhite.png" alt="">
+                <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt="">
+                <span class="count get-collection " id="get-collection">
+                    12
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">收藏</span></div>
+            </li>
+            <li class="tool-item tool-active">
+                <a class="" href="javascript:;">
+                    <img class="company active" id="health-companies" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHealthCompanies1Active.gif" alt="一键三连">
+                </a>
+                <div class="tool-hover-tip three-click"><span class="text">一键三连</span></div>
+            </li>
+            <li class="tool-item tool-item-bar">
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-QRcode" id="tool-share">
+                <a class="tool-item-href" href="javascript:;" data-report-click='{"mod":"1582594662_002","spm":"1001.2101.3001.4129","ab":"new"}'>
+                    <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newShareWhite.png" alt="">
+                </a>
+                <div class="QRcode" id="tool-QRcode">
+                    <p class="title">
+                    扫一扫，分享海报
+                    </p>
+                    <div id='shareCode'></div>
+                </div>
+            </li>
+        </ul>
+        </div>
+        <div class="toolbox-right">
+                <div class="tool-directory">
+                    <a class="bt-columnlist-show"
+                    data-id="2444291"
+                    data-free="true"
+                    data-subscribe="false"
+                    data-title="音视频/图像"
+                    data-img="https://img-blog.csdnimg.cn/20200827142216663.jpg?x-oss-process=image/resize,m_fixed,h_224,w_224"
+                    data-url="https://blog.csdn.net/aoshilang2249/category_2444291.html"
+                    data-sum="34"
+                    data-people="1"
+                    data-price="0"
+                    data-oldprice="0"
+                    data-join="false"
+                    data-studyvip="false"
+                    data-studysubscribe="false"
+                    data-report-view='{"spm":"1001.2101.3001.6334","extend1":"专栏目录"}'
+                    data-report-click='{"spm":"1001.2101.3001.6334","extend1":"专栏目录"}'
+                    >专栏目录</a>
+                </div>
+        </div>
+    </div>  
+</div>
+<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/production/qrcode-7c90a92189.min.js"></script>
+<script src="//g.csdnimg.cn/??sharewx/1.2.1/sharewx.js" type="text/javascript"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/user-login/3.0.1/user-login.js"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/collection-box/2.0.6/collection-box.js"></script>
+                <div id="dmp_ad_58" style="width:100%;overflow-x:hidden"><div id="kp_box_58" data-pid="58"><iframe  src="https://kunpeng-sc.csdnimg.cn/?timestamp=1623163941/#/preview/8151?positionId=58&queryWord=&spm=1001.2101.3001.5002" frameborder="0" width= "100%"  height= "75px" scrolling="no" ></iframe><img class="pre-img-lasy"  data-src="https://kunyu.csdn.net/1.png?p=58&a=4892&c=8151&k=&spm=1001.2101.3001.5002&d=1&t=3&u=0320ac1dfed4499dbe26e51802db0459" style="display: block;width: 0px;height: 0px;"></div></div>
+            <div class="second-recommend-box recommend-box">
+<div class="recommend-item-box type_download clearfix" data-url="https://download.csdn.net/download/yangyangyangwang/3344588"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://download.csdn.net/download/yangyangyangwang/3344588"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://download.csdn.net/download/yangyangyangwang/3344588" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://download.csdn.net/download/yangyangyangwang/3344588"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">各种主流<em>音频</em><em>编码</em>（或<em>格式</em>）介绍</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">06-07</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://download.csdn.net/download/yangyangyangwang/3344588" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://download.csdn.net/download/yangyangyangwang/3344588"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">　<em>PCM</em> 脉冲<em>编码</em>调制是Pulse Code Modulation的缩写。前面的文字我们提到了<em>PCM</em>大致的工作流程，我们不需要关心<em>PCM</em>最终<em>编码</em>采用的是什么计算方式，我们只需要知道<em>PCM</em><em>编码</em>的<em>音频</em>流的优点和缺点就可以了。<em>PCM</em><em>编码</em>的最大的优点就是音质好，最大的缺点就是体积大。我们常见的Audio CD就采用了<em>PCM</em><em>编码</em>，一张光盘的容量只能容纳72分钟的音乐信息。</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+<a id="commentBox" name="commentBox"></a>
+<div class="comment-box">
+	<div class="comment-edit-box d-flex">
+		<a id="commentsedit"></a>
+		<div class="user-img">
+			<a href="https://blog.csdn.net/u013454589" target="_blank">
+				<img class="" src="https://profile.csdnimg.cn/2/1/6/3_u013454589">
+			</a>
+		</div>
+		<form id="commentform">
+			<img class="comment-sofa-flag" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentFlag@2x.png">
+      <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="优质评论可以帮助作者获得更高权重" maxlength="1000"></textarea>
+			<div class="comment-emoticon"><img class="comment-emoticon-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/emoticon.png" alt="表情包"></div> 
+      <span class="comment-emoticon-tip">插入表情</span>
+      <div class="comment-emoticon-box">
+        <div class="comment-emoticon-img-box"></div>
+			</div>
+      <div class="opt-box">
+				<div id="ubbtools" class="add_code">
+					<a href="#insertcode" code="code" target="_self"><i class="icon iconfont icon-daima"></i></a>
+				</div>
+				<input type="hidden" id="comment_replyId" name="comment_replyId">
+				<input type="hidden" id="article_id" name="article_id" value="38469465">
+				<input type="hidden" id="comment_userId" name="comment_userId" value="">
+				<input type="hidden" id="commentId" name="commentId" value="">
+				<div class="dropdown" id="myDrap">
+					<a class="dropdown-face d-flex align-items-center" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+						<div class="txt-selected text-truncate">添加代码片</div>
+						<svg class="icon d-block" width="200px" height="100.00px" viewBox="0 0 2048 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path  d="M597.33333292 298.666667h853.333334L1023.99999992 725.333333 597.33333292 298.666667z"  /></svg>
+					</a>
+					<ul class="dropdown-menu" id="commentCode" aria-labelledby="drop4">
+						<li><a data-code="html">HTML/XML</a></li>
+						<li><a data-code="objc">objective-c</a></li>
+						<li><a data-code="ruby">Ruby</a></li>
+						<li><a data-code="php">PHP</a></li>
+						<li><a data-code="csharp">C</a></li>
+						<li><a data-code="cpp">C++</a></li>
+						<li><a data-code="javascript">JavaScript</a></li>
+						<li><a data-code="python">Python</a></li>
+						<li><a data-code="java">Java</a></li>
+						<li><a data-code="css">CSS</a></li>
+						<li><a data-code="sql">SQL</a></li>
+						<li><a data-code="plain">其它</a></li>
+					</ul>
+				</div>
+				<div class="right-box" id="rightBox" data-type="2">
+							<span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span>
+							<a data-report-click='{"mod":"1582594662_003","spm":"1001.2101.3001.4227","ab":"new"}'><input type="submit"
+									class="btn btn-sm btn-comment" value="发表评论"></a>
+				</div>
+			</div>
+		</form>
+		<input type="button" class="bt-comment-show" value="评论">
+	</div>
+	<div class="comment-list-container">
+		<a id="comments"></a>
+		<div class="comment-list-box">
+		</div>
+		<div id="commentPage" class="pagination-box d-none"></div>
+		<div class="opt-box text-center">
+			<div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div>
+		</div>
+	</div>
+</div>            <div class="recommend-box insert-baidu-box">
+                <div class="recommend-item-box clearfix" style="display:none"></div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_43557947/article/details/107979665"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/weixin_43557947/article/details/107979665"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_43557947/article/details/107979665" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/weixin_43557947/article/details/107979665"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em><em>编码</em>译码</div>
+					<div class="tag">最新发布</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_43557947" target="_blank"><span class="blog-title">weixin_43557947的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-13</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1865
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_43557947/article/details/107979665" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/weixin_43557947/article/details/107979665"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>PCM</em><em>编码</em>
+<em>编码</em>过程：符号位，段落码，段内码。符号位简单，段内码转为bin就可以
+段内码下图就自己看看就好
+
+![段内码对照表](https://img-blog.csdnimg.cn/20200813143627759.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MzU1Nzk0Nw==,size_16,color_FFFF</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/fujx333/2936795"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"3","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/fujx333/2936795"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/fujx333/2936795" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"3","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/fujx333/2936795"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em>的<em>编码</em>及其解码</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">12-25</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/fujx333/2936795" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"3","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/fujx333/2936795"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">产生长度为1000的标准正态分布的随机信号，画出时域波形及频谱；
+采用u=255的非均匀<em>PCM</em><em>编码</em>，每符号为8bit，画输入-输出关系图；
+计算信号量化噪声比（SQNR）；
+信道误码率为10-3；
+解码，并画出u律反变换后的信号时域波形及频谱。</div>
+			</a>
+		</div>
+	</div>
+</div>
+		<dl id="recommend-item-box-tow" class="recommend-item-box type_blog clearfix">
+			
+		</dl>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/c0ffee1982/article/details/1892319"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"4","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/c0ffee1982/article/details/1892319"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/c0ffee1982/article/details/1892319" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"4","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/c0ffee1982/article/details/1892319"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em>文件<em>格式</em>简介（比较专业）</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/c0ffee1982" target="_blank"><span class="blog-title">c0ffee1982的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-19</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					4534
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/c0ffee1982/article/details/1892319" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"4","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/c0ffee1982/article/details/1892319"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>PCM</em>文件：模拟<em>音频</em>信号经模数转换（A/D变换）直接形成的二进制序列，该文件没有附加的文件头和文件结束标志。Windows的Convert工具可以把<em>PCM</em><em>音频</em><em>格式</em>的文件转换成Microsoft的WAV<em>格式</em>的文件。&nbsp;&nbsp;&nbsp;脉冲<em>编码</em>调制<em>PCM</em>文件<em>格式</em>简介&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 将<em>音频</em>数字化，其实就是将声音数字化。最常见的方式是透过脉冲<em>编码</em>调制<em>PCM</em>(Pulse Code Modulation) 。运</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/lavender1626/10433312"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-5.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"5","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/lavender1626/10433312"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/lavender1626/10433312" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-5.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"5","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/lavender1626/10433312"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-5.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">Android录音，<em>PCM</em><em>音频</em><em>编码</em>AAC<em>格式</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">05-23</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/lavender1626/10433312" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-5.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"5","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/lavender1626/10433312"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-5.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">使用android AudioRecord录制<em>PCM</em><em>音频</em>，并使用MediaCodec<em>编码</em>成AAC<em>格式</em>，保存在手机内存</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/Calcular/article/details/52515360"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/Calcular/article/details/52515360"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/Calcular/article/details/52515360" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/Calcular/article/details/52515360"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em><em>编码</em></div>
+					<div class="tag">热门推荐</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/Calcular" target="_blank"><span class="blog-title">Calcular的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">09-12</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/Calcular/article/details/52515360" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/Calcular/article/details/52515360"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">通常把模拟信号抽样、量化，直到转化为二进制符号的基本过程称为脉冲<em>编码</em>制（Pulse Code Modulation <em>PCM</em>）,简称脉码调制
+
+&nbsp;
+
+
+
+&nbsp;
+
+
+
+&nbsp;
+
+》自然二进制码和折叠二进制码
+
+按照自然规律排列的0，1，10，11，110，111，1000，1001.。。为自然二进制码，对电话号码<em>编码</em>常用折叠二进制码
+
+<em>编码</em>方式如下图
+
+
+
+折叠码除了能表示负极性，而且误码对于小电压影响较小...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://andyli.blog.csdn.net/article/details/78914566"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://andyli.blog.csdn.net/article/details/78914566"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://andyli.blog.csdn.net/article/details/78914566" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://andyli.blog.csdn.net/article/details/78914566"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em><em>音频</em><em>编码</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/m0_37263637" target="_blank"><span class="blog-title">Andy Tools</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-27</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://andyli.blog.csdn.net/article/details/78914566" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://andyli.blog.csdn.net/article/details/78914566"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>PCM</em>语音<em>编码</em>主要过程是将语音等模拟信号每隔一定时间进行取样，使其离散化，同时将抽样值按分层单位四舍五入取整量化，同时将抽样值按一组二进制码来表示抽样脉冲的幅值。也就是说语音信号最终以脉冲形式<em>编码</em>。有一定电子基础的都知道传感器采集<em>音频</em>信号是模拟量，而我们实际传输过程中使用的是数字量。而这就涉及到模拟转数字的过程，下面将进行介绍。1 <em>PCM</em><em>编码</em>原理<em>PCM</em> 脉冲<em>编码</em>调制是Pulse Code Modul</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/tantion/article/details/82982020"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/tantion/article/details/82982020"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/tantion/article/details/82982020" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/tantion/article/details/82982020"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em><em>编码</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/tantion" target="_blank"><span class="blog-title">T的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-09</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2862
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/tantion/article/details/82982020" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/tantion/article/details/82982020"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>PCM</em>&nbsp;脉冲<em>编码</em>调制是Pulse Code Modulation的缩写。脉冲<em>编码</em>调制是数字通信的<em>编码</em>方式之一。主要过程是将话音、图像等模拟信号每隔一定时间进行取样，使其离散化，同时将抽样值按分层单位四舍五入取整量化，同时将抽样值按一组二进制码来表示抽样脉冲的幅值。（原始<em>音频</em>数据，数据量很大，一般要经过压缩（aac）后再使用）
+
+&nbsp;
+
+采样率和采样大小。单位：（位/bit）
+
+采样率：
+
+声音其实是...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/wang_h_b/10454717"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-9.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"9","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/wang_h_b/10454717"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/wang_h_b/10454717" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-9.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"9","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/wang_h_b/10454717"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-9.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-9.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em><em>格式</em><em>音频</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">06-02</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/wang_h_b/10454717" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-9.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"9","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/wang_h_b/10454717"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-9.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-9.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">北京北京8k16bits单声道.<em>pcm</em>
+
+冰雨片段8k16bit单声道.<em>pcm</em>
+冰雨片段32k16bit单声道.<em>pcm</em>
+冰雨片段48k16bit单声道.<em>pcm</em>
+浪花一朵朵片段8k16bit单声道.<em>pcm</em>
+浪花一朵朵片段32k16bit单声道.<em>pcm</em>
+浪花一朵朵片段48k16bit单声道.<em>pcm</em>
+
+注：由于在设备上录制，《冰雨》和《浪花一朵朵》中有一定的杂音，介意者谨慎！
+    《北京北京》无杂音。</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/u011913417/article/details/102372984"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~essearch~vector-10.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"10","strategy":"2~default~essearch~vector","dest":"https://blog.csdn.net/u011913417/article/details/102372984"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/u011913417/article/details/102372984" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~essearch~vector-10.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"10","strategy":"2~default~essearch~vector","dest":"https://blog.csdn.net/u011913417/article/details/102372984"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-10.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-10.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">G711<em>音频</em><em>编码格式</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/u011913417" target="_blank"><span class="blog-title">Be busy living or busy dying</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1800
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/u011913417/article/details/102372984" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~essearch~vector-10.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"10","strategy":"2~default~essearch~vector","dest":"https://blog.csdn.net/u011913417/article/details/102372984"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-10.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-10.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">&emsp;&emsp;最近工作中遇到了G711a<em>音频</em><em>编码</em>，之前只用到wav和<em>pcm</em>，特写此文对G711<em>格式</em>了解一番。
+文章目录<em>音频</em>保存<em>格式</em>采样和量化G711简介参考来源
+<em>音频</em>保存<em>格式</em>
+采样和量化
+&emsp;&emsp;首先需要明确的两个概念，&ldquo;采样&rdquo;和&ldquo;量化&rdquo;。对于给定的一个波形，采样是从时间上将连续变成离散的过程，而采样得到的值，可能还是不能够用给定的位宽（比如8bit）来表示，这就需要经过量化，即从我们能够表示的离散值里面找一个...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/gyley2/5066141"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-11.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"11","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/gyley2/5066141"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/gyley2/5066141" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-11.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"11","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/gyley2/5066141"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-11.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-11.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>pcm</em><em>音频</em>转aac</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">02-16</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/gyley2/5066141" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-11.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"11","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/gyley2/5066141"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-11.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-11.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>pcm</em><em>音频</em>转aac，代码包里有编译方法。linux平台下编译通过</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/ob7uuui6/10992641"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-12.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"12","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/ob7uuui6/10992641"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/ob7uuui6/10992641" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-12.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"12","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/ob7uuui6/10992641"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-12.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-12.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>音频</em>g711 转  <em>pcm</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">03-04</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/ob7uuui6/10992641" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~essearch~vector-12.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"12","strategy":"2~default~essearch~vector","dest":"http://download.csdn.net/download/ob7uuui6/10992641"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-12.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7Eessearch%7Evector-12.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">ffmpeg在码流转换上面实在是强大，今天实验了一下把G711<em>音频</em>专成<em>PCM</em>的<em>音频</em>，并最终实验成功，分享源码</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/pds574834424/article/details/78174097"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~essearch~vector-13.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"13","strategy":"2~default~essearch~vector","dest":"https://blog.csdn.net/pds574834424/article/details/78174097"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/pds574834424/article/details/78174097" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~essearch~vector-13.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"13","strategy":"2~default~essearch~vector","dest":"https://blog.csdn.net/pds574834424/article/details/78174097"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-13.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-13.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>音频</em><em>PCM</em>知识整理</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/pds574834424" target="_blank"><span class="blog-title">pds574834424的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/pds574834424/article/details/78174097" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~essearch~vector-13.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"13","strategy":"2~default~essearch~vector","dest":"https://blog.csdn.net/pds574834424/article/details/78174097"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-13.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7Eessearch%7Evector-13.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">简介
+
+<em>PCM</em>(Pulse Code Modulation)，脉冲<em>编码</em>调制。人耳听到的是模拟信号，<em>PCM</em>是把声音从模拟信号转化为数字信号的技术。原理是用一个固定的频率对模拟信号进行采样，采样后的信号在波形上看就像一串连续的幅值不一的脉冲(脉搏似的短暂起伏的电冲击)，把这些脉冲的幅值按一定精度进行量化，这些量化后的数值被连续的输出、传输、处理或记录到存储介质中，所有这些组成了数字<em>音频</em>的产生过程(抽样</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/g0415shenw/10557418"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-14.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"14","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/g0415shenw/10557418"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/g0415shenw/10557418" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-14.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"14","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/g0415shenw/10557418"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-14.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-14.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">wav文件封装<em>pcm</em><em>编码格式</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">07-22</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/g0415shenw/10557418" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-14.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"14","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/g0415shenw/10557418"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-14.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-14.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">具体wav文件分析见博客：
+https://blog.csdn.net/g0415shenw/article/details/81158328</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/cto_1649900265/10244998"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-15.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"15","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/cto_1649900265/10244998"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/cto_1649900265/10244998" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-15.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"15","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/cto_1649900265/10244998"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-15.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-15.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>音频</em><em>PCM</em>播放</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">02-08</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/cto_1649900265/10244998" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-15.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"15","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/cto_1649900265/10244998"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-15.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-15.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>音频</em><em>PCM</em>播放</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/danruhai/3576470"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-16.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"16","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/danruhai/3576470"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/danruhai/3576470" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-16.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"16","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/danruhai/3576470"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-16.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-16.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em><em>编码</em>的详细介绍</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">09-05</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/danruhai/3576470" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-16.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"16","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/danruhai/3576470"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-16.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-16.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>PCM</em><em>编码</em>详细介绍
+<em>PCM</em><em>编码</em>解码过程图</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_download clearfix" data-url="http://download.csdn.net/download/eafish/5025062"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-17.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"17","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/eafish/5025062"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="http://download.csdn.net/download/eafish/5025062" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-17.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"17","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/eafish/5025062"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-17.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-17.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em><em>编码</em><em>详解</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info display-flex">
+					<span class="info-block">01-24</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="http://download.csdn.net/download/eafish/5025062" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-download-2~default~CTRLIST~default-17.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"17","strategy":"2~default~CTRLIST~default","dest":"http://download.csdn.net/download/eafish/5025062"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-17.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-download-2%7Edefault%7ECTRLIST%7Edefault-17.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">语音压缩<em>编码</em>，<em>pcm</em><em>编码</em>类型
+脉冲<em>编码</em>调制(<em>PCM</em>)
+增量调制与自适应增量调制
+自适应差分脉冲<em>编码</em>调制（AD<em>PCM</em>）</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/qingkongyeyue/article/details/52122486"  data-report-view='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qingkongyeyue/article/details/52122486"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/qingkongyeyue/article/details/52122486" class="tit" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qingkongyeyue/article/details/52122486"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>PCM</em>语音<em>编码</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/qingkongyeyue" target="_blank"><span class="blog-title">qingkongyeyue的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-04</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/qingkongyeyue/article/details/52122486" target="_blank"  data-report-click='{"ab":"new","mod":"popu_387","extra":"{\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1634181775774_38944\"}","dist_request_id":"1634181775774_38944","ab_strategy":"ctrlist","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/qingkongyeyue/article/details/52122486"}'  data-report-query='utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">1、首先理解<em>PCM</em>是什么
+<em>PCM</em> 是Pulse Code Modulation的缩写,中文是脉冲<em>编码</em>调制，也就是说语音信号最终以脉冲形式<em>编码</em>。
+
+2、接下来理解一下<em>PCM</em><em>编码</em>的步骤
+（1）采样（采样频率f1必须大于或等于所传输的模拟信号的最高频率的2倍）
+（2）量化
+（3）<em>编码</em>
+
+
+3、<em>PCM</em>的A律13折线<em>编码</em>
+归纳：
+（1）y轴等分成8分，而x轴按1/2比逐次缩小化取值，总</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+            <div class="template-box">
+                <span>©️2021 CSDN</span>
+                <span>皮肤主题: 代码科技</span>
+                <span> 设计师:Amelia_0503</span>
+                <span>
+                    <a href="https://blog.csdn.net/" class="back-home c-blue c-blue-hover c-blue-focus">返回首页</a>
+                </span>
+            </div>
+<div class="blog-footer-bottom" style="margin-top:10px;"></div>
+<script src="https://g.csdnimg.cn/common/csdn-footer/csdn-footer.js" data-isfootertrack="false" type="text/javascript"></script>
+<script type="text/javascript">
+    window.csdn.csdnFooter.options = {
+        el: '.blog-footer-bottom',
+        type: 2
+    }
+</script>        </main>
+<aside class="blog_container_aside">
+	<div id="asideProfile" class="aside-box">
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://langyastudio.blog.csdn.net" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4121","dest":"https://langyastudio.blog.csdn.net","ab":"new"}'>
+                <img src="https://profile.csdnimg.cn/5/F/C/3_aoshilang2249" class="avatar_pic">
+            </a>
+        </div>
+        <div class="user-info d-flex flex-column profile-intro-name-box">
+            <div class="profile-intro-name-boxTop">
+                <a href="https://langyastudio.blog.csdn.net" class="" id="uid" title="郎涯技术" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4122","dest":"https://langyastudio.blog.csdn.net","ab":"new"}'>
+                    <span class="name " username="aoshilang2249">郎涯技术</span>
+                </a>
+                <span>
+                </span>
+                <span class="flag expert-blog">
+                <img class="identity" src="https://csdnimg.cn/release/blogv2/dist/mobile/img/expertNew.png" alt="">
+                <span class="bubble">CSDN认证博客专家</span>
+                </span>
+                <span class="flag company-blog">
+                <span class="bubble">CSDN认证企业博客</span>
+                </span>
+            </div>
+            <div class="profile-intro-name-boxFooter">
+                <span class="personal-home-page personal-home-years">码龄11年</span>
+                    <span class="personal-home-page">
+                    <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="企业员工">
+                    <img src="https://csdnimg.cn/identity/enstaf.png" alt="">
+                    企业员工
+                    </a>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="395">
+            <a href="https://langyastudio.blog.csdn.net" data-report-click='{"mod":"1598321000_001","spm":"1001.2101.3001.4310"}' data-report-query="t=1">  
+                <dt><span class="count">395</span></dt>
+                <dd class="font">原创</dd>
+            </a>
+        </dl>
+        <dl class="text-center" data-report-click='{"mod":"1598321000_002","spm":"1001.2101.3001.4311"}' title="537">
+            <a href="https://blog.csdn.net/rank/list/weekly" target="_blank">
+                <dt><span class="count">537</span></dt>
+                <dd class="font">周排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" title="815">
+            <a href="https://blog.csdn.net/rank/list/total" data-report-click='{"mod":"1598321000_003","spm":"1001.2101.3001.4312"}' target="_blank">
+                <dt><span class="count">815</span></dt>
+                <dd class="font">总排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" style="min-width:58px" title="2332529">  
+            <dt><span class="count">233万+</span></dt>
+            <dd>访问</dd>
+        </dl>
+        <dl class="text-center" title="7级,点击查看等级说明">
+            <dt><a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank">
+                <img class="level" src="https://csdnimg.cn/identity/blog7.png">
+            </a>
+            </dt>
+            <dd>等级</dd>
+        </dl>
+    </div>
+    <div class="item-rank"></div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="22054">
+            <dt><span class="count">2万+</span></dt>
+            <dd>积分</dd>
+        </dl>
+         <dl class="text-center" id="fanBox" title="5132">
+            <dt><span class="count" id="fan">5132</span></dt>
+            <dd>粉丝</dd>
+        </dl>
+        <dl class="text-center" title="571">
+            <dt><span class="count">571</span></dt>
+            <dd>获赞</dd>
+        </dl>
+        <dl class="text-center" title="324">
+            <dt><span class="count">324</span></dt>
+            <dd>评论</dd>
+        </dl>
+        <dl class="text-center" title="1361">
+            <dt><span class="count">1361</span></dt>
+            <dd>收藏</dd>
+        </dl>
+    </div>
+    <div class="aside-box-footer" data-report-view='{"spm":"3001.4296"}'>
+        <div class="badge-box d-flex">
+            <div class="badge d-flex">
+                <div class="icon-badge" title="GitHub">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/github@240.png" alt="GitHub">
+                    </div>
+                </div>
+                <div class="icon-badge" title="签到新秀">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/qiandao10@240.png" alt="签到新秀">
+                    </div>
+                </div>
+                <div class="icon-badge" title="阅读者勋章Lv2">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/yuedu7@240.png" alt="阅读者勋章Lv2">
+                    </div>
+                </div>
+                <div class="icon-badge" title="专栏达人">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/zhuanlandaren@240.png" alt="专栏达人">
+                    </div>
+                </div>
+                <div class="icon-badge" title="持之以恒">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/chizhiyiheng@240.png" alt="持之以恒">
+                    </div>
+                </div>
+                <div class="icon-badge" title="1024勋章">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/1024@240.png" alt="1024勋章">
+                    </div>
+                </div>
+                <div class="icon-badge" title="勤写标兵Lv2">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/qixiebiaobing2@240.png" alt="勤写标兵Lv2">
+                    </div>
+                </div>
+                <div class="icon-badge" title="原力新人">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/yuanli_xinren@240.png" alt="原力新人">
+                    </div>
+                </div>
+                <div class="icon-badge" title="分享王者">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/fenxiangwangzhe@240.png" alt="分享王者">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-intro-name-boxOpration">
+        <div class="opt-letter-watch-box">
+        <a class="bt-button personal-letter" href="https://im.csdn.net/chat/aoshilang2249" target="_blank" rel="noopener">私信</a>
+        </div>
+        <div class="opt-letter-watch-box"> 
+            <a class="personal-watch bt-button" id="btnAttent" >关注</a>  
+        </div>
+    </div>
+</div>
+<div id="asideSearchArticle" class="aside-box">
+	<div class="aside-content search-comter">
+    <div class="aside-search aside-search-blog">         
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章">
+        <a class="btn-search-blog">
+                    <img src="//csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042">
+        </a>
+    </div>
+    </div>
+</div>
+
+<div id="asideCustom" class="aside-box custom-box">
+    <h3 class="aside-title">联系我</h3>
+    <div class="aside-content clearfix">
+        专注分享后端、在线教育、视音频领域等技术。想和你一起&#xff0c;每天进步一点点&#xff0c;做一个不凡的人&#xff01;
+<br />
+<center> 
+ <p> <img src="https://img-blog.csdnimg.cn/20210628150651309.jpg" width="170" alt="访问我的公众号" /><br /> 公众号「郎涯技术」 </p>
+</center>
+    </div>
+</div>
+
+<div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list">
+			<li>
+				<a href="https://langyastudio.blog.csdn.net/article/details/78775204" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://langyastudio.blog.csdn.net/article/details/78775204","ab":"new"}'>
+				微信分享链接的缩略图和标题
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">61964</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://langyastudio.blog.csdn.net/article/details/111222105" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://langyastudio.blog.csdn.net/article/details/111222105","ab":"new"}'>
+				Fiddler 实现手机抓包详解
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">53110</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://langyastudio.blog.csdn.net/article/details/82012187" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://langyastudio.blog.csdn.net/article/details/82012187","ab":"new"}'>
+				HLS 直播协议m3u8详解
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">48892</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://langyastudio.blog.csdn.net/article/details/38469051" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://langyastudio.blog.csdn.net/article/details/38469051","ab":"new"}'>
+				音频属性详解(涉及采样率、通道数、位数、比特率、帧等)
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">41285</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://langyastudio.blog.csdn.net/article/details/45419941" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://langyastudio.blog.csdn.net/article/details/45419941","ab":"new"}'>
+				联想T430 安装msata接口的SSD固态硬盘
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">37011</span>
+                </a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="asideCategory" class="aside-box flexible-box">
+    <h3 class="aside-title">分类专栏</h3>
+    <div class="aside-content">
+        <ul>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_8287232.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_8287232.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20190828113750582.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">视频教程/资讯</span>
+                    </span>
+                    <span class="count float-right">7篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444277.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444277.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827135522709.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">Java</span>
+                    </span>
+                    <span class="count float-right">17篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_8250939.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_8250939.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/2020082713585598.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">Spring Boot</span>
+                    </span>
+                    <span class="count float-right">14篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2679761.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2679761.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/2020102310205570.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">PHP</span>
+                    </span>
+                    <span class="count float-right">71篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444271.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444271.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827141140595.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">C/C++</span>
+                    </span>
+                    <span class="count float-right">17篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_9271367.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_9271367.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20210428101747132.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">C#/WPF</span>
+                    </span>
+                    <span class="count float-right">49篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_9271302.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_9271302.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/2021042810194141.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">C#调用C++</span>
+                    </span>
+                    <span class="count float-right">20篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444293.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444293.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827141938500.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">中间件</span>
+                    </span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444343.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444343.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201023103418428.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">数据库</span>
+                    </span>
+                    <span class="count float-right">8篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_3162579.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_3162579.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/2020102310355982.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">缓存/消息</span>
+                    </span>
+                    <span class="count float-right">4篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_11273541.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_11273541.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20210809200849311.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">RPC/Netty/Task</span>
+                    </span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079967.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079967.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201023105229694.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">Apache/Nginx/Tomcat</span>
+                    </span>
+                    <span class="count float-right">15篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_10679105.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_10679105.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/202012211630365.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">架构设计</span>
+                    </span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2694085.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2694085.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827141747743.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">分布式/高可用</span>
+                    </span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_11273721.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_11273721.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20210809211258294.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">数据结构/算法</span>
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444291.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444291.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827142216663.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">音视频/图像</span>
+                    </span>
+                    <span class="count float-right">34篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079968.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079968.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20190918135101160.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">直播</span>
+                    </span>
+                    <span class="count float-right">18篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079966.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079966.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827143756645.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">系统/网络/运维</span>
+                    </span>
+                    <span class="count float-right">17篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6883115.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6883115.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201023103911196.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">Docker/Jenkins/Ansible</span>
+                    </span>
+                    <span class="count float-right">5篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_9271368.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_9271368.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20181210095006849.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">CentOS/Windows/Mac</span>
+                    </span>
+                    <span class="count float-right">53篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444383.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444383.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827141609816.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">Web全栈</span>
+                    </span>
+                    <span class="count float-right">54篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079950.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079950.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827143406601.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">研发管理</span>
+                    </span>
+                    <span class="count float-right">21篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079957.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079957.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20190918140037908.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">产品/项目/测试</span>
+                    </span>
+                    <span class="count float-right">8篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444303.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444303.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201023105450755.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">软件工具</span>
+                    </span>
+                    <span class="count float-right">53篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444313.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444313.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20200827143846678.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">程序人生</span>
+                    </span>
+                    <span class="count float-right">9篇</span>
+                </a>
+            </li>
+            <li class="indentation">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_3065927.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_3065927.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20190927151124774.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">生活随笔</span>
+                    </span>
+                    <span class="count float-right">31篇</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p class="text-center">
+        <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a>
+    </p>
+</div>
+<div id="asideNewComments" class="aside-box">
+    <h3 class="aside-title">最新评论</h3>
+    <div class="aside-content">
+        <ul class="newcomment-list">
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://langyastudio.blog.csdn.net/article/details/111222105#comments_18573183" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18573183","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18573183","ab":"new"}'>Fiddler 实现手机抓包详解</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/m0_55140805" class="user-name" target="_blank">m0_55140805: </a>
+                    <span class="code-comments">一样样的</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://langyastudio.blog.csdn.net/article/details/111222105#comments_18462393" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18462393","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18462393","ab":"new"}'>Fiddler 实现手机抓包详解</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/m0_62430740" class="user-name" target="_blank">m0_62430740: </a>
+                    <span class="code-comments">就是在同一局域网，手机上打不开</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://langyastudio.blog.csdn.net/article/details/111222105#comments_18436555" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18436555","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18436555","ab":"new"}'>Fiddler 实现手机抓包详解</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/qq_55475211" class="user-name" target="_blank">qq_55475211: </a>
+                    <span class="code-comments">什么额外操作呀</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://langyastudio.blog.csdn.net/article/details/111222105#comments_18429194" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18429194","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/111222105#comments_18429194","ab":"new"}'>Fiddler 实现手机抓包详解</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/qq_43302492" class="user-name" target="_blank">qq_43302492: </a>
+                    <span class="code-comments">端口搞错了？？，电脑和手机需要在同一局域网内</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://langyastudio.blog.csdn.net/article/details/49429299#comments_18352252" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/49429299#comments_18352252","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://langyastudio.blog.csdn.net/article/details/49429299#comments_18352252","ab":"new"}'>Linux-CentOS 安装XPDF</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/LoveYou123520" class="user-name" target="_blank">LoveYou123520: </a>
+                    <span class="code-comments">window下乱码问题可以解决，在linux下存在乱码问题</span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="asideNewNps" class="aside-box">
+    <h3 class="aside-title">您愿意向朋友推荐“博客详情页”吗？</h3>
+    <div class="aside-content">
+        <ul class="newnps-list">
+            <li class="newnps-item" data-type="强烈不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel1.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey1.png" alt="">
+                </div>
+                <div class="newnps-text">强烈不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel2.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey2.png" alt="">
+                </div>
+                <div class="newnps-text">不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="一般般">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel3.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey3.png" alt="">
+                </div>
+                <div class="newnps-text">一般般</div>
+            </li>
+            <li class="newnps-item" data-type="推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel4.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey4.png" alt="">
+                </div>
+                <div class="newnps-text">推荐</div>
+            </li>
+            <li class="newnps-item" data-type="强烈推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel5.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey5.png" alt="">
+                </div>
+                <div class="newnps-text">强烈推荐</div>
+            </li>
+        </ul>
+        <div class="newnps-form-box">
+        <div class="newnps-form">
+            <input type="text" placeholder="请输入建议或反馈后点击提交" class="newnps-input">
+            <span class="newnps-btn">提交</span>
+        </div>
+        </div>
+    </div>
+</div>
+<div id="asideArchive" class="aside-box" style="display:block!important; width:300px;">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix">
+            <li class="clearfix">
+            <a href="https://langyastudio.blog.csdn.net/article/details/120185665" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://langyastudio.blog.csdn.net/article/details/120185665","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://langyastudio.blog.csdn.net/article/details/120185665","ab":"new"}'>「springboot 2.x 系列」validation数据校验详细说明</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://langyastudio.blog.csdn.net/article/details/120157946" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://langyastudio.blog.csdn.net/article/details/120157946","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://langyastudio.blog.csdn.net/article/details/120157946","ab":"new"}'>「springboot 2.x 系列」如何彻底解决跨域问题</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://langyastudio.blog.csdn.net/article/details/120150367" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://langyastudio.blog.csdn.net/article/details/120150367","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://langyastudio.blog.csdn.net/article/details/120150367","ab":"new"}'>「springboot 2.x 系列」exception全局异常处理</a>
+            </li>
+        </ul>
+        <div class="archive-bar"></div>
+        <div class="archive-box">
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2021/09" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2021年</span><span class="num">19篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2020/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2020年</span><span class="num">17篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2019/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2019年</span><span class="num">28篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2018/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2018年</span><span class="num">26篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2017/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2017年</span><span class="num">43篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2016/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2016年</span><span class="num">86篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2015/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2015年</span><span class="num">206篇</span></a></div>
+                <div class="archive-list-item"><a href="https://langyastudio.blog.csdn.net/article/month/2014/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2014年</span><span class="num">97篇</span></a></div>
+        </div>
+    </div>
+</div>
+	<div id="footerRightAds" class="isShowFooterAds">
+		<div class="aside-box">
+			<div id="kp_box_57" data-pid="57"><div class="_d73ej4ar8ao"></div>
+<script type="text/javascript">
+    (window.slotbydup = window.slotbydup || []).push({
+        id: "u3163270",
+        container: "_d73ej4ar8ao",
+        async: true
+    });
+</script>
+<!-- 多条广告如下脚本只需引入一次 -->
+<script type="text/javascript" src="//cpro.baidustatic.com/cpro/ui/cm.js" async="async" defer="defer" >
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=57&a=77&c=0&k=&spm=1001.2101.3001.5001&d=1&t=3&u=4d1a224a383e45a695ff01044271105c" style="display: block;width: 0px;height: 0px;"></div>
+		</div>
+	</div>
+    <!-- 详情页显示目录 -->
+<!--文章目录-->
+<div id="asidedirectory" class="aside-box">
+    <div class='groupfile' id="directory">
+        <h3 class="aside-title">目录</h3>
+        <div class="align-items-stretch group_item">
+            <div class="pos-box">
+            <div class="scroll-box">
+                <div class="toc-box"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</aside>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).parents("p.text-center").remove();
+	})
+</script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-tooltip/2.5/user-tooltip.js"></script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-medal/1.0.7/user-medal.js"></script>    </div>
+<div class="recommend-right  align-items-stretch clearfix" id="rightAside" data-type="recommend">
+    <aside class="recommend-right_aside">
+        <div id="recommend-right" >
+                        <div class='flex-column aside-box groupfile' id="groupfile">
+                <div class="groupfile-div">
+                <h3 class="aside-title">目录</h3>
+                <div class="align-items-stretch group_item">
+                    <div class="pos-box">
+                        <div class="scroll-box">
+                            <div class="toc-box"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div id="recommendAdBox">
+                    <div id="kp_box_479" data-pid="479"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PC-博客详情页-右侧视窗（自适应） -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="3484057394"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=479&a=3267&c=0&k=&spm=1001.2101.3001.4834&d=1&t=3&u=d91bd357c07544a1be170221cd266365" style="display: block;width: 0px;height: 0px;"></div>
+                </div>
+            <div class='aside-box kind_person d-flex flex-column'>
+                    <h3 class="aside-title">分类专栏</h3>
+                    <div class="align-items-stretch kindof_item" id="kind_person_column">
+                        <div class="aside-content">
+                            <ul>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_8287232.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_8287232.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20190828113750582.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">视频教程/资讯</span>
+                                        </span>
+                                        <span class="count float-right">7篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444277.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444277.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827135522709.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">Java</span>
+                                        </span>
+                                        <span class="count float-right">17篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_8250939.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_8250939.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/2020082713585598.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">Spring Boot</span>
+                                        </span>
+                                        <span class="count float-right">14篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2679761.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2679761.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/2020102310205570.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">PHP</span>
+                                        </span>
+                                        <span class="count float-right">71篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444271.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444271.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827141140595.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">C/C++</span>
+                                        </span>
+                                        <span class="count float-right">17篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_9271367.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_9271367.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20210428101747132.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">C#/WPF</span>
+                                        </span>
+                                        <span class="count float-right">49篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_9271302.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_9271302.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/2021042810194141.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">C#调用C++</span>
+                                        </span>
+                                        <span class="count float-right">20篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444293.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444293.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827141938500.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">中间件</span>
+                                        </span>
+                                        <span class="count float-right">2篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444343.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444343.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201023103418428.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">数据库</span>
+                                        </span>
+                                        <span class="count float-right">8篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_3162579.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_3162579.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/2020102310355982.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">缓存/消息</span>
+                                        </span>
+                                        <span class="count float-right">4篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_11273541.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_11273541.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20210809200849311.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">RPC/Netty/Task</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079967.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079967.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201023105229694.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">Apache/Nginx/Tomcat</span>
+                                        </span>
+                                        <span class="count float-right">15篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_10679105.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_10679105.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/202012211630365.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">架构设计</span>
+                                        </span>
+                                        <span class="count float-right">2篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2694085.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2694085.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827141747743.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">分布式/高可用</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_11273721.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_11273721.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20210809211258294.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">数据结构/算法</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444291.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444291.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827142216663.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">音视频/图像</span>
+                                        </span>
+                                        <span class="count float-right">34篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079968.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079968.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20190918135101160.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">直播</span>
+                                        </span>
+                                        <span class="count float-right">18篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079966.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079966.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827143756645.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">系统/网络/运维</span>
+                                        </span>
+                                        <span class="count float-right">17篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6883115.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6883115.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201023103911196.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">Docker/Jenkins/Ansible</span>
+                                        </span>
+                                        <span class="count float-right">5篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_9271368.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_9271368.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20181210095006849.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">CentOS/Windows/Mac</span>
+                                        </span>
+                                        <span class="count float-right">53篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444383.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444383.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827141609816.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">Web全栈</span>
+                                        </span>
+                                        <span class="count float-right">54篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079950.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079950.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827143406601.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">研发管理</span>
+                                        </span>
+                                        <span class="count float-right">21篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_6079957.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_6079957.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20190918140037908.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">产品/项目/测试</span>
+                                        </span>
+                                        <span class="count float-right">8篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444303.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444303.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201023105450755.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">软件工具</span>
+                                        </span>
+                                        <span class="count float-right">53篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_2444313.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_2444313.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20200827143846678.jpg?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">程序人生</span>
+                                        </span>
+                                        <span class="count float-right">9篇</span>
+                                    </a>
+                                </li>
+                                <li class="indentation">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/aoshilang2249/category_3065927.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/aoshilang2249/category_3065927.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20190927151124774.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">生活随笔</span>
+                                        </span>
+                                        <span class="count float-right">31篇</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</div>
+<div class="mask-dark"></div>
+<script>
+    var articleId = 38469465;
+    var commentscount = 0;
+    var curentUrl = "https://blog.csdn.net/aoshilang2249/article/details/38469465";
+    var myUrl = "https://my.csdn.net/";
+    var highlight = ["pcm","编码格式","pc","编码","详解","cm","格式","音频"];//高亮数组
+    var isRecommendModule = true;
+    var isBaiduPre = true;
+    var baiduCount = 2;
+    var share_card_url = "https://blog.csdn.net/aoshilang2249/article/shareArticleCardPage?article_id=38469465"
+	var articleType = 1;
+    var baiduKey = "pcm编码";
+    var userNewReport = false;
+    var needInsertBaidu = true;
+    var recommendRegularDomainArr = ["blog.csdn.net/.+/article/details/","download.csdn.net/download/","edu.csdn.net/course/detail/","ask.csdn.net/questions/","bbs.csdn.net/topics/","www.csdn.net/gather_.+/"]
+    var codeStyle = "github-gist";
+    var baiduSearchType = "baidulandingword";
+    var canRead = true;
+    var blogMoveHomeArticle = false;
+    var showPcWindowAd = false;
+    var showSearchText = "";
+    var linkPage = true;
+    var articleSource = 1;
+    var articleReport = '{"pid": "blog", "spm":"1001.2101"}';
+    var isShowToQuestion = false;
+    var baiduSearchChannel = 'pc_relevant'
+    var baiduSearchIdentification = '.no_search_link'
+    var distRequestId = '1634181775774_38944'
+    var initRewardObject = {
+        giver: "u013454589",
+        anchor: "aoshilang2249",
+        articleId: "38469465",
+        sign: "6ac1d3c40e3023b86a8831c2e462e832",
+    }
+</script>
+<script src="https://csdnimg.cn/public/sandalstrap/1.4/js/sandalstrap.min.js"></script>
+<div class="skin-boxshadow"></div>
+<div class="directory-boxshadow"></div>
+<div class="pay-code">
+    <div class="pay-money">实付<span class="pay-money-span" data-nowprice='' data-oldprice=''>元</span></div>
+    <div class="content-blance"><a class="blance-bt" href="javascript:;">使用余额支付</a></div>
+    <div class="content-code">
+    <div id="payCode" data-id="">
+            <div class="renovate">
+                <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png">
+                <span>点击重新获取</span>
+            </div>
+        </div>
+        <div class="pay-style"><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span><span class="text">扫码支付</span></div>
+    </div>
+    <div class="bt-close"><svg t="1567152543821" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"><defs><style type="text/css"></style></defs><path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path></svg></div>
+    <!-- <p style="margin-top: 8px;font-size: 14px;" class="text-center">支付成功即可阅读</p> -->
+    <div class="pay-balance">
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span>
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span>  
+    <div class="pay-code-tile">
+        <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt="">
+        <div class="pay-code-content">
+            <div class="span">
+                <p class="title">抵扣说明：</p>
+                <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、C币套餐、付费专栏及课程。</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span  >余额充值</span></a>
+</div>
+<div style="display:none;">
+	<img src="" onerror='setTimeout(function(){if(!/(csdn.net|iteye.com|baiducontent.com|googleusercontent.com|360webcache.com|sogoucdn.com|bingj.com|baidu.com)$/.test(window.location.hostname)){window.location.href="\x68\x74\x74\x70\x73\x3a\x2f\x2f\x77\x77\x77\x2e\x63\x73\x64\x6e\x2e\x6e\x65\x74"}},3000);'>
+</div>
+</body>
+    <!-- 富文本柱状图  -->
+	<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/chart.css"/>
+	<script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/lib/chart.min.js"></script>
+    <script type="text/javascript" src="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/chart/widget2chart.js"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_highlight-db1e81323a.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_common-6a9acd4c62.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/edit_copy_code-1320dfe85c.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/github-gist.css">
+<script>
+ // 全局声明
+ if (window.csdn === undefined) {
+      window.csdn = {};
+    }
+    window.csdn.sideToolbar = {
+        options: {
+            report:{
+                isShow: true,
+            },
+            qr: {
+                isShow: false,
+            },
+            guide: {
+                isShow: true
+            }
+        }
+    }
+    $(function(){
+        $(document).on('click',"a.option-box[data-type='report']",function() {
+            window.csdn.userLogin.loadAjax(function(res){
+                if(userNewReport){
+                     window.csdn.feedback({
+                        "type":'blog',
+                        "rtype":'article',
+                        "rid":articleId,
+                        "reportedName":username,
+                        "title":articleTitle,
+                        "contentUrl":articleDetailUrl,
+                        "callback":function(){
+                            showToast({
+                                text: "感谢您的举报，我们会尽快审核！",
+                                bottom: '10%', //toast距离页面底部的距离
+                                zindex: 9000, //为了防止被其他控件遮盖，z-index默认为2
+                                speed: 500, //toast的显示速度
+                                time: 1500//toast显示多久以后消失
+                            });
+                        }
+                     })
+                }else{
+                    showReport(false,articleTitles);
+                }
+            })
+        });
+    })
+</script>
+    <script src="https://g.csdnimg.cn/baidu-search/1.0.9/baidu-search.js"  type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/download/old_static/js/qrcode.js"></script>
+<script src="https://g.csdnimg.cn/lib/qrcode/1.0.0/qrcode.min.js"></script>
+<script src="https://g.csdnimg.cn/user-ordercart/3.0.0/user-ordercart.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/user-ordertip/4.1.3/user-ordertip.js" type="text/javascript" ></script>
+<script src="https://g.csdnimg.cn/order-payment/3.0.0/order-payment.js" type="text/javascript" ></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/common-24fa4dcb20.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/detail-9f7ba6959d.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/column-f871ff2a6c.min.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/side-toolbar/3.0/side-toolbar.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/copyright/1.0.4/copyright.js" type="text/javascript"></script>
+<script>
+    $(".MathJax").remove();
+    if ($('div.markdown_views pre.prettyprint code.hljs').length > 0) {
+        $('div.markdown_views')[0].className = 'markdown_views';
+    }
+</script>
+<script type="text/javascript" src="https://csdnimg.cn/release/blog_mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            "HTML-CSS": {
+                    linebreaks: { automatic: true, width: "94%container" },
+                    imageFont: null
+            },
+            tex2jax: {
+                preview: "none",
+                ignoreClass:"title-article"
+            },
+            mml2jax: {
+                preview: 'none'
+            }
+    });
+</script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/common/csdn-login-box/csdn-login-box.js"></script></html>
