@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>使用graphviz绘图 | I Code It</title>
+<meta name="keywords" content="" />
+<meta name="description" content="2015年11月10日更新 在实践中，我又发现了一些graphviz的有趣的特性，比如时序图，rank以及图片节点等。在这里一并更新。
+##前言
+日常的开发工作中，为代码添加注释是代码可维护性的一个重要方面，但是仅仅提供注释是不够的，特别是当系统功能越来越复杂，涉及到的模块越来越多的时候，仅仅靠代码就很难从宏观的层次去理解。因此我们需要图例的支持，图例不仅仅包含功能之间的交互，也可以包含复杂的数据结构的示意图，数据流向等。
+但是，常用的UML建模工具，如Visio等都略显复杂，且体积庞大。对于开发人员，特别是后台开发人员来说，命令行，脚本才是最友好的，而图形界面会很大程度的限制开发效率。相对于鼠标，键盘才是开发人员最好的朋友。
+###graphviz简介
+本文介绍一个高效而简洁的绘图工具graphviz。graphviz是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。
+graphviz中包含了众多的布局器：
+ dot 默认布局方式，主要用于有向图 neato 基于spring-model(又称force-based)算法 twopi 径向布局 circo 圆环布局 fdp 用于无向图  graphviz的设计初衷是对有向图/无向图等进行自动布局，开发人员使用dot脚本定义图形元素，然后选择算法进行布局，最终导出结果。
+首先，在dot脚本中定义图的顶点和边，顶点和边都具有各自的属性，比如形状，颜色，填充模式，字体，样式等。然后使用合适的布局算法进行布局。布局算法除了绘制各个顶点和边之外，需要尽可能的将顶点均匀的分布在画布上，并且尽可能的减少边的交叉(如果交叉过多，就很难看清楚顶点之间的关系了)。所以使用graphviz的一般流程为：
+ 定义一个图，并向图中添加需要的顶点和边 为顶点和边添加样式 使用布局引擎进行绘制  一旦熟悉这种开发模式，就可以快速的将你的想法绘制出来。配合一个良好的编辑器(vim/emacs)等，可以极大的提高开发效率，与常见的GUI应用的所见即所得模式对应，此模式称为所思即所得。比如在我的机器上，使用Sublime Text 编辑dot脚本，然后将F7/Cmd-B映射为调用dot引擎去绘制当前脚本，并打开一个新的窗口来显示运行结果：
+对于开发人员而言，经常会用到的图形绘制可能包括：函数调用关系，一个复杂的数据结构，系统的模块组成，抽象语法树等。
+###基础知识
+graphviz包含3中元素，图，顶点和边。每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等。下面是一些简单的示例，可以帮助我们快速的了解graphviz的基本用法。
+####第一个graphviz图
+比如，要绘制一个有向图，包含4个节点a,b,c,d。其中a指向b，b和c指向d。可以定义下列脚本：
+digraph abc{ a; b; c; d; a -&gt; b; b -&gt; d; c -&gt; d; } 使用dot布局方式，绘制出来的效果如下：
+默认的顶点中的文字为定义顶点变量的名称，形状为椭圆。边的默认样式为黑色实线箭头，我们可以在脚本中做一下修改，将顶点改为方形，边改为虚线。
+####定义顶点和边的样式
+在digraph的花括号内，添加顶点和边的新定义：
+node [shape=&quot;record&quot;]; edge [style=&quot;dashed&quot;]; 则绘制的效果如下：
+####进一步修改顶点和边样式
+进一步，我们将顶点a的颜色改为淡绿色，并将c到d的边改为红色，脚本如下：
+digraph abc{ node [shape=&quot;record&quot;]; edge [style=&quot;dashed&quot;]; a [style=&quot;filled&quot;, color=&quot;black&quot;, fillcolor=&quot;chartreuse&quot;]; b; c; d; a -&gt; b; b -&gt; d; c -&gt; d [color=&quot;red&quot;]; } 绘制的结果如下：">
+<meta name="author" content="邱俊涛 | Juntao Qiu">
+<link rel="canonical" href="https://icodeit.org/2015/11/using-graphviz-drawing/" />
+<link crossorigin="anonymous" href="/assets/css/stylesheet.min.5e2b4101351c21e906f398ae96901791830f58d430f96f2659dab7eaef7b3cb7.css" integrity="sha256-XitBATUcIekG85iulpAXkYMPWNQw&#43;W8mWdq36u97PLc=" rel="preload stylesheet" as="style">
+<script defer crossorigin="anonymous" src="/assets/js/highlight.min.7680afc38aa6b15ddf158a4f3780b7b1f7dde7e91d26f073e6229bb7a0793c92.js" integrity="sha256-doCvw4qmsV3fFYpPN4C3sffd5&#43;kdJvBz5iKbt6B5PJI="
+    onload="hljs.initHighlightingOnLoad();"></script>
+<link rel="icon" href="https://icodeit.org/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://icodeit.org/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://icodeit.org/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://icodeit.org/apple-touch-icon.png">
+<link rel="mask-icon" href="https://icodeit.org/safari-pinned-tab.svg">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<meta name="generator" content="Hugo 0.85.0" />
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --hljs-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-28217566-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script><meta property="og:title" content="使用graphviz绘图" />
+<meta property="og:description" content="2015年11月10日更新 在实践中，我又发现了一些graphviz的有趣的特性，比如时序图，rank以及图片节点等。在这里一并更新。
+##前言
+日常的开发工作中，为代码添加注释是代码可维护性的一个重要方面，但是仅仅提供注释是不够的，特别是当系统功能越来越复杂，涉及到的模块越来越多的时候，仅仅靠代码就很难从宏观的层次去理解。因此我们需要图例的支持，图例不仅仅包含功能之间的交互，也可以包含复杂的数据结构的示意图，数据流向等。
+但是，常用的UML建模工具，如Visio等都略显复杂，且体积庞大。对于开发人员，特别是后台开发人员来说，命令行，脚本才是最友好的，而图形界面会很大程度的限制开发效率。相对于鼠标，键盘才是开发人员最好的朋友。
+###graphviz简介
+本文介绍一个高效而简洁的绘图工具graphviz。graphviz是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。
+graphviz中包含了众多的布局器：
+ dot 默认布局方式，主要用于有向图 neato 基于spring-model(又称force-based)算法 twopi 径向布局 circo 圆环布局 fdp 用于无向图  graphviz的设计初衷是对有向图/无向图等进行自动布局，开发人员使用dot脚本定义图形元素，然后选择算法进行布局，最终导出结果。
+首先，在dot脚本中定义图的顶点和边，顶点和边都具有各自的属性，比如形状，颜色，填充模式，字体，样式等。然后使用合适的布局算法进行布局。布局算法除了绘制各个顶点和边之外，需要尽可能的将顶点均匀的分布在画布上，并且尽可能的减少边的交叉(如果交叉过多，就很难看清楚顶点之间的关系了)。所以使用graphviz的一般流程为：
+ 定义一个图，并向图中添加需要的顶点和边 为顶点和边添加样式 使用布局引擎进行绘制  一旦熟悉这种开发模式，就可以快速的将你的想法绘制出来。配合一个良好的编辑器(vim/emacs)等，可以极大的提高开发效率，与常见的GUI应用的所见即所得模式对应，此模式称为所思即所得。比如在我的机器上，使用Sublime Text 编辑dot脚本，然后将F7/Cmd-B映射为调用dot引擎去绘制当前脚本，并打开一个新的窗口来显示运行结果：
+对于开发人员而言，经常会用到的图形绘制可能包括：函数调用关系，一个复杂的数据结构，系统的模块组成，抽象语法树等。
+###基础知识
+graphviz包含3中元素，图，顶点和边。每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等。下面是一些简单的示例，可以帮助我们快速的了解graphviz的基本用法。
+####第一个graphviz图
+比如，要绘制一个有向图，包含4个节点a,b,c,d。其中a指向b，b和c指向d。可以定义下列脚本：
+digraph abc{ a; b; c; d; a -&gt; b; b -&gt; d; c -&gt; d; } 使用dot布局方式，绘制出来的效果如下：
+默认的顶点中的文字为定义顶点变量的名称，形状为椭圆。边的默认样式为黑色实线箭头，我们可以在脚本中做一下修改，将顶点改为方形，边改为虚线。
+####定义顶点和边的样式
+在digraph的花括号内，添加顶点和边的新定义：
+node [shape=&quot;record&quot;]; edge [style=&quot;dashed&quot;]; 则绘制的效果如下：
+####进一步修改顶点和边样式
+进一步，我们将顶点a的颜色改为淡绿色，并将c到d的边改为红色，脚本如下：
+digraph abc{ node [shape=&quot;record&quot;]; edge [style=&quot;dashed&quot;]; a [style=&quot;filled&quot;, color=&quot;black&quot;, fillcolor=&quot;chartreuse&quot;]; b; c; d; a -&gt; b; b -&gt; d; c -&gt; d [color=&quot;red&quot;]; } 绘制的结果如下：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://icodeit.org/2015/11/using-graphviz-drawing/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2015-11-10T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2015-11-10T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="使用graphviz绘图"/>
+<meta name="twitter:description" content="2015年11月10日更新 在实践中，我又发现了一些graphviz的有趣的特性，比如时序图，rank以及图片节点等。在这里一并更新。
+##前言
+日常的开发工作中，为代码添加注释是代码可维护性的一个重要方面，但是仅仅提供注释是不够的，特别是当系统功能越来越复杂，涉及到的模块越来越多的时候，仅仅靠代码就很难从宏观的层次去理解。因此我们需要图例的支持，图例不仅仅包含功能之间的交互，也可以包含复杂的数据结构的示意图，数据流向等。
+但是，常用的UML建模工具，如Visio等都略显复杂，且体积庞大。对于开发人员，特别是后台开发人员来说，命令行，脚本才是最友好的，而图形界面会很大程度的限制开发效率。相对于鼠标，键盘才是开发人员最好的朋友。
+###graphviz简介
+本文介绍一个高效而简洁的绘图工具graphviz。graphviz是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。
+graphviz中包含了众多的布局器：
+ dot 默认布局方式，主要用于有向图 neato 基于spring-model(又称force-based)算法 twopi 径向布局 circo 圆环布局 fdp 用于无向图  graphviz的设计初衷是对有向图/无向图等进行自动布局，开发人员使用dot脚本定义图形元素，然后选择算法进行布局，最终导出结果。
+首先，在dot脚本中定义图的顶点和边，顶点和边都具有各自的属性，比如形状，颜色，填充模式，字体，样式等。然后使用合适的布局算法进行布局。布局算法除了绘制各个顶点和边之外，需要尽可能的将顶点均匀的分布在画布上，并且尽可能的减少边的交叉(如果交叉过多，就很难看清楚顶点之间的关系了)。所以使用graphviz的一般流程为：
+ 定义一个图，并向图中添加需要的顶点和边 为顶点和边添加样式 使用布局引擎进行绘制  一旦熟悉这种开发模式，就可以快速的将你的想法绘制出来。配合一个良好的编辑器(vim/emacs)等，可以极大的提高开发效率，与常见的GUI应用的所见即所得模式对应，此模式称为所思即所得。比如在我的机器上，使用Sublime Text 编辑dot脚本，然后将F7/Cmd-B映射为调用dot引擎去绘制当前脚本，并打开一个新的窗口来显示运行结果：
+对于开发人员而言，经常会用到的图形绘制可能包括：函数调用关系，一个复杂的数据结构，系统的模块组成，抽象语法树等。
+###基础知识
+graphviz包含3中元素，图，顶点和边。每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等。下面是一些简单的示例，可以帮助我们快速的了解graphviz的基本用法。
+####第一个graphviz图
+比如，要绘制一个有向图，包含4个节点a,b,c,d。其中a指向b，b和c指向d。可以定义下列脚本：
+digraph abc{ a; b; c; d; a -&gt; b; b -&gt; d; c -&gt; d; } 使用dot布局方式，绘制出来的效果如下：
+默认的顶点中的文字为定义顶点变量的名称，形状为椭圆。边的默认样式为黑色实线箭头，我们可以在脚本中做一下修改，将顶点改为方形，边改为虚线。
+####定义顶点和边的样式
+在digraph的花括号内，添加顶点和边的新定义：
+node [shape=&quot;record&quot;]; edge [style=&quot;dashed&quot;]; 则绘制的效果如下：
+####进一步修改顶点和边样式
+进一步，我们将顶点a的颜色改为淡绿色，并将c到d的边改为红色，脚本如下：
+digraph abc{ node [shape=&quot;record&quot;]; edge [style=&quot;dashed&quot;]; a [style=&quot;filled&quot;, color=&quot;black&quot;, fillcolor=&quot;chartreuse&quot;]; b; c; d; a -&gt; b; b -&gt; d; c -&gt; d [color=&quot;red&quot;]; } 绘制的结果如下："/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Posts",
+      "item": "https://icodeit.org/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  3 ,
+      "name": "使用graphviz绘图",
+      "item": "https://icodeit.org/2015/11/using-graphviz-drawing/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "使用graphviz绘图",
+  "name": "使用graphviz绘图",
+  "description": "2015年11月10日更新 在实践中，我又发现了一些graphviz的有趣的特性，比如时序图，rank以及图片节点等。在这里一并更新。\n##前言\n日常的开发工作中，为代码添加注释是代码可维护性的一个重要方面，但是仅仅提供注释是不够的，特别是当系统功能越来越复杂，涉及到的模块越来越多的时候，仅仅靠代码就很难从宏观的层次去理解。因此我们需要图例的支持，图例不仅仅包含功能之间的交互，也可以包含复杂的数据结构的示意图，数据流向等。\n但是，常用的UML建模工具，如Visio等都略显复杂，且体积庞大。对于开发人员，特别是后台开发人员来说，命令行，脚本才是最友好的，而图形界面会很大程度的限制开发效率。相对于鼠标，键盘才是开发人员最好的朋友。\n###graphviz简介\n本文介绍一个高效而简洁的绘图工具graphviz。graphviz是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。\ngraphviz中包含了众多的布局器：\n dot 默认布局方式，主要用于有向图 neato 基于spring-model(又称force-based)算法 twopi 径向布局 circo 圆环布局 fdp 用于无向图  graphviz的设计初衷是对有向图/无向图等进行自动布局，开发人员使用dot脚本定义图形元素，然后选择算法进行布局，最终导出结果。\n首先，在dot脚本中定义图的顶点和边，顶点和边都具有各自的属性，比如形状，颜色，填充模式，字体，样式等。然后使用合适的布局算法进行布局。布局算法除了绘制各个顶点和边之外，需要尽可能的将顶点均匀的分布在画布上，并且尽可能的减少边的交叉(如果交叉过多，就很难看清楚顶点之间的关系了)。所以使用graphviz的一般流程为：\n 定义一个图，并向图中添加需要的顶点和边 为顶点和边添加样式 使用布局引擎进行绘制  一旦熟悉这种开发模式，就可以快速的将你的想法绘制出来。配合一个良好的编辑器(vim/emacs)等，可以极大的提高开发效率，与常见的GUI应用的所见即所得模式对应，此模式称为所思即所得。比如在我的机器上，使用Sublime Text 编辑dot脚本，然后将F7/Cmd-B映射为调用dot引擎去绘制当前脚本，并打开一个新的窗口来显示运行结果：\n对于开发人员而言，经常会用到的图形绘制可能包括：函数调用关系，一个复杂的数据结构，系统的模块组成，抽象语法树等。\n###基础知识\ngraphviz包含3中元素，图，顶点和边。每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等。下面是一些简单的示例，可以帮助我们快速的了解graphviz的基本用法。\n####第一个graphviz图\n比如，要绘制一个有向图，包含4个节点a,b,c,d。其中a指向b，b和c指向d。可以定义下列脚本：\ndigraph abc{ a; b; c; d; a -\u0026gt; b; b -\u0026gt; d; c -\u0026gt; d; } 使用dot布局方式，绘制出来的效果如下：\n默认的顶点中的文字为定义顶点变量的名称，形状为椭圆。边的默认样式为黑色实线箭头，我们可以在脚本中做一下修改，将顶点改为方形，边改为虚线。\n####定义顶点和边的样式\n在digraph的花括号内，添加顶点和边的新定义：\nnode [shape=\u0026quot;record\u0026quot;]; edge [style=\u0026quot;dashed\u0026quot;]; 则绘制的效果如下：\n####进一步修改顶点和边样式\n进一步，我们将顶点a的颜色改为淡绿色，并将c到d的边改为红色，脚本如下：\ndigraph abc{ node [shape=\u0026quot;record\u0026quot;]; edge [style=\u0026quot;dashed\u0026quot;]; a [style=\u0026quot;filled\u0026quot;, color=\u0026quot;black\u0026quot;, fillcolor=\u0026quot;chartreuse\u0026quot;]; b; c; d; a -\u0026gt; b; b -\u0026gt; d; c -\u0026gt; d [color=\u0026quot;red\u0026quot;]; } 绘制的结果如下：",
+  "keywords": [
+    
+  ],
+  "articleBody": " 2015年11月10日更新 在实践中，我又发现了一些graphviz的有趣的特性，比如时序图，rank以及图片节点等。在这里一并更新。\n##前言\n日常的开发工作中，为代码添加注释是代码可维护性的一个重要方面，但是仅仅提供注释是不够的，特别是当系统功能越来越复杂，涉及到的模块越来越多的时候，仅仅靠代码就很难从宏观的层次去理解。因此我们需要图例的支持，图例不仅仅包含功能之间的交互，也可以包含复杂的数据结构的示意图，数据流向等。\n但是，常用的UML建模工具，如Visio等都略显复杂，且体积庞大。对于开发人员，特别是后台开发人员来说，命令行，脚本才是最友好的，而图形界面会很大程度的限制开发效率。相对于鼠标，键盘才是开发人员最好的朋友。\n###graphviz简介\n本文介绍一个高效而简洁的绘图工具graphviz。graphviz是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言): dot作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。graphviz提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。\ngraphviz中包含了众多的布局器：\n dot 默认布局方式，主要用于有向图 neato 基于spring-model(又称force-based)算法 twopi 径向布局 circo 圆环布局 fdp 用于无向图  graphviz的设计初衷是对有向图/无向图等进行自动布局，开发人员使用dot脚本定义图形元素，然后选择算法进行布局，最终导出结果。\n首先，在dot脚本中定义图的顶点和边，顶点和边都具有各自的属性，比如形状，颜色，填充模式，字体，样式等。然后使用合适的布局算法进行布局。布局算法除了绘制各个顶点和边之外，需要尽可能的将顶点均匀的分布在画布上，并且尽可能的减少边的交叉(如果交叉过多，就很难看清楚顶点之间的关系了)。所以使用graphviz的一般流程为：\n 定义一个图，并向图中添加需要的顶点和边 为顶点和边添加样式 使用布局引擎进行绘制  一旦熟悉这种开发模式，就可以快速的将你的想法绘制出来。配合一个良好的编辑器(vim/emacs)等，可以极大的提高开发效率，与常见的GUI应用的所见即所得模式对应，此模式称为所思即所得。比如在我的机器上，使用Sublime Text 编辑dot脚本，然后将F7/Cmd-B映射为调用dot引擎去绘制当前脚本，并打开一个新的窗口来显示运行结果：\n对于开发人员而言，经常会用到的图形绘制可能包括：函数调用关系，一个复杂的数据结构，系统的模块组成，抽象语法树等。\n###基础知识\ngraphviz包含3中元素，图，顶点和边。每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等。下面是一些简单的示例，可以帮助我们快速的了解graphviz的基本用法。\n####第一个graphviz图\n比如，要绘制一个有向图，包含4个节点a,b,c,d。其中a指向b，b和c指向d。可以定义下列脚本：\ndigraph abc{ a; b; c; d; a - b; b - d; c - d; } 使用dot布局方式，绘制出来的效果如下：\n默认的顶点中的文字为定义顶点变量的名称，形状为椭圆。边的默认样式为黑色实线箭头，我们可以在脚本中做一下修改，将顶点改为方形，边改为虚线。\n####定义顶点和边的样式\n在digraph的花括号内，添加顶点和边的新定义：\nnode [shape=\"record\"]; edge [style=\"dashed\"]; 则绘制的效果如下：\n####进一步修改顶点和边样式\n进一步，我们将顶点a的颜色改为淡绿色，并将c到d的边改为红色，脚本如下：\ndigraph abc{ node [shape=\"record\"]; edge [style=\"dashed\"]; a [style=\"filled\", color=\"black\", fillcolor=\"chartreuse\"]; b; c; d; a - b; b - d; c - d [color=\"red\"]; } 绘制的结果如下：\n应当注意到，顶点和边都接受属性的定义，形式为在顶点和边的定义之后加上一个由方括号括起来的key-value列表，每个key-value对由逗号隔开。如果图中顶点和边采用统一的风格，则可以在图定义的首部定义node, edge的属性。比如上图中，定义所有的顶点为方框，所有的边为虚线，在具体的顶点和边之后定义的属性将覆盖此全局属性。如特定与a的绿色，c到d的边的红色。\n####以图片为节点\n除了颜色，节点还可以使用图片。不过需要注意的是，在使用图片作为节点的时候，需要将本来的形状设置为none，并且将label置为空字符串，避免出现文字对图片的干扰。\ndigraph abc{ node [shape=\"record\"]; edge [style=\"dashed\"]; a [style=\"filled\", color=\"black\", fillcolor=\"chartreuse\"]; b; c [shape=\"none\", image=\"logos/browser-icon-chrome-resized.png\", label=\"\"]; d; a - b; b - d; c - d [color=\"red\"]; } ###子图的绘制\ngraphviz支持子图，即图中的部分节点和边相对对立(软件的模块划分经常如此)。比如，我们可以将顶点c和d归为一个子图：\ndigraph abc{ node [shape=\"record\"]; edge [style=\"dashed\"]; a [style=\"filled\", color=\"black\", fillcolor=\"chartreuse\"]; b; subgraph cluster_cd{ label=\"c and d\"; bgcolor=\"mintcream\"; c; d; } a - b; b - d; c - d [color=\"red\"]; } 将c和d划分到cluster_cd这个子图中，标签为c and d,并添加背景色，以方便与主图区分开，绘制结果如下：\n应该注意的是，子图的名称必须以cluster开头，否则graphviz无法设别。\n####数据结构的可视化\n实际开发中，经常要用到的是对复杂数据结构的描述，graphviz提供完善的机制来绘制此类图形。\n#####一个hash表的数据结构\n比如一个hash表的内容，可能具有下列结构：\nstruct st_hash_type { int (*compare) (); int (*hash) (); }; struct st_table_entry { unsigned int hash; char *key; char *record; st_table_entry *next; }; struct st_table { struct st_hash_type *type; int num_bins; /* slot count */ int num_entries; /* total number of entries */ struct st_table_entry **bins; /* slot */ }; #####绘制hash表的数据结构\n从代码上看，由于结构体存在引用关系，不够清晰，如果层次较多，则很难以记住各个结构之间的关系，我们可以通过下图来更清楚的展示：\n脚本如下：\ndigraph st2{ fontname = \"Verdana\"; fontsize = 10; rankdir=TB; node [fontname = \"Verdana\", fontsize = 10, color=\"skyblue\", shape=\"record\"]; edge [fontname = \"Verdana\", fontsize = 10, color=\"crimson\", style=\"solid\"]; st_hash_type [label=\"{st_hash_type|(*compare)|(*hash)}\"]; st_table_entry [label=\"{st_table_entry|hash|key|record|next}\"]; st_table [label=\"{st_table|type|num_bins|num_entries|bins}\"]; st_table:bins - st_table_entry:head; st_table:type - st_hash_type:head; st_table_entry:next - st_table_entry:head [style=\"dashed\", color=\"forestgreen\"]; } 应该注意到，在顶点的形状为record的时候，label属性的语法比较奇怪，但是使用起来非常灵活。比如，用竖线”|”隔开的串会在绘制出来的节点中展现为一条分隔符。用括起来的串称为锚点，当一个节点具有多个锚点的时候，这个特性会非常有用，比如节点st_table的type属性指向st_hash_type，第4个属性指向st_table_entry等，都是通过锚点来实现的。\n我们发现，使用默认的dot布局后，绿色的这条边覆盖了数据结构st_table_entry，并不美观，因此可以使用别的布局方式来重新布局，如使用circo算法：\n则可以得到更加合理的布局结果。\n####hash表的实例\n另外，这个hash表的一个实例如下：\n脚本如下：\ndigraph st{ fontname = \"Verdana\"; fontsize = 10; rankdir = LR; rotate = 90; node [ shape=\"record\", width=.1, height=.1]; node [fontname = \"Verdana\", fontsize = 10, color=\"skyblue\", shape=\"record\"]; edge [fontname = \"Verdana\", fontsize = 10, color=\"crimson\", style=\"solid\"]; node [shape=\"plaintext\"]; st_table [label= st_table   num_bins=5   num_entries=3   bins   ]; node [shape=\"record\"]; num_bins [label=\"  |  |  |  |  \", height=2]; node[ width=2 ]; entry_1 [label=\"{st_table_entry|next}\"]; entry_2 [label=\"{st_table_entry|null}\"]; entry_3 [label=\"{st_table_entry|null}\"]; st_table:bins - num_bins:b1; num_bins:b1 - entry_1:e; entry_1:next - entry_2:e; num_bins:b3 - entry_3:e; } 上例中可以看到，节点的label属性支持类似于HTML语言中的TABLE形式的定义，通过行列的数目来定义节点的形状，从而使得节点的组成更加灵活。\n####软件模块组成图\nApache httpd 模块关系\n在实际的开发中，随着系统功能的完善，软件整体的结构会越来越复杂，通常开发人员会将软件划分为可理解的多个子模块，各个子模块通过协作，完成各种各样的需求。\n下面有个例子，是某软件设计时的一个草稿：\nIDP支持层为一个相对独立的子系统，其中包括如数据库管理器，配置信息管理器等模块，另外为了提供更大的灵活性，将很多其他的模块抽取出来作为外部模块，而支持层提供一个模块管理器，来负责加载/卸载这些外部的模块集合。\n这些模块间的关系较为复杂，并且有部分模块关系密切，应归类为一个子系统中，上图对应的dot脚本为：\ndigraph idp_modules{ rankdir = TB; fontname = \"Microsoft YaHei\"; fontsize = 12; node [ fontname = \"Microsoft YaHei\", fontsize = 12, shape = \"record\" ]; edge [ fontname = \"Microsoft YaHei\", fontsize = 12 ]; subgraph cluster_sl{ label=\"IDP支持层\"; bgcolor=\"mintcream\"; node [shape=\"Mrecord\", color=\"skyblue\", style=\"filled\"]; network_mgr [label=\"网络管理器\"]; log_mgr [label=\"日志管理器\"]; module_mgr [label=\"模块管理器\"]; conf_mgr [label=\"配置管理器\"]; db_mgr [label=\"数据库管理器\"]; }; subgraph cluster_md{ label=\"可插拔模块集\"; bgcolor=\"lightcyan\"; node [color=\"chartreuse2\", style=\"filled\"]; mod_dev [label=\"开发支持模块\"]; mod_dm [label=\"数据建模模块\"]; mod_dp [label=\"部署发布模块\"]; }; mod_dp - mod_dev [label=\"依赖...\"]; mod_dp - mod_dm [label=\"依赖...\"]; mod_dp - module_mgr [label=\"安装...\", color=\"yellowgreen\", arrowhead=\"none\"]; mod_dev - mod_dm [label=\"依赖...\"]; mod_dev - module_mgr [label=\"安装...\", color=\"yellowgreen\", arrowhead=\"none\"]; mod_dm - module_mgr [label=\"安装...\", color=\"yellowgreen\", arrowhead=\"none\"]; } ####状态图\n有限自动机示意图\n上图是一个简易有限自动机，接受a及a结尾的任意长度的串。其脚本定义如下：\ndigraph automata_0 { size = \"8.5, 11\"; fontname = \"Microsoft YaHei\"; fontsize = 10; node [shape = circle, fontname = \"Microsoft YaHei\", fontsize = 10]; edge [fontname = \"Microsoft YaHei\", fontsize = 10]; 0 [ style = filled, color=lightgrey ]; 2 [ shape = doublecircle ]; 0 - 2 [ label = \"a \" ]; 0 - 1 [ label = \"other \" ]; 1 - 2 [ label = \"a \" ]; 1 - 1 [ label = \"other \" ]; 2 - 2 [ label = \"a \" ]; 2 - 1 [ label = \"other \" ]; \"Machine: a\" [ shape = plaintext ]; } 形状值为plaintext的表示不用绘制边框，仅展示纯文本内容，这个在绘图中，绘制指示性的文本时很有用，如上图中的Machine: a。\n####OSGi中模块的生命周期图\nOSGi中，模块具有生命周期，从安装到卸载，可能的状态具有已安装，已就绪，正在启动，已启动，正在停止，已卸载等。如下图所示：\n对应的脚本如下：\ndigraph module_lc{ rankdir=TB; fontname = \"Microsoft YaHei\"; fontsize = 12; node [fontname = \"Microsoft YaHei\", fontsize = 12, shape = \"Mrecord\", color=\"skyblue\", style=\"filled\"]; edge [fontname = \"Microsoft YaHei\", fontsize = 12, color=\"darkgreen\" ]; installed [label=\"已安装状态\"]; resolved [label=\"已就绪状态\"]; uninstalled [label=\"已卸载状态\"]; starting [label=\"正在启动\"]; active [label=\"已激活(运行)状态\"]; stopping [label=\"正在停止\"]; start [label=\"\", shape=\"circle\", width=0.5, fixedsize=true, style=\"filled\", color=\"black\"]; start - installed [label=\"安装\"]; installed - uninstalled [label=\"卸载\"]; installed - resolved [label=\"准备\"]; installed - installed [label=\"更新\"]; resolved - installed [label=\"更新\"]; resolved - uninstalled [label=\"卸载\"]; resolved - starting [label=\"启动\"]; starting - active [label=\"\"]; active - stopping [label=\"停止\"]; stopping - resolved [label=\"\"]; } ###其他实例\n一棵简单的抽象语法树(AST)\n表达式 (3+4)*5 在编译时期，会形成一棵语法树，一边在计算时，先计算3+4的值，最后与5相乘。\n对应的脚本如下：\ndigraph ast{ fontname = \"Microsoft YaHei\"; fontsize = 10; node [shape = circle, fontname = \"Microsoft YaHei\", fontsize = 10]; edge [fontname = \"Microsoft YaHei\", fontsize = 10]; node [shape=\"plaintext\"]; mul [label=\"mul(*)\"]; add [label=\"add(+)\"]; add - 3 add - 4; mul - add; mul - 5; } ####简单的UML类图\n下面是一简单的UML类图，Dog和Cat都是Animal的子类，Dog和Cat同属一个包，且有可能有联系(0..n)。\n脚本：\ndigraph G{ fontname = \"Courier New\" fontsize = 10 node [ fontname = \"Courier New\", fontsize = 10, shape = \"record\" ]; edge [ fontname = \"Courier New\", fontsize = 10 ]; Animal [ label = \"{Animal |+ name : String\\l+ age : int\\l|+ die() : void\\l}\" ]; subgraph clusterAnimalImpl{ bgcolor=\"yellow\" Dog [ label = \"{Dog||+ bark() : void\\l}\" ]; Cat [ label = \"{Cat||+ meow() : void\\l}\" ]; }; edge [ arrowhead = \"empty\" ]; Dog-Animal; Cat-Animal; Dog-Cat [arrowhead=\"none\", label=\"0..*\"]; } ####状态图\n脚本：\ndigraph finite_state_machine { rankdir = LR; size = \"8,5\" node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8; node [shape = circle]; LR_0 - LR_2 [ label = \"SS(B)\" ]; LR_0 - LR_1 [ label = \"SS(S)\" ]; LR_1 - LR_3 [ label = \"S($end)\" ]; LR_2 - LR_6 [ label = \"SS(b)\" ]; LR_2 - LR_5 [ label = \"SS(a)\" ]; LR_2 - LR_4 [ label = \"S(A)\" ]; LR_5 - LR_7 [ label = \"S(b)\" ]; LR_5 - LR_5 [ label = \"S(a)\" ]; LR_6 - LR_6 [ label = \"S(b)\" ]; LR_6 - LR_5 [ label = \"S(a)\" ]; LR_7 - LR_8 [ label = \"S(b)\" ]; LR_7 - LR_5 [ label = \"S(a)\" ]; LR_8 - LR_6 [ label = \"S(b)\" ]; LR_8 - LR_5 [ label = \"S(a)\" ]; } 时序图 digraph G { rankdir=\"LR\"; node[shape=\"point\", width=0, height=0]; edge[arrowhead=\"none\", style=\"dashed\"] { rank=\"same\"; edge[style=\"solided\"]; LC[shape=\"plaintext\"]; LC - step00 - step01 - step02 - step03 - step04 - step05; } { rank=\"same\"; edge[style=\"solided\"]; Agency[shape=\"plaintext\"]; Agency - step10 - step11 - step12 - step13 - step14 - step15; } { rank=\"same\"; edge[style=\"solided\"]; Agent[shape=\"plaintext\"]; Agent - step20 - step21 - step22 - step23 - step24 - step25; } step00 - step10 [label=\"sends email new custumer\", arrowhead=\"normal\"]; step11 - step01 [label=\"declines\", arrowhead=\"normal\"]; step12 - step02 [label=\"accepts\", arrowhead=\"normal\"]; step13 - step23 [label=\"forward to\", arrowhead=\"normal\"]; step24 - step14; step14 - step04 [arrowhead=\"normal\"]; } rankdir=\"LR\"表示，布局从左L到右R。可以看到，在代码中有{}括起来的部分。\n{ rank=\"same\"; edge[style=\"solided\"]; Agency[shape=\"plaintext\"]; Agency - step10 - step11 - step12 - step13 - step14 - step15; } 每一个rank=\"same\"的block中的所有节点都会在同一条线上。我们设置了所有的线为虚线，但是在该block中，将线改为solided。\n###附录\n事实上，从dot的语法及上述的示例中，很容易看出，dot脚本很容易被其他语言生成。比如，使用一些简单的数据库查询就可以生成数据库中的ER图的dot脚本。\n如果你追求高效的开发速度，并希望快速的将自己的想法画出来，那么graphviz是一个很不错的选择。\n当然，graphviz也有一定的局限，比如绘制时序图(序列图)就很难实现。graphviz的节点出现在画布上的位置事实上是不确定的，依赖于所使用的布局算法，而不是在脚本中出现的位置，这可能使刚开始接触graphviz的开发人员有点不适应。graphviz的强项在于自动布局，当图中的顶点和边的数目变得很多的时候，才能很好的体会这一特性的好处：\n比如上图，或者较上图更复杂的图，如果采用手工绘制显然是不可能的，只能通过graphviz提供的自动布局引擎来完成。如果仅用于展示模块间的关系，子模块与子模块间通信的方式，模块的逻辑位置等，graphviz完全可以胜任，但是如果图中对象的物理位置必须是准确的，如节点A必须位于左上角，节点B必须与A相邻等特性，使用graphviz则很难做到。毕竟，它的强项是自动布局，事实上，所有的节点对与布局引擎而言，权重在初始时都是相同的，只是在渲染之后，节点的大小，形状等特性才会影响权重。\n本文只是初步介绍了graphviz的简单应用，如图的定义，顶点/边的属性定义，如果运行等，事实上还有很多的属性，如画布的大小，字体的选择，颜色列表等，大家可以通过graphviz的官网来找到更详细的资料。\n文中的代码都已经在Github上。\n",
+  "wordCount" : "1072",
+  "inLanguage": "en",
+  "datePublished": "2015-11-10T00:00:00Z",
+  "dateModified": "2015-11-10T00:00:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "邱俊涛 | Juntao Qiu"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://icodeit.org/2015/11/using-graphviz-drawing/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "I Code It",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://icodeit.org/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://icodeit.org" accesskey="h" title="I Code It (Alt + H)">I Code It</a>
+            <span class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </span>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://icodeit.org/archives" title="Archive">
+                    <span>Archive</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://icodeit.org/categories/" title="Categories">
+                    <span>Categories</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://icodeit.org/search/" title="Search (Alt &#43; /)" accesskey=/>
+                    <span>Search</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://icodeit.org/about/" title="About">
+                    <span>About</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="https://icodeit.org">Home</a>&nbsp;»&nbsp;<a href="https://icodeit.org/posts/">Posts</a></div>
+    <h1 class="post-title">
+      使用graphviz绘图
+    </h1>
+    <div class="post-meta">November 10, 2015&nbsp;·&nbsp;6 min&nbsp;·&nbsp;邱俊涛 | Juntao Qiu
+</div>
+  </header> <div class="toc">
+    <details >
+        <summary accesskey="c" title="(Alt + C)">
+            <span class="details">Table of Contents</span>
+        </summary>
+
+        <div class="inner"><ul>
+                <li>
+                    <a href="#%e6%97%b6%e5%ba%8f%e5%9b%be" aria-label="时序图">时序图</a>
+                </li>
+            </ul>
+        </div>
+    </details>
+</div>
+
+  <div class="post-content"><hr>
+<p>2015年11月10日更新
+在实践中，我又发现了一些<code>graphviz</code>的有趣的特性，比如<code>时序图</code>，<code>rank</code>以及<code>图片节点</code>等。在这里一并更新。</p>
+<p>##前言</p>
+<p>日常的开发工作中，为代码添加注释是代码可维护性的一个重要方面，但是仅仅提供注释是不够的，特别是当系统功能越来越复杂，涉及到的模块越来越多的时候，仅仅靠代码就很难从宏观的层次去理解。因此我们需要图例的支持，图例不仅仅包含功能之间的交互，也可以包含复杂的数据结构的示意图，数据流向等。</p>
+<p>但是，常用的UML建模工具，如<code>Visio</code>等都略显复杂，且体积庞大。对于开发人员，特别是后台开发人员来说，命令行，脚本才是最友好的，而图形界面会很大程度的限制开发效率。相对于鼠标，键盘才是开发人员最好的朋友。</p>
+<p>###graphviz简介</p>
+<p>本文介绍一个高效而简洁的绘图工具<code>graphviz</code>。<code>graphviz</code>是贝尔实验室开发的一个开源的工具包，它使用一个特定的<code>DSL</code>(领域特定语言): <code>dot</code>作为脚本语言，然后使用布局引擎来解析此脚本，并完成自动布局。<code>graphviz</code>提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。</p>
+<p><code>graphviz</code>中包含了众多的布局器：</p>
+<ul>
+<li><code>dot</code> 默认布局方式，主要用于有向图</li>
+<li><code>neato</code> 基于spring-model(又称force-based)算法</li>
+<li><code>twopi</code> 径向布局</li>
+<li><code>circo</code> 圆环布局</li>
+<li><code>fdp</code> 用于无向图</li>
+</ul>
+<p><code>graphviz</code>的设计初衷是对<code>有向图/无向图</code>等进行自动布局，开发人员使用dot脚本定义图形元素，然后选择算法进行布局，最终导出结果。</p>
+<p>首先，在dot脚本中定义图的顶点和边，顶点和边都具有各自的属性，比如形状，颜色，填充模式，字体，样式等。然后使用合适的布局算法进行布局。布局算法除了绘制各个顶点和边之外，需要尽可能的将顶点均匀的分布在画布上，并且尽可能的减少边的交叉(如果交叉过多，就很难看清楚顶点之间的关系了)。所以使用<code>graphviz</code>的一般流程为：</p>
+<ul>
+<li>定义一个图，并向图中添加需要的顶点和边</li>
+<li>为顶点和边添加样式</li>
+<li>使用布局引擎进行绘制</li>
+</ul>
+<p>一旦熟悉这种开发模式，就可以快速的将你的想法绘制出来。配合一个良好的编辑器(vim/emacs)等，可以极大的提高开发效率，与常见的GUI应用的所见即所得模式对应，此模式称为所思即所得。比如在我的机器上，使用Sublime Text 编辑<code>dot</code>脚本，然后将<code>F7/Cmd-B</code>映射为调用<code>dot引擎</code>去绘制当前脚本，并打开一个新的窗口来显示运行结果：</p>
+<p><img loading="lazy" src="/images/2015/11/workspace-resized.png" alt="workspace"  />
+</p>
+<p>对于开发人员而言，经常会用到的图形绘制可能包括：函数调用关系，一个复杂的数据结构，系统的模块组成，抽象语法树等。</p>
+<p>###基础知识</p>
+<p>graphviz包含3中元素，<code>图</code>，<code>顶点</code>和<code>边</code>。每个元素都可以具有各自的属性，用来定义字体，样式，颜色，形状等。下面是一些简单的示例，可以帮助我们快速的了解graphviz的基本用法。</p>
+<p>####第一个graphviz图</p>
+<p>比如，要绘制一个有向图，包含4个节点<code>a,b,c,d</code>。其中<code>a</code>指向<code>b</code>，<code>b</code>和<code>c</code>指向<code>d</code>。可以定义下列脚本：</p>
+<pre><code>digraph abc{
+	a;
+	b;
+	c;
+	d;
+ 
+	a -&gt; b;
+	b -&gt; d;
+	c -&gt; d;
+}
+</code></pre><p>使用<code>dot</code>布局方式，绘制出来的效果如下：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image004.gif" alt="dot-simple"  />
+</p>
+<p>默认的顶点中的文字为定义顶点变量的名称，形状为椭圆。边的默认样式为黑色实线箭头，我们可以在脚本中做一下修改，将顶点改为<code>方形</code>，边改为<code>虚线</code>。</p>
+<p>####定义顶点和边的样式</p>
+<p>在<code>digraph</code>的花括号内，添加顶点和边的新定义：</p>
+<pre><code>node [shape=&quot;record&quot;];
+edge [style=&quot;dashed&quot;];
+</code></pre><p>则绘制的效果如下：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image006.gif" alt="dot-simple2"  />
+</p>
+<p>####进一步修改顶点和边样式</p>
+<p>进一步，我们将顶点<code>a</code>的颜色改为<code>淡绿色</code>，并将<code>c</code>到<code>d</code>的边改为<code>红色</code>，脚本如下：</p>
+<pre><code>digraph abc{
+	node [shape=&quot;record&quot;];
+	edge [style=&quot;dashed&quot;];
+	 
+	a [style=&quot;filled&quot;, color=&quot;black&quot;, fillcolor=&quot;chartreuse&quot;];
+	b;
+	c;
+	d;
+	 
+	a -&gt; b;
+	b -&gt; d;
+	c -&gt; d [color=&quot;red&quot;];
+}
+</code></pre><p>绘制的结果如下：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image008.gif" alt="dot-simple3"  />
+</p>
+<p>应当注意到，顶点和边都接受属性的定义，形式为在顶点和边的定义之后加上一个由方括号括起来的<code>key-value</code>列表，每个<code>key-value</code>对由逗号隔开。如果图中顶点和边采用统一的风格，则可以在图定义的首部定义<code>node</code>, <code>edge</code>的属性。比如上图中，定义所有的顶点为方框，所有的边为虚线，在具体的顶点和边之后定义的属性将覆盖此全局属性。如特定与<code>a</code>的绿色，<code>c</code>到<code>d</code>的边的红色。</p>
+<p>####以图片为节点</p>
+<p>除了颜色，节点还可以使用图片。不过需要注意的是，在使用图片作为节点的时候，需要将本来的形状设置为<code>none</code>，并且将<code>label</code>置为空字符串，避免出现文字对图片的干扰。</p>
+<pre><code>digraph abc{
+	node [shape=&quot;record&quot;];
+	edge [style=&quot;dashed&quot;];
+	 
+	a [style=&quot;filled&quot;, color=&quot;black&quot;, fillcolor=&quot;chartreuse&quot;];
+	b;
+	c [shape=&quot;none&quot;, image=&quot;logos/browser-icon-chrome-resized.png&quot;, label=&quot;&quot;];
+	d;
+	 
+	a -&gt; b;
+	b -&gt; d;
+	c -&gt; d [color=&quot;red&quot;];
+}
+</code></pre><p><img loading="lazy" src="/images/2015/11/image-node.png" alt="image-node"  />
+</p>
+<p>###子图的绘制</p>
+<p>graphviz支持子图，即图中的部分节点和边相对对立(软件的模块划分经常如此)。比如，我们可以将顶点c和d归为一个子图：</p>
+<pre><code>digraph abc{
+
+	node [shape=&quot;record&quot;];
+	edge [style=&quot;dashed&quot;];
+	 
+	a [style=&quot;filled&quot;, color=&quot;black&quot;, fillcolor=&quot;chartreuse&quot;];
+	b;
+ 
+    subgraph cluster_cd{
+	    label=&quot;c and d&quot;;
+	    bgcolor=&quot;mintcream&quot;;
+	    c;
+	    d;
+    }
+ 
+	a -&gt; b;
+	b -&gt; d;
+	c -&gt; d [color=&quot;red&quot;];
+}
+</code></pre><p>将<code>c</code>和<code>d</code>划分到<code>cluster_cd</code>这个子图中，标签为<code>c and d</code>,并添加背景色，以方便与主图区分开，绘制结果如下：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image010.gif" alt="cluster"  />
+</p>
+<p>应该注意的是，子图的名称必须以<code>cluster</code>开头，否则<code>graphviz</code>无法设别。</p>
+<p>####数据结构的可视化</p>
+<p>实际开发中，经常要用到的是对复杂数据结构的描述，<code>graphviz</code>提供完善的机制来绘制此类图形。</p>
+<p>#####一个hash表的数据结构</p>
+<p>比如一个hash表的内容，可能具有下列结构：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#66d9ef">struct</span> st_hash_type {
+    <span style="color:#66d9ef">int</span> (<span style="color:#f92672">*</span>compare) ();
+    <span style="color:#66d9ef">int</span> (<span style="color:#f92672">*</span>hash) ();
+};
+ 
+<span style="color:#66d9ef">struct</span> st_table_entry {
+    <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> hash;
+    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>key;
+    <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>record;
+    st_table_entry <span style="color:#f92672">*</span>next;
+};
+ 
+<span style="color:#66d9ef">struct</span> st_table {
+    <span style="color:#66d9ef">struct</span> st_hash_type <span style="color:#f92672">*</span>type;
+    <span style="color:#66d9ef">int</span> num_bins; <span style="color:#75715e">/* slot count */</span>
+    <span style="color:#66d9ef">int</span> num_entries; <span style="color:#75715e">/* total number of entries */</span>
+    <span style="color:#66d9ef">struct</span> st_table_entry <span style="color:#f92672">**</span>bins; <span style="color:#75715e">/* slot */</span>
+};
+</code></pre></div><p>#####绘制hash表的数据结构</p>
+<p>从代码上看，由于结构体存在引用关系，不够清晰，如果层次较多，则很难以记住各个结构之间的关系，我们可以通过下图来更清楚的展示：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image012.gif" alt="hash-datastruct"  />
+</p>
+<p>脚本如下：</p>
+<pre><code>digraph st2{
+	fontname = &quot;Verdana&quot;;
+	fontsize = 10;
+	rankdir=TB;
+	 
+	node [fontname = &quot;Verdana&quot;, fontsize = 10, color=&quot;skyblue&quot;, shape=&quot;record&quot;];
+	 
+	edge [fontname = &quot;Verdana&quot;, fontsize = 10, color=&quot;crimson&quot;, style=&quot;solid&quot;];
+	 
+	st_hash_type [label=&quot;{&lt;head&gt;st_hash_type|(*compare)|(*hash)}&quot;];
+	st_table_entry [label=&quot;{&lt;head&gt;st_table_entry|hash|key|record|&lt;next&gt;next}&quot;];
+	st_table [label=&quot;{st_table|&lt;type&gt;type|num_bins|num_entries|&lt;bins&gt;bins}&quot;];
+	 
+	st_table:bins -&gt; st_table_entry:head;
+	st_table:type -&gt; st_hash_type:head;
+	st_table_entry:next -&gt; st_table_entry:head [style=&quot;dashed&quot;, color=&quot;forestgreen&quot;];
+}
+</code></pre><p>应该注意到，在顶点的形状为<code>record</code>的时候，<code>label</code>属性的语法比较奇怪，但是使用起来非常灵活。比如，用竖线”|”隔开的串会在绘制出来的节点中展现为一条分隔符。用<code>&lt;&gt;</code>括起来的串称为锚点，当一个节点具有多个锚点的时候，这个特性会非常有用，比如节点<code>st_table</code>的<code>type</code>属性指向<code>st_hash_type</code>，第4个属性指向<code>st_table_entry</code>等，都是通过锚点来实现的。</p>
+<p>我们发现，使用默认的<code>dot</code>布局后，绿色的这条边覆盖了数据结构<code>st_table_entry</code>，并不美观，因此可以使用别的布局方式来重新布局，如使用<code>circo</code>算法：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image014.gif" alt="circo"  />
+</p>
+<p>则可以得到更加合理的布局结果。</p>
+<p>####hash表的实例</p>
+<p>另外，这个hash表的一个实例如下：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image016.gif" alt="hash-instance"  />
+</p>
+<p>脚本如下：</p>
+<pre><code>digraph st{
+	fontname = &quot;Verdana&quot;;
+	fontsize = 10;
+	rankdir = LR;
+	rotate = 90;
+	 
+	node [ shape=&quot;record&quot;, width=.1, height=.1];
+	node [fontname = &quot;Verdana&quot;, fontsize = 10, color=&quot;skyblue&quot;, shape=&quot;record&quot;];
+	 
+	edge [fontname = &quot;Verdana&quot;, fontsize = 10, color=&quot;crimson&quot;, style=&quot;solid&quot;];
+	node [shape=&quot;plaintext&quot;];
+	 
+	st_table [label=&lt;
+	    &lt;table border=&quot;0&quot; cellborder=&quot;1&quot; cellspacing=&quot;0&quot; align=&quot;left&quot;&gt;
+	    &lt;tr&gt;
+	    &lt;td&gt;st_table&lt;/td&gt;
+	    &lt;/tr&gt;
+	    &lt;tr&gt;
+	    &lt;td&gt;num_bins=5&lt;/td&gt;
+	    &lt;/tr&gt;
+	    &lt;tr&gt;
+	    &lt;td&gt;num_entries=3&lt;/td&gt;
+	    &lt;/tr&gt;
+	    &lt;tr&gt;
+	    &lt;td port=&quot;bins&quot;&gt;bins&lt;/td&gt;
+	    &lt;/tr&gt;
+	    &lt;/table&gt;
+	&gt;];
+	 
+	node [shape=&quot;record&quot;];
+	num_bins [label=&quot; &lt;b1&gt; | &lt;b2&gt; | &lt;b3&gt; | &lt;b4&gt; | &lt;b5&gt; &quot;, height=2];
+	node[ width=2 ];
+	 
+	entry_1 [label=&quot;{&lt;e&gt;st_table_entry|&lt;next&gt;next}&quot;];
+	entry_2 [label=&quot;{&lt;e&gt;st_table_entry|&lt;next&gt;null}&quot;];
+	entry_3 [label=&quot;{&lt;e&gt;st_table_entry|&lt;next&gt;null}&quot;];
+	 
+	st_table:bins -&gt; num_bins:b1;
+	num_bins:b1 -&gt; entry_1:e;
+	entry_1:next -&gt; entry_2:e;
+	num_bins:b3 -&gt; entry_3:e;
+}
+</code></pre><p>上例中可以看到，节点的<code>label</code>属性支持类似于<code>HTML</code>语言中的TABLE形式的定义，通过行列的数目来定义节点的形状，从而使得节点的组成更加灵活。</p>
+<p>####软件模块组成图</p>
+<p>Apache httpd 模块关系</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image018.gif" alt="httpd"  />
+</p>
+<p>在实际的开发中，随着系统功能的完善，软件整体的结构会越来越复杂，通常开发人员会将软件划分为可理解的多个子模块，各个子模块通过协作，完成各种各样的需求。</p>
+<p>下面有个例子，是某软件设计时的一个草稿：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image020.gif" alt="idp"  />
+</p>
+<p>IDP支持层为一个相对独立的子系统，其中包括如数据库管理器，配置信息管理器等模块，另外为了提供更大的灵活性，将很多其他的模块抽取出来作为外部模块，而支持层提供一个模块管理器，来负责加载/卸载这些外部的模块集合。</p>
+<p>这些模块间的关系较为复杂，并且有部分模块关系密切，应归类为一个子系统中，上图对应的<code>dot</code>脚本为：</p>
+<pre><code>digraph idp_modules{
+ 
+	rankdir = TB;
+	fontname = &quot;Microsoft YaHei&quot;;
+	fontsize = 12;
+	 
+	node [ fontname = &quot;Microsoft YaHei&quot;, fontsize = 12, shape = &quot;record&quot; ]; 
+	edge [ fontname = &quot;Microsoft YaHei&quot;, fontsize = 12 ];
+	 
+	    subgraph cluster_sl{
+	        label=&quot;IDP支持层&quot;;
+	        bgcolor=&quot;mintcream&quot;;
+	        node [shape=&quot;Mrecord&quot;, color=&quot;skyblue&quot;, style=&quot;filled&quot;];
+	        network_mgr [label=&quot;网络管理器&quot;];
+	        log_mgr [label=&quot;日志管理器&quot;];
+	        module_mgr [label=&quot;模块管理器&quot;];
+	        conf_mgr [label=&quot;配置管理器&quot;];
+	        db_mgr [label=&quot;数据库管理器&quot;];
+	    };
+	 
+	    subgraph cluster_md{
+	        label=&quot;可插拔模块集&quot;;
+	        bgcolor=&quot;lightcyan&quot;;
+	        node [color=&quot;chartreuse2&quot;, style=&quot;filled&quot;];
+	        mod_dev [label=&quot;开发支持模块&quot;];
+	        mod_dm [label=&quot;数据建模模块&quot;];
+	        mod_dp [label=&quot;部署发布模块&quot;];
+	    };
+	 
+	mod_dp -&gt; mod_dev [label=&quot;依赖...&quot;];
+	mod_dp -&gt; mod_dm [label=&quot;依赖...&quot;];
+	mod_dp -&gt; module_mgr [label=&quot;安装...&quot;, color=&quot;yellowgreen&quot;, arrowhead=&quot;none&quot;];
+	mod_dev -&gt; mod_dm [label=&quot;依赖...&quot;];
+	mod_dev -&gt; module_mgr [label=&quot;安装...&quot;, color=&quot;yellowgreen&quot;, arrowhead=&quot;none&quot;];
+	mod_dm -&gt; module_mgr [label=&quot;安装...&quot;, color=&quot;yellowgreen&quot;, arrowhead=&quot;none&quot;];
+}
+</code></pre><p>####状态图</p>
+<p>有限自动机示意图</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image022.gif" alt="fsm"  />
+</p>
+<p>上图是一个简易有限自动机，接受<code>a</code>及<code>a</code>结尾的任意长度的串。其脚本定义如下：</p>
+<pre><code>digraph automata_0 {
+	size = &quot;8.5, 11&quot;;
+	fontname = &quot;Microsoft YaHei&quot;;
+	fontsize = 10;
+	 
+	node [shape = circle, fontname = &quot;Microsoft YaHei&quot;, fontsize = 10];
+	edge [fontname = &quot;Microsoft YaHei&quot;, fontsize = 10];
+	 
+	0 [ style = filled, color=lightgrey ];
+	2 [ shape = doublecircle ];
+	 
+	0 -&gt; 2 [ label = &quot;a &quot; ];
+	0 -&gt; 1 [ label = &quot;other &quot; ];
+	1 -&gt; 2 [ label = &quot;a &quot; ];
+	1 -&gt; 1 [ label = &quot;other &quot; ];
+	2 -&gt; 2 [ label = &quot;a &quot; ];
+	2 -&gt; 1 [ label = &quot;other &quot; ];
+	 
+	&quot;Machine: a&quot; [ shape = plaintext ];
+}
+</code></pre><p>形状值为plaintext的表示不用绘制边框，仅展示纯文本内容，这个在绘图中，绘制指示性的文本时很有用，如上图中的<code>Machine: a</code>。</p>
+<p>####OSGi中模块的生命周期图</p>
+<p>OSGi中，模块具有生命周期，从安装到卸载，可能的状态具有已安装，已就绪，正在启动，已启动，正在停止，已卸载等。如下图所示：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image024.gif" alt="osgi"  />
+</p>
+<p>对应的脚本如下：</p>
+<pre><code>digraph module_lc{
+	rankdir=TB;
+	fontname = &quot;Microsoft YaHei&quot;;
+	fontsize = 12;
+	 
+	node [fontname = &quot;Microsoft YaHei&quot;, fontsize = 12, shape = &quot;Mrecord&quot;, color=&quot;skyblue&quot;, style=&quot;filled&quot;]; 
+	edge [fontname = &quot;Microsoft YaHei&quot;, fontsize = 12, color=&quot;darkgreen&quot; ];
+	 
+	installed [label=&quot;已安装状态&quot;];
+	resolved [label=&quot;已就绪状态&quot;];
+	uninstalled [label=&quot;已卸载状态&quot;];
+	starting [label=&quot;正在启动&quot;];
+	active [label=&quot;已激活(运行)状态&quot;];
+	stopping [label=&quot;正在停止&quot;];
+	start [label=&quot;&quot;, shape=&quot;circle&quot;, width=0.5, fixedsize=true, style=&quot;filled&quot;, color=&quot;black&quot;];
+	 
+	start -&gt; installed [label=&quot;安装&quot;];
+	installed -&gt; uninstalled [label=&quot;卸载&quot;];
+	installed -&gt; resolved [label=&quot;准备&quot;];
+	installed -&gt; installed [label=&quot;更新&quot;];
+	resolved -&gt; installed [label=&quot;更新&quot;];
+	resolved -&gt; uninstalled [label=&quot;卸载&quot;];
+	resolved -&gt; starting [label=&quot;启动&quot;];
+	starting -&gt; active [label=&quot;&quot;];
+	active -&gt; stopping [label=&quot;停止&quot;];
+	stopping -&gt; resolved [label=&quot;&quot;]; 
+}
+</code></pre><p>###其他实例</p>
+<p>一棵简单的抽象语法树(AST)</p>
+<p>表达式 <code>(3+4)*5</code> 在编译时期，会形成一棵语法树，一边在计算时，先计算<code>3+4</code>的值，最后与5相乘。</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image026.gif" alt="ast-calc"  />
+</p>
+<p>对应的脚本如下：</p>
+<pre><code>digraph ast{
+	fontname = &quot;Microsoft YaHei&quot;;
+	fontsize = 10;
+	 
+	node [shape = circle, fontname = &quot;Microsoft YaHei&quot;, fontsize = 10];
+	edge [fontname = &quot;Microsoft YaHei&quot;, fontsize = 10];
+	node [shape=&quot;plaintext&quot;];
+	 
+	mul [label=&quot;mul(*)&quot;];
+	add [label=&quot;add(+)&quot;];
+	 
+	add -&gt; 3
+	add -&gt; 4;
+	mul -&gt; add;
+	mul -&gt; 5;
+}
+</code></pre><p>####简单的UML类图</p>
+<p>下面是一简单的UML类图，<code>Dog</code>和<code>Cat</code>都是<code>Animal</code>的子类，<code>Dog</code>和<code>Cat</code>同属一个包，且有可能有联系<code>(0..n)</code>。</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image028.gif" alt="uml"  />
+</p>
+<p>脚本：</p>
+<pre><code>digraph G{
+	 
+	fontname = &quot;Courier New&quot;
+	fontsize = 10
+	 
+	node [ fontname = &quot;Courier New&quot;, fontsize = 10, shape = &quot;record&quot; ];
+	edge [ fontname = &quot;Courier New&quot;, fontsize = 10 ];
+	 
+	Animal [ label = &quot;{Animal |+ name : String\l+ age : int\l|+ die() : void\l}&quot; ];
+	 
+	    subgraph clusterAnimalImpl{
+	        bgcolor=&quot;yellow&quot;
+	        Dog [ label = &quot;{Dog||+ bark() : void\l}&quot; ];
+	        Cat [ label = &quot;{Cat||+ meow() : void\l}&quot; ];
+	    };
+	 
+	edge [ arrowhead = &quot;empty&quot; ];
+	 
+	Dog-&gt;Animal;
+	Cat-&gt;Animal;
+	Dog-&gt;Cat [arrowhead=&quot;none&quot;, label=&quot;0..*&quot;];
+}
+</code></pre><p>####状态图</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image030.gif" alt="status-chart"  />
+</p>
+<p>脚本：</p>
+<pre><code>digraph finite_state_machine {
+	rankdir = LR;
+	size = &quot;8,5&quot;
+	 
+	node [shape = doublecircle]; 
+	 
+	LR_0 LR_3 LR_4 LR_8;
+	 
+	node [shape = circle];
+	 
+	LR_0 -&gt; LR_2 [ label = &quot;SS(B)&quot; ];
+	LR_0 -&gt; LR_1 [ label = &quot;SS(S)&quot; ];
+	LR_1 -&gt; LR_3 [ label = &quot;S($end)&quot; ];
+	LR_2 -&gt; LR_6 [ label = &quot;SS(b)&quot; ];
+	LR_2 -&gt; LR_5 [ label = &quot;SS(a)&quot; ];
+	LR_2 -&gt; LR_4 [ label = &quot;S(A)&quot; ];
+	LR_5 -&gt; LR_7 [ label = &quot;S(b)&quot; ];
+	LR_5 -&gt; LR_5 [ label = &quot;S(a)&quot; ];
+	LR_6 -&gt; LR_6 [ label = &quot;S(b)&quot; ];
+	LR_6 -&gt; LR_5 [ label = &quot;S(a)&quot; ];
+	LR_7 -&gt; LR_8 [ label = &quot;S(b)&quot; ];
+	LR_7 -&gt; LR_5 [ label = &quot;S(a)&quot; ];
+	LR_8 -&gt; LR_6 [ label = &quot;S(b)&quot; ];
+	LR_8 -&gt; LR_5 [ label = &quot;S(a)&quot; ];
+}
+</code></pre><h4 id="时序图">时序图<a hidden class="anchor" aria-hidden="true" href="#时序图">#</a></h4>
+<pre><code>digraph G { 
+    rankdir=&quot;LR&quot;; 
+    node[shape=&quot;point&quot;, width=0, height=0]; 
+    edge[arrowhead=&quot;none&quot;, style=&quot;dashed&quot;] 
+
+    { 
+        rank=&quot;same&quot;; 
+        edge[style=&quot;solided&quot;];
+        LC[shape=&quot;plaintext&quot;]; 
+        LC -&gt; step00 -&gt; step01 -&gt; step02 -&gt; step03 -&gt; step04 -&gt; step05; 
+    } 
+
+    { 
+        rank=&quot;same&quot;; 
+        edge[style=&quot;solided&quot;];
+        Agency[shape=&quot;plaintext&quot;];
+        Agency -&gt; step10 -&gt; step11 -&gt; step12 -&gt; step13 -&gt; step14 -&gt; step15; 
+    } 
+
+    { 
+        rank=&quot;same&quot;; 
+        edge[style=&quot;solided&quot;];
+        Agent[shape=&quot;plaintext&quot;];
+        Agent -&gt; step20 -&gt; step21 -&gt; step22 -&gt; step23 -&gt; step24 -&gt; step25; 
+    } 
+
+    step00 -&gt; step10 [label=&quot;sends email new custumer&quot;, arrowhead=&quot;normal&quot;]; 
+    step11 -&gt; step01 [label=&quot;declines&quot;, arrowhead=&quot;normal&quot;]; 
+    step12 -&gt; step02 [label=&quot;accepts&quot;, arrowhead=&quot;normal&quot;]; 
+    step13 -&gt; step23 [label=&quot;forward to&quot;, arrowhead=&quot;normal&quot;]; 
+    step24 -&gt; step14; 
+    step14 -&gt; step04 [arrowhead=&quot;normal&quot;]; 
+} 
+</code></pre><p><code>rankdir=&quot;LR&quot;</code>表示，布局从左<code>L</code>到右<code>R</code>。可以看到，在代码中有<code>{}</code>括起来的部分。</p>
+<pre><code>{ 
+    rank=&quot;same&quot;; 
+    edge[style=&quot;solided&quot;];
+    Agency[shape=&quot;plaintext&quot;];
+    Agency -&gt; step10 -&gt; step11 -&gt; step12 -&gt; step13 -&gt; step14 -&gt; step15; 
+}
+</code></pre><p>每一个<code>rank=&quot;same&quot;</code>的block中的所有节点都会在同一条线上。我们设置了所有的线为虚线，但是在该block中，将线改为<code>solided</code>。</p>
+<p><img loading="lazy" src="/images/2015/11/seq.png" alt="seq"  />
+</p>
+<p>###附录</p>
+<p>事实上，从<code>dot</code>的语法及上述的示例中，很容易看出，dot脚本很容易被其他语言生成。比如，使用一些简单的数据库查询就可以生成数据库中的ER图的dot脚本。</p>
+<p>如果你追求高效的开发速度，并希望快速的将自己的想法画出来，那么<code>graphviz</code>是一个很不错的选择。</p>
+<p>当然，<code>graphviz</code>也有一定的局限，比如绘制时序图(序列图)就很难实现。<code>graphviz</code>的节点出现在画布上的位置事实上是不确定的，依赖于所使用的布局算法，而不是在脚本中出现的位置，这可能使刚开始接触<code>graphviz</code>的开发人员有点不适应。<code>graphviz</code>的强项在于自动布局，当图中的顶点和边的数目变得很多的时候，才能很好的体会这一特性的好处：</p>
+<p><img loading="lazy" src="/images/2012/01/clip_image034.gif" alt="complex"  />
+</p>
+<p>比如上图，或者较上图更复杂的图，如果采用手工绘制显然是不可能的，只能通过<code>graphviz</code>提供的自动布局引擎来完成。如果仅用于展示模块间的关系，子模块与子模块间通信的方式，模块的逻辑位置等，<code>graphviz</code>完全可以胜任，但是如果图中对象的物理位置必须是准确的，如节点A必须位于左上角，节点B必须与A相邻等特性，使用<code>graphviz</code>则很难做到。毕竟，它的强项是自动布局，事实上，所有的节点对与布局引擎而言，权重在初始时都是相同的，只是在渲染之后，节点的大小，形状等特性才会影响权重。</p>
+<p>本文只是初步介绍了<code>graphviz</code>的简单应用，如图的定义，顶点/边的属性定义，如果运行等，事实上还有很多的属性，如画布的大小，字体的选择，颜色列表等，大家可以通过<code>graphviz</code>的官网来找到更详细的资料。</p>
+<p>文中的代码都已经在<a href="https://github.com/abruzzi/graphviz-scripts">Github</a>上。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+<nav class="paginav">
+  <a class="prev" href="https://icodeit.org/2016/01/my-2015/">
+    <span class="title">« Prev Page</span>
+    <br>
+    <span>我的2015</span>
+  </a>
+  <a class="next" href="https://icodeit.org/2015/11/get-started-with-reflux/">
+    <span class="title">Next Page »</span>
+    <br>
+    <span>Reflux 101</span>
+  </a>
+</nav>
+
+
+<div class="share-buttons">
+    <a target="_blank" rel="noopener noreferrer" aria-label="share 使用graphviz绘图 on twitter"
+        href="https://twitter.com/intent/tweet/?text=%e4%bd%bf%e7%94%a8graphviz%e7%bb%98%e5%9b%be&amp;url=https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f&amp;hashtags=">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-253.927,424.544c135.939,0 210.268,-112.643 210.268,-210.268c0,-3.218 0,-6.437 -0.153,-9.502c14.406,-10.421 26.973,-23.448 36.935,-38.314c-13.18,5.824 -27.433,9.809 -42.452,11.648c15.326,-9.196 26.973,-23.602 32.49,-40.92c-14.252,8.429 -30.038,14.56 -46.896,17.931c-13.487,-14.406 -32.644,-23.295 -53.946,-23.295c-40.767,0 -73.87,33.104 -73.87,73.87c0,5.824 0.613,11.494 1.992,16.858c-61.456,-3.065 -115.862,-32.49 -152.337,-77.241c-6.284,10.881 -9.962,23.601 -9.962,37.088c0,25.594 13.027,48.276 32.95,61.456c-12.107,-0.307 -23.448,-3.678 -33.41,-9.196l0,0.92c0,35.862 25.441,65.594 59.311,72.49c-6.13,1.686 -12.72,2.606 -19.464,2.606c-4.751,0 -9.348,-0.46 -13.946,-1.38c9.349,29.426 36.628,50.728 68.965,51.341c-25.287,19.771 -57.164,31.571 -91.8,31.571c-5.977,0 -11.801,-0.306 -17.625,-1.073c32.337,21.15 71.264,33.41 112.95,33.41Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share 使用graphviz绘图 on linkedin"
+        href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f&amp;title=%e4%bd%bf%e7%94%a8graphviz%e7%bb%98%e5%9b%be&amp;summary=%e4%bd%bf%e7%94%a8graphviz%e7%bb%98%e5%9b%be&amp;source=https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-288.985,423.278l0,-225.717l-75.04,0l0,225.717l75.04,0Zm270.539,0l0,-129.439c0,-69.333 -37.018,-101.586 -86.381,-101.586c-39.804,0 -57.634,21.891 -67.617,37.266l0,-31.958l-75.021,0c0.995,21.181 0,225.717 0,225.717l75.02,0l0,-126.056c0,-6.748 0.486,-13.492 2.474,-18.315c5.414,-13.475 17.767,-27.434 38.494,-27.434c27.135,0 38.007,20.707 38.007,51.037l0,120.768l75.024,0Zm-307.552,-334.556c-25.674,0 -42.448,16.879 -42.448,39.002c0,21.658 16.264,39.002 41.455,39.002l0.484,0c26.165,0 42.452,-17.344 42.452,-39.002c-0.485,-22.092 -16.241,-38.954 -41.943,-39.002Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share 使用graphviz绘图 on reddit"
+        href="https://reddit.com/submit?url=https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f&title=%e4%bd%bf%e7%94%a8graphviz%e7%bb%98%e5%9b%be">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-3.446,265.638c0,-22.964 -18.616,-41.58 -41.58,-41.58c-11.211,0 -21.361,4.457 -28.841,11.666c-28.424,-20.508 -67.586,-33.757 -111.204,-35.278l18.941,-89.121l61.884,13.157c0.756,15.734 13.642,28.29 29.56,28.29c16.407,0 29.706,-13.299 29.706,-29.701c0,-16.403 -13.299,-29.702 -29.706,-29.702c-11.666,0 -21.657,6.792 -26.515,16.578l-69.105,-14.69c-1.922,-0.418 -3.939,-0.042 -5.585,1.036c-1.658,1.073 -2.811,2.761 -3.224,4.686l-21.152,99.438c-44.258,1.228 -84.046,14.494 -112.837,35.232c-7.468,-7.164 -17.589,-11.591 -28.757,-11.591c-22.965,0 -41.585,18.616 -41.585,41.58c0,16.896 10.095,31.41 24.568,37.918c-0.639,4.135 -0.99,8.328 -0.99,12.576c0,63.977 74.469,115.836 166.33,115.836c91.861,0 166.334,-51.859 166.334,-115.836c0,-4.218 -0.347,-8.387 -0.977,-12.493c14.564,-6.47 24.735,-21.034 24.735,-38.001Zm-119.474,108.193c-20.27,20.241 -59.115,21.816 -70.534,21.816c-11.428,0 -50.277,-1.575 -70.522,-21.82c-3.007,-3.008 -3.007,-7.882 0,-10.889c3.003,-2.999 7.882,-3.003 10.885,0c12.777,12.781 40.11,17.317 59.637,17.317c19.522,0 46.86,-4.536 59.657,-17.321c3.016,-2.999 7.886,-2.995 10.885,0.008c3.008,3.011 3.003,7.882 -0.008,10.889Zm-5.23,-48.781c-16.373,0 -29.701,-13.324 -29.701,-29.698c0,-16.381 13.328,-29.714 29.701,-29.714c16.378,0 29.706,13.333 29.706,29.714c0,16.374 -13.328,29.698 -29.706,29.698Zm-160.386,-29.702c0,-16.381 13.328,-29.71 29.714,-29.71c16.369,0 29.689,13.329 29.689,29.71c0,16.373 -13.32,29.693 -29.689,29.693c-16.386,0 -29.714,-13.32 -29.714,-29.693Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share 使用graphviz绘图 on facebook"
+        href="https://facebook.com/sharer/sharer.php?u=https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-106.468,0l0,-192.915l66.6,0l12.672,-82.621l-79.272,0l0,-53.617c0,-22.603 11.073,-44.636 46.58,-44.636l36.042,0l0,-70.34c0,0 -32.71,-5.582 -63.982,-5.582c-65.288,0 -107.96,39.569 -107.96,111.204l0,62.971l-72.573,0l0,82.621l72.573,0l0,192.915l-191.104,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share 使用graphviz绘图 on whatsapp"
+        href="https://api.whatsapp.com/send?text=%e4%bd%bf%e7%94%a8graphviz%e7%bb%98%e5%9b%be%20-%20https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f">
+        <svg version="1.1" viewBox="0 0 512 512" xml:space="preserve">
+            <path
+                d="M449.446,0c34.525,0 62.554,28.03 62.554,62.554l0,386.892c0,34.524 -28.03,62.554 -62.554,62.554l-386.892,0c-34.524,0 -62.554,-28.03 -62.554,-62.554l0,-386.892c0,-34.524 28.029,-62.554 62.554,-62.554l386.892,0Zm-58.673,127.703c-33.842,-33.881 -78.847,-52.548 -126.798,-52.568c-98.799,0 -179.21,80.405 -179.249,179.234c-0.013,31.593 8.241,62.428 23.927,89.612l-25.429,92.884l95.021,-24.925c26.181,14.28 55.659,21.807 85.658,21.816l0.074,0c98.789,0 179.206,-80.413 179.247,-179.243c0.018,-47.895 -18.61,-92.93 -52.451,-126.81Zm-126.797,275.782l-0.06,0c-26.734,-0.01 -52.954,-7.193 -75.828,-20.767l-5.441,-3.229l-56.386,14.792l15.05,-54.977l-3.542,-5.637c-14.913,-23.72 -22.791,-51.136 -22.779,-79.287c0.033,-82.142 66.867,-148.971 149.046,-148.971c39.793,0.014 77.199,15.531 105.329,43.692c28.128,28.16 43.609,65.592 43.594,105.4c-0.034,82.149 -66.866,148.983 -148.983,148.984Zm81.721,-111.581c-4.479,-2.242 -26.499,-13.075 -30.604,-14.571c-4.105,-1.495 -7.091,-2.241 -10.077,2.241c-2.986,4.483 -11.569,14.572 -14.182,17.562c-2.612,2.988 -5.225,3.364 -9.703,1.12c-4.479,-2.241 -18.91,-6.97 -36.017,-22.23c-13.314,-11.876 -22.304,-26.542 -24.916,-31.026c-2.612,-4.484 -0.279,-6.908 1.963,-9.14c2.016,-2.007 4.48,-5.232 6.719,-7.847c2.24,-2.615 2.986,-4.484 4.479,-7.472c1.493,-2.99 0.747,-5.604 -0.374,-7.846c-1.119,-2.241 -10.077,-24.288 -13.809,-33.256c-3.635,-8.733 -7.327,-7.55 -10.077,-7.688c-2.609,-0.13 -5.598,-0.158 -8.583,-0.158c-2.986,0 -7.839,1.121 -11.944,5.604c-4.105,4.484 -15.675,15.32 -15.675,37.364c0,22.046 16.048,43.342 18.287,46.332c2.24,2.99 31.582,48.227 76.511,67.627c10.685,4.615 19.028,7.371 25.533,9.434c10.728,3.41 20.492,2.929 28.209,1.775c8.605,-1.285 26.499,-10.833 30.231,-21.295c3.732,-10.464 3.732,-19.431 2.612,-21.298c-1.119,-1.869 -4.105,-2.99 -8.583,-5.232Z" />
+        </svg>
+    </a>
+    <a target="_blank" rel="noopener noreferrer" aria-label="share 使用graphviz绘图 on telegram"
+        href="https://telegram.me/share/url?text=%e4%bd%bf%e7%94%a8graphviz%e7%bb%98%e5%9b%be&amp;url=https%3a%2f%2ficodeit.org%2f2015%2f11%2fusing-graphviz-drawing%2f">
+        <svg version="1.1" xml:space="preserve" viewBox="2 2 28 28">
+            <path
+                d="M26.49,29.86H5.5a3.37,3.37,0,0,1-2.47-1,3.35,3.35,0,0,1-1-2.47V5.48A3.36,3.36,0,0,1,3,3,3.37,3.37,0,0,1,5.5,2h21A3.38,3.38,0,0,1,29,3a3.36,3.36,0,0,1,1,2.46V26.37a3.35,3.35,0,0,1-1,2.47A3.38,3.38,0,0,1,26.49,29.86Zm-5.38-6.71a.79.79,0,0,0,.85-.66L24.73,9.24a.55.55,0,0,0-.18-.46.62.62,0,0,0-.41-.17q-.08,0-16.53,6.11a.59.59,0,0,0-.41.59.57.57,0,0,0,.43.52l4,1.24,1.61,4.83a.62.62,0,0,0,.63.43.56.56,0,0,0,.4-.17L16.54,20l4.09,3A.9.9,0,0,0,21.11,23.15ZM13.8,20.71l-1.21-4q8.72-5.55,8.78-5.55c.15,0,.23,0,.23.16a.18.18,0,0,1,0,.06s-2.51,2.3-7.52,6.8Z" />
+        </svg>
+    </a>
+</div>
+
+  </footer><div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+        this.page.url = 'https:\/\/icodeit.org\/2015\/11\/using-graphviz-drawing\/';
+        this.page.identifier = 'https:\/\/icodeit.org\/2015\/11\/using-graphviz-drawing\/';
+        this.page.title = '使用graphviz绘图';
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "icodeit" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2021 <a href="https://icodeit.org">I Code It</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://git.io/hugopapermod" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+    menu.onscroll = function () {
+        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerText = 'copy';
+
+        function copyingDone() {
+            copybutton.innerText = 'copied!';
+            setTimeout(() => {
+                copybutton.innerText = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

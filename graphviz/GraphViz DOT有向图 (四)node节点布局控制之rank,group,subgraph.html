@@ -1,0 +1,1908 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="canonical" href="https://blog.csdn.net/youwen21/article/details/98397954"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="report" content='{"pid": "blog", "spm":"1001.2101"}'>
+    <meta name="referrer" content="always">
+    <meta http-equiv="Cache-Control" content="no-siteapp" /><link rel="alternate" media="handheld" href="#" />
+    <meta name="shenma-site-verification" content="5a59773ab8077d4a62bf469ab966a63b_1497598848">
+    <meta name="applicable-device" content="pc">
+    <link  href="https://g.csdnimg.cn/static/logo/favicon32.ico"  rel="shortcut icon" type="image/x-icon" />
+    <title>GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph_杜绝996的web开发man-CSDN博客</title>
+    <script>
+      (function(){ 
+        var el = document.createElement("script"); 
+        el.src = "https://s3a.pstatp.com/toutiao/push.js?1abfa13dfe74d72d41d83c86d240de427e7cac50c51ead53b2e79d40c7952a23ed7716d05b4a0f683a653eab3e214672511de2457e74e99286eb2c33f4428830"; 
+        el.id = "ttzz"; 
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(el, s);
+      })(window)
+    </script>
+        <meta name="keywords" content="GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph">
+        <meta name="csdn-baidu-search"  content='{"autorun":true,"install":true,"keyword":"GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph"}'>
+    <meta name="description" content="内容">
+    <script src="//g.csdnimg.cn/tingyun/1.8.5/blog.js" type='text/javascript'></script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/css/detail_enter-fdee416dbe.min.css">
+    <script type="application/ld+json">{"@context":"https://ziyuan.baidu.com/contexts/cambrian.jsonld","@id":"https://blog.csdn.net/youwen21/article/details/98397954","appid":"1638831770136827","pubDate":"2019-08-04T01:36:38","title":"GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph_杜绝996的web开发man-CSDN博客","upDate":"2019-08-04T01:36:38"}</script>
+        <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/release/blogv2/dist/pc/themesSkin/skin-shirtblue/skin-shirtblue-b2ba816980.min.css">
+    <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var isCorporate = false;//注释删除enterprise
+        var username =  "youwen21";
+        var skinImg = "white";
+        var blog_address = "https://blog.csdn.net/youwen21";
+        var currentUserName = "u013454589";
+        var isOwner = false;
+        var loginUrl = "http://passport.csdn.net/account/login?from=https://blog.csdn.net/youwen21/article/details/98397954";
+        var blogUrl = "https://blog.csdn.net/";
+        var avatar = "https://profile.csdnimg.cn/C/2/B/3_youwen21";
+        var articleTitle = "GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph";
+        var articleDesc = "内容";
+        var articleTitles = "GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph_杜绝996的web开发man-CSDN博客";
+        var nickName = "youwen21";
+        var articleDetailUrl = "https://blog.csdn.net/youwen21/article/details/98397954";
+        if(window.location.host.split('.').length == 3) {
+            blog_address = blogUrl + username;
+        }
+        var skinStatus = "White";
+        var blogStaticHost = "https://csdnimg.cn/release/blogv2/"
+    </script>
+    <script src="https://g.csdnimg.cn/??fixed-sidebar/1.1.6/fixed-sidebar.js" type="text/javascript"></script>
+    <script src='//g.csdnimg.cn/common/csdn-report/report.js' type='text/javascript'></script>
+    <link rel="stylesheet" type="text/css" href="https://csdnimg.cn/public/sandalstrap/1.4/css/sandalstrap.min.css">
+    <style>
+        .MathJax, .MathJax_Message, .MathJax_Preview{
+            display: none
+        }
+    </style>
+    <script src="https://dup.baidustatic.com/js/ds.js"></script>
+</head>
+  <body class="nodata " style="">
+        <script>
+            var toolbarSearchExt = '{"landingWord":[],"queryWord":"","tag":["GraphViz","graph","dot","有向图"],"title":"GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph"}';
+        </script>
+    <script src="https://g.csdnimg.cn/common/csdn-toolbar/csdn-toolbar.js" type="text/javascript"></script>
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/pc/css/blog_code-01256533b5.min.css">
+<link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/chart-3456820cac.css" />
+<div class="main_father clearfix d-flex justify-content-center" style="height:100%;"> 
+    <div class="container clearfix" id="mainBox">
+        <main>
+<script type="text/javascript">
+    function getQueryString(name) {   
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象  
+      var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+      if( r != null ) return decodeURIComponent( r[2] ); return '';   
+    }
+    function stripscript(s){ 
+      var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？%]") 
+      var rs = ""; 
+      for (var i = 0; i < s.length; i++) { 
+        rs = rs+s.substr(i, 1).replace(pattern, ''); 
+      } 
+      return rs; 
+    }
+    var blogHotWords = stripscript(getQueryString('utm_term')).length > 1 ? stripscript(getQueryString('utm_term')) : ''
+</script>
+<div class="blog-content-box">
+        <div class="article-header-box">
+        <div class="article-header">
+            <div class="article-title-box">
+                <h1 class="title-article" id="articleContentId">GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph</h1>
+            </div>
+            <div class="article-info-box">
+                <div class="article-bar-top">
+                    <img class="article-type-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" alt="">
+                    <div class="bar-content">
+                    <a class="follow-nickName " href="https://blog.csdn.net/youwen21" target="_blank" rel="noopener">youwen21</a>
+                    <span class="time">2019-08-04 01:36:38</span>
+                    <img class="article-read-img article-heard-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes.png" alt="">
+                    <span class="read-count">4389</span>
+                    <a id="blog_detail_zk_collection" class="un-collection" data-report-click='{"mod":"popu_823","spm":"1001.2101.3001.4232","ab":"new"}'>
+                        <img class="article-collect-img article-heard-img un-collect-status isdefault" style="display:inline-block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect.png" alt="">
+                        <img class="article-collect-img article-heard-img collect-status isactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                        <span class="name">收藏</span>
+                        <span class="get-collection">
+                            8
+                        </span>
+                    </a>
+                    </div>
+                </div>
+                <div class="blog-tags-box">
+                    <div class="tags-box artic-tag-box">
+                            <span class="label">分类专栏：</span>
+                                <a class="tag-link" href="https://blog.csdn.net/youwen21/category_9192092.html" target="_blank" rel="noopener">GraphViz</a>
+                            <span class="label">文章标签：</span>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"GraphViz","ab":"new"}' class="tag-link" href="https://www.csdn.net/tags/MtjaQgysNjY1MDUtYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">GraphViz</a>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"graph","ab":"new"}' class="tag-link" href="https://www.csdn.net/tags/MtTaEg0sMzE3ODMtYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">graph</a>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"dot","ab":"new"}' class="tag-link" href="https://so.csdn.net/so/search/s.do?q=dot&amp;t=blog&amp;o=vip&amp;s=&amp;l=&amp;f=&amp;viparticle=" target="_blank" rel="noopener">dot</a>
+                                <a data-report-click='{"mod":"popu_626","spm":"1001.2101.3001.4223","strategy":"有向图","ab":"new"}' class="tag-link" href="https://www.csdn.net/tags/MtTaEg0sMTg4MDAtYmxvZwO0O0OO0O0O.html" target="_blank" rel="noopener">有向图</a>
+                    </div>
+                </div>
+                <div class="slide-content-box">
+                    <div class="article-copyright">
+                        <div class="creativecommons">
+                            版权声明：本文为博主原创文章，遵循<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。
+                        </div>
+                        <div class="article-source-link">
+                            本文链接：<a href="https://blog.csdn.net/youwen21/article/details/98397954" target="_blank">https://blog.csdn.net/youwen21/article/details/98397954</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="operating">
+                    <a class="href-article-edit slide-toggle">版权</a>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div id="blogColumnPayAdvert">
+            <div class="column-group">
+                <div class="column-group-item column-group0 column-group-item-one">
+                    <div class="item-l">
+                        <a class="item-target" href="https://blog.csdn.net/youwen21/category_9192092.html" target="_blank" title="GraphViz"
+                        data-report-view='{"spm":"1001.2101.3001.6332"}'
+                        data-report-click='{"spm":"1001.2101.3001.6332"}'>
+                            <img class="item-target" src="https://img-blog.csdnimg.cn/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="">
+                            <span class="title item-target">GraphViz</span>
+                        </a>
+                        <span class="dec">专栏收录该内容</span>
+                    </div>
+                    <div class="item-m">
+                        <span>14 篇文章</span>
+                        <span>2 订阅</span>
+                    </div>
+                    <div class="item-r">
+                            <a class="item-target article-column-bt articleColumnFreeBt" data-id="9192092">订阅专栏</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <article class="baidu_pl">
+        <div id="article_content" class="article_content clearfix">
+        <link rel="stylesheet" href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/ck_htmledit_views-1a85854398.css">
+                <div id="content_views" class="markdown_views prism-atom-one-dark">
+                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+                    </svg>
+                    <p></p>
+<div class="toc">
+ <h3>目录</h3>
+ <ul><li><a href="#node_1">node布局说明</a></li><li><a href="#_8">默认布局</a></li><li><a href="#_15">有指向关系时的布局</a></li><li><a href="#_29">几个节点做为同一序列元素</a></li><li><a href="#_46">指定多组同序列</a></li><li><a href="#subgraphnode_63">使用subgraph使多个node节点做为一个整体</a></li><li><ul><li><a href="#subgraph_66">subgraph子图中的节点默认还是占用一行</a></li><li><a href="#subgraph_87">当subgraph有指向关系时&#xff0c;它依然占用画板行</a></li><li><a href="#subgraphrank_108">在subgraph中&#xff0c;可以使用rank约束节点占用行</a></li><li><a href="#subgraph_130">subgraph可以使用绝大部分全局属性&#xff0c;用以生成样式背景等不同视觉的子图</a></li></ul>
+ </li></ul>
+</div>
+<p></p> 
+<h1><a id="node_1"></a>node布局说明</h1> 
+<p>在rankdir&#61;TB默认值时&#xff0c;可以把画布看做是一个横格作文本<br /> 在rankdir&#61;LR时&#xff0c;可以把画布看到横过来的作文本&#xff0c;即线条是竖着的<br /> 在节点没有关系指向时&#xff0c;它们都在第一行<br /> 当节点有指向关系时&#xff0c;子节点会在父节点的下一行&#xff08;可以通过rank更改&#xff09;<br /> 使用rank可以使指定的节点都提至rank序列中的最高行&#xff08;如&#xff0c;x:2,y:5,z:20, 那么y和z都会被提至第2行的高度&#xff09;</p> 
+<h1><a id="_8"></a>默认布局</h1> 
+<pre><code>digraph g{
+    A;B;C;D;E;F;H;  
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/2019080401144990.png" alt="在这里插入图片描述" /></p> 
+<h1><a id="_15"></a>有指向关系时的布局</h1> 
+<pre><code>digraph g{
+	A;B;C;D;E;F;H;  
+
+	A-&gt;B;
+	B-&gt;C;
+	C-&gt;D;
+	D-&gt;E;
+	D-&gt;F;
+	E-&gt;H;
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/20190804005649302.png" alt="在这里插入图片描述" /></p> 
+<h1><a id="_29"></a>几个节点做为同一序列元素</h1> 
+<pre><code>digraph g{
+    // rankdir&#61;&#34;LR&#34;
+	A;B;C;D;E;F;H;
+	{rank&#61;&#34;same&#34;; C;D;E}
+	A-&gt;B;
+	B-&gt;C;
+	C-&gt;D;
+	D-&gt;E;
+	D-&gt;F;
+	E-&gt;H;
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/20190804005805800.png" alt="在这里插入图片描述" /><br /> <img src="https://img-blog.csdnimg.cn/20190804005914547.png?x-oss-process&#61;image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXdlbjIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p> 
+<h1><a id="_46"></a>指定多组同序列</h1> 
+<pre><code>digraph g{
+	A;B;C;D;E;F;H;
+	{rank&#61;&#34;same&#34;; B;E}
+	{rank&#61;&#34;same&#34;; F;E}
+	A-&gt;B;
+	B-&gt;C;
+	C-&gt;D;
+	D-&gt;E;
+	D-&gt;F;
+	E-&gt;H;
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/20190804010209239.png?x-oss-process&#61;image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXdlbjIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p> 
+<h1><a id="subgraphnode_63"></a>使用subgraph使多个node节点做为一个整体</h1> 
+<p>在rankdir&#61;TB时&#xff0c;subgraph节点默认是横向排列&#xff0c;它们占用同一行<br /> 在rankdir&#61;LR时&#xff0c;默认它们占用同一列</p> 
+<h2><a id="subgraph_66"></a>subgraph子图中的节点默认还是占用一行</h2> 
+<pre><code>digraph g{
+	A;H;
+	
+	subgraph cluster_a {
+		style &#61; &#34;dashed&#34;;
+		B;C;D;
+	}
+	subgraph cluster_b {
+		style &#61; &#34;dashed&#34;;
+		E;F;
+	}
+
+	A-&gt;B;
+	B-&gt;E;
+	B-&gt;H;
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/20190804012745684.png?x-oss-process&#61;image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXdlbjIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p> 
+<h2><a id="subgraph_87"></a>当subgraph有指向关系时&#xff0c;它依然占用画板行</h2> 
+<pre><code>digraph g{
+    A;H;
+	
+	subgraph cluster_a {
+		style &#61; &#34;dashed&#34;;
+		B;C;D; Z;
+        B-&gt;D-&gt;C;
+	}
+	subgraph cluster_b {
+		style &#61; &#34;dashed&#34;;
+		E;F;
+	}
+
+	A-&gt;B;
+	B-&gt;E;
+	B-&gt;H;
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/20190804013233903.png?x-oss-process&#61;image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXdlbjIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p> 
+<h2><a id="subgraphrank_108"></a>在subgraph中&#xff0c;可以使用rank约束节点占用行</h2> 
+<pre><code>digraph g{
+	A;H;
+	
+	subgraph cluster_a {
+		style &#61; &#34;dashed&#34;;
+		{rank&#61;&#34;same&#34;; B;C;D}
+		B;C;D;
+		B-&gt;C-&gt;D;
+	}
+	subgraph cluster_b {
+		style &#61; &#34;dashed&#34;;
+		E;F;
+	}
+
+	A-&gt;B;
+	B-&gt;E;
+	B-&gt;H;
+}
+</code></pre> 
+<p><img src="https://img-blog.csdnimg.cn/2019080401350164.png?x-oss-process&#61;image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3lvdXdlbjIx,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p> 
+<h2><a id="subgraph_130"></a>subgraph可以使用绝大部分全局属性&#xff0c;用以生成样式背景等不同视觉的子图</h2>
+                </div>
+                <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/editerView/markdown_views-d7a94ec6ab.css" rel="stylesheet">
+                <link href="https://csdnimg.cn/release/blogv2/dist/mdeditor/css/style-49037e4d27.css" rel="stylesheet">
+        </div>
+        <div id="treeSkill"></div>
+    </article>
+</div>
+<div class="more-toolbox-new" id="toolBarBox">
+    <div class="left-toolbox">
+        <div class="toolbox-left">
+            <div class="profile-box"><a class="profile-href" target="_blank" href="https://blog.csdn.net/youwen21"><img class="profile-img" src="https://profile.csdnimg.cn/C/2/B/3_youwen21"><span class="profile-name">youwen21</span></a></div>
+            <div class="profile-attend">
+                    <a class="tool-attend tool-bt-button tool-bt-attend" href="javascript:;" data-report-view='{"mod":"1592215036_002","spm":"1001.2101.3001.4232","extend1":"关注"}'>关注</a>
+                <a class="tool-item-follow active-animation" style="display:none;">关注</a>
+            </div>
+        </div>
+        <div class="toolbox-middle">
+        <ul class="toolbox-list">
+            <li class="tool-item tool-item-size tool-active is-like" id="is-like">
+            <a class="tool-item-href">
+                <img style="display:none;" id="is-like-imgactive-animation-like" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" alt="">
+                <img class="isactive" style="display:none" id="is-like-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2021Active.png" alt="">
+                <img class="isdefault" style="display:block" id="is-like-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2021White.png" alt="">  
+                <span id="spanCount" class="count ">
+                        3
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">点赞</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-unlike" id="is-unlike">
+            <a class="tool-item-href">
+                <img class="isactive" style="margin-right:0px;display:none" id="is-unlike-imgactive" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUnHeart2021Active.png" alt="">
+                <img class="isdefault" style="margin-right:0px;display:block" id="is-unlike-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newUnHeart2021White.png" alt="">
+                <span id="unlikeCount" class="count "></span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">踩</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-item-comment">
+            <a class="tool-item-href" href="#commentBox">
+                <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newComment2021White.png" alt="">
+                <span class="count">
+                    0
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">评论</span></div>
+            </li>
+            <li class="tool-item tool-item-size tool-active is-collection ">
+            <a class="tool-item-href" href="javascript:;" data-report-click='{"mod":"popu_824","spm":"1001.2101.3001.4130","ab":"new"}'>
+                <img style="display:none" id="is-collection-img-collection" class="animation-dom active-animation" src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive.png" alt="">
+                <img class="isdefault" id="is-collection-img" style="display:block" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectWhite.png" alt="">
+                <img class="isactive" id="is-collection-imgactive" style="display:none" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" alt="">
+                <span class="count get-collection " id="get-collection">
+                    8
+                </span>
+            </a>
+            <div class="tool-hover-tip"><span class="text space">收藏</span></div>
+            </li>
+            <li class="tool-item tool-active">
+                <a class="" href="javascript:;">
+                    <img class="company active" id="health-companies" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHealthCompanies1Active.gif" alt="一键三连">
+                </a>
+                <div class="tool-hover-tip three-click"><span class="text">一键三连</span></div>
+            </li>
+            <li class="tool-item tool-item-bar">
+            </li>
+            <li class="tool-item tool-item-size tool-active tool-QRcode" id="tool-share">
+                <a class="tool-item-href" href="javascript:;" data-report-click='{"mod":"1582594662_002","spm":"1001.2101.3001.4129","ab":"new"}'>
+                    <img class="isdefault" src="https://csdnimg.cn/release/blogv2/dist/pc/img/newShareWhite.png" alt="">
+                </a>
+                <div class="QRcode" id="tool-QRcode">
+                    <p class="title">
+                    扫一扫，分享海报
+                    </p>
+                    <div id='shareCode'></div>
+                </div>
+            </li>
+        </ul>
+        </div>
+        <div class="toolbox-right">
+                <div class="tool-directory">
+                    <a class="bt-columnlist-show"
+                    data-id="9192092"
+                    data-free="true"
+                    data-subscribe="false"
+                    data-title="GraphViz"
+                    data-img="https://img-blog.csdnimg.cn/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64"
+                    data-url="https://blog.csdn.net/youwen21/category_9192092.html"
+                    data-sum="14"
+                    data-people="2"
+                    data-price="0"
+                    data-oldprice="0"
+                    data-join="false"
+                    data-studyvip="false"
+                    data-studysubscribe="false"
+                    data-report-view='{"spm":"1001.2101.3001.6334","extend1":"专栏目录"}'
+                    data-report-click='{"spm":"1001.2101.3001.6334","extend1":"专栏目录"}'
+                    >专栏目录</a>
+                </div>
+        </div>
+    </div>  
+</div>
+<script type=text/javascript crossorigin src="https://csdnimg.cn/release/phoenix/production/qrcode-7c90a92189.min.js"></script>
+<script src="//g.csdnimg.cn/??sharewx/1.2.1/sharewx.js" type="text/javascript"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/user-login/3.0.1/user-login.js"></script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/collection-box/2.0.6/collection-box.js"></script>
+                <div class="first-recommend-box recommend-box">
+<div class="recommend-item-box type_blog clearfix" data-url="https://csfreebird.blog.csdn.net/article/details/51165288"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6661.1","mod":"popu_871","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://csfreebird.blog.csdn.net/article/details/51165288"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://csfreebird.blog.csdn.net/article/details/51165288" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6661.1","mod":"popu_871","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://csfreebird.blog.csdn.net/article/details/51165288"}'  data-report-query='spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>Graphviz</em> 将顶点分组</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/sheismylife" target="_blank"><span class="blog-title">Dean Chen的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">04-15</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					5456
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://csfreebird.blog.csdn.net/article/details/51165288" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6661.1","mod":"popu_871","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant_t0.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://csfreebird.blog.csdn.net/article/details/51165288"}'  data-report-query='spm=1001.2101.3001.6661.1&utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">使用<em>rank</em>=same可以做到这点。<em>graph</em> { 
+		<em>rank</em>dir=LR;
+		a -- { b c d }; b -- { c e }; c -- { e f }; d -- { f g }; e -- h; 
+		f -- { h i j g }; g -- k; h -- { o l }; i -- { l m j }; j -- { m n k }; 
+		k -- { n r };</div>
+			</a>
+		</div>
+	</div>
+</div>
+                </div>
+            <script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_commontools-fbe92c420e.min.js" type="text/javascript" async></script>
+            <div class="second-recommend-box recommend-box">
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/zyb418/article/details/105800018"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.1","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/zyb418/article/details/105800018"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/zyb418/article/details/105800018" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.1","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/zyb418/article/details/105800018"}'  data-report-query='spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">（转）<em>Graphviz</em> 画图的一些总结</div>
+					<div class="tag">最新发布</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/zyb418" target="_blank"><span class="blog-title">zyb418的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">04-27</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					806
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/zyb418/article/details/105800018" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.1","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"1","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/zyb418/article/details/105800018"}'  data-report-query='spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">https://www.cnblogs.com/shuqin/p/11897207.html
+
+    <em>Graphviz</em>
+<em>Graphviz</em> 是一个自动排版的作图软件，可以生成 png pdf 等格式。
+
+<em>dot</em> 语法介绍
+部分图形属性介绍
+示例
+使用VSC<em>ode</em>进行预览生成
+参考
+
+<em>dot</em> 语言
+<em>Graphviz</em> 构建组件为 图，<em>节点</em>，边，用属性对其进行描述。
+以下是定义<em>DOT</em>语言的抽象语法，约束...</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+<a id="commentBox" name="commentBox"></a>
+<div class="comment-box">
+	<div class="comment-edit-box d-flex">
+		<a id="commentsedit"></a>
+		<div class="user-img">
+			<a href="https://blog.csdn.net/u013454589" target="_blank">
+				<img class="" src="https://profile.csdnimg.cn/2/1/6/3_u013454589">
+			</a>
+		</div>
+		<form id="commentform">
+			<img class="comment-sofa-flag" src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentFlag@2x.png">
+      <textarea class="comment-content" name="comment_content" id="comment_content" placeholder="请发表有价值的评论， 博客评论不欢迎灌水，良好的社区氛围需大家一起维护。" maxlength="1000"></textarea>
+			<div class="comment-emoticon"><img class="comment-emoticon-img" data-url="https://csdnimg.cn/release/blogv2/dist/pc/img/" src="https://csdnimg.cn/release/blogv2/dist/pc/img/emoticon.png" alt="表情包"></div> 
+      <span class="comment-emoticon-tip">插入表情</span>
+      <div class="comment-emoticon-box">
+        <div class="comment-emoticon-img-box"></div>
+			</div>
+      <div class="opt-box">
+				<div id="ubbtools" class="add_code">
+					<a href="#insertcode" code="code" target="_self"><i class="icon iconfont icon-daima"></i></a>
+				</div>
+				<input type="hidden" id="comment_replyId" name="comment_replyId">
+				<input type="hidden" id="article_id" name="article_id" value="98397954">
+				<input type="hidden" id="comment_userId" name="comment_userId" value="">
+				<input type="hidden" id="commentId" name="commentId" value="">
+				<div class="dropdown" id="myDrap">
+					<a class="dropdown-face d-flex align-items-center" data-toggle="dropdown" role="button"
+						aria-haspopup="true" aria-expanded="false">
+						<div class="txt-selected text-truncate">添加代码片</div>
+						<svg class="icon d-block" width="200px" height="100.00px" viewBox="0 0 2048 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path  d="M597.33333292 298.666667h853.333334L1023.99999992 725.333333 597.33333292 298.666667z"  /></svg>
+					</a>
+					<ul class="dropdown-menu" id="commentCode" aria-labelledby="drop4">
+						<li><a data-code="html">HTML/XML</a></li>
+						<li><a data-code="objc">objective-c</a></li>
+						<li><a data-code="ruby">Ruby</a></li>
+						<li><a data-code="php">PHP</a></li>
+						<li><a data-code="csharp">C</a></li>
+						<li><a data-code="cpp">C++</a></li>
+						<li><a data-code="javascript">JavaScript</a></li>
+						<li><a data-code="python">Python</a></li>
+						<li><a data-code="java">Java</a></li>
+						<li><a data-code="css">CSS</a></li>
+						<li><a data-code="sql">SQL</a></li>
+						<li><a data-code="plain">其它</a></li>
+					</ul>
+				</div>
+				<div class="right-box" id="rightBox" data-type="2">
+							<span id="tip_comment" class="tip">还能输入<em>1000</em>个字符</span>
+							<a data-report-click='{"mod":"1582594662_003","spm":"1001.2101.3001.4227","ab":"new"}'><input type="submit"
+									class="btn btn-sm btn-comment" value="发表评论"></a>
+				</div>
+			</div>
+		</form>
+		<input type="button" class="bt-comment-show" value="评论">
+	</div>
+	<div class="comment-list-container">
+		<a id="comments"></a>
+		<div class="comment-list-box">
+		</div>
+		<div id="commentPage" class="pagination-box d-none"></div>
+		<div class="opt-box text-center">
+			<div class="btn btn-sm btn-link-blue" id="btnMoreComment"></div>
+		</div>
+	</div>
+</div>            <div class="recommend-box insert-baidu-box">
+                <div class="recommend-item-box clearfix" style="display:none"></div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/youwen21/article/details/98759987"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.2","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98759987"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/youwen21/article/details/98759987" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.2","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98759987"}'  data-report-query='spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>GraphViz</em> <em>DOT</em><em>有向图</em> - 复杂案例收集</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/youwen21" target="_blank"><span class="blog-title">杜绝996的web开发man</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					291
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/youwen21/article/details/98759987" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.2","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-2.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"2","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98759987"}'  data-report-query='spm=1001.2101.3001.6650.2&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-2.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">文章目录
+
+https://blog.csdn.net/zhangskd/article/<em>de</em>tails/8250470
+
+
+</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/youwen21/article/details/98394638"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.3","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"3","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98394638"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/youwen21/article/details/98394638" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.3","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"3","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98394638"}'  data-report-query='spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>GraphViz</em> <em>DOT</em><em>有向图</em> (三)<em>node</em><em>节点</em>丰富内容</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/youwen21" target="_blank"><span class="blog-title">杜绝996的web开发man</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-04</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2371
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/youwen21/article/details/98394638" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.3","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-3.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"3","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98394638"}'  data-report-query='spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>node</em>点节定义
+默认无需定义， 直接使用，即可生成<em>节点</em>
+di<em>graph</em> g {
+    <em>node</em> [sh<em>ap</em>e = record,height=.1];
+    &qu<em>ot</em>;<em>node</em>0&qu<em>ot</em>; -&gt; &qu<em>ot</em>;<em>node</em>4&qu<em>ot</em>;;
+    &qu<em>ot</em>;<em>node</em>0&qu<em>ot</em>; -&gt; &qu<em>ot</em>;<em>node</em>1&qu<em>ot</em>;;
+    &qu<em>ot</em>;<em>node</em>1&qu<em>ot</em>; -&gt; &qu<em>ot</em>;<em>node</em>2&qu<em>ot</em>;;
+    &qu<em>ot</em>;<em>node</em>1&qu<em>ot</em>; -&gt; &qu<em>ot</em>;<em>node</em>3&qu<em>ot</em>;;
+    &qu<em>ot</em>;<em>node</em>4&qu<em>ot</em>; -&amp;...</div>
+			</a>
+		</div>
+	</div>
+</div>
+		<dl id="recommend-item-box-tow" class="recommend-item-box type_blog clearfix">
+			
+		</dl>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/bitcarmanlee/article/details/78037251"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.4","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"4","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/bitcarmanlee/article/details/78037251"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/bitcarmanlee/article/details/78037251" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.4","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"4","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/bitcarmanlee/article/details/78037251"}'  data-report-query='spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>DOT</em> + <em>graphviz</em> 轻松画图神器</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/bitcarmanlee" target="_blank"><span class="blog-title">bitcarmanlee的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">09-20</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/bitcarmanlee/article/details/78037251" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.4","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-4.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"4","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/bitcarmanlee/article/details/78037251"}'  data-report-query='spm=1001.2101.3001.6650.4&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-4.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">本人是个不会画图的屌丝，一方面是因为需要画图的地方很少，另一方面也是因为即使需要画图，也都是很简单的几个框几个圈几条线，所以就用word之类的原始工具直接上了，结果往往是痛苦的经历换来搓搓的一张图，而且图很难修改，遇到需求变更时往往牵一发而动全身，所以每次听说画图，总有背后一凉的感觉。最近经同事介绍，了解了一下<em>DOT</em>和<em>graphviz</em>，一看到这东西就感觉遇到了真爱，简单的几行代码，轻松搞定画图，不用</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/a50295866/article/details/101356823"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.5","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"5","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/a50295866/article/details/101356823"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/a50295866/article/details/101356823" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.5","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"5","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/a50295866/article/details/101356823"}'  data-report-query='spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>graphviz</em> 绘制架构图</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/a50295866" target="_blank"><span class="blog-title">a50295866的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">06-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					460
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/a50295866/article/details/101356823" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.5","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"5","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/a50295866/article/details/101356823"}'  data-report-query='spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">架构图:
+ 1.依赖调用关系.(类似文献引用关系, <em>graphviz</em> 自动将每一次调用升一次层级)
+ 2.依赖调用可能是上下层级调用,也可能是同层级引用. 需人工去梳理出这些关系
+ 3. 引用多的用颜色标识出来
+ 4. 读来写,读来透传(phoenix), 读来组合(加上 uid 的帐户层) ,读来通知(支付模块)
+ 产品考虑的是以人为对象的算法....</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/a50295866/article/details/101356822"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.6","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/a50295866/article/details/101356822"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/a50295866/article/details/101356822" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.6","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/a50295866/article/details/101356822"}'  data-report-query='spm=1001.2101.3001.6650.6&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>graphviz</em> <em>布局</em>和子图,表格教程</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/a50295866" target="_blank"><span class="blog-title">a50295866的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">06-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1122
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/a50295866/article/details/101356822" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.6","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-6.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"6","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/a50295866/article/details/101356822"}'  data-report-query='spm=1001.2101.3001.6650.6&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-6.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">有了这三个利器,就搞定架构图了.
+子图间互相调用要开启
+http://<em>graphviz</em>.org/pdf/<em>dot</em>gui<em>de</em>.pdf
+
+转载于:https://www.cnblogs.com/fei33423/p/6959910.html</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/sd10086/article/details/52979462"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.7","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/sd10086/article/details/52979462"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/sd10086/article/details/52979462" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.7","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/sd10086/article/details/52979462"}'  data-report-query='spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">使用<em>Graphviz</em>绘制流程图和关系图</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/sd10086" target="_blank"><span class="blog-title">sd10086的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">10-31</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/sd10086/article/details/52979462" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.7","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-7.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"7","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/sd10086/article/details/52979462"}'  data-report-query='spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-7.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>Graphviz</em>的一些基本用法。</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/iteye_163/article/details/82449436"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.8","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/iteye_163/article/details/82449436"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/iteye_163/article/details/82449436" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.8","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/iteye_163/article/details/82449436"}'  data-report-query='spm=1001.2101.3001.6650.8&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">使用<em>graphviz</em> <em>dot</em>来画图表</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/iteye_163" target="_blank"><span class="blog-title">gashero的Geek前哨</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-17</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1435
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/iteye_163/article/details/82449436" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.8","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-8.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"8","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/iteye_163/article/details/82449436"}'  data-report-query='spm=1001.2101.3001.6650.8&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-8.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">
+&nbsp;
+使用<em>graphviz</em> <em>dot</em>来画图表
+
+
+
+
+
+
+
+翻译:
+gashero
+
+
+日期:
+2007-08-29
+
+
+原文:
+http://www.<em>graphviz</em>.org/Documentation/<em>dot</em>gui<em>de</em>.pdf
+
+
+原文日期:
+2006-01-26
+
+
+
+摘要
+<em>dot</em>用于绘制带有层次的<em>有向图</em>。可以运行于命令行模式、WEB可视化服务、或兼容的图形接口。功能包括...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/zhoupj999/article/details/50317949"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.9","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-9.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"9","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/zhoupj999/article/details/50317949"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/zhoupj999/article/details/50317949" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.9","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-9.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"9","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/zhoupj999/article/details/50317949"}'  data-report-query='spm=1001.2101.3001.6650.9&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>Graphviz</em> 画图和例子</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/zhoupj999" target="_blank"><span class="blog-title">行到水穷处，坐看云起时</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-15</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					6806
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/zhoupj999/article/details/50317949" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.9","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-9.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"9","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/zhoupj999/article/details/50317949"}'  data-report-query='spm=1001.2101.3001.6650.9&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-9.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1"><em>Graphviz</em> 探索
+简介 
+<em>graphviz</em>是贝尔实验室开发的一个开源的工具包，它使用一个特定的DSL(领域特定语言):<em>dot</em>作为脚本语言，然后使用<em>布局</em>引擎来解析此脚本，并完成自动<em>布局</em>。<em>graphviz</em>提供丰富的导出格式，如常用的图片格式，SVG，PDF格式等。<em>graphviz</em>中包含了众多的<em>布局</em>器：<em>dot</em> 默认<em>布局</em>方式，主要用于<em>有向图</em>
+neato 基于spring-m<em>ode</em>l(又称force-b</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/youwen21/article/details/98677881"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.10","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-10.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"10","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98677881"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/youwen21/article/details/98677881" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.10","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-10.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"10","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98677881"}'  data-report-query='spm=1001.2101.3001.6650.10&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>GraphViz</em> <em>DOT</em><em>有向图</em> - 复杂案例分析(4)</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/youwen21" target="_blank"><span class="blog-title">杜绝996的web开发man</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-07</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					270
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/youwen21/article/details/98677881" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.10","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-10.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"10","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98677881"}'  data-report-query='spm=1001.2101.3001.6650.10&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-10.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">文章目录
+
+</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/youwen21/article/details/98869718"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.11","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-11.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"11","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98869718"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/youwen21/article/details/98869718" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.11","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-11.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"11","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98869718"}'  data-report-query='spm=1001.2101.3001.6650.11&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>GraphViz</em> <em>DOT</em><em>有向图</em> - 复杂案例分析(5)</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/youwen21" target="_blank"><span class="blog-title">杜绝996的web开发man</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-08</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					261
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/youwen21/article/details/98869718" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.11","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-11.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"11","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98869718"}'  data-report-query='spm=1001.2101.3001.6650.11&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-11.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">文章目录案例 t<em>ran</em>cer<em>ou</em>te
+案例 t<em>ran</em>cer<em>ou</em>te
+
+处理t<em>ran</em>cer<em>ou</em>te信息
+di<em>graph</em> name {
+	&qu<em>ot</em>;10.26.20.1&qu<em>ot</em>;
+	-&gt;&qu<em>ot</em>;45.251.21.241&qu<em>ot</em>;
+	-&gt;&qu<em>ot</em>;172.16.240.1&qu<em>ot</em>;
+	-&gt;&qu<em>ot</em>;172.255.2.110&qu<em>ot</em>;
+	-&gt;{&qu<em>ot</em>;103.216.40.20&qu<em>ot</em>;;&qu<em>ot</em>;103.216.40.40&qu<em>ot</em>;}
+	-&gt;{&qu<em>ot</em>;116.251...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/youwen21/article/details/98677716"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.12","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-12.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"12","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98677716"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/youwen21/article/details/98677716" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.12","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-12.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"12","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98677716"}'  data-report-query='spm=1001.2101.3001.6650.12&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>GraphViz</em> <em>DOT</em><em>有向图</em> - 复杂案例分析(3)</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/youwen21" target="_blank"><span class="blog-title">杜绝996的web开发man</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-07</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					256
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/youwen21/article/details/98677716" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.12","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-12.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"12","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98677716"}'  data-report-query='spm=1001.2101.3001.6650.12&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-12.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">内容
+
+</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/youwen21/article/details/98308052"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.13","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-13.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"13","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98308052"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/youwen21/article/details/98308052" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.13","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-13.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"13","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98308052"}'  data-report-query='spm=1001.2101.3001.6650.13&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>GraphViz</em> <em>DOT</em><em>有向图</em> (二)基本使用</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/youwen21" target="_blank"><span class="blog-title">杜绝996的web开发man</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-03</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					213
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/youwen21/article/details/98308052" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.13","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-13.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"13","strategy":"2~default~CTRLIST~default","dest":"https://blog.csdn.net/youwen21/article/details/98308052"}'  data-report-query='spm=1001.2101.3001.6650.13&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-13.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">基本使用
+最简单的图只定义<em>node</em>
+// ClassDia<em>gra</em>m 可以写，也可以不写
+di<em>graph</em> ClassDia<em>gra</em>m { 
+    a-&gt;b;
+    b-&gt;c;
+    a-&gt;c;
+    c-&gt;d;
+}
+
+
+更改<em>node</em>说明
+// ClassDia<em>gra</em>m 可以写，也可以不写
+di<em>graph</em> { 
+    a[label=&qu<em>ot</em>;begin开始&qu<em>ot</em>;];
+    b[...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_30514745/article/details/96688249"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.14","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-14.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"14","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_30514745/article/details/96688249"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_30514745/article/details/96688249" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.14","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-14.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"14","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_30514745/article/details/96688249"}'  data-report-query='spm=1001.2101.3001.6650.14&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>Graphviz</em>(02) 汉字<em>subgraph</em>不显示汉字的处理</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_30514745" target="_blank"><span class="blog-title">weixin_30514745的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">07-21</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					168
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_30514745/article/details/96688249" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.14","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-14.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"14","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_30514745/article/details/96688249"}'  data-report-query='spm=1001.2101.3001.6650.14&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-14.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">1.按照官方教程设置
+2.如果还不显示，在不显示的汉字前面加上一个&ldquo;空格&rdquo;，汉字就会正常显示。
+
+di<em>graph</em> idp_m<em>od</em>ules{
+
+  <em>rank</em>dir = TB;
+  fontname = &qu<em>ot</em>;Microsoft YaHei&qu<em>ot</em>;;
+  fontsize = 12;
+  
+  <em>node</em> [ fontname = &qu<em>ot</em>;Microsoft YaHei&qu<em>ot</em>;, fontsize = 12...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/shenxin870409/article/details/41171475"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.15","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/shenxin870409/article/details/41171475"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/shenxin870409/article/details/41171475" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.15","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/shenxin870409/article/details/41171475"}'  data-report-query='spm=1001.2101.3001.6650.15&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>Graphviz</em>工具</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/shenxin870409" target="_blank"><span class="blog-title">宁静的心</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">11-16</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					3202
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/shenxin870409/article/details/41171475" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.15","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-15.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"15","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/shenxin870409/article/details/41171475"}'  data-report-query='spm=1001.2101.3001.6650.15&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-15.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">工欲善其事，必先利其器。</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/petershuang/article/details/81319114"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.16","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/petershuang/article/details/81319114"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/petershuang/article/details/81319114" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.16","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/petershuang/article/details/81319114"}'  data-report-query='spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>Graphviz</em>的使用</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/petershuang" target="_blank"><span class="blog-title">petershuang的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">08-01</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1978
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/petershuang/article/details/81319114" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.16","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-16.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"16","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/petershuang/article/details/81319114"}'  data-report-query='spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-16.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">一、背景
+
+最近想画一些架构，流程图之类的， 有些图形比较负责，画起来比较费时间，就找了个简单工具辅助自己画图。<em>Graphviz</em>画的图比较简单，凑合能用，优点就是快适合程序员使用。
+
+二、安装
+
+官方网站（https://<em>graphviz</em>.gitlab.io）下载安装就好了，我全程没有问题。
+
+三、使用
+
+使用就是写<em>DOT</em>语言。
+
+语法规则参考：https://<em>graphviz</em>.gitlab.io...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/weixin_34210740/article/details/94677069"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.17","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_34210740/article/details/94677069"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/weixin_34210740/article/details/94677069" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.17","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_34210740/article/details/94677069"}'  data-report-query='spm=1001.2101.3001.6650.17&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">利用<em>Graphviz</em> 画结构图</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/weixin_34210740" target="_blank"><span class="blog-title">weixin_34210740的博客</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">06-25</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					300
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/weixin_34210740/article/details/94677069" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.17","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-17.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"17","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/weixin_34210740/article/details/94677069"}'  data-report-query='spm=1001.2101.3001.6650.17&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-17.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">1. <em>Graphviz</em>介绍
+ <em>Graphviz</em>是大名鼎鼎的贝尔实验室的几位牛人开发的一个画图工具。
+它的理念和一般的&ldquo;所见即所得&rdquo;的画图工具不一样，是&ldquo;所想即所得&rdquo;。 
+<em>Graphviz</em>提供了<em>dot</em>语言来编写绘图脚本。什么？！画个图也需要一个语言！！
+不要急，<em>dot</em>语言是非常简单地，只要看了下面几个列子，就能使用了。
+
+2. <em>Graphviz</em>的几个例子
+ 下面的几个例子...</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/zhangskd/article/details/8250470"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.18","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/zhangskd/article/details/8250470"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/zhangskd/article/details/8250470" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.18","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/zhangskd/article/details/8250470"}'  data-report-query='spm=1001.2101.3001.6650.18&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1">程序员的绘图利器 &mdash; <em>Graphviz</em></div>
+					<div class="tag">热门推荐</div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/zhangskd" target="_blank"><span class="blog-title">zhangskd的专栏</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">12-04</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					2万+
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/zhangskd/article/details/8250470" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.18","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-18.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"18","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/zhangskd/article/details/8250470"}'  data-report-query='spm=1001.2101.3001.6650.18&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-18.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">概述
+&nbsp;
+官网：http://www.<em>graphviz</em>.org/
+<em>Graphviz</em> (<em>Graph</em> Vi<em>su</em>alization Software) 是一个由AT&amp;T实验室启动的开源工具包。<em>DOT</em>是一种图形描述语言，非常简单的，
+<em>Graphviz</em>就是用来处理这种语言的工具。只需要简单了解一下<em>DOT</em>语言，就可以用<em>Graphviz</em>绘图了，它对程序员特别有用。
+So in short, if yo</div>
+			</a>
+		</div>
+	</div>
+</div>
+<div class="recommend-item-box type_blog clearfix" data-url="https://blog.csdn.net/claroja/article/details/82586670"  data-report-view='{"ab":"new","spm":"1001.2101.3001.6650.19","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-19.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"19","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/claroja/article/details/82586670"}'>
+	<div class="content-box">
+		<div class="content-blog display-flex">
+			<div class="title-box">
+				<a href="https://blog.csdn.net/claroja/article/details/82586670" class="tit" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.19","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-19.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"19","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/claroja/article/details/82586670"}'  data-report-query='spm=1001.2101.3001.6650.19&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.no_search_link'>
+					<div class="left ellipsis-online ellipsis-online-1"><em>graphviz</em></div>
+				</a>
+			</div>
+			<div class="info-box display-flex">
+				<div class="info">
+					<a href="https://blog.csdn.net/claroja" target="_blank"><span class="blog-title">Claroja</span></a>
+				</div>
+				<div class="info display-flex">
+					<span class="info-block time">09-10</span>
+					<span class="info-block read"><img class="read-img" src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					1561
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="desc-box">
+			<a href="https://blog.csdn.net/claroja/article/details/82586670" target="_blank"  data-report-click='{"ab":"new","spm":"1001.2101.3001.6650.19","mod":"popu_387","extra":"{\"highlightScore\":0.0,\"utm_medium\":\"distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-19.no_search_link\",\"dist_request_id\":\"1636946424649_37461\"}","dist_request_id":"1636946424649_37461","ab_strategy":"default","index":"19","strategy":"2~default~BlogCommendFromBaidu~default","dest":"https://blog.csdn.net/claroja/article/details/82586670"}'  data-report-query='spm=1001.2101.3001.6650.19&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.no_search_link&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-19.no_search_link'>
+				<div class="desc ellipsis-online ellipsis-online-1">1.创建图
+
+di<em>graph</em> name1 {
+    label = &amp;amp;amp;qu<em>ot</em>;<em>graph</em>&amp;amp;amp;qu<em>ot</em>;;
+    a;b;
+
+    <em>subgraph</em> cluster_sgh {
+        label = &amp;amp;amp;qu<em>ot</em>;<em>subgraph</em>&amp;amp;amp;qu<em>ot</em>;;
+        c;d;
+    }
+}
+
+使用<em>node</em> []和edge []对全局进行设置
+
+
+
+di<em>graph</em> <em>graph</em>1 {
+    <em>node</em> [sh</div>
+			</a>
+		</div>
+	</div>
+</div>
+            </div>
+            <div class="template-box">
+                <span>©️2021 CSDN</span>
+                <span>皮肤主题: 像素格子</span>
+                <span> 设计师:CSDN官方博客</span>
+                <span>
+                    <a href="https://blog.csdn.net/" class="back-home c-blue c-blue-hover c-blue-focus">返回首页</a>
+                </span>
+            </div>
+<div class="blog-footer-bottom" style="margin-top:10px;"></div>
+<script src="https://g.csdnimg.cn/common/csdn-footer/csdn-footer.js" data-isfootertrack="false" type="text/javascript"></script>
+<script type="text/javascript">
+    window.csdn.csdnFooter.options = {
+        el: '.blog-footer-bottom',
+        type: 2
+    }
+</script>        </main>
+<aside class="blog_container_aside">
+	<div id="asideProfile" class="aside-box">
+    <div class="profile-intro d-flex">
+        <div class="avatar-box d-flex justify-content-center flex-column">
+            <a href="https://blog.csdn.net/youwen21" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4121","dest":"https://blog.csdn.net/youwen21","ab":"new"}'>
+                <img src="https://profile.csdnimg.cn/C/2/B/3_youwen21" class="avatar_pic">
+            </a>
+        </div>
+        <div class="user-info d-flex flex-column profile-intro-name-box">
+            <div class="profile-intro-name-boxTop">
+                <a href="https://blog.csdn.net/youwen21" class="" id="uid" title="youwen21" data-report-click='{"mod":"popu_379","spm":"1001.2101.3001.4122","dest":"https://blog.csdn.net/youwen21","ab":"new"}'>
+                    <span class="name " username="youwen21">youwen21</span>
+                </a>
+                <span>
+                </span>
+                <span class="flag expert-blog">
+                <span class="bubble">CSDN认证博客专家</span>
+                </span>
+                <span class="flag company-blog">
+                <span class="bubble">CSDN认证企业博客</span>
+                </span>
+            </div>
+            <div class="profile-intro-name-boxFooter">
+                <span class="personal-home-page personal-home-years">码龄10年</span>
+                    <span class="personal-home-page">
+                    <a class="personal-home-certification" href="https://i.csdn.net/#/uc/profile?utm_source=14998968" target="_blank" title="暂无认证">
+                    <img src="https://csdnimg.cn/identity/nocErtification.png" alt="">
+                    暂无认证
+                    </a>
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="49">
+            <a href="https://blog.csdn.net/youwen21" data-report-click='{"mod":"1598321000_001","spm":"1001.2101.3001.4310"}' data-report-query="t=1">  
+                <dt><span class="count">49</span></dt>
+                <dd class="font">原创</dd>
+            </a>
+        </dl>
+        <dl class="text-center" data-report-click='{"mod":"1598321000_002","spm":"1001.2101.3001.4311"}' title="51086">
+            <a href="https://blog.csdn.net/rank/list/weekly" target="_blank">
+                <dt><span class="count">5万+</span></dt>
+                <dd class="font">周排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" title="41112">
+            <a href="https://blog.csdn.net/rank/list/total" data-report-click='{"mod":"1598321000_003","spm":"1001.2101.3001.4312"}' target="_blank">
+                <dt><span class="count">4万+</span></dt>
+                <dd class="font">总排名</dd>
+            </a>
+        </dl>
+        <dl class="text-center" style="min-width:58px" title="64117">  
+            <dt><span class="count">6万+</span></dt>
+            <dd>访问</dd>
+        </dl>
+        <dl class="text-center" title="4级,点击查看等级说明">
+            <dt><a href="https://blog.csdn.net/blogdevteam/article/details/103478461" target="_blank">
+                <img class="level" src="https://csdnimg.cn/identity/blog4.png">
+            </a>
+            </dt>
+            <dd>等级</dd>
+        </dl>
+    </div>
+    <div class="item-rank"></div>
+    <div class="data-info d-flex item-tiling">
+        <dl class="text-center" title="880">
+            <dt><span class="count">880</span></dt>
+            <dd>积分</dd>
+        </dl>
+         <dl class="text-center" id="fanBox" title="11">
+            <dt><span class="count" id="fan">11</span></dt>
+            <dd>粉丝</dd>
+        </dl>
+        <dl class="text-center" title="23">
+            <dt><span class="count">23</span></dt>
+            <dd>获赞</dd>
+        </dl>
+        <dl class="text-center" title="15">
+            <dt><span class="count">15</span></dt>
+            <dd>评论</dd>
+        </dl>
+        <dl class="text-center" title="85">
+            <dt><span class="count">85</span></dt>
+            <dd>收藏</dd>
+        </dl>
+    </div>
+    <div class="aside-box-footer" data-report-view='{"spm":"3001.4296"}'>
+        <div class="badge-box d-flex">
+            <div class="badge d-flex">
+                <div class="icon-badge" title="签到新秀">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/qiandao1@240.png" alt="签到新秀">
+                    </div>
+                </div>
+                <div class="icon-badge" title="持之以恒">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/chizhiyiheng@240.png" alt="持之以恒">
+                    </div>
+                </div>
+                <div class="icon-badge" title="勤写标兵Lv2">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/qixiebiaobing2@240.png" alt="勤写标兵Lv2">
+                    </div>
+                </div>
+                <div class="icon-badge" title="分享达人">
+                    <div class="mouse-box">
+                        <img class="medal-img" data-report-click='{"spm":"3001.4296"}' src="https://csdnimg.cn/medal/fenxiangdaren@240.png" alt="分享达人">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="profile-intro-name-boxOpration">
+        <div class="opt-letter-watch-box">
+        <a class="bt-button personal-letter" href="https://im.csdn.net/chat/youwen21" target="_blank" rel="noopener">私信</a>
+        </div>
+        <div class="opt-letter-watch-box"> 
+            <a class="personal-watch bt-button" id="btnAttent" >关注</a>  
+        </div>
+    </div>
+</div>
+<div id="asideSearchArticle" class="aside-box">
+	<div class="aside-content search-comter">
+    <div class="aside-search aside-search-blog">         
+        <input type="text" class="input-serch-blog" name="" autocomplete="off" value="" id="search-blog-words" placeholder="搜博主文章">
+        <a class="btn-search-blog">
+                    <img src="//csdnimg.cn/cdn/content-toolbar/csdn-sou.png?v=1587021042">
+        </a>
+    </div>
+    </div>
+</div>
+
+
+<div id="asideHotArticle" class="aside-box">
+	<h3 class="aside-title">热门文章</h3>
+	<div class="aside-content">
+		<ul class="hotArticle-list">
+			<li>
+				<a href="https://blog.csdn.net/youwen21/article/details/100142735" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/youwen21/article/details/100142735","ab":"new"}'>
+				Nginx基本配置http,server,location三层结构说明
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">17469</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/youwen21/article/details/108845934" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/youwen21/article/details/108845934","ab":"new"}'>
+				TCP网络错误Connection reset by peer，peer是啥意思呢
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">8991</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/youwen21/article/details/98896703" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/youwen21/article/details/98896703","ab":"new"}'>
+				GraphViz 使用教程-用代码生成有向图。并介绍流程图、时序图等绘图工具
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">4391</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/youwen21/article/details/98397954" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/youwen21/article/details/98397954","ab":"new"}'>
+				GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">4381</span>
+                </a>
+			</li>
+			<li>
+				<a href="https://blog.csdn.net/youwen21/article/details/100514013" target="_blank"  data-report-click='{"mod":"popu_541","spm":"1001.2101.3001.4139","dest":"https://blog.csdn.net/youwen21/article/details/100514013","ab":"new"}'>
+				mac系统 grep不支持-P选项的解决办法，grep匹配utf8中文字符
+					<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" alt="">
+					<span class="read">3637</span>
+                </a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="asideCategory" class="aside-box flexible-box">
+    <h3 class="aside-title">分类专栏</h3>
+    <div class="aside-content">
+        <ul>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_11352831.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_11352831.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">redis</span>
+                    </span>
+                    <span class="count float-right">4篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_10434485.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_10434485.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">TCP/IP</span>
+                    </span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9406470.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9406470.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">杂项其他</span>
+                    </span>
+                    <span class="count float-right">8篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_10014252.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_10014252.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">go</span>
+                    </span>
+                    <span class="count float-right">7篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9324080.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9324080.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">教育行业IT系统</span>
+                    </span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9308930.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9308930.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">nginx</span>
+                    </span>
+                    <span class="count float-right">1篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_2229601.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_2229601.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">php</span>
+                    </span>
+                    <span class="count float-right">7篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9164483.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9164483.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">命令行-termial</span>
+                    </span>
+                    <span class="count float-right">2篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9164500.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9164500.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">效率工具</span>
+                    </span>
+                    <span class="count float-right">6篇</span>
+                </a>
+            </li>
+            <li class="">
+                <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9192092.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9192092.html","ab":"new"}'>
+                    <img src="https://img-blog.csdnimg.cn/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                    <span class="title oneline">
+                        <span class="text">GraphViz</span>
+                    </span>
+                    <span class="count float-right">14篇</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <p class="text-center">
+        <a class="flexible-btn" data-fbox="aside-archive"><img class="look-more" src="https://csdnimg.cn/release/blogv2/dist/pc/img/arrowDownWhite.png" alt=""></a>
+    </p>
+</div>
+<div id="asideNewComments" class="aside-box">
+    <h3 class="aside-title">最新评论</h3>
+    <div class="aside-content">
+        <ul class="newcomment-list">
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/youwen21/article/details/98394638#comments_18510475" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/98394638#comments_18510475","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/98394638#comments_18510475","ab":"new"}'>GraphViz DOT有向图 (三)node节点丰富内容</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/youwen21" class="user-name" target="_blank">youwen21: </a>
+                    <span class="code-comments">这个没法作出判断， 你用第三方库包是否支持image node， 程序的运行目录和2.png是否在相同目录等，很多不确定因素。
+代码直接系统调用dot生成图片应该可以。</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/youwen21/article/details/115000907#comments_17629253" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115000907#comments_17629253","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115000907#comments_17629253","ab":"new"}'>mac Apple M1 在根目录无法创建文件和文件夹 mkdir: /data : Read-only file system</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/youwen21" class="user-name" target="_blank">youwen21: </a>
+                    <span class="code-comments">https://blog.csdn.net/qq_35417527/article/details/113754230  参考这个可以</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/youwen21/article/details/115000907#comments_17567521" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115000907#comments_17567521","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115000907#comments_17567521","ab":"new"}'>mac Apple M1 在根目录无法创建文件和文件夹 mkdir: /data : Read-only file system</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/qq_41271393" class="user-name" target="_blank">扎扎小成: </a>
+                    <span class="code-comments">m1 怎么解</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/youwen21/article/details/115003058#comments_16147370" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115003058#comments_16147370","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115003058#comments_16147370","ab":"new"}'>mac新电脑Apple M1 golang 不能debug 解决</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/youwen21" class="user-name" target="_blank">youwen21: </a>
+                    <span class="code-comments">可能正常调式， 注意go安装是arm架构的。</span>
+                </p>
+            </li>
+            <li>
+                <a class="title text-truncate" target="_blank" href="https://blog.csdn.net/youwen21/article/details/115003058#comments_16143132" data-report-click='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115003058#comments_16143132","ab":"new"}' data-report-view='{"mod":"popu_542","spm":"1001.2101.3001.4231","dest":"https://blog.csdn.net/youwen21/article/details/115003058#comments_16143132","ab":"new"}'>mac新电脑Apple M1 golang 不能debug 解决</a>
+                <p class="comment ellipsis">
+                    <a href="https://blog.csdn.net/WU_DENG9495" class="user-name" target="_blank">WjXIIIIIIIIII: </a>
+                    <span class="code-comments">Arm架构Debug能正常看到结果吗?</span>
+                </p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div id="asideNewNps" class="aside-box">
+    <h3 class="aside-title">您愿意向朋友推荐“博客详情页”吗？</h3>
+    <div class="aside-content">
+        <ul class="newnps-list">
+            <li class="newnps-item" data-type="强烈不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel1.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey1.png" alt="">
+                </div>
+                <div class="newnps-text">强烈不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="不推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel2.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey2.png" alt="">
+                </div>
+                <div class="newnps-text">不推荐</div>
+            </li>
+            <li class="newnps-item" data-type="一般般">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel3.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey3.png" alt="">
+                </div>
+                <div class="newnps-text">一般般</div>
+            </li>
+            <li class="newnps-item" data-type="推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel4.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey4.png" alt="">
+                </div>
+                <div class="newnps-text">推荐</div>
+            </li>
+            <li class="newnps-item" data-type="强烈推荐">
+                <div class="newnps-img-box">
+                    <img class="newnps-img active" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeel5.png" alt="">
+                    <img class="newnps-img default" src="https://csdnimg.cn/release/blogv2/dist/pc/img/npsFeelGrey5.png" alt="">
+                </div>
+                <div class="newnps-text">强烈推荐</div>
+            </li>
+        </ul>
+        <div class="newnps-form-box">
+        <div class="newnps-form">
+            <input type="text" placeholder="请输入建议或反馈后点击提交" class="newnps-input">
+            <span class="newnps-btn">提交</span>
+        </div>
+        </div>
+    </div>
+</div>
+<div id="asideArchive" class="aside-box" style="display:block!important; width:300px;">
+    <h3 class="aside-title">最新文章</h3>
+    <div class="aside-content">
+        <ul class="inf_list clearfix">
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/youwen21/article/details/120207206" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/youwen21/article/details/120207206","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/youwen21/article/details/120207206","ab":"new"}'>redis源码阅读 3 - 配置Clion编辑器Debug redis-server</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/youwen21/article/details/120207052" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/youwen21/article/details/120207052","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/youwen21/article/details/120207052","ab":"new"}'>redis源码阅读 2 - 解读makefile, make编译生成 redis-cli redis-server</a>
+            </li>
+            <li class="clearfix">
+            <a href="https://blog.csdn.net/youwen21/article/details/120261805" target="_blank" data-report-click='{"mod":"popu_382","spm":"1001.2101.3001.4136","dest":"https://blog.csdn.net/youwen21/article/details/120261805","ab":"new"}' data-report-view='{"mod":"popu_382","dest":"https://blog.csdn.net/youwen21/article/details/120261805","ab":"new"}'>redis源码阅读4-结构图</a>
+            </li>
+        </ul>
+        <div class="archive-bar"></div>
+        <div class="archive-box">
+                <div class="archive-list-item"><a href="https://blog.csdn.net/youwen21/article/month/2021/09" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2021年</span><span class="num">14篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/youwen21/article/month/2020/12" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2020年</span><span class="num">13篇</span></a></div>
+                <div class="archive-list-item"><a href="https://blog.csdn.net/youwen21/article/month/2019/10" target="_blank" data-report-click='{"mod":"popu_538","spm":"1001.2101.3001.4138","ab":"new","dest":""}'><span class="year">2019年</span><span class="num">23篇</span></a></div>
+        </div>
+    </div>
+</div>
+	<div id="footerRightAds" class="isShowFooterAds">
+		<div class="aside-box">
+			<div id="kp_box_57" data-pid="57"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PC-博客详情页-矩形-左下视窗（自适应） -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="1894159733"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=57&a=707&c=0&k=&spm=1001.2101.3001.5001&d=1&t=3&u=a85c80439cbd4168ae6aa8137a1a45c2" style="display: block;width: 0px;height: 0px;"></div>
+		</div>
+	</div>
+    <!-- 详情页显示目录 -->
+<!--文章目录-->
+<div id="asidedirectory" class="aside-box">
+    <div class='groupfile' id="directory">
+        <h3 class="aside-title">目录</h3>
+        <div class="align-items-stretch group_item">
+            <div class="pos-box">
+            <div class="scroll-box">
+                <div class="toc-box"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+</aside>
+<script>
+	$("a.flexible-btn").click(function(){
+		$(this).parents('div.aside-box').removeClass('flexible-box');
+		$(this).parents("p.text-center").remove();
+	})
+</script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-tooltip/2.5/user-tooltip.js"></script>
+<script type="text/javascript"  src="https://g.csdnimg.cn/user-medal/1.0.7/user-medal.js"></script>    </div>
+<div class="recommend-right  align-items-stretch clearfix" id="rightAside" data-type="recommend">
+    <aside class="recommend-right_aside">
+        <div id="recommend-right" >
+                        <div class='flex-column aside-box groupfile' id="groupfile">
+                <div class="groupfile-div">
+                <h3 class="aside-title">目录</h3>
+                <div class="align-items-stretch group_item">
+                    <div class="pos-box">
+                        <div class="scroll-box">
+                            <div class="toc-box"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div id="recommendAdBox">
+                    <div id="kp_box_479" data-pid="479"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- PC-博客详情页-右侧视窗（自适应） -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-1076724771190722"
+     data-ad-slot="3484057394"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><img class="pre-img-lasy" data-src="https://kunyu.csdn.net/1.png?p=479&a=3267&c=0&k=&spm=1001.2101.3001.4834&d=1&t=3&u=5a829ca84b294012bccf5fdadc9268f0" style="display: block;width: 0px;height: 0px;"></div>
+                </div>
+            <div class='aside-box kind_person d-flex flex-column'>
+                    <h3 class="aside-title">分类专栏</h3>
+                    <div class="align-items-stretch kindof_item" id="kind_person_column">
+                        <div class="aside-content">
+                            <ul>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_11352831.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_11352831.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">redis</span>
+                                        </span>
+                                        <span class="count float-right">4篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_10434485.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_10434485.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756925.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">TCP/IP</span>
+                                        </span>
+                                        <span class="count float-right">1篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9406470.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9406470.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">杂项其他</span>
+                                        </span>
+                                        <span class="count float-right">8篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_10014252.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_10014252.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">go</span>
+                                        </span>
+                                        <span class="count float-right">7篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9324080.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9324080.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">教育行业IT系统</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9308930.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9308930.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756926.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">nginx</span>
+                                        </span>
+                                        <span class="count float-right">1篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_2229601.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_2229601.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756928.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">php</span>
+                                        </span>
+                                        <span class="count float-right">7篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9164483.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9164483.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756927.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">命令行-termial</span>
+                                        </span>
+                                        <span class="count float-right">2篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9164500.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9164500.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">效率工具</span>
+                                        </span>
+                                        <span class="count float-right">6篇</span>
+                                    </a>
+                                </li>
+                                <li class="">
+                                    <a class="clearfix" target="_blank" href="https://blog.csdn.net/youwen21/category_9192092.html" data-report-click='{"mod":"popu_537","spm":"1001.2101.3001.4137","strategy":"pc付费专栏左侧入口","dest":"https://blog.csdn.net/youwen21/category_9192092.html","ab":"new"}'>
+                                        <img src="https://img-blog.csdnimg.cn/20201014180756919.png?x-oss-process=image/resize,m_fixed,h_64,w_64" alt="" onerror="this.src='https://img-blog.csdnimg.cn/20201014180756922.png?x-oss-process=image/resize,m_fixed,h_64,w_64'">
+                                        <span class="title oneline">
+                                            <span class="text">GraphViz</span>
+                                        </span>
+                                        <span class="count float-right">14篇</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+</div>
+<div class="mask-dark"></div>
+<script>
+    var articleId = 98397954;
+    var commentscount = 0;
+    var curentUrl = "https://blog.csdn.net/youwen21/article/details/98397954";
+    var myUrl = "https://my.csdn.net/";
+    var highlight = ["subgraph","graphviz","graph","node","group","sub","ode","bgr","dot","rap","rank","aph","gra","ap","gro","od","su","ot","de","布局","bg","ran","ub","gr","ou","nk","控制","节点","四","有向图","viz"];//高亮数组
+    var isRecommendModule = true;
+    var isBaiduPre = true;
+    var baiduCount = 2;
+    var share_card_url = "https://app-blog.csdn.net/share?article_id=98397954&username=youwen21"
+	var articleType = 1;
+    var baiduKey = "GraphViz DOT有向图 (四)node节点布局控制之rank,group,subgraph";
+    var userNewReport = false;
+    var needInsertBaidu = true;
+    var recommendRegularDomainArr = ["blog.csdn.net/.+/article/details/","download.csdn.net/download/","edu.csdn.net/course/detail/","ask.csdn.net/questions/","bbs.csdn.net/topics/","www.csdn.net/gather_.+/"]
+    var codeStyle = "atom-one-dark";
+    var baiduSearchType = "title";
+    var canRead = true;
+    var blogMoveHomeArticle = false;
+    var showPcWindowAd = false;
+    var showHeadWord = true;
+    var showSearchText = "";
+    var linkPage = true;
+    var articleSource = 1;
+    var articleReport = '{"pid": "blog", "spm":"1001.2101"}';
+    var isShowToQuestion = false;
+    var baiduSearchChannel = 'pc_relevant'
+    var baiduSearchIdentification = '.no_search_link'
+    var distRequestId = '1636946424649_37461'
+    var initRewardObject = {
+        giver: "u013454589",
+        anchor: "youwen21",
+        articleId: "98397954",
+        sign: "1cc70894eebc2a9c0f0416d4a3847f1a",
+    }
+    var isLikeStatus = false;
+    var isUnLikeStatus = false;
+    var studyLearnWord = "赠12个月"
+</script>
+<script src="https://csdnimg.cn/public/sandalstrap/1.4/js/sandalstrap.min.js"></script>
+<div class="skin-boxshadow"></div>
+<div class="directory-boxshadow"></div>
+<div class="pay-code">
+    <div class="pay-money">实付<span class="pay-money-span" data-nowprice='' data-oldprice=''>元</span></div>
+    <div class="content-blance"><a class="blance-bt" href="javascript:;">使用余额支付</a></div>
+    <div class="content-code">
+    <div id="payCode" data-id="">
+            <div class="renovate">
+                <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png">
+                <span>点击重新获取</span>
+            </div>
+        </div>
+        <div class="pay-style"><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png"></span><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png"></span><span><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png"></span><span class="text">扫码支付</span></div>
+    </div>
+    <div class="bt-close"><svg t="1567152543821" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10924" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12"><defs><style type="text/css"></style></defs><path d="M512 438.378667L806.506667 143.893333a52.032 52.032 0 1 1 73.6 73.621334L585.621333 512l294.485334 294.485333a52.074667 52.074667 0 0 1-73.6 73.642667L512 585.621333 217.514667 880.128a52.053333 52.053333 0 1 1-73.621334-73.642667L438.378667 512 143.893333 217.514667a52.053333 52.053333 0 1 1 73.621334-73.621334L512 438.378667z" fill="" p-id="10925"></path></svg></div>
+    <!-- <p style="margin-top: 8px;font-size: 14px;" class="text-center">支付成功即可阅读</p> -->
+    <div class="pay-balance">
+    <input type="radio" class="pay-code-radio" data-type="details"> 
+    <span class="span">钱包余额</span>
+    <span class="balance" style="color:#FC5531;font-size:14px;">0</span>  
+    <div class="pay-code-tile">
+        <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" alt="">
+        <div class="pay-code-content">
+            <div class="span">
+                <p class="title">抵扣说明：</p>
+                <p> 1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br> 2.余额无法直接购买下载，可以购买VIP、C币套餐、付费专栏及课程。</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <a class="pay-balance-con" href="https://i.csdn.net/#/wallet/balance/recharge" target="_blank"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" alt=""><span  >余额充值</span></a>
+</body>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_highlight-7e7de84184.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/pc_wap_common-501dc4c49b.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/components/js/edit_copy_code-1320dfe85c.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://csdnimg.cn/release/blog_editor_html/release1.6.12/ckeditor/plugins/codesnippet/lib/highlight/styles/atom-one-dark.css">
+<script>
+ // 全局声明
+ if (window.csdn === undefined) {
+      window.csdn = {};
+    }
+    window.csdn.sideToolbar = {
+        options: {
+            report:{
+                isShow: true,
+            },
+            qr: {
+                isShow: false,
+            },
+            guide: {
+                isShow: true
+            }
+        }
+    }
+    $(function(){
+        $(document).on('click',"a.option-box[data-type='report']",function() {
+            window.csdn.userLogin.loadAjax(function(res){
+                if(userNewReport){
+                     window.csdn.feedback({
+                        "type":'blog',
+                        "rtype":'article',
+                        "rid":articleId,
+                        "reportedName":username,
+                        "submitOptions":{
+                            "title":articleTitle,
+                            "contentUrl":articleDetailUrl
+                        },
+                        "callback":function(){
+                            showToast({
+                                text: "感谢您的举报，我们会尽快审核！",
+                                bottom: '10%', //toast距离页面底部的距离
+                                zindex: 9000, //为了防止被其他控件遮盖，z-index默认为2
+                                speed: 500, //toast的显示速度
+                                time: 1500//toast显示多久以后消失
+                            });
+                        }
+                     })
+                }else{
+                    showReport(false,articleTitles);
+                }
+            })
+        });
+    })
+</script>
+    <script src="https://g.csdnimg.cn/baidu-search/1.0.9/baidu-search.js"  type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/download/old_static/js/qrcode.js"></script>
+<script src="https://g.csdnimg.cn/lib/qrcode/1.0.0/qrcode.min.js"></script>
+<script src="https://g.csdnimg.cn/user-ordercart/3.0.0/user-ordercart.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/user-ordertip/4.1.3/user-ordertip.js" type="text/javascript" ></script>
+<script src="https://g.csdnimg.cn/order-payment/3.0.2/order-payment.js" type="text/javascript" ></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/common-8738548423.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/detail-5e992a2a2d.min.js" type="text/javascript"></script>
+<script src="https://csdnimg.cn/release/blogv2/dist/pc/js/column-c7621afc01.min.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/side-toolbar/3.0/side-toolbar.js" type="text/javascript"></script>
+<script src="https://g.csdnimg.cn/copyright/1.0.4/copyright.js" type="text/javascript"></script>
+<script>
+    $(".MathJax").remove();
+    if ($('div.markdown_views pre.prettyprint code.hljs').length > 0) {
+        $('div.markdown_views')[0].className = 'markdown_views';
+    }
+</script>
+<script type="text/javascript" src="https://csdnimg.cn/release/blog_mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+            "HTML-CSS": {
+                    linebreaks: { automatic: true, width: "94%container" },
+                    imageFont: null
+            },
+            tex2jax: {
+                preview: "none",
+                ignoreClass:"title-article"
+            },
+            mml2jax: {
+                preview: 'none'
+            }
+    });
+</script>
+<script type="text/javascript" crossorigin src="https://g.csdnimg.cn/common/csdn-login-box/csdn-login-box.js"></script></html>
