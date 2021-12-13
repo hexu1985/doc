@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)https://wangxin1248.github.io/linux/2018/07/ubuntu18.04-install-redis.html -->
+<html lang="en-us"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <link rel="stylesheet" href="./ubuntu 18.04 安装 Redis_files/normalize.css">
+  <link rel="stylesheet" href="./ubuntu 18.04 安装 Redis_files/bulma.css">
+  <link rel="stylesheet" href="./ubuntu 18.04 安装 Redis_files/custom.css">
+  <link rel="stylesheet" href="./ubuntu 18.04 安装 Redis_files/syntax.css">
+  <link rel="stylesheet" href="./ubuntu 18.04 安装 Redis_files/font-awesome.min.css">
+  <link href="./ubuntu 18.04 安装 Redis_files/css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="https://wangxin1248.github.io/assets/images/icon-xin.png">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://wangxin1248.github.io/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="https://wangxin1248.github.io/atom.xml">
+  
+  <title>
+    
+      ubuntu 18.04 安装 Redis · 王鑫的个人博客
+    
+  </title>
+  
+<script type="text/javascript" async="" src="./ubuntu 18.04 安装 Redis_files/analytics.js.下载"></script><script async="" src="./ubuntu 18.04 安装 Redis_files/js"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-101239613-1');
+</script><script type="text/javascript" async="" src="./ubuntu 18.04 安装 Redis_files/embed.js.下载"></script><script charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/btype.js"></script><script type="text/javascript" charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/chrome.js"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/embed/styles/lounge.3e33cc45b553fa4f7fd3dfc49dc03ed0.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/common.bundle.2f2f40d40785c9541a90e9086c8770a3.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/embed/lounge.bundle.2737369a2131ed319d0273590d7dc69d.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><script async="" id="dsq_recs_scr" src="./ubuntu 18.04 安装 Redis_files/recommendations.js.下载"></script><link rel="prefetch" as="style" href="https://c.disquscdn.com/next/recommendations/styles/recommendations.10022a97346f1c6e3798931bbd8e4bb5.css"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/common.bundle.6c6defcc206edabe5048d82459ee0a0e.js"><link rel="prefetch" as="script" href="https://c.disquscdn.com/next/recommendations/recommendations.bundle.926bc472e4859a48daa346b4ba2ab4f4.js"><link rel="prefetch" as="script" href="https://disqus.com/next/config.js"><script src="./ubuntu 18.04 安装 Redis_files/alfie_v4.63f1ab6d6b9d5807dc0c94ef3fe0b851.js.下载" async="" charset="UTF-8"></script></head>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+
+<!-- Google analytics -->
+
+
+<body>
+
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="container">
+        <h1 class="title">
+          <!-- 网站顶部提示信息 -->
+          <span class="typewrite" data-period="2000" data-type="[ &quot;Hello,World&quot;,&quot;你好，世界&quot;]"><span class="wrap">Hello</span></span>
+        </h1>
+      <h4 class="subtitle" id="quote">Love is not a maybe thing. You know when you love someone.
+</h4>
+    </div>
+  </div>
+</section>
+
+<div class="main-container">
+  <div class="tile is-ancestor is-vertical">
+
+
+    <!-- 顶部部分 -->
+    <nav class="nav has-shadow">
+
+      <div class="nav-left">
+
+        <a href="https://wangxin1248.github.io/" class="nav-item">
+          <span class="icon">
+            <i class="fa fa-home" aria-hidden="true" title="Homepage"></i>
+          </span>
+        </a>
+
+        <a href="https://github.com/wangxin1248" class="nav-item">
+          <span class="icon">
+            <i class="fa fa-github" aria-hidden="true" title="Github"></i>
+          </span>
+        </a>
+        <!-- 搜索栏 -->
+        <div class="nav-item" id="searchFieldNav">
+          <div class="field has-addons">
+            <p class="control">
+              <input class="input is-small" type="text" placeholder="Find an article" id="search-text">
+            </p>
+            <p class="control">
+              <a class="button is-dark is-small" onclick="searchHandler();">
+                Search
+              </a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="nav-right nav-menu" id="nav-menu">
+        <a href="https://wangxin1248.github.io/archive" class="nav-item">Archive</a>
+        <a href="https://wangxin1248.github.io/categories" class="nav-item">Categories</a>
+        <a href="https://wangxin1248.github.io/tags" class="nav-item">Tags</a>
+      </div>
+
+      <span class="nav-toggle" id="nav-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+    </span></nav>
+
+    <div class="tile is-parent">
+      <!-- 文章部分 -->
+      <div class="tile is-8 is-child main">
+
+        <!-- 回到顶部 -->
+<script>
+  $("#back-top").hide();
+  $(document).ready(function () {
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 100) {
+        $('#back-top').fadeIn();
+      } else {
+        $('#back-top').fadeOut();
+      }
+    });
+    $('#back-top a').click(function () {
+      $('body,html').animate({
+        scrollTop: 0
+      }, 800);
+      return false;
+    });
+  });
+  </script>
+  
+<style type="text/css">
+      #back-top {
+        position: fixed;
+        bottom: 30px;
+        margin-left: 1000px;
+      }
+      #back-top a {
+        width: 150px;
+        height: 195px;
+        display: block;
+        background: #ffffff url(/assets/images/bg_up_arrow.png) no-repeat center center;
+        background-color: #ffffff;
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+        border-radius: 7px;
+        -webkit-transition: 1s;
+        -moz-transition: 1s;
+        transition: 1s;
+      }
+      #back-top a:hover {
+        background-color: #ffffff;
+      }
+</style>
+
+<div class="box">
+    <h1 class="post-title">ubuntu 18.04 安装 Redis</h1>
+    <span class="post-meta">12 July, 2018. It was a Thursday.  <span id="busuanzi_container_page_pv" style="display: inline;">
+        <div align="left">view: <span id="busuanzi_value_page_pv">12875</span></div>
+      </span><a style="color:grey" href="https://wangxin1248.github.io/linux/2018/07/ubuntu18.04-install-redis.html#disqus_thread"></a></span><hr>
+    <span class="post-text"><h1 id="redis-安装">Redis 安装</h1>
+
+<p>Redis是一款内存键值存储，以其灵活性，性能和广泛的语言支持而闻名。本教程将演示如何在Ubuntu 18.04服务器上安装和配置Redis。主要内容包括：</p>
+
+<ol>
+  <li>安装 Redis</li>
+  <li>Redis 配置</li>
+  <li>Redis 控制</li>
+</ol>
+
+<h2 id="一安装-redis">一、安装 Redis</h2>
+
+<p>使用 apt 从官方 Ubuntu 存储库来安装 Redis：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>apt update
+<span class="nv">$ </span><span class="nb">sudo </span>apt <span class="nb">install </span>redis-server
+</code></pre></div></div>
+
+<h2 id="二redis-配置">二、Redis 配置</h2>
+
+<p>打开 Redis的配置文件</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>vi /etc/redis/redis.conf
+</code></pre></div></div>
+
+<p>在文件中，找到supervised指令。 该指令允许您声明一个init系统来管理Redis作为服务，从而为您提供对其操作的更多控制。 受supervised指令默认设置为no 。 由于您正在运行使用systemd init系统的Ubuntu，请将其更改为systemd ：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># If you run Redis from upstart or systemd, Redis can interact with your</span>
+<span class="c"># supervision tree. Options:</span>
+<span class="c">#   supervised no      - no supervision interaction</span>
+<span class="c">#   supervised upstart - signal upstart by putting Redis into SIGSTOP mode</span>
+<span class="c">#   supervised systemd - signal systemd by writing READY=1 to $NOTIFY_SOCKET</span>
+<span class="c">#   supervised auto    - detect upstart or systemd method based on</span>
+<span class="c">#                        UPSTART_JOB or NOTIFY_SOCKET environment variables</span>
+<span class="c"># Note: these supervision methods only signal "process is ready."</span>
+<span class="c">#       They do not enable continuous liveness pings back to your supervisor.</span>
+supervised systemd
+</code></pre></div></div>
+
+<p>重新加载Redis服务文件以反映您对配置文件所做的更改：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>service redis restart
+</code></pre></div></div>
+
+<p>查看 Redis 的运行状态：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>systemctl status redis
+</code></pre></div></div>
+
+<p>输出如下结果表示运行成功：</p>
+
+<p><img src="./ubuntu 18.04 安装 Redis_files/05-ubuntu-install-redis.png" alt="redis-install-1"></p>
+
+<p>现在已经成功安装和配置了Redis并且已经开始运行。</p>
+
+<h2 id="三redis-控制">三、Redis 控制</h2>
+
+<h3 id="redis-服务控制">redis 服务控制</h3>
+
+<p>启动 redis 服务：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>service redis start
+</code></pre></div></div>
+
+<p>关闭 redis 服务：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>service redis stop
+</code></pre></div></div>
+
+<p>重启 redis 服务：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>service redis restart
+</code></pre></div></div>
+
+<h3 id="redis-客户端连接">redis 客户端连接</h3>
+
+<p>在命令行中输入如下命令来登陆进 redis 客户端</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>redis-cli
+</code></pre></div></div>
+
+<h3 id="redis-远程连接">redis 远程连接</h3>
+
+<p>打开配置文件</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>vi /etc/redis/redis.conf
+</code></pre></div></div>
+
+<p>将 bind 127.0.0.1 ::1 改为 bind 0.0.0.0</p>
+
+<p>之后重新启动 redis</p>
+
+<h2 id="四redis-设置密码">四、Redis 设置密码</h2>
+
+<p>打开 Redis 的配置文件</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>vi /etc/redis/redis.conf
+</code></pre></div></div>
+
+<p>找到下面这一行</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># requirepass foobared </span>
+</code></pre></div></div>
+
+<p>将注释符号去掉，将后面修改成自己的密码，如:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>requirepass 123456
+</code></pre></div></div>
+</span>
+</div>
+
+<!-- 回到顶部 -->
+<div id="back-top">
+    <a href="https://wangxin1248.github.io/linux/2018/07/ubuntu18.04-install-redis.html#top" title="回到顶部"></a>
+</div>
+
+
+
+
+  <div id="disqus_recommendations" style="margin-bottom: 12px;"><iframe id="dsq-app1877" name="dsq-app1877" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./ubuntu 18.04 安装 Redis_files/saved_resource.html" style="width: 100% !important; border: none !important; overflow: hidden !important; height: 270px !important; display: inline !important; box-sizing: border-box !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div><div id="disqus_thread"><iframe id="dsq-app3009" name="dsq-app3009" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="./ubuntu 18.04 安装 Redis_files/saved_resource(1).html" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 395px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script type="text/javascript">
+    
+    
+    var disqus_shortname = 'wangxin1248'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+
+      </div>
+      <!-- 信息框部分 -->
+      <div class="tile is-4 is-child">
+        <div class="tile is-parent is-vertical sidebar">
+
+          <!-- 个人头像 -->
+          <div class="tile is-child widget">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title nice-title">
+                  查看作者信息
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content nice-text">
+                    <a href="https://wangxin1248.github.io/resume.html"><img class="resume_img" src="./ubuntu 18.04 安装 Redis_files/web_hi_res_512.jpg"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 文章分类 -->
+          <div class="tile is-child widget">
+
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title nice-title">
+                  本站文章分类
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content nice-text">
+                  
+                  <ul class="categories_box inline">
+                      
+                    
+
+
+  
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Life-ref">
+    		Life <span>12</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Jekyll-ref">
+    		Jekyll <span>2</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Linux-ref">
+    		Linux <span>40</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Python-ref">
+    		Python <span>49</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#MachineLearning-ref">
+    		MachineLearning <span>4</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Flutter-ref">
+    		Flutter <span>2</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#SQL-ref">
+    		SQL <span>5</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Ubiquitous%20computing-ref">
+    		Ubiquitous computing <span>3</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Java-ref">
+    		Java <span>8</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Design%20Pattern-ref">
+    		Design Pattern <span>1</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Golang-ref">
+    		Golang <span>21</span>
+    	</a></li>
+     
+    	<li><a href="https://wangxin1248.github.io/categories#Docker-ref">
+    		Docker <span>1</span>
+    	</a></li>
+    
+  
+
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 推荐网站部分 -->
+          <div class="tile is-child widget">
+            <div class="card">
+              <header class="card-header">
+                <p class="card-header-title nice-title">
+                  相关友情链接
+                </p>
+              </header>
+              <div class="card-content">
+                <div class="content nice-text">
+                  <ul>
+                    <li>
+                      <a href="https://leetcode-cn.com/wangxin1248/">LeetCode-CN</a>
+                    </li>
+                    <li>
+                      <a href="http://blog.csdn.net/icarus_wang/">CSDN Blog</a>
+                    </li>
+                    <li>
+                      <a href="https://www.kaggle.com/wangxin1248">Kaggle</a>
+                    </li>
+                    <li>
+                      <a href="https://www.hackerrank.com/wangxin1248">HackerRank</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        Copyright (C) wangxin1248, All Rights Reserved.
+      </p>
+      <p>
+        Made with <a href="https://wangxin1248.github.io/resume.html">Xin Wang</a>, <a href="https://jekyllrb.com/">Jekyll</a>. Hosted on <a href="https://github.com/">Github</a><span id="busuanzi_container_site_uv" style="display: inline;">
+          .您是本站第<span id="busuanzi_value_site_uv">116331</span>位小伙伴
+        </span>
+      </p>
+      <p>
+        <a class="icon" href="https://github.com/wangxin1248">
+          <i class="fa fa-github" title="Github"></i>
+        </a>
+        <a class="icon" href="https://weibo.com/wangxin1248">
+          <i class="fa fa-weibo" title="Weibo"></i>
+        </a>
+        <a class="icon" href="mailto:wangxin1248@gmail.com">
+          <i class="fa fa-envelope" title="Email"></i>
+        </a>
+      </p>
+    </div>
+  </div>
+</footer>       
+<!-- js -->
+<script src="./ubuntu 18.04 安装 Redis_files/custom.js.下载"></script>
+<script src="./ubuntu 18.04 安装 Redis_files/typewriter.js.下载"></script>
+<!-- 访问人数统计改用新的域名 -->
+<script async="" src="./ubuntu 18.04 安装 Redis_files/busuanzi.pure.mini.js.下载"></script>
+<!-- <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script> -->
+
+
+<iframe style="display: none;" src="./ubuntu 18.04 安装 Redis_files/saved_resource(2).html"></iframe><iframe style="display: none;" src="./ubuntu 18.04 安装 Redis_files/saved_resource(3).html"></iframe><style type="text/css">.typewrite > .wrap { border-right: 0.08em solid #fff}</style></body></html>

@@ -1,0 +1,121 @@
+/*
+    Import League Gothic <3
+*/
+@font-face {
+    font-family: Helvetica, Tahoma, Arial, STXihei, “华文细黑”, Heiti, “黑体”, “Microsoft YaHei”, “微软雅黑”, SimSun, “宋体”, sans-serif;
+    src: url('leaguegothic-regular-webfont.eot');
+    src: url('leaguegothic-regular-webfont.eot?#iefix') format('embedded-opentype'),
+    url('leaguegothic-regular-webfont.woff') format('woff'),
+    url('leaguegothic-regular-webfont.ttf') format('truetype'),
+    url('leaguegothic-regular-webfont.svg#league_gothicregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 所有内容界面宽度（包括文章和右侧内容）*/
+.main-container {
+    /* max-width: 1140px; */
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+/* 网站顶部宽度 */
+.container {
+    text-align: center;
+    max-width: 960px;
+}
+
+/* 搜索框*/
+#searchFieldNav {
+}
+
+/* 导航栏 */
+#nav-menu{
+    text-align: center;
+}
+
+/* 顶部显示文字大小修改 */
+h1.title > span {
+    font-family: "League Gothic", "Arial Narrow", Arial, sans-serif;
+    margin-bottom: 1.75rem;
+    font-size: 1.85em;
+}
+
+.subtitle {
+    font-size: 0.80em;
+    margin-top: -1.0rem;
+}
+
+/* 文章界面显示信息修改 */
+.post {
+    margin-bottom: 1em;
+}
+
+.nice-title {
+    font-size: larger;
+    font-weight: 400;
+    font-family: Roboto, sans-serif;
+}
+
+/* 头像调整 */
+.resume_img{
+    padding: 1em 1em 0 1em;
+}
+
+.nice-text {
+    font-family: "Open Sans", sans-serif;
+}
+/* 头像框大小 */
+.card-content {
+    padding: 0 0 1em;
+}
+
+.fa-heart:hover {
+    color: red;
+}
+
+.footer {
+    padding: 3rem 1.5rem 3rem;
+}
+
+.post-title {
+    font-size: x-large;
+    font-family: Roboto, sans-serif;
+}
+
+.post-meta {
+    font-family: "Open Sans", sans-serif;
+    font-size: small;
+}
+
+.post-text {
+    font-family: "Open Sans", sans-serif;
+}
+
+.post-text > p {
+    margin-bottom: 1em;
+}
+
+/* 右侧sidebar*/
+.sidebar {
+    /* padding: 0 0.75rem 0.75rem 0.75rem !important; */
+    padding: 0 0 0.75rem 0.75rem !important;
+    /* margin-left: 100px; */
+}
+
+/* 左侧内容 */
+.box {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+    max-width: 1040px;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    color: #57A3E8;
+}
