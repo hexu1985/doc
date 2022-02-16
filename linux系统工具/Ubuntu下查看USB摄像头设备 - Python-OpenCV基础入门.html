@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<!-- saved from url=(0080)http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/ -->
+<html lang="zh" class="js json svg checked target dataset details fetch supports csstransforms3d no-ios" style=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+      
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="为了让更多的学生可以更方便的入门OpenCV, 1Z实验室秉承make things easy的理念, 编写了这套OpenCV基础入门教程， 提供对小白友好的文档与演示示例。学完本套课程你可以利用opencv进行简单的工程开发，例如：色块识别，手写数字识别。">
+      
+      
+        <link rel="canonical" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/">
+      
+      
+        <meta name="author" content="1Z实验室-阿凯">
+      
+      
+        <meta name="lang:clipboard.copy" content="复制">
+      
+        <meta name="lang:clipboard.copied" content="已复制">
+      
+        <meta name="lang:search.language" content="jp">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="没有找到符合条件的结果">
+      
+        <meta name="lang:search.result.one" content="找到 1 个符合条件的结果">
+      
+        <meta name="lang:search.result.other" content="# 个符合条件的结果">
+      
+        <meta name="lang:search.tokenizer" content="[\uff0c\u3002]+">
+      
+      <link rel="shortcut icon" href="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/1zlab-logo-transparent.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-3.1.0">
+    
+    
+      
+        <title>Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门</title>
+      
+    
+    
+      <link rel="stylesheet" href="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/application.11e41852.css">
+      
+      
+    
+    
+      <script async="" src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/analytics.js.下载"></script><script src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/modernizr.20ef595d.js.下载"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin="">
+        <link rel="stylesheet" href="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/css">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/material-icons.css">
+    
+    
+    
+  <script charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/btype.js"></script><script type="text/javascript" charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/chrome.js"></script><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1em; bottom: 1.5em; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 2px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 2px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: 1em}
+.MathJax_MenuRadioCheck.RTL {right: 1em; left: auto}
+.MathJax_MenuLabel {padding: 2px 2em 4px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #CCCCCC; margin: 4px 1px 0px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: Highlight; color: HighlightText}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style></head>
+  
+    <body dir="ltr" data-md-state=""><div id="MathJax_Message" style="display: none;"></div>
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z"></path>
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#ubuntuusb" tabindex="1" class="md-skip">
+        跳转至
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header" data-md-state="shadow">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+
+
+        <a href="http://www.1zlab.com/" title="主页" class="md-header-nav__button md-logo">
+          
+            <img src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/1zlab-logo-transparent.png" width="24" height="24">
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title" data-md-state="active">
+          
+            
+              <span class="md-header-nav__topic" style="width: 786px;">
+                Python-OpenCV基础入门
+              </span>
+              <span class="md-header-nav__topic" style="width: 786px;">
+                Ubuntu下查看USB摄像头设备
+              </span>
+            
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          
+            <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+            
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix="">
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+          
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+
+  <a href="https://github.com/1zlab/1zlab-source-code" title="前往 Github 仓库" class="md-source" data-md-source="github" data-md-state="done">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      1zlab/1zlab-source-code
+    </div>
+  </a>
+
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation" style="height: 912px;" data-md-state="lock">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+
+
+    <a href="http://www.1zlab.com/" title="主页" class="md-nav__button md-logo">
+      
+        <img src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/1zlab-logo-transparent.png" width="48" height="48">
+      
+    </a>
+    Python-OpenCV基础入门
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+
+  <a href="https://github.com/1zlab/1zlab-source-code" title="前往 Github 仓库" class="md-source" data-md-source="github" data-md-state="done">
+    
+      <div class="md-source__icon">
+        <svg viewBox="0 0 24 24" width="24" height="24">
+          <use xlink:href="#__github" width="24" height="24"></use>
+        </svg>
+      </div>
+    
+    <div class="md-source__repository">
+      1zlab/1zlab-source-code
+    </div>
+  </a>
+
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix="">
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/" title="Python-OpenCV基础入门" class="md-nav__link">
+      Python-OpenCV基础入门
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+    
+    <label class="md-nav__link" for="nav-2">
+      课程导引
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-2">
+        课程导引
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-first-course/" title="课程导引" class="md-nav__link">
+      课程导引
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-face-detection/" title="人脸检测" class="md-nav__link">
+      人脸检测
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      OpenCV开发环境配置
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-3">
+        OpenCV开发环境配置
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-install-by-pip/" title="通过pip安装OpenCV" class="md-nav__link">
+      通过pip安装OpenCV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/virtualbox-ubuntu-vm-install/" title="使用VirtualBox安装Ubuntu虚拟机安装" class="md-nav__link">
+      使用VirtualBox安装Ubuntu虚拟机安装
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-install-anaconda/" title="Ubuntu安装Anaconda" class="md-nav__link">
+      Ubuntu安装Anaconda
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-install-opencv-by-anaconda/" title="Ubuntu通过Anaconda安装OpenCV" class="md-nav__link">
+      Ubuntu通过Anaconda安装OpenCV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-vm-use-usb-camera/" title="Ubuntu虚拟机里使用USB摄像头获取图像" class="md-nav__link">
+      Ubuntu虚拟机里使用USB摄像头获取图像
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-compile-opencv-from-code/" title="Ubuntu从源码编译OpenCV" class="md-nav__link">
+      Ubuntu从源码编译OpenCV
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-mac-environment/" title="Mac下配置OpenCV的开发环境" class="md-nav__link">
+      Mac下配置OpenCV的开发环境
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      图像读取与保存
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-4">
+        图像读取与保存
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-import-cv2/" title="导入cv2包" class="md-nav__link">
+      导入cv2包
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-about-opencv-version/" title="番外篇-关于cv2的编号" class="md-nav__link">
+      番外篇-关于cv2的编号
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-imread/" title="读入图片" class="md-nav__link">
+      读入图片
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-display-image/" title="显示图片" class="md-nav__link">
+      显示图片
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-print-image-property/" title="打印图像相关属性" class="md-nav__link">
+      打印图像相关属性
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-why-bgr-not-rgb/" title="番外篇-为何是BGR不是RGB" class="md-nav__link">
+      番外篇-为何是BGR不是RGB
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked="">
+    
+    <label class="md-nav__link" for="nav-5">
+      摄像头与视频流
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: block; overflow: visible;">
+      <label class="md-nav__title" for="nav-5">
+        摄像头与视频流
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Ubuntu下查看USB摄像头设备
+      </label>
+    
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/" title="Ubuntu下查看USB摄像头设备" class="md-nav__link md-nav__link--active">
+      Ubuntu下查看USB摄像头设备
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#_1" title="概要" class="md-nav__link">
+    概要
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#1-video" title="1. 查看video设备" class="md-nav__link">
+    1. 查看video设备
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#2-video4linux" title="2. 通过video4linux查看设备" class="md-nav__link">
+    2. 通过video4linux查看设备
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#3-v4l-python" title="3. V4L + Python  查看设备号" class="md-nav__link">
+    3. V4L + Python  查看设备号
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#4-cheese" title="4. 通过cheese 查看视频流" class="md-nav__link">
+    4. 通过cheese 查看视频流
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-read-usb-camera-image/" title="OpenCV读入USB摄像头拍摄的画面" class="md-nav__link">
+      OpenCV读入USB摄像头拍摄的画面
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-usb-camrea-focus/" title="焦距与USB摄像头镜头调焦" class="md-nav__link">
+      焦距与USB摄像头镜头调焦
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-video-record-video-read/" title="视频录制与视频读取" class="md-nav__link">
+      视频录制与视频读取
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-make-phone-as-ip-camera/" title="手机作为IP摄像头" class="md-nav__link">
+      手机作为IP摄像头
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6">
+    
+    <label class="md-nav__link" for="nav-6">
+      图像的数据结构
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-6">
+        图像的数据结构
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-image-data-structure/" title="图像的数据结构" class="md-nav__link">
+      图像的数据结构
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-image-cut-select-roi/" title="图像切割与ROI" class="md-nav__link">
+      图像切割与ROI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/numpy-tutorial/" title="Numpy基础" class="md-nav__link">
+      Numpy基础
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
+    
+    <label class="md-nav__link" for="nav-7">
+      HighGUI上位机开发
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-7">
+        HighGUI上位机开发
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-introduction-to-highgui/" title="HighGUI简介" class="md-nav__link">
+      HighGUI简介
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-highgui-window/" title="HighGUI窗口" class="md-nav__link">
+      HighGUI窗口
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-highgui-imread/" title="读入图片" class="md-nav__link">
+      读入图片
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-imshow-window/" title="窗口展示" class="md-nav__link">
+      窗口展示
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-imwrite/" title="图片保存" class="md-nav__link">
+      图片保存
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-waitkey-keyboards/" title="键盘事件监听" class="md-nav__link">
+      键盘事件监听
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-destroy-window/" title="窗口销毁" class="md-nav__link">
+      窗口销毁
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-example-show-image/" title="综合实验-窗口显示图像" class="md-nav__link">
+      综合实验-窗口显示图像
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-trackbar/" title="滑动条组件" class="md-nav__link">
+      滑动条组件
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-example-change-canvas-color/" title="项目实战-可变色画布" class="md-nav__link">
+      项目实战-可变色画布
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-highgui-button/" title="按键组件" class="md-nav__link">
+      按键组件
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-mouse-event-listener/" title="鼠标事件监听" class="md-nav__link">
+      鼠标事件监听
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-example-diy-pinter/" title="项目实战-自制绘图板" class="md-nav__link">
+      项目实战-自制绘图板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8">
+    
+    <label class="md-nav__link" for="nav-8">
+      色彩空间
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-8">
+        色彩空间
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-intro-color-space/" title="色彩空间的介绍" class="md-nav__link">
+      色彩空间的介绍
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-convert-color-space/" title="色彩空间变换" class="md-nav__link">
+      色彩空间变换
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-cvt-bgr-to-rgb/" title="从BGR到RGB" class="md-nav__link">
+      从BGR到RGB
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-hsv-color-space/" title="HSV色彩空间" class="md-nav__link">
+      HSV色彩空间
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      图像仿射变换
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-9">
+        图像仿射变换
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-intro-affine-transform/" title="仿射变换简介" class="md-nav__link">
+      仿射变换简介
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-translation/" title="图像平移" class="md-nav__link">
+      图像平移
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-rotation/" title="图像旋转" class="md-nav__link">
+      图像旋转
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-resize/" title="图像缩放" class="md-nav__link">
+      图像缩放
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-filp/" title="图像翻转" class="md-nav__link">
+      图像翻转
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-extract-number-image/" title="项目实战-提取手写数字图片样本" class="md-nav__link">
+      项目实战-提取手写数字图片样本
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-interpolation-algrithm/" title="图像插值算法" class="md-nav__link">
+      图像插值算法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-10" type="checkbox" id="nav-10">
+    
+    <label class="md-nav__link" for="nav-10">
+      图像透视变换
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-10">
+        图像透视变换
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-image-prespective-projection/" title="图像透视变换" class="md-nav__link">
+      图像透视变换
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-11" type="checkbox" id="nav-11">
+    
+    <label class="md-nav__link" for="nav-11">
+      绘图
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-11">
+        绘图
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-intro/" title="章节导引" class="md-nav__link">
+      章节导引
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-init-canvas/" title="初始化画布" class="md-nav__link">
+      初始化画布
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-line/" title="绘制直线" class="md-nav__link">
+      绘制直线
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-rect/" title="绘制矩形" class="md-nav__link">
+      绘制矩形
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-circle/" title="绘制圆形" class="md-nav__link">
+      绘制圆形
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-polygon/" title="绘制多边形" class="md-nav__link">
+      绘制多边形
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-ellipse/" title="绘制椭圆形" class="md-nav__link">
+      绘制椭圆形
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-text/" title="绘制文字" class="md-nav__link">
+      绘制文字
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-draw-in-action/" title="项目实战" class="md-nav__link">
+      项目实战
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-12" type="checkbox" id="nav-12">
+    
+    <label class="md-nav__link" for="nav-12">
+      图像统计
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-12">
+        图像统计
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/image-statistic-draw-curves/" title="颜色统计与分布曲线绘制" class="md-nav__link">
+      颜色统计与分布曲线绘制
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-13" type="checkbox" id="nav-13">
+    
+    <label class="md-nav__link" for="nav-13">
+      图像二值化
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-13">
+        图像二值化
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-global-binary-inrange/" title="全局二值化" class="md-nav__link">
+      全局二值化
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-visualization-binary-params/" title="二值化可视化调参" class="md-nav__link">
+      二值化可视化调参
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-binary-image-logical-opereation/" title="二值化逻辑运算" class="md-nav__link">
+      二值化逻辑运算
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-ps-mask-bitwise-operation/" title="罩层抠图" class="md-nav__link">
+      罩层抠图
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-14" type="checkbox" id="nav-14">
+    
+    <label class="md-nav__link" for="nav-14">
+      数学形态学
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-14">
+        数学形态学
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-intro-morphology/" title="数学形态学概要" class="md-nav__link">
+      数学形态学概要
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-erode/" title="腐蚀" class="md-nav__link">
+      腐蚀
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-dilate/" title="膨胀" class="md-nav__link">
+      膨胀
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-opening/" title="开运算" class="md-nav__link">
+      开运算
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-closing/" title="闭运算" class="md-nav__link">
+      闭运算
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-gradient/" title="数学形态学梯度" class="md-nav__link">
+      数学形态学梯度
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-morphology-excercises/" title="课后习题" class="md-nav__link">
+      课后习题
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-15" type="checkbox" id="nav-15">
+    
+    <label class="md-nav__link" for="nav-15">
+      连通域边缘特征
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-15">
+        连通域边缘特征
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-contour-points-collection/" title="连通域的轮廓点集" class="md-nav__link">
+      连通域的轮廓点集
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-draw-contours/" title="轮廓点集的绘制" class="md-nav__link">
+      轮廓点集的绘制
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-contours-hierarchy/" title="连通域的继承关系矩阵" class="md-nav__link">
+      连通域的继承关系矩阵
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-contour-search-pattern/" title="连通域检索模式详解" class="md-nav__link">
+      连通域检索模式详解
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-coutour-rect/" title="连通域的外接矩形" class="md-nav__link">
+      连通域的外接矩形
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-16" type="checkbox" id="nav-16">
+    
+    <label class="md-nav__link" for="nav-16">
+      Matplotlib显示图像
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1" style="display: none; overflow: hidden;">
+      <label class="md-nav__title" for="nav-16">
+        Matplotlib显示图像
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix="">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/matplotlib-show-color-image/" title="Matplotlib显示彩图" class="md-nav__link">
+      Matplotlib显示彩图
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/matplotlib-show-grayscale-image/" title="Matplotlib显示灰度图" class="md-nav__link">
+      Matplotlib显示灰度图
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/matplotlib-show-multiple-image/" title="Matplotlib显示多张图片" class="md-nav__link">
+      Matplotlib显示多张图片
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc" style="height: 912px;" data-md-state="lock">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">目录</label>
+    <ul class="md-nav__list" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#_1" title="概要" class="md-nav__link" data-md-state="blur">
+    概要
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#1-video" title="1. 查看video设备" class="md-nav__link" data-md-state="blur">
+    1. 查看video设备
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#2-video4linux" title="2. 通过video4linux查看设备" class="md-nav__link">
+    2. 通过video4linux查看设备
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#3-v4l-python" title="3. V4L + Python  查看设备号" class="md-nav__link">
+    3. V4L + Python  查看设备号
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#4-cheese" title="4. 通过cheese 查看视频流" class="md-nav__link">
+    4. 通过cheese 查看视频流
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="ubuntuusb">Ubuntu下查看USB摄像头设备<a class="headerlink" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#ubuntuusb" title="Permanent link">¶</a></h1>
+<h2 id="_1">概要<a class="headerlink" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#_1" title="Permanent link">¶</a></h2>
+<p>我们想要从USB摄像头获取图片，然后在opencv中进行处理。</p>
+<p>在用opencv编写获取USB摄像头图片的代码之前，我们最好先在Ubuntu下查看一下USB摄像头的列表与对应的编号。另外我们可以通过<code>v4l</code>查看摄像头所支持的视频压缩格式. 最后我们通过Ubuntu内置的<code>Cheese</code>软件读取实时的视频流数据。</p>
+<p>如果你使用的不是Ubuntu系统，可以跳过此教程。</p>
+<p><strong>keywords</strong> Ubuntu 摄像头 查看USB设备</p>
+<h2 id="1-video">1. 查看video设备<a class="headerlink" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#1-video" title="Permanent link">¶</a></h2>
+<p><img alt="ls查看USB摄像头列表" src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/ls-check-usb-device-list.gif"></p>
+<p>在linux中任何对象都是文件，查看当前是否有摄像头挂载到Ubuntu上，我们可以执行下面的命令行</p>
+<div class="codehilite" id="__code_0"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_0 pre, #__code_0 code"><span class="md-clipboard__message"></span></button><pre><span></span>ls -ltrh /dev/video*
+</pre></div>
+
+<blockquote>
+<p>OUTPUT<br>
+</p><div class="codehilite" id="__code_1"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_1 pre, #__code_1 code"><span class="md-clipboard__message"></span></button><pre><span></span>fange@cr:~$ ls -ltrh /dev/video*
+crw-rw----+ 1 root video 81, 0 3月  28 22:10 /dev/video0
+crw-rw----+ 1 root video 81, 1 3月  28 22:10 /dev/video1
+</pre></div><p></p>
+</blockquote>
+<h2 id="2-video4linux">2. 通过video4linux查看设备<a class="headerlink" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#2-video4linux" title="Permanent link">¶</a></h2>
+<p><img alt="v4l查看USB摄像头列表" src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/use-v4l-check-camera-devices.gif"></p>
+<p><strong>video4linux(v4l)</strong>是一些视频系统，视频软件，音频软件的基础，经常使用在需要采集图像的场合，如视频监控，webcam,可视电话，经常应用在embedded linux中，是linux嵌入式开发中经常使用的系统接口。它是linux内核提供给用户空间的编程接口，各种的视频和音频设备开发相应的驱动程序后，就可以通过v4l提供的系统API来控制视频和音频设备，也就是说v4l分为两层，底层为音视频设备在内核中的驱动，上层为系统提供的API，而对于我们来说需要的就是使用这些系统的API。</p>
+<p>--百度百科 https://baike.baidu.com/item/V4L/10234303?fr=aladdin</p>
+<p>安装v4l<br>
+</p><div class="codehilite" id="__code_2"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_2 pre, #__code_2 code"><span class="md-clipboard__message"></span></button><pre><span></span>sudo apt-get install v4l-utils
+</pre></div><p></p>
+<p>通过v4l2查看设备<br>
+</p><div class="codehilite" id="__code_3"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_3 pre, #__code_3 code"><span class="md-clipboard__message"></span></button><pre><span></span>v4l2-ctl --list-devices
+</pre></div><p></p>
+<blockquote>
+<p>OUTPUT<br>
+</p><div class="codehilite" id="__code_4"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_4 pre, #__code_4 code"><span class="md-clipboard__message"></span></button><pre><span></span>KS-WDR: KS-WDR (usb-0000:00:14.0-1):
+    /dev/video0
+</pre></div><p></p>
+</blockquote>
+<p>查看当前摄像头支持的视频压缩格式</p>
+<div class="codehilite" id="__code_5"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_5 pre, #__code_5 code"><span class="md-clipboard__message"></span></button><pre><span></span>v4l2-ctl -d /dev/video0 --list-formats
+</pre></div>
+
+<blockquote>
+<p>OUTPUT</p>
+</blockquote>
+<div class="codehilite" id="__code_6"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_6 pre, #__code_6 code"><span class="md-clipboard__message"></span></button><pre><span></span><span class="n">ioctl</span><span class="p">:</span> <span class="n">VIDIOC_ENUM_FMT</span>
+    <span class="n">Index</span>       <span class="p">:</span> <span class="mi">0</span>
+    <span class="n">Type</span>        <span class="p">:</span> <span class="n">Video</span> <span class="n">Capture</span>
+    <span class="n">Pixel</span> <span class="n">Format</span><span class="p">:</span> <span class="s1">'MJPG'</span> <span class="p">(</span><span class="n">compressed</span><span class="p">)</span>
+    <span class="n">Name</span>        <span class="p">:</span> <span class="n">Motion</span><span class="o">-</span><span class="n">JPEG</span>
+
+    <span class="n">Index</span>       <span class="p">:</span> <span class="mi">1</span>
+    <span class="n">Type</span>        <span class="p">:</span> <span class="n">Video</span> <span class="n">Capture</span>
+    <span class="n">Pixel</span> <span class="n">Format</span><span class="p">:</span> <span class="s1">'YUYV'</span>
+    <span class="n">Name</span>        <span class="p">:</span> <span class="n">YUYV</span> <span class="mi">4</span><span class="p">:</span><span class="mi">2</span><span class="p">:</span><span class="mi">2</span>
+</pre></div>
+
+<p>可以看到摄像头，支持两种格式</p>
+<h2 id="3-v4l-python">3. V4L + Python  查看设备号<a class="headerlink" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#3-v4l-python" title="Permanent link">¶</a></h2>
+<p>在python里面我们可以借助<code>v4l-utils</code> 跟python</p>
+<div class="codehilite" id="__code_7"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_7 pre, #__code_7 code"><span class="md-clipboard__message"></span></button><pre><span></span><span class="c1">#-*- coding: UTF-8 -*-</span>
+<span class="sd">'''</span>
+<span class="sd">根据设备名称获取相机设备号</span>
+
+<span class="sd">使用前需要先安装v4l-utils</span>
+
+<span class="sd">Installing v4l-utils (debian) gives one the handy v4l2-ctl command:</span>
+<span class="sd">$ v4l2-ctl --list-devices</span>
+
+<span class="sd">KS-WDR: KS-WDR (usb-0000:00:14.0-2):</span>
+<span class="sd">    /dev/video0</span>
+
+<span class="sd">H264 USB Camera: USB Camera (usb-0000:00:14.0-4.1):</span>
+<span class="sd">    /dev/video1</span>
+<span class="sd">    /dev/video2</span>
+
+<span class="sd">所以我们可以根据设备名称去检索摄像头对应的序号</span>
+<span class="sd">'''</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">PIPE</span><span class="p">,</span><span class="n">Popen</span>
+
+<span class="k">def</span> <span class="nf">find_cam</span><span class="p">(</span><span class="n">cam</span><span class="p">):</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"/usr/bin/v4l2-ctl"</span><span class="p">,</span> <span class="s2">"--list-devices"</span><span class="p">]</span>
+    <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="c1"># 降byte类型转换为string</span>
+    <span class="c1"># out = str(out)</span>
+    <span class="k">for</span> <span class="n">dev_name</span><span class="p">,</span> <span class="n">dev_idx</span> <span class="ow">in</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\n\t</span><span class="s2">"</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">out</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">b</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)]:</span>
+        <span class="k">if</span> <span class="n">cam</span> <span class="ow">in</span> <span class="n">dev_name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dev_idx</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf8'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">None</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+    <span class="c1"># 这里修改设备名称</span>
+    <span class="n">cam</span><span class="o">=</span> <span class="sa">b</span><span class="s2">"KS-WDR"</span>
+    <span class="c1"># 寻找设备编号</span>
+    <span class="n">dev_idx</span> <span class="o">=</span> <span class="n">find_cam</span><span class="p">(</span><span class="n">cam</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dev_idx</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">"设备没有找到"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="s2">"设备编号： {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dev_idx</span><span class="p">))</span>
+</pre></div>
+
+<h2 id="4-cheese">4. 通过cheese 查看视频流<a class="headerlink" href="http://www.1zlab.com/wiki/python-opencv-tutorial/ubuntu-check-usb-camera-device/#4-cheese" title="Permanent link">¶</a></h2>
+<p><img alt="cheese读入视频" src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/cheese-read-video.gif"></p>
+<p>cheese是Ubuntu自带摄像软件，中文名称茄子。</p>
+<p>如果你的系统上没有的话也可以安装：</p>
+<div class="codehilite" id="__code_8"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_8 pre, #__code_8 code"><span class="md-clipboard__message"></span></button><pre><span></span>sudo apt-get install cheese
+</pre></div>
+
+<p>通过cheese 查看视频流。</p>
+<p>cheese + 设备号</p>
+<div class="codehilite" id="__code_9"><button class="md-clipboard" title="复制" data-clipboard-target="#__code_9 pre, #__code_9 code"><span class="md-clipboard__message"></span></button><pre><span></span>cheese /dev/video0
+</pre></div>
+
+<p>cheese功能非常有限， 而且容易崩溃。</p>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            
+              <hr>
+
+                    <div style="margin: 0 auto;background-color: #fafafa">
+                        <span style="font-size: 25px">精品课程</span>
+                        <div style="display:flex;flex-flow: row nowrap; justify-content: space-around; align-items: flex-start;">
+                            <div style="display: flex;flex-flow: column wrap;align-items: center;margin: 4px;width: 40vw">
+                                <a href="https://study.163.com/course/introduction/1006457010.htm?share=2&amp;shareId=400000000650020">
+                                    <img src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/arm.jpg" alt="" style="width: 40vw; height: auto;">
+                                </a>
+
+                                <a style="text-align: center" href="https://study.163.com/course/introduction/1006457010.htm?share=2&amp;shareId=400000000650020">机械臂运动学控制及Python实现</a>
+                            </div>
+                            <div style="display: flex;flex-flow: column wrap;align-items: center;margin: 4px;width: 40vw">
+                                <a href="https://study.163.com/course/courseMain.htm?courseId=1212241811&amp;share=2&amp;shareId=400000000650020">
+                                    <img src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/robot_grab.png" alt="" style="width: 40vw; height: auto;">
+                                </a>
+                                <a style="text-align: center" href="https://study.163.com/course/courseMain.htm?courseId=1212241811&amp;share=2&amp;shareId=400000000650020">机械臂视觉抓取从理论到实践</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+</article>
+
+          <img src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/10.png" style="width: 100%">
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-why-bgr-not-rgb/" title="番外篇-为何是BGR不是RGB" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  后退
+                </span>
+                番外篇-为何是BGR不是RGB
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="http://www.1zlab.com/wiki/python-opencv-tutorial/opencv-read-usb-camera-image/" title="OpenCV读入USB摄像头拍摄的画面" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  前进
+                </span>
+                OpenCV读入USB摄像头拍摄的画面
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+      </div>
+      
+        
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+    <script src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/application.905597d0.js.下载"></script>
+    
+        
+        
+            
+            <script src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/lunr.stemmer.support.js.下载"></script>
+            
+                
+                    
+                        <script src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/tinyseg.js.下载"></script>
+                    
+                    
+                        <script src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/lunr.jp.js.下载"></script>
+                    
+                
+            
+            
+        
+    
+    <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+    
+
+
+
+    <script type="text/x-mathjax-config;executed=true">
+        MathJax.Hub.Config({
+          config: ["MMLorHTML.js"],
+          jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+          extensions: ["MathMenu.js", "MathZoom.js"]
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+    <script type="text/javascript" src="./Ubuntu下查看USB摄像头设备 - Python-OpenCV基础入门_files/MathJax.js.下载"></script>
+
+
+    
+      
+        <script>!function(e,a,t,n,o,c,i){e.GoogleAnalyticsObject=o,e.ga=e.ga||function(){(e.ga.q=e.ga.q||[]).push(arguments)},e.ga.l=1*new Date,c=a.createElement(t),i=a.getElementsByTagName(t)[0],c.async=1,c.src="https://www.google-analytics.com/analytics.js",i.parentNode.insertBefore(c,i)}(window,document,"script",0,"ga"),ga("create","UA-127068587-1","1zlab.com"),ga("set","anonymizeIp",!0),ga("send","pageview");var links=document.getElementsByTagName("a");if(Array.prototype.map.call(links,function(a){a.host!=document.location.host&&a.addEventListener("click",function(){var e=a.getAttribute("data-md-action")||"follow";ga("send","event","outbound",e,a.href)})}),document.forms.search){var query=document.forms.search.query;query.addEventListener("blur",function(){if(this.value){var e=document.location.pathname;ga("send","pageview",e+"?q="+this.value)}})}</script>
+      
+    
+  
+</body></html>

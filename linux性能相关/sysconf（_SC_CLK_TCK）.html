@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)http://zgserver.com/sysconf_sc_clk_tck.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>  sysconf（_SC_CLK_TCK）它返回什么？ 中国服务器网</title>
+    <link rel="stylesheet" href="./sysconf（_SC_CLK_TCK）_files/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+    img {max-width: 100%;}
+    </style>
+	  <script src="./sysconf（_SC_CLK_TCK）_files/f.txt"></script><script src="./sysconf（_SC_CLK_TCK）_files/f(1).txt" id="google_shimpl"></script><script data-ad-client="ca-pub-8401008596536068" async="" src="./sysconf（_SC_CLK_TCK）_files/f(2).txt" data-checked-head="true"></script>
+
+  <meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="AxujKG9INjsZ8/gUq8+dTruNvk7RjZQ1oFhhgQbcTJKDnZfbzSTE81wvC2Hzaf3TW4avA76LTZEMdiedF1vIbA4AAABueyJvcmlnaW4iOiJodHRwczovL2ltYXNkay5nb29nbGVhcGlzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0="><meta http-equiv="origin-trial" content="Azuce85ORtSnWe1MZDTv68qpaW3iHyfL9YbLRy0cwcCZwVnePnOmkUJlG8HGikmOwhZU22dElCcfrfX2HhrBPAkAAAB7eyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A16nvcdeoOAqrJcmjLRpl1I6f3McDD8EfofAYTt/P/H4/AWwB99nxiPp6kA0fXoiZav908Z8etuL16laFPUdfQsAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="AxBHdr0J44vFBQtZUqX9sjiqf5yWZ/OcHRcRMN3H9TH+t90V/j3ENW6C8+igBZFXMJ7G3Pr8Dd13632aLng42wgAAACBeyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiVHJ1c3RUb2tlbnMiLCJleHBpcnkiOjE2NTI3NzQ0MDAsImlzU3ViZG9tYWluIjp0cnVlLCJpc1RoaXJkUGFydHkiOnRydWV9"><meta http-equiv="origin-trial" content="A88BWHFjcawUfKU3lIejLoryXoyjooBXLgWmGh+hNcqMK44cugvsI5YZbNarYvi3roc1fYbHA1AVbhAtuHZflgEAAAB2eyJvcmlnaW4iOiJodHRwczovL2dvb2dsZS5jb206NDQzIiwiZmVhdHVyZSI6IlRydXN0VG9rZW5zIiwiZXhwaXJ5IjoxNjUyNzc0NDAwLCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlfQ=="><meta http-equiv="origin-trial" content="A8FHS1NmdCwGqD9DwOicnHHY+y27kdWfxKa0YHSGDfv0CSpDKRHTQdQmZVPDUdaFWUsxdgVxlwAd6o+dhJykPA0AAACWeyJvcmlnaW4iOiJodHRwczovL2RvdWJsZWNsaWNrLm5ldDo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A8zdXi6dr1hwXEUjQrYiyYQGlU3557y5QWDnN0Lwgj9ePt66XMEvNkVWOEOWPd7TP9sBQ25X0Q15Lr1Nn4oGFQkAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXN5bmRpY2F0aW9uLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><meta http-equiv="origin-trial" content="A4/Htern2udN9w3yJK9QgWQxQFruxOXsXL7cW60DyCl0EZFGCSme/J33Q/WzF7bBkVvhEWDlcBiUyZaim5CpFQwAAACceyJvcmlnaW4iOiJodHRwczovL2dvb2dsZXRhZ3NlcnZpY2VzLmNvbTo0NDMiLCJmZWF0dXJlIjoiQ29udmVyc2lvbk1lYXN1cmVtZW50IiwiZXhwaXJ5IjoxNjQzMTU1MTk5LCJpc1N1YmRvbWFpbiI6dHJ1ZSwiaXNUaGlyZFBhcnR5Ijp0cnVlLCJ1c2FnZSI6InN1YnNldCJ9"><link rel="preload" href="./sysconf（_SC_CLK_TCK）_files/f(3).txt" as="script"><script type="text/javascript" src="./sysconf（_SC_CLK_TCK）_files/f(3).txt"></script><link rel="preload" href="./sysconf（_SC_CLK_TCK）_files/f(4).txt" as="script"><script type="text/javascript" src="./sysconf（_SC_CLK_TCK）_files/f(4).txt"></script><script id="LA_CODELESS" src="./sysconf（_SC_CLK_TCK）_files/js-sdk-event.min.js.下载" data-la-ev="1wUWGr6Fh81AV7XT"></script><script charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/btype.js"></script><script type="text/javascript" charset="utf-8" src="chrome-extension://jgphnjokjhjlcnnajmfjlacjnjkhleah/js/chrome.js"></script></head>
+<body style="padding-top:3.5rem">
+    <div class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="http://zgserver.com/">中国服务器网</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation" style="">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor03">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+<a class="nav-link" href="http://zgserver.com/server/linux">Linux</a>
+      </li>
+      <li class="nav-item">
+<a class="nav-link" href="http://zgserver.com/server/windows">Windows</a>
+      </li>
+      <li class="nav-item">
+<a class="nav-link" href="http://zgserver.com/server/ubuntu">Ubuntu</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+      </div>
+    </div>	
+<div class="container" style="height: auto !important;">
+
+<div class="row " style="height: auto !important;">
+        <div class="col-12" style="height: auto !important; min-height: 0px !important;">
+        <ol class="breadcrumb ">
+  <li class="breadcrumb-item"><a href="http://zgserver.com/">中国服务器网</a></li>
+  <li class="breadcrumb-item"><span class="badge badge-pill badge-light"><a href="https://zgserver.com/server/851" rel="tag">内核</a></span> <span class="badge badge-pill badge-light"><a href="https://zgserver.com/server/c" rel="tag">c + +</a></span> <span class="badge badge-pill badge-light"><a href="https://zgserver.com/server/linux" rel="tag">Linux操作系统</a></span></li>
+  <li class="breadcrumb-item active">sysconf（_SC_CLK_TCK）它返回什么？</li>
+        </ol>
+			<script async="" src="./sysconf（_SC_CLK_TCK）_files/f(2).txt"></script>
+<!-- zgserver-zsy -->
+<ins class="adsbygoogle" style="display: block; height: 280px;" data-ad-client="ca-pub-8401008596536068" data-ad-slot="4337784113" data-ad-format="auto" data-full-width-responsive="true" data-adsbygoogle-status="done" data-ad-status="unfilled"><ins id="aswift_1_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 280px; width: 1110px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_1_anchor" style="border: none; height: 280px; width: 1110px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block; overflow: visible;"><iframe id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;border:0;width:1110px;height:280px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="1110" height="280" frameborder="0" src="./sysconf（_SC_CLK_TCK）_files/ads.html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!2" data-load-complete="true"></iframe></ins></ins></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+	</div>
+</div>
+<div class="row">
+<div class="col-md-4 order-3">
+        <div class="card border-0">
+            <div class="card-header">Intereting Posts</div>
+            <div class="list-group list-group-flush">
+          <a href="https://zgserver.com/caching-31.html" rel="bookmark" class="list-group-item list-group-item-action">
+    如何禁用根设备上的文件系统caching？  </a>
+  <a href="https://zgserver.com/visual-studio-11-2.html" rel="bookmark" class="list-group-item list-group-item-action">
+    使用Visual Studio 11编译的可执行文件有什么特别之处，导致可执行文件无法在Windows XP上执行？  </a>
+  <a href="https://zgserver.com/windows-1944.html" rel="bookmark" class="list-group-item list-group-item-action">
+    在Windows上首次启动后，文档图标发生更改  </a>
+  <a href="https://zgserver.com/windows-phone-4.html" rel="bookmark" class="list-group-item list-group-item-action">
+    当键盘存在时，Windows Phone应用程序会滚动问题  </a>
+  <a href="https://zgserver.com/forfilesvariablesfname.html" rel="bookmark" class="list-group-item list-group-item-action">
+    我如何从forfilesvariablesfname中删除引号  </a>
+  <a href="https://zgserver.com/bash-94.html" rel="bookmark" class="list-group-item list-group-item-action">
+    使用通配符（*）将文件复制到bash脚本中的文件夹 – 为什么它不工作？  </a>
+  <a href="https://zgserver.com/golangbuild-2.html" rel="bookmark" class="list-group-item list-group-item-action">
+    用golang创build硬链接  </a>
+  <a href="https://zgserver.com/grep-120.html" rel="bookmark" class="list-group-item list-group-item-action">
+    如何从文件grep精确匹配的特殊字符？  </a>
+  <a href="https://zgserver.com/windows-59.html" rel="bookmark" class="list-group-item list-group-item-action">
+    Windows  – 提交大小与虚拟大小  </a>
+  <a href="https://zgserver.com/sleep.html" rel="bookmark" class="list-group-item list-group-item-action">
+    为什么我所有的线程使用sleep（）睡眠？  </a>
+  <a href="https://zgserver.com/setpixel-getpixelwin32-c.html" rel="bookmark" class="list-group-item list-group-item-action">
+    单色位图SetPixel / GetPixel问题Win32 C代码  </a>
+  <a href="https://zgserver.com/udpnatudp.html" rel="bookmark" class="list-group-item list-group-item-action">
+    如何将数据从UDP服务器发送到NAT后面的UDP客户端？  </a>
+  <a href="https://zgserver.com/cmd-exewindows.html" rel="bookmark" class="list-group-item list-group-item-action">
+    如何遵循cmd.exe中的子目录的Windows快捷方式？  </a>
+  <a href="https://zgserver.com/expressionfindtypes.html" rel="bookmark" class="list-group-item list-group-item-action">
+    正则expression式从find中排除文件types  </a>
+  <a href="https://zgserver.com/unixtcp-ipso_reuseaddr.html" rel="bookmark" class="list-group-item list-group-item-action">
+    为什么不在Unix的TCP / IP服务器上使用SO_REUSEADDR？  </a>
+			</div>
+        </div>    
+</div><div class="col-md-8 col-lg-8 order-1">
+	    <a href="https://zgserver.com/sysconf_sc_clk_tck.html"><h1 class="text-dark">sysconf（_SC_CLK_TCK）它返回什么？</h1></a> 
+    <div class="card border-0">
+        <p> 我想了解各种sysconfmacros。我已经写了一个程序如下。 </p>
+<pre><code>int main() { fprintf(stdout, "No. of clock ticks per sec : %ld\n",sysconf(_SC_CLK_TCK)); return 0; }</code> </pre>
+<p> 我总是得到100的结果。我正在运行在时钟为2.93GHz的CPU上。数字100的意思是什么？ </p>
+<script async="" src="./sysconf（_SC_CLK_TCK）_files/f(2).txt"></script>
+<ins class="adsbygoogle" style="display: block; text-align: center; height: 183px;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-8401008596536068" data-ad-slot="7566582686" data-adsbygoogle-status="done" data-ad-status="unfilled"><ins id="aswift_2_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 183px; width: 730px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_2_anchor" style="border: none; height: 183px; width: 730px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;border:0;width:730px;height:183px;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="730" height="183" frameborder="0" src="./sysconf（_SC_CLK_TCK）_files/ads(1).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!3" data-load-complete="true"></iframe></ins></ins></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script><p></p>        <div class="row">
+			<div class="col">
+			
+				<ul><li><a class="text-dark" href="https://zgserver.com/string-23.html" rel="bookmark" title="如何更改内核的版本string？">如何更改内核的版本string？</a></li><li><a class="text-dark" href="https://zgserver.com/linuxkfree.html" rel="bookmark" title="在linux内核中，会不会打电话给kfree？">在linux内核中，会不会打电话给kfree？</a></li><li><a class="text-dark" href="https://zgserver.com/configurationeclipse-for-linux.html" rel="bookmark" title="configurationEclipse for Linux内核模块开发">configurationEclipse for Linux内核模块开发</a></li><li><a class="text-dark" href="https://zgserver.com/cpucent-os-6-3.html" rel="bookmark" title="CPU在Cent OS 6.3上使用率很高">CPU在Cent OS 6.3上使用率很高</a></li><li><a class="text-dark" href="https://zgserver.com/linux-397.html" rel="bookmark" title="linux内核模块不自动加载">linux内核模块不自动加载</a></li></ul>			</div>
+		</div>
+
+    <div class="list-group list-group-flush">
+
+    
+<!-- You can start editing here. -->
+
+
+	<div class="list-group-item list-group-item-action flex-column align-items-start">
+		      	<p> 这只是每秒时钟滴答的数量，在您的情况下，内核配置为每秒100个时钟（或100Hz时钟）。 </p>
+</div>
+<!-- #comment-## -->
+<div class="list-group-item list-group-item-action flex-column align-items-start">
+		      	<p> 每秒的时钟滴答数可以通过sysconf系统调用找到， </p>
+<pre> <code>printf ("_SC_CLK_TCK = %ld\n", sysconf (_SC_CLK_TCK));</code> </pre>
+<p> 时钟滴答的典型值为每秒100次。也就是说，在这种情况下，每10毫秒或0.01秒有一个时钟滴答。 为了将由时间返回的clock_t值转换成秒，必须除以每秒钟的时钟滴答数。 使用times和sysconf（_SC_CLK_TCK）系统调用的示例程序是， </p>
+<pre> <code>#include &lt;stdio.h&gt; #include &lt;string.h&gt; #include &lt;stdlib.h&gt; #include &lt;unistd.h&gt; #include &lt;time.h&gt; #include &lt;sys/times.h&gt; main () { clock_t ct0, ct1; struct tms tms0, tms1; int i; if ((ct0 = times (&amp;tms0)) == -1) perror ("times"); printf ("_SC_CLK_TCK = %ld\n", sysconf (_SC_CLK_TCK)); for (i = 0; i &lt; 10000000; i++) ; if ((ct1 = times (&amp;tms1)) == -1) perror ("times"); printf ("ct0 = %ld, times: %ld %ld %ld %ld\n", ct0, tms0.tms_utime, tms0.tms_cutime, tms0.tms_stime, tms0.tms_cstime); printf ("ct1 = %ld, times: %ld %ld %ld %ld\n", ct1, tms1.tms_utime, tms1.tms_cutime, tms1.tms_stime, tms1.tms_cstime); printf ("ct1 - ct0 = %ld\n", ct1 - ct0); }</code> </pre>
+<p>  <strong>资源</strong> </p>
+<p>  <a href="http://www.softprayog.in/tutorials/linux-process-execution-time" rel="nofollow ugc">http://www.softprayog.in/tutorials/linux-process-execution-time</a> </p>
+</div>
+<!-- #comment-## -->
+
+	<div class="navigation">
+		<div class="alignleft"></div>
+		<div class="alignright"></div>
+	</div>
+ 	
+	</div>
+		
+        </div>
+<ul>
+<li><a class="text-dark" href="https://zgserver.com/bootloadergrublilo-find.html" rel="bookmark" title="bootloader（如grub，lilo …）如何find内核映像？">bootloader（如grub，lilo …）如何find内核映像？</a></li><li><a class="text-dark" href="https://zgserver.com/net-34.html" rel="bookmark" title="当我从.NET产生一个新的线程时究竟发生了什么？">当我从.NET产生一个新的线程时究竟发生了什么？</a></li><li><a class="text-dark" href="https://zgserver.com/15689.html" rel="bookmark" title="这是什么意思打破用户空间？">这是什么意思打破用户空间？</a></li><li><a class="text-dark" href="https://zgserver.com/terminal-59.html" rel="bookmark" title="用户进程，terminal和内核之间的通信">用户进程，terminal和内核之间的通信</a></li><li><a class="text-dark" href="https://zgserver.com/windowsfunction-3.html" rel="bookmark" title="Windows驱动程序时间戳function">Windows驱动程序时间戳function</a></li><li><a class="text-dark" href="https://zgserver.com/linuxfind-23.html" rel="bookmark" title="如何在Linux源中find特定系统调用的定义？">如何在Linux源中find特定系统调用的定义？</a></li><li><a class="text-dark" href="https://zgserver.com/linuxstruct-file_operationsclosuresrelease.html" rel="bookmark" title="为什么在Linux内核的`struct file_operations`中closures函数被称为release？">为什么在Linux内核的`struct file_operations`中closures函数被称为release？</a></li><li><a class="text-dark" href="https://zgserver.com/11622.html" rel="bookmark" title="从内核分配用户空间内存">从内核分配用户空间内存</a></li><li><a class="text-dark" href="https://zgserver.com/18564.html" rel="bookmark" title="多个内核模块在卸载期间拦截相同的系统调用和崩溃">多个内核模块在卸载期间拦截相同的系统调用和崩溃</a></li><li><a class="text-dark" href="https://zgserver.com/minix-3-x53ef.html" rel="bookmark" title="有没有办法在Minix 3中访问和修改系统调用的用户数据？  我可以在这里使用sys_datacopy（）吗？  为什么我的尝试不工作？">有没有办法在Minix 3中访问和修改系统调用的用户数据？  我可以在这里使用sys_datacopy（）吗？  为什么我的尝试不工作？</a></li><li><a class="text-dark" href="https://zgserver.com/89334.html" rel="bookmark" title="什么语言允许我与操作系统的内核进行交互">什么语言允许我与操作系统的内核进行交互</a></li><li><a class="text-dark" href="https://zgserver.com/linux-tcp-ip.html" rel="bookmark" title="Linux TCP / IP黑客在哪里生活？">Linux TCP / IP黑客在哪里生活？</a></li><li><a class="text-dark" href="https://zgserver.com/alsa-5.html" rel="bookmark" title="如何从用户空间注册一个虚拟卡alsa？">如何从用户空间注册一个虚拟卡alsa？</a></li><li><a class="text-dark" href="https://zgserver.com/c-817.html" rel="bookmark" title="以编程方式在C中插入和删除内核模块">以编程方式在C中插入和删除内核模块</a></li></ul>    
+    </div>
+    
+</div>
+
+   <div class="clearfix mt-5"></div>
+    <hr>
+<footer>
+        <ul class="list-inline text-center">
+        <li class="list-inline-item">© 2017 中国服务器网</li>
+        <li class="list-inline-item"><a href="http://zgserver.com/topics">Topics</a></li>
+        <li class="list-inline-item"><a href="http://zgserver.com/sysconf_sc_clk_tck.html#">Terms</a></li>
+        <li class="list-inline-item"><a href="http://zgserver.com/sysconf_sc_clk_tck.html#">Privacy Policy</a></li>
+        </ul>
+</footer>
+
+</div>     
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="./sysconf（_SC_CLK_TCK）_files/jquery-3.2.1.slim.min.js.下载" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><ins id="aswift_0_expand" tabindex="0" title="Advertisement" aria-label="Advertisement" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-table;"><ins id="aswift_0_anchor" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: block;"><iframe id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" src="./sysconf（_SC_CLK_TCK）_files/ads(2).html" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" data-google-container-id="a!1" data-load-complete="true"></iframe></ins></ins></ins>
+    <script src="./sysconf（_SC_CLK_TCK）_files/popper.min.js.下载" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="./sysconf（_SC_CLK_TCK）_files/bootstrap.min.js.下载" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  
+<span style="display:none">
+<script type="text/javascript">
+var sc_project=11595120; 
+var sc_invisible=1; 
+var sc_security="4e2d25cf"; 
+var scJsHost = (("https:" == document.location.protocol) ?
+"https://secure." : "http://www.");
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+</script><script type="text/javascript" src="./sysconf（_SC_CLK_TCK）_files/counter.js.下载"></script>
+<noscript><div class="statcounter"><a title="Web Analytics"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="//c.statcounter.com/11595120/0/4e2d25cf/1/" alt="Web
+Analytics"></a></div></noscript>
+	<script charset="UTF-8" id="LA_COLLECT" src="./sysconf（_SC_CLK_TCK）_files/js-sdk-pro.min.js.下载"></script>
+<script>LA.init({id: "1wUWGr6Fh81AV7XT",ck: "1wUWGr6Fh81AV7XT"})</script>
+</span>
+<iframe src="./sysconf（_SC_CLK_TCK）_files/aframe.html" width="0" height="0" style="display: none;"></iframe></body><iframe id="google_esf" name="google_esf" src="./sysconf（_SC_CLK_TCK）_files/zrt_lookup.html" style="display: none;"></iframe></html>
